@@ -1,5 +1,4 @@
 import VueMaterial from "vue-material";
-require('dotenv').config();
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
 import Vue from "vue";
