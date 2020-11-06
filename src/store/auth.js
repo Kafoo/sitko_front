@@ -4,16 +4,21 @@ export default {
   namespaced: true,
 
   state: {
-    userData: null
+    userData: null,
+    plop: "plop"
   },
 
   getters: {
-    user: state => state.userData
+    user: state => state.userData,
+    plop: state => state.plop
   },
 
   mutations: {
     setUserData(state, user) {
       state.userData = user;
+    },
+    setPlop(state, plop) {
+      state.plop = plop;
     }
   },
 
@@ -61,6 +66,10 @@ export default {
         .then(() => {
           dispatch("getUserData");
         });
+    },
+    changePlop({ commit, state }) {
+      let newPlop = state.plop + "plop";
+      commit("setPlop", newPlop);
     }
   }
 };

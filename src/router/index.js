@@ -12,14 +12,13 @@ const guest = (to, from, next) => {
   }
 };
 
-const auth = (to, from, next) => {
+/*const auth = (to, from, next) => {
   if (localStorage.getItem("authToken")) {
     return next();
   } else {
     return next("/login");
   }
-};
-
+};*/
 
 const routes = [
   {
@@ -44,7 +43,6 @@ const routes = [
   {
     path: "/verify/:hash",
     name: "Verify",
-    beforeEnter: auth,
     props: true,
     component: () =>
       import(/* webpackChunkName: "verify" */ "../views/Auth/Verify.vue")

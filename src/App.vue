@@ -1,16 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/login" v-show="!user">Login</router-link> |
-      <router-link to="/register" v-show="!user">Register</router-link> |
-      <a class="nav-link" href="#" @click="logout" v-show="user">Logout</a>
-    </div>
-    <router-view />
-  </div>
-</template>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
 
+      <v-toolbar-title>Sitko</v-toolbar-title>
+
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <v-btn text to="/">Home</v-btn>
+      <v-btn text to="/about">About</v-btn>
+      <v-btn text to="/login" v-show="!user">Login</v-btn>
+      <v-btn text to="/register" v-show="!user">Register</v-btn>
+      <v-btn text @click="logout" v-show="user">Logout</v-btn>
+
+    </v-app-bar>
+
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
+</template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -27,32 +46,8 @@ export default {
     ...mapActions("auth", ["sendLogoutRequest", "getUserData"]),
     logout() {
       this.sendLogoutRequest();
-      this.$router.push("/");
+      this.$router.push("/").catch(()=>{});;
     }
   }
 };
 </script>
-
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>

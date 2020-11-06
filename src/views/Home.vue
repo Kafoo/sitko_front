@@ -27,10 +27,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["user"])
+    ...mapGetters("auth", ["user", "plop"])
   },
   methods: {
-    ...mapActions("auth", ["sendVerifyResendRequest"]),
+    ...mapActions("auth", ["sendVerifyResendRequest", "changePlop"]),
     verifyResend() {
       this.success = this.error = null;
       this.sendVerifyResendRequest()

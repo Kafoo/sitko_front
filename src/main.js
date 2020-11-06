@@ -1,15 +1,13 @@
-import VueMaterial from "vue-material";
-import "vue-material/dist/vue-material.min.css";
-import "vue-material/dist/theme/default.css";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import axios from "axios";
+import vuetify from "./plugins/vuetify";
+
+Vue.use(vuetify)
 
 Vue.config.productionTip = false;
-
-Vue.use(VueMaterial);
 
 axios.interceptors.response.use(
   response => response,
@@ -32,13 +30,12 @@ axios.interceptors.request.use(function(config) {
     "Content-Type": "application/json",
     Accept: "application/json"
   };
-
   return config;
 });
-
 
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");

@@ -55,6 +55,9 @@ export default {
       }
     };
   },
+  props: {
+    verification: { type: String, default: null }
+  },
   computed: {
     ...mapGetters(["errors"])
   },
@@ -65,7 +68,11 @@ export default {
     ...mapActions("auth", ["sendLoginRequest"]),
     login: function() {
       this.sendLoginRequest(this.details).then(() => {
-        this.$router.push({ name: "Home" });
+        if (this.verification) {
+          this.$emit("verify");
+        } else {
+          this.$router.push({ name: "Home" }).catch(() => {});
+        }
       });
     }
   }
