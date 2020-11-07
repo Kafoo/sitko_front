@@ -1,9 +1,6 @@
 <template>
-  <div class="login mt-5">
-    <div class="card">
-      <div class="card-header">
-        Register
-      </div>
+  <div class="login d-flex justify-center">
+    <v-card max-width="700px" width="80%" class="elevation-6 ma-8">
       <div class="card-body">
         <form>
           <div class="form-group">
@@ -58,12 +55,14 @@
               placeholder="Confirm password"
             />
           </div>
-          <button type="button" @click="register" class="btn btn-primary">
-            Register
-          </button>
+          <v-card-actions class="d-flex justify-center">
+            <v-btn type="button" @click="register">
+              Register
+            </v-btn>
+          </v-card-actions>
         </form>
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 

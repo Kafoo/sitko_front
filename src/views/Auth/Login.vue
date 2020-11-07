@@ -1,9 +1,6 @@
 <template>
-  <div class="login mt-5">
-    <div class="card">
-      <div class="card-header">
-        Login
-      </div>
+  <div class="login d-flex justify-center">
+    <v-card max-width="700px" width="80%" class="elevation-6 ma-8">
       <div class="card-body">
         <form>
           <div class="form-group">
@@ -34,12 +31,14 @@
               {{ errors.password[0] }}
             </div>
           </div>
-          <button type="button" @click="login" class="btn btn-primary">
-            Login
-          </button>
+          <v-card-actions class="d-flex justify-center">
+            <v-btn type="button" @click="login">
+              Login
+            </v-btn>
+          </v-card-actions>
         </form>
       </div>
-    </div>
+    </v-card>
   </div>
 </template>
 

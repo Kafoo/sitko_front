@@ -83,6 +83,9 @@ export default {
         this.menuItems.find(x => x.title === "Register").vshow = !newVal
         this.menuItems.find(x => x.title === "Logout").vshow = newVal
       }
+    },
+    '$route' (to) {
+      document.title = to.meta.title || 'Sitko'
     }
   },
   mounted() {

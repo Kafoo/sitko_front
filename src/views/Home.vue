@@ -1,18 +1,27 @@
 <template>
-  <div class="home mt-5">
+  <div class="home mt-5 d-flex justify-center">
     <div class="alert alert-success" role="alert" v-if="success">
       {{ success }}
     </div>
     <div class="alert alert-danger" role="alert" v-if="error">
       {{ error }}
     </div>
-    <h2 v-if="!user">Welcome, please log in or register</h2>
-    <h2 v-else-if="!user.email_verified_at">
-      Hello, {{ user.name }}! Registration successful, please check your inbox
-      and click confirmation link. If you did not receive the email, click
-      <a href="#" @click="verifyResend">here</a> to request another
-    </h2>
-    <h2 v-else>Hello, {{ user.name }}! You're in.</h2>
+    <v-card max-width="700px" width="80%" class="pa-8 mt-2 elevation-5">
+      <h3 v-if="!user" class="text-center">Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où rien ne se passe encore.</h3>
+      <span v-else-if="!user.email_verified_at" class="text-center">
+        <h2>Coucou {{ user.name }} !</h2>
+        <h4>
+          Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception. Tu peux aussi demander un nouveau mail de confirmation en cliquant
+          <a href="#" @click="verifyResend">ici</a>.
+        </h4>
+      </span>
+      <span v-else class="text-center">
+        <h2>Coucou {{ user.name }} !</h2>
+        <h4>
+          Bienvenue dans ce merveilleux site où rien ne se passe.
+        </h4>
+      </span>
+    </v-card>
   </div>
 </template>
 
