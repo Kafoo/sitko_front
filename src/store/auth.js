@@ -9,16 +9,12 @@ export default {
   },
 
   getters: {
-    user: state => state.userData,
-    plop: state => state.plop
+    user: state => state.userData
   },
 
   mutations: {
     setUserData(state, user) {
       state.userData = user;
-    },
-    setPlop(state, plop) {
-      state.plop = plop;
     }
   },
 
@@ -67,9 +63,14 @@ export default {
           dispatch("getUserData");
         });
     },
-    changePlop({ commit, state }) {
-      let newPlop = state.plop + "plop";
-      commit("setPlop", newPlop);
+    sendDeleteUser({ commit }, data){
+      commit("setErrors", {}, { root: true });
+      return axios
+        .post(process.env.VUE_APP_API_URL + "destroy", data)
+        .then(() => {
+        commit("setUserData", null);
+        localStorage.removeItem("authToken");
+      });
     }
   }
 };

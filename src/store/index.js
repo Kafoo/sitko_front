@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    errors: []
+    errors: [],
+    windowWidth: window.innerWidth,
   },
 
   getters: {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    setWindowWidth(state) {
+      state.windowWidth = window.innerWidth;
+    },
     setErrors(state, errors) {
       state.errors = errors;
     }
