@@ -81,7 +81,7 @@ export default {
         required
       }
     }
-  },,
+  },
   methods: {
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
@@ -93,7 +93,7 @@ export default {
       }
     },
     clearForm() {
-      this.$v.$reset()
+      this.$v.$reset();
       this.form.email = null;
       this.form.password = null;
     },
@@ -119,12 +119,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-form{
+form {
   justify-content: center;
 }
 
-.md-card{
+.md-card {
   padding: 0 30px;
 }
 

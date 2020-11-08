@@ -32,8 +32,8 @@ const routes = [
     beforeEnter: guest,
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Auth/Login.vue"),
-    meta:{
-      title: 'Sitko - Login'
+    meta: {
+      title: "Sitko - Login"
     }
   },
   {
@@ -42,8 +42,8 @@ const routes = [
     beforeEnter: guest,
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/Auth/Register.vue"),
-    meta:{
-      title: 'Sitko - Register'
+    meta: {
+      title: "Sitko - Register"
     }
   },
   {
@@ -61,8 +61,8 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Account.vue"),
-    meta:{
-      title: 'Sitko - Account'
+    meta: {
+      title: "Sitko - Account"
     }
   }
 ];

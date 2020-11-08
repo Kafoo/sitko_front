@@ -7,9 +7,9 @@
           :key="item.title"
           :to="item.path"
           @click="item.click"
-          v-show="item.vshow">
-          <v-list-item-action>
-          </v-list-item-action>
+          v-show="item.vshow"
+        >
+          <v-list-item-action> </v-list-item-action>
           <v-list-item-content>{{ item.title }}</v-list-item-content>
         </v-list-item>
       </v-list>
@@ -17,20 +17,19 @@
 
     <v-app-bar app>
       <span class="hidden-sm-and-up">
-        <v-app-bar-nav-icon @click="drawer = !drawer">
-        </v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
       </span>
       <v-toolbar-title>
-      <v-app-bar-nav-icon class="hidden-xs-only">        
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="./assets/logo.png"
-          transition="scale-transition"
-          width="55"
-        />
-      </v-app-bar-nav-icon>
+        <v-app-bar-nav-icon class="hidden-xs-only">
+          <v-img
+            alt="Vuetify Logo"
+            class="shrink mr-2"
+            contain
+            src="./assets/logo.png"
+            transition="scale-transition"
+            width="55"
+          />
+        </v-app-bar-nav-icon>
         <router-link to="/" tag="span" style="cursor: pointer">
           {{ appTitle }}
         </router-link>
@@ -43,14 +42,23 @@
           :key="item.title"
           :to="item.path"
           @click="item.click"
-          v-show="item.vshow">
+          v-show="item.vshow"
+        >
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
     </v-app-bar>
-    
+
     <v-main>
-      <router-view></router-view>
+      <div v-if="loading" class="mt-5 d-flex justify-center">
+        <v-skeleton-loader
+          class="pa-8 mt-2 elevation-5"
+          max-width="700px"
+          width="80%"
+          type="card"
+        ></v-skeleton-loader>
+      </div>
+      <router-view v-else></router-view>
     </v-main>
   </v-app>
 </template>
@@ -58,34 +66,58 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
-  data(){
+  data() {
     return {
-      appTitle: 'Sitko',
+      appTitle: "Sitko",
       drawer: false,
       menuItems: [
-          { title: 'Home', path: '/', icon: '', click:()=>{}, vshow:true},
-          { title: 'Account', path: '/account', icon: '', click:()=>{}, vshow:this.user},
-          { title: 'Login', path: '/login', icon: '', click:()=>{}, vshow:!this.user},
-          { title: 'Register', path: '/register', icon: '', click:()=>{}, vshow:!this.user},
-          { title: 'Logout', path: '', icon: '', click:this.logout, vshow:this.user}  
-     ]
-    }
+        { title: "Home", path: "/", icon: "", click: () => {}, vshow: true },
+        {
+          title: "Account",
+          path: "/account",
+          icon: "",
+          click: () => {},
+          vshow: this.user
+        },
+        {
+          title: "Login",
+          path: "/login",
+          icon: "",
+          click: () => {},
+          vshow: !this.user
+        },
+        {
+          title: "Register",
+          path: "/register",
+          icon: "",
+          click: () => {},
+          vshow: !this.user
+        },
+        {
+          title: "Logout",
+          path: "",
+          icon: "",
+          click: this.logout,
+          vshow: this.user
+        }
+      ]
+    };
   },
   computed: {
-    ...mapGetters("auth", ["user"])
+    ...mapGetters("auth", ["user", "loading"])
   },
   watch: {
     //Watching if user for showing nav items
-    user:{
-      handler(newVal){
-        this.menuItems.find(x => x.title === "Account").vshow = newVal
-        this.menuItems.find(x => x.title === "Login").vshow = !newVal
-        this.menuItems.find(x => x.title === "Register").vshow = !newVal
-        this.menuItems.find(x => x.title === "Logout").vshow = newVal
+    user: {
+      handler(newVal) {
+        this.menuItems.find(x => x.title === "Account").vshow = newVal;
+        this.menuItems.find(x => x.title === "Login").vshow = !newVal;
+        this.menuItems.find(x => x.title === "Register").vshow = !newVal;
+        this.menuItems.find(x => x.title === "Logout").vshow = newVal;
       }
     },
-    '$route' (to) {
-      document.title = to.meta.title || 'Sitko'
+    $route(to) {
+      document.title = to.meta.title || "Sitko";
     }
   },
   mounted() {
@@ -97,7 +129,7 @@ export default {
     ...mapActions("auth", ["sendLogoutRequest", "getUserData"]),
     logout() {
       this.sendLogoutRequest();
-      this.$router.push("/").catch(()=>{});;
+      this.$router.push("/").catch(() => {});
     }
   }
 };

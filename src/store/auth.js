@@ -5,25 +5,34 @@ export default {
 
   state: {
     userData: null,
-    plop: "plop"
+    loading: false
   },
 
   getters: {
-    user: state => state.userData
+    user: state => state.userData,
+    loading: state => state.loading
   },
 
   mutations: {
     setUserData(state, user) {
       state.userData = user;
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    removeLoading(state) {
+      state.loading = false;
     }
   },
 
   actions: {
     getUserData({ commit }) {
+      commit("setLoading");
       axios
         .get(process.env.VUE_APP_API_URL + "user")
         .then(response => {
           commit("setUserData", response.data);
+          commit("removeLoading");
         })
         .catch(() => {
           localStorage.removeItem("authToken");
@@ -63,14 +72,14 @@ export default {
           dispatch("getUserData");
         });
     },
-    sendDeleteUser({ commit }, data){
+    sendDeleteUser({ commit }, data) {
       commit("setErrors", {}, { root: true });
       return axios
         .post(process.env.VUE_APP_API_URL + "destroy", data)
         .then(() => {
-        commit("setUserData", null);
-        localStorage.removeItem("authToken");
-      });
+          commit("setUserData", null);
+          localStorage.removeItem("authToken");
+        });
     }
   }
 };

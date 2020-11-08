@@ -2,7 +2,10 @@
   <div class="login d-flex justify-center">
     <v-card max-width="700px" width="80%" class="elevation-6 ma-8">
       <div class="card-body">
-        <form>
+        <form @submit.prevent="login">
+          <div class="form-group text-md-center">
+            <span v-if="verification" class="h2">Confirmation de l'email</span>
+          </div>
           <div class="form-group">
             <label for="email">Email address</label>
             <input
@@ -12,6 +15,7 @@
               id="email"
               v-model="details.email"
               placeholder="Enter email"
+              :disabled="loading"
             />
             <div class="invalid-feedback" v-if="errors.email">
               {{ errors.email[0] }}
@@ -26,16 +30,25 @@
               id="password"
               v-model="details.password"
               placeholder="Password"
+              :disabled="loading"
             />
             <div class="invalid-feedback" v-if="errors.password">
               {{ errors.password[0] }}
             </div>
           </div>
           <v-card-actions class="d-flex justify-center">
-            <v-btn type="button" @click="login">
+            <v-btn type="submit" :disabled="loading">
               Login
             </v-btn>
           </v-card-actions>
+          <v-progress-linear
+            v-if="loading"
+            color="green darken-4 accent-4"
+            indeterminate
+            rounded
+            height="6"
+            class="progress"
+          ></v-progress-linear>
         </form>
       </div>
     </v-card>
@@ -51,7 +64,8 @@ export default {
       details: {
         email: null,
         password: null
-      }
+      },
+      loading: false
     };
   },
   props: {
@@ -66,14 +80,28 @@ export default {
   methods: {
     ...mapActions("auth", ["sendLoginRequest"]),
     login: function() {
-      this.sendLoginRequest(this.details).then(() => {
-        if (this.verification) {
-          this.$emit("verify");
-        } else {
-          this.$router.push({ name: "Home" }).catch(() => {});
-        }
-      });
+      this.loading = true;
+      this.sendLoginRequest(this.details)
+        .then(() => {
+          if (this.verification) {
+            this.$emit("verify");
+          } else {
+            this.$router.push({ name: "Home" }).catch(() => {});
+          }
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     }
   }
 };
 </script>
+
+<style>
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+</style>

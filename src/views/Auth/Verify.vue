@@ -4,7 +4,6 @@
       {{ error }}
     </div>
     <div v-else>
-      <h1>Vérification de l'email...</h1>
       <login v-if="!user" verification="email" v-on:verify="verify" />
     </div>
   </div>
@@ -24,7 +23,11 @@ export default {
       error: null
     };
   },
-  mounted() {},
+  mounted() {
+    if (this.user) {
+      this.verify();
+    }
+  },
   computed: {
     ...mapGetters("auth", ["user"]),
     getUser() {

@@ -2,7 +2,7 @@
   <div class="login d-flex justify-center">
     <v-card max-width="700px" width="80%" class="elevation-6 ma-8">
       <div class="card-body">
-        <form>
+        <form @submit.prevent="register">
           <div class="form-group">
             <label for="email">Name</label>
             <input
@@ -12,6 +12,7 @@
               id="name"
               v-model="details.name"
               placeholder="Enter name"
+              :disabled="loading"
             />
             <div class="invalid-feedback" v-if="errors.name">
               {{ errors.name[0] }}
@@ -26,6 +27,7 @@
               id="email"
               v-model="details.email"
               placeholder="Enter email"
+              :disabled="loading"
             />
             <div class="invalid-feedback" v-if="errors.email">
               {{ errors.email[0] }}
@@ -40,6 +42,7 @@
               id="password"
               v-model="details.password"
               placeholder="Password"
+              :disabled="loading"
             />
             <div class="invalid-feedback" v-if="errors.password">
               {{ errors.password[0] }}
@@ -53,13 +56,22 @@
               id="password_confirmation"
               v-model="details.password_confirmation"
               placeholder="Confirm password"
+              :disabled="loading"
             />
           </div>
           <v-card-actions class="d-flex justify-center">
-            <v-btn type="button" @click="register">
+            <v-btn type="submit" :disabled="loading">
               Register
             </v-btn>
           </v-card-actions>
+          <v-progress-linear
+            v-if="loading"
+            color="green darken-4 accent-4"
+            indeterminate
+            rounded
+            height="6"
+            class="progress"
+          ></v-progress-linear>
         </form>
       </div>
     </v-card>
@@ -77,7 +89,8 @@ export default {
         email: null,
         password: null,
         password_confirmation: null
-      }
+      },
+      loading: false
     };
   },
   computed: {
@@ -89,10 +102,24 @@ export default {
   methods: {
     ...mapActions("auth", ["sendRegisterRequest"]),
     register: function() {
-      this.sendRegisterRequest(this.details).then(() => {
-        this.$router.push({ name: "Home" }).catch(() => {});
-      });
+      this.loading = true;
+      this.sendRegisterRequest(this.details)
+        .then(() => {
+          this.$router.push({ name: "Home" }).catch(() => {});
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     }
   }
 };
 </script>
+
+<style>
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+</style>

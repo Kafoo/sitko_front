@@ -7,11 +7,16 @@
       {{ error }}
     </div>
     <v-card max-width="700px" width="80%" class="pa-8 mt-2 elevation-5">
-      <h3 v-if="!user" class="text-center">Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où rien ne se passe encore.</h3>
+      <h3 v-if="!user" class="text-center">
+        Salut, connecte-toi ou créé un compte pour profiter de ce site
+        merveilleux où rien ne se passe encore.
+      </h3>
       <span v-else-if="!user.email_verified_at" class="text-center">
         <h2>Coucou {{ user.name }} !</h2>
         <h4>
-          Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception. Tu peux aussi demander un nouveau mail de confirmation en cliquant
+          Ton compte a bien été enregistré, maintenant, tu peux confirmer ton
+          mail via le lien que tu as reçu dans ta boîte de réception. Tu peux
+          aussi demander un nouveau mail de confirmation en cliquant
           <a href="#" @click="verifyResend">ici</a>.
         </h4>
       </span>

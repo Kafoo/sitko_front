@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     errors: [],
-    windowWidth: window.innerWidth,
+    windowWidth: window.innerWidth
   },
 
   getters: {
