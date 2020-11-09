@@ -51,12 +51,13 @@
 
     <v-main>
       <div v-if="loading" class="mt-5 d-flex justify-center">
-        <v-skeleton-loader
-          class="pa-8 mt-2 elevation-5"
-          max-width="700px"
-          width="80%"
-          type="card"
-        ></v-skeleton-loader>
+        <v-progress-circular
+        indeterminate
+        color="green lighten-2"
+        class="mt-16"
+        size="100"
+        width="10"
+        ></v-progress-circular>
       </div>
       <router-view v-else></router-view>
     </v-main>

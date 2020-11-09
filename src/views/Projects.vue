@@ -66,12 +66,11 @@
       <h4 v-if="!generalLoading && !projects.length"
       class="text-center">- Il n'y a pas encore de projet -</h4>
 
-      <div v-if="generalLoading" class="d-flex align-content-space-around flex-wrap">
+      <div v-if="generalLoading" class="d-flex justify-space-around flex-wrap">
         <v-skeleton-loader
           v-for="item in [1,2,3,4]"
           v-bind:key="item"
-          class="pa-5 ma-1 elevation-3"
-          max-width="700px"
+          class="pa-5 ma-1 elevation-3 d-flex flex-grow-1"
           width="300"
           height="250"
           type="article, actions"
@@ -79,12 +78,11 @@
       </div>
 
       <div v-else>
-        <transition-group class="d-flex align-content-space-around flex-wrap" name="list-complete" tag="p">
+        <transition-group class="d-flex justify-space-around flex-wrap" name="list-complete" tag="p">
           <v-card
           v-for="(project, index)  in projects" :key="project.id"
           class="project d-flex flex-column flex-grow-1 ma-1 elevation-3 list-complete-item"
           width="300"
-          max-width="300"
           height="200">
             <v-card-title> 
               {{project.title}}
@@ -172,6 +170,7 @@ export default {
       .then(response => {
         this.createLoading = false
         this.projects.push(response.data.project)
+        this.newProject = {}
       })
       .catch(() => {
         console.log('error')
