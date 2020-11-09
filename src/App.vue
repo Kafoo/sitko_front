@@ -80,6 +80,13 @@ export default {
           vshow: this.user
         },
         {
+          title: "Projects",
+          path: "/projects",
+          icon: "",
+          click: () => {},
+          vshow: this.user
+        },
+        {
           title: "Login",
           path: "/login",
           icon: "",
@@ -111,6 +118,7 @@ export default {
     user: {
       handler(newVal) {
         this.menuItems.find(x => x.title === "Account").vshow = newVal;
+        this.menuItems.find(x => x.title === "Projects").vshow = newVal;
         this.menuItems.find(x => x.title === "Login").vshow = !newVal;
         this.menuItems.find(x => x.title === "Register").vshow = !newVal;
         this.menuItems.find(x => x.title === "Logout").vshow = newVal;

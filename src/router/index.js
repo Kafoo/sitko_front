@@ -12,13 +12,13 @@ const guest = (to, from, next) => {
   }
 };
 
-/*const auth = (to, from, next) => {
+const auth = (to, from, next) => {
   if (localStorage.getItem("authToken")) {
     return next();
   } else {
     return next("/login");
   }
-};*/
+};
 
 const routes = [
   {
@@ -34,6 +34,16 @@ const routes = [
       import(/* webpackChunkName: "login" */ "../views/Auth/Login.vue"),
     meta: {
       title: "Sitko - Login"
+    }
+  },
+  {
+    path: "/projects",
+    name: "Projects",
+    beforeEnter: auth,
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Projects.vue"),
+    meta: {
+      title: "Sitko - Projets"
     }
   },
   {
