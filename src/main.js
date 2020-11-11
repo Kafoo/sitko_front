@@ -5,6 +5,10 @@ import store from "./store";
 import axios from "axios";
 import vuetify from "./plugins/vuetify";
 Vue.use(vuetify);
+/*import VueAnalytics from 'vue-analytics'
+Vue.use(VueAnalytics, {
+  id: 'G-F1KDKS0Y4Y'
+})*/
 
 Vue.config.productionTip = false;
 

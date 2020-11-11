@@ -41,10 +41,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["user", "plop"])
+    ...mapGetters("auth", ["user"])
   },
   methods: {
-    ...mapActions("auth", ["sendVerifyResendRequest", "changePlop"]),
+    ...mapActions("auth", ["sendVerifyResendRequest"]),
     verifyResend() {
       this.success = this.error = null;
       this.sendVerifyResendRequest()

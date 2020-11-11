@@ -6,12 +6,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    generalError: "",
     errors: [],
     windowWidth: window.innerWidth
   },
 
   getters: {
-    errors: state => state.errors
+    errors: state => state.errors,
+    generalError: state => state.generalError
   },
 
   mutations: {
@@ -20,6 +22,9 @@ export default new Vuex.Store({
     },
     setErrors(state, errors) {
       state.errors = errors;
+    },
+    setGeneralError(state, generalError) {
+      state.generalError = generalError;
     }
   },
 

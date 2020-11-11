@@ -1,62 +1,22 @@
 <template>
-  <v-app>
-    <v-navigation-drawer disable-resize-watcher v-model="drawer" app>
-      <v-list>
-        <v-list-item
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.path"
-          @click="item.click"
-          v-show="item.vshow"
-        >
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>{{ item.title }}</v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+  <v-app class="app">
 
-    <v-app-bar app>
-      <span class="hidden-sm-and-up">
-        <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
-      </span>
-      <v-toolbar-title>
-        <v-app-bar-nav-icon class="hidden-xs-only">
-          <v-img
-            alt="Vuetify Logo"
-            class="shrink mr-2"
-            contain
-            src="./assets/logo.png"
-            transition="scale-transition"
-            width="55"
-          />
-        </v-app-bar-nav-icon>
-        <router-link to="/" tag="span" style="cursor: pointer">
-          {{ appTitle }}
-        </router-link>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-xs-only">
-        <v-btn
-          text
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.path"
-          @click="item.click"
-          v-show="item.vshow"
-        >
-          {{ item.title }}
-        </v-btn>
-      </v-toolbar-items>
-    </v-app-bar>
+    <v-snackbar 
+    v-model="generalError"
+    color="red">
+      {{ generalError }}
+    </v-snackbar>
+
+    <navigation/>
 
     <v-main>
       <div v-if="loading" class="mt-5 d-flex justify-center">
         <v-progress-circular
-        indeterminate
-        color="green lighten-2"
-        class="mt-16"
-        size="100"
-        width="10"
+          indeterminate
+          color="green lighten-2"
+          class="mt-16"
+          size="100"
+          width="10"
         ></v-progress-circular>
       </div>
       <router-view v-else></router-view>
@@ -66,80 +26,45 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import Navigation from '@/components/app/Navigation.vue'
+
 export default {
-  data() {
-    return {
-      appTitle: "Sitko",
-      drawer: false,
-      menuItems: [
-        { title: "Home", path: "/", icon: "", click: () => {}, vshow: true },
-        {
-          title: "Account",
-          path: "/account",
-          icon: "",
-          click: () => {},
-          vshow: this.user
-        },
-        {
-          title: "Projects",
-          path: "/projects",
-          icon: "",
-          click: () => {},
-          vshow: this.user
-        },
-        {
-          title: "Login",
-          path: "/login",
-          icon: "",
-          click: () => {},
-          vshow: !this.user
-        },
-        {
-          title: "Register",
-          path: "/register",
-          icon: "",
-          click: () => {},
-          vshow: !this.user
-        },
-        {
-          title: "Logout",
-          path: "",
-          icon: "",
-          click: this.logout,
-          vshow: this.user
-        }
-      ]
-    };
+  components:{
+    Navigation
   },
   computed: {
-    ...mapGetters("auth", ["user", "loading"])
+    ...mapGetters("auth", ["loading"]),
+    ...mapGetters(["generalError"]),
   },
-  watch: {
-    //Watching if user for showing nav items
-    user: {
-      handler(newVal) {
-        this.menuItems.find(x => x.title === "Account").vshow = newVal;
-        this.menuItems.find(x => x.title === "Projects").vshow = newVal;
-        this.menuItems.find(x => x.title === "Login").vshow = !newVal;
-        this.menuItems.find(x => x.title === "Register").vshow = !newVal;
-        this.menuItems.find(x => x.title === "Logout").vshow = newVal;
-      }
-    },
-    $route(to) {
-      document.title = to.meta.title || "Sitko";
-    }
+  methods: {
+    ...mapActions("auth", ["getUserData"])
   },
   mounted() {
     if (localStorage.getItem("authToken")) {
       this.getUserData();
     }
-  },
-  methods: {
-    ...mapActions("auth", ["sendLogoutRequest", "getUserData"]),
-    logout() {
-      this.sendLogoutRequest();
-      this.$router.push("/").catch(() => {});
-    }
   }
 };
 </script>
+
+<style>
+
+.alert {
+  position: fixed;
+  margin: auto;
+  top: 83px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  max-width: 90%;
+  text-align: center;
+  opacity: 0;
+  z-index: 1000;
+}
+
+.alert.visible {
+  opacity: 1;
+  transition: all 0.5s;
+}
+
+</style>
