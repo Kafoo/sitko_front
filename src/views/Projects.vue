@@ -1,80 +1,78 @@
 <template>
-  <div class="home mt-5 d-flex justify-center">
-    <v-card max-width="1000px" width="90%" class="pa-8 mt-2 elevation-3">
-      <div class="text-center">
-        <v-btn
-          large
-          @click="creating = true"
-          class="center mb-8 green lighten-1"
-          justify="center"
-          align="center"
-        >
-          Créer
-        </v-btn>
-      </div>
+  <v-card class=" ma-xs-0 ma-sm-5 projects pa-8 elevation-3">
+    <div class="text-center">
+      <v-btn
+        large
+        @click="creating = true"
+        class="center mb-8 green lighten-1"
+        justify="center"
+        align="center"
+      >
+        Créer
+      </v-btn>
+    </div>
 
-        <v-select
-          :items="types"
-          label="Type"
-          outlined
-          v-model="activeType"
-        ></v-select>
+      <v-select
+        :items="types"
+        label="Type"
+        outlined
+        v-model="activeType"
+      ></v-select>
 
 
-      <h4 v-if="!loading && !projects.length" class="text-center">
-        - Il n'y a pas encore de projet -
-      </h4>
+    <h4 v-if="!loading && !projects.length" class="text-center">
+      - Il n'y a pas encore de projet -
+    </h4>
 
-      <h4 v-else-if="!loading && !activeProjects.length" class="text-center">
-        - Il n'y a pas encore de projet de ce type -
-      </h4>
+    <h4 v-else-if="!loading && !activeProjects.length" class="text-center">
+      - Il n'y a pas encore de projet de ce type -
+    </h4>
 
-      <div v-if="loading" class="d-flex flex-wrap">
-        <v-skeleton-loader
-          v-for="item in [1, 2, 3, 4]"
-          v-bind:key="item"
-          class="boilerplate pa-5 ma-1 elevation-3"
-          width="200"
-          height="180"
-          type="article, actions"
-        ></v-skeleton-loader>
-      </div>
+    <div v-if="loading" class="d-flex flex-wrap">
+      <v-skeleton-loader
+        v-for="item in [1, 2, 3, 4]"
+        v-bind:key="item"
+        class="boilerplate pa-5 ma-1 elevation-3"
+        width="200"
+        height="180"
+        type="article, actions"
+      ></v-skeleton-loader>
+    </div>
 
-      <div v-else>
-        <transition-group
-          class="projects d-flex flex-wrap"
-          name="list-complete"
-          tag="p"
-        >
-          <div v-for="(project, index) in activeProjects"
-          :key="project.id"
-          class="list-complete-item">
-            <CardProject
-            :project="project"
-            :index="index"
-            @openEdit="openEdit"
-            @deleteProject="deleteProject"/>
-          </div>
+    <div v-else>
+      <transition-group
+        class="projects d-flex flex-wrap"
+        name="list-complete"
+        tag="p"
+      >
+        <div v-for="(project, index) in activeProjects"
+        :key="project.id"
+        class="list-complete-item">
+          <CardProject
+          :project="project"
+          :index="index"
+          @openEdit="openEdit"
+          @deleteProject="deleteProject"/>
+        </div>
 
-        </transition-group>
+      </transition-group>
 
-        <v-dialog v-model="creating" width="500">
-          <CreateProject
-            @commitCreation="commitCreation"
-            @closeCreation="closeCreation"
-          />
-        </v-dialog>
+      <v-dialog v-model="creating" width="500">
+        <CreateProject
+          @commitCreation="commitCreation"
+          @closeCreation="closeCreation"
+        />
+      </v-dialog>
 
-        <v-dialog v-model="editing" width="500">
-          <EditProject
-            :propProject="editionProject"
-            @commitEdit="commitEdit"
-            @closeEdit="closeEdit"
-          />
-        </v-dialog>
-      </div>
-    </v-card>
-  </div>
+      <v-dialog v-model="editing" width="500">
+        <EditProject
+          :propProject="editionProject"
+          @commitEdit="commitEdit"
+          @closeEdit="closeEdit"
+        />
+      </v-dialog>
+    </div>
+  </v-card>
 </template>
 
 <script>
@@ -179,7 +177,7 @@ export default {
   }
   .list-complete-enter {
     opacity: 0;
-    transform: translateX(500px);
+    transform: translateX(-500px);
   }
   .list-complete-leave-to {
     opacity: 0;

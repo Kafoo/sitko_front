@@ -1,14 +1,16 @@
 <template>
-  <div class="home mt-5 d-flex justify-center">
-    <v-card max-width="700px" width="80%" class="pa-8 mt-2 elevation-5">
-      <h1>Mon Compte</h1>
-      <v-dialog v-model="dialog" width="500">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="red" dark v-bind="attrs" v-on="on">
-            Supprimer mon compte
-          </v-btn>
-        </template>
 
+    <v-card class="account d-flex flex-column align-center ma-xs-0 ma-sm-5 elevation-4 pa-5">
+      <h1>Mon Compte</h1>
+      <v-btn class="d-block my-4" color="grey" dark @click="logout">
+        Se déconnecter
+      </v-btn>
+
+      <v-btn class="d-block" color="red" dark @click="dialog = true">
+        Supprimer mon compte
+      </v-btn>
+
+      <v-dialog v-model="dialog" width="500">
         <v-card class="pt-7 pb-3">
           <v-card-text class="text-h6">
             Sûr de chez sûr ? Aucun moyen de revenir en arrière
@@ -41,7 +43,7 @@
         </v-card>
       </v-dialog>
     </v-card>
-  </div>
+
 </template>
 
 <script>
@@ -60,7 +62,7 @@ export default {
     ...mapGetters("auth", ["user"])
   },
   methods: {
-    ...mapActions("auth", ["sendDeleteUser"]),
+    ...mapActions("auth", ["sendDeleteUser", "sendLogoutRequest"]),
     deleteUser() {
       this.success = this.error = null;
       this.loading = true;
@@ -73,6 +75,9 @@ export default {
           this.error = "Error deleting user.";
           console.log(error.response);
         });
+    },
+    logout() {
+      this.sendLogoutRequest();
     }
   }
 };

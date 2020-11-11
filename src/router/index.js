@@ -37,6 +37,16 @@ const routes = [
     }
   },
   {
+    path: "/calendar",
+    name: "Calendar",
+    beforeEnter: auth,
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Calendar.vue"),
+    meta: {
+      title: "Sitko - Calendrier"
+    }
+  },
+  {
     path: "/projects",
     name: "Projects",
     beforeEnter: auth,

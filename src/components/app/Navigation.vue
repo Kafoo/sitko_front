@@ -7,7 +7,6 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path"
-          @click="item.click"
           v-show="item.vshow"
         >
           <v-list-item-action> </v-list-item-action>
@@ -43,7 +42,6 @@
           v-for="item in menuItems"
           :key="item.title"
           :to="item.path"
-          @click="item.click"
           v-show="item.vshow"
         >
           {{ item.title }}
@@ -62,41 +60,39 @@ export default {
       appTitle: "Sitko",
       drawer: false,
       menuItems: [
-        { title: "Home", path: "/", icon: "", click: () => {}, vshow: true },
+        { title: "Home",
+          path: "/",
+          icon: "",
+          vshow: true },
+        {
+          title: "Calendrier",
+          path: "/calendar",
+          icon: "",
+          vshow: this.user
+        },
         {
           title: "Projects",
           path: "/projects",
           icon: "",
-          click: () => {},
           vshow: this.user
         },
         {
-          title: "Account",
+          title: "Compte",
           path: "/account",
           icon: "",
-          click: () => {},
           vshow: this.user
         },
         {
           title: "Login",
           path: "/login",
           icon: "",
-          click: () => {},
           vshow: !this.user
         },
         {
           title: "Register",
           path: "/register",
           icon: "",
-          click: () => {},
           vshow: !this.user
-        },
-        {
-          title: "Logout",
-          path: "",
-          icon: "",
-          click: this.logout,
-          vshow: this.user
         }
       ]
     };
@@ -109,21 +105,15 @@ export default {
     //Watching if user for showing nav items
     user: {
       handler(newVal) {
-        this.menuItems.find(x => x.title === "Account").vshow = newVal;
+        this.menuItems.find(x => x.title === "Compte").vshow = newVal;
+        this.menuItems.find(x => x.title === "Calendrier").vshow = newVal;
         this.menuItems.find(x => x.title === "Projects").vshow = newVal;
         this.menuItems.find(x => x.title === "Login").vshow = !newVal;
         this.menuItems.find(x => x.title === "Register").vshow = !newVal;
-        this.menuItems.find(x => x.title === "Logout").vshow = newVal;
       }
     },
     $route(to) {
       document.title = to.meta.title || "Sitko";
-    }
-  },
-  methods: {
-    ...mapActions("auth", ["sendLogoutRequest"]),
-    logout() {
-      this.sendLogoutRequest();
     }
   }
 };
