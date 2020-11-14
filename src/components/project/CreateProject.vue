@@ -30,6 +30,16 @@
           v-model="newProject.description"
           :disabled="loading"
         ></v-textarea>
+        
+        <v-chip-group>
+          <v-chip v-for="event in newProject.events" :key="event.start">
+            {{event.chip}}
+          </v-chip>
+        </v-chip-group>
+
+        <v-card-actions class="d-flex justify-center">
+          <v-btn @click="pickingDate=true">Ajouter un événement dans le calendrier</v-btn>
+        </v-card-actions>
 
         <v-card-actions class="d-flex justify-center">
           <v-btn @click="cancel" :disabled="loading">
@@ -39,6 +49,7 @@
             Valider
           </v-btn>
         </v-card-actions>
+
         <v-progress-linear
           v-if="loading"
           color="green darken-4 accent-4"
@@ -49,12 +60,26 @@
         ></v-progress-linear>
       </v-form>
     </div>
+
+    <v-expand-transition>
+      <v-card
+        v-if="pickingDate"
+        class="transition-fast-in-fast-out v-card--reveal"
+        style="height: 100%;"
+      >
+        <ChooseDate 
+        @closeDatePicker="closeDatePicker"
+        @addEvent="addEvent"/>
+      </v-card>
+    </v-expand-transition>
+    
   </v-card>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapActions } from "vuex";
 import axios from "axios";
+import ChooseDate from '@/components/project/ChooseDate.vue';
 
 export default {
   name: "CreateProject",
@@ -62,45 +87,56 @@ export default {
     return {
       form: false,
       loading: false,
-      newProject: {},
+      pickingDate: false,
+      newProject: {
+        events: []
+      },
       types: ["commun", "idée", "perso"]
     };
   },
-  mounted() {
-    this.$store.commit("setErrors", {});
+  components:{
+    ChooseDate
   },
   props: {
     project: Object
   },
-  computed: {
-    ...mapGetters(["errors"])
-  },
   methods: {
-    ...mapMutations(["setGeneralError"]),
+    ...mapActions("project", ["sendCreateProject"]),
     cancel() {
-      this.newProject = {};
+      this.newProject = {events: []};
       this.$refs.form.reset();
       this.$emit("closeCreation");
     },
     createProject() {
       this.loading = true;
-      axios
-        .post(process.env.VUE_APP_API_URL + "project", this.newProject)
-        .then(response => {
+      this.sendCreateProject(this.newProject)
+        .then(() => {
           this.loading = false;
-          this.$emit("commitCreation", response.data.project);
-          this.newProject = {};
+          this.$emit("closeCreation");
+          this.newProject = {events: []};
           this.$refs.form.reset();
         })
         .catch(() => {
           this.loading = false;
-          this.setGeneralError(
-            "Oups, petite erreur dans la création du projet"
-          );
         });
+    },
+    closeDatePicker(){
+      this.pickingDate = false
+    },
+    addEvent(event){
+      this.newProject.events.push(event)
     }
   }
 };
 </script>
 
-<style></style>
+<style>
+  
+.v-card--reveal {
+  bottom: 0;
+  opacity: 1 !important;
+  position: absolute;
+  width: 100%;
+}
+
+</style>

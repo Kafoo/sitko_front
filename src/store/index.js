@@ -1,10 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import auth from "./auth";
+import project from "./project";
+import event from "./event";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  namespaced: true,
+
   state: {
     generalError: "",
     errors: [],
@@ -25,12 +29,15 @@ export default new Vuex.Store({
     },
     setGeneralError(state, generalError) {
       state.generalError = generalError;
+      setTimeout(state.generalError = "", 6000)
     }
   },
 
   actions: {},
 
   modules: {
-    auth
+    auth,
+    project,
+    event
   }
 });

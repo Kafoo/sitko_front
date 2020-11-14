@@ -4,7 +4,9 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 import vuetify from "./plugins/vuetify";
-Vue.use(vuetify);
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+Vue.use(vuetify)
+
 /*import VueAnalytics from 'vue-analytics'
 Vue.use(VueAnalytics, {
   id: 'G-F1KDKS0Y4Y'

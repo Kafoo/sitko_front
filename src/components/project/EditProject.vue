@@ -1,48 +1,60 @@
 <template>
   <v-card class="pt-7 pb-3">
-    <v-text-field
-      outlined
-      class="mx-4"
-      label="Titre"
-      v-model="project.title"
-    ></v-text-field>
-    <v-textarea
-      outlined
-      name="input-7-4"
-      class="mx-4"
-      label="Description"
-      v-model="project.description"
-    ></v-textarea>
+    <v-form @submit.prevent="sendEdit" ref="form" v-model="form">
+      <v-text-field
+        outlined
+        class="mx-4"
+        label="Titre"
+        v-model="project.title"
+        :rules="[v => !!v || 'Titre obligatoire']"
+      ></v-text-field>
+      <v-textarea
+        outlined
+        name="input-7-4"
+        class="mx-4"
+        label="Description"
+        v-model="project.description"
+        :rules="[v => !!v || 'Description obligatoire']"
+      ></v-textarea>
 
-    <v-divider></v-divider>
+      <v-chip-group>
+        <v-chip v-for="event in project.events" :key="event.start">
+          {{event.chip}}
+        </v-chip>
+      </v-chip-group>
 
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn text @click="closeEdit" :disabled="loading">
-        Annuler
-      </v-btn>
-      <v-btn text color="primary" @click="sendEdit" :disabled="loading">
-        Confirmer
-      </v-btn>
-    </v-card-actions>
-    <v-progress-linear
-      v-if="loading"
-      color="green darken-4 accent-4"
-      indeterminate
-      rounded
-      height="6"
-      class="progress"
-    ></v-progress-linear>
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn text @click="closeEdit" :disabled="loading">
+          Annuler
+        </v-btn>
+        <v-btn text color="primary" type="submit" :disabled="loading || !form">
+          Confirmer
+        </v-btn>
+      </v-card-actions>
+      <v-progress-linear
+        v-if="loading"
+        color="green darken-4 accent-4"
+        indeterminate
+        rounded
+        height="6"
+        class="progress"
+      ></v-progress-linear>
+    </v-form>
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "EditProject",
   data() {
     return {
+      form: false,
       loading: false,
       project: {}
     };
@@ -59,23 +71,19 @@ export default {
     }
   },
   methods: {
+    ...mapActions("project", ["sendEditProject"]),
     closeEdit() {
       this.$emit("closeEdit");
     },
     sendEdit() {
       this.loading = true;
-      axios
-        .put(
-          process.env.VUE_APP_API_URL + "project/" + this.project.id,
-          this.project
-        )
-        .then(response => {
-          this.$emit("commitEdit", this.project);
+      this.sendEditProject(this.project)
+        .then(() => {
           this.$emit("closeEdit");
           this.loading = false;
         })
         .catch(() => {
-          console.log("error");
+          this.loading = false;
         });
     }
   }

@@ -34,7 +34,17 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["loading"]),
-    ...mapGetters(["generalError"]),
+    ...mapGetters({
+            nameFromStore: 'generalError'
+        }),
+    generalError: {
+       get(){
+         return this.nameFromStore
+       },
+       set(newName){
+         return newName
+       } 
+    }
   },
   methods: {
     ...mapActions("auth", ["getUserData"])

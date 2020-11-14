@@ -8,7 +8,7 @@
         justify="center"
         align="center"
       >
-        Créer
+        Créer un projet
       </v-btn>
     </div>
 
@@ -20,28 +20,27 @@
       ></v-select>
 
 
-    <h4 v-if="!loading && !projects.length" class="text-center">
+    <h4 v-if="!loading_projects && !projects.length" class="text-center">
       - Il n'y a pas encore de projet -
     </h4>
 
-    <h4 v-else-if="!loading && !activeProjects.length" class="text-center">
+    <h4 v-else-if="!loading_projects && !activeProjects.length" class="text-center">
       - Il n'y a pas encore de projet de ce type -
     </h4>
 
-    <div v-if="loading" class="d-flex flex-wrap">
+    <div v-if="loading_projects" class="d-flex flex-column">
       <v-skeleton-loader
         v-for="item in [1, 2, 3, 4]"
         v-bind:key="item"
-        class="boilerplate pa-5 ma-1 elevation-3"
-        width="200"
-        height="180"
-        type="article, actions"
+        class="boilerplate ma-1 elevation-3"
+        height="60"
+        type="table-heading"
       ></v-skeleton-loader>
     </div>
 
     <div v-else>
       <transition-group
-        class="projects d-flex flex-wrap"
+        class="projects d-flex flex-column"
         name="list-complete"
         tag="p"
       >
@@ -54,12 +53,10 @@
           @openEdit="openEdit"
           @deleteProject="deleteProject"/>
         </div>
-
       </transition-group>
 
       <v-dialog v-model="creating" width="500">
         <CreateProject
-          @commitCreation="commitCreation"
           @closeCreation="closeCreation"
         />
       </v-dialog>
@@ -67,7 +64,6 @@
       <v-dialog v-model="editing" width="500">
         <EditProject
           :propProject="editionProject"
-          @commitEdit="commitEdit"
           @closeEdit="closeEdit"
         />
       </v-dialog>
@@ -91,20 +87,18 @@ export default {
   },
   data() {
     return {
-      loading: false,
       editing: false,
       creating: false,
-      projects: [],
       types: ["tous les projets", "idée", "commun", "perso"],
       activeType: "tous les projets",
       editionProject: {},
     };
   },
-  mounted() {
-    this.loading = true;
+  created() {
     this.getProjects();
   },
   computed: {
+    ...mapGetters("project", ["loading_projects", "projects"]),
     ...mapGetters(["errors"]),
     activeProjects(){
       if (this.activeType === "tous les projets") {
@@ -117,54 +111,17 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["setGeneralError"]),
+    ...mapActions("project", ["getProjects", "deleteProject"]),
     openEdit(index) {
       this.editionProject = this.projects[index];
       this.editing = true;
     },
-    commitEdit(project) {
-      let editedProjectId = project.id;
-      let oldProject = this.projects.find(x => x.id === editedProjectId);
-      let oldProjectIndex = this.projects.indexOf(oldProject);
-      this.projects.splice(oldProjectIndex, 1, project);
-    },
-    commitCreation(project) {
-      this.creating = false;
-      this.projects.push(project);
-    },
     closeEdit() {
       this.editing = false;
+      this.editionProject = {};
     },
     closeCreation() {
       this.creating = false;
-    },
-    deleteProject(id) {
-      //Deleting state
-      let project = this.projects.find(x => x.id === id);
-      let index = this.projects.indexOf(project);
-      this.projects.splice(index, 1);
-      //Delete call to API
-      axios
-        .delete(process.env.VUE_APP_API_URL + "project/" + id)
-        .then(response => {
-          console.log(response.data.success);
-        })
-        .catch(() => {
-          console.log(index);
-          this.projects.splice(index, 0, project);
-          this.setGeneralError(
-            "Oups, petite erreur dans la suppression du projet"
-          );
-        });
-    },
-    getProjects() {
-      axios
-        .get(process.env.VUE_APP_API_URL + "project")
-        .then(response => {
-          this.projects = response.data;
-          this.loading = false;
-        })
-        .catch(() => {});
     }
   }
 };
@@ -181,12 +138,10 @@ export default {
   }
   .list-complete-leave-to {
     opacity: 0;
-    transform: translateX(5000000px);
+    transform: translateX(500px);
   }
   .list-complete-leave-active {
     position: absolute;
   }
-
-
 
 </style>
