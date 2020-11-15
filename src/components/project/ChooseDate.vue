@@ -15,17 +15,17 @@
         ></v-switch>
     </div>
 
-      <v-date-picker v-show="singleDate" v-model="event.date" mode="datetime" is24hr />
-      <v-date-picker v-show="!singleDate" v-model="event.range" is-range mode="datetime" is24hr />
+    <v-date-picker v-show="singleDate" v-model="event.date" mode="datetime" is24hr />
+    <v-date-picker v-show="!singleDate" v-model="event.range" is-range mode="datetime" is24hr />
 
-      <v-card-actions class="mt-3">
-        <v-btn @click="$emit('closeDatePicker')">
-          Annuler
-        </v-btn>
-        <v-btn @click="confirm">
-          Valider
-        </v-btn>
-      </v-card-actions>
+    <v-card-actions class="mt-3">
+      <v-btn @click="$emit('closeDatePicker')">
+        Annuler
+      </v-btn>
+      <v-btn @click="confirm">
+        Valider
+      </v-btn>
+    </v-card-actions>
 
   </div>
 
@@ -90,7 +90,6 @@ export default {
         newEvent.start = this.formatDT(this.event.range.start)
         newEvent.end = this.formatDT(this.event.range.end)
       }
-      console.log(newEvent)
       this.$emit('addEvent', new Event(newEvent))
       this.$emit('closeDatePicker')
     }

@@ -1,74 +1,82 @@
 <template>
-  <v-card class=" ma-xs-0 ma-sm-5 projects pa-8 elevation-3">
-    <div class="text-center">
-      <v-btn
-        large
-        @click="creating = true"
-        class="center mb-8 green lighten-1"
-        justify="center"
-        align="center"
-      >
-        Créer un projet
-      </v-btn>
-    </div>
+  <div class="d-flex">
+    <v-card class=" ma-xs-0 ma-sm-5 projects pa-8 elevation-3 flex-grow-1 flex-shrink-10"
+    min-width="0">
+      <div class="text-center">
+        <v-btn
+          large
+          @click="creating = true"
+          class="center mb-8 green lighten-1"
+          justify="center"
+          align="center"
+        >
+          Créer un projet
+        </v-btn>
+      </div>
 
-      <v-select
-        :items="types"
-        label="Type"
-        outlined
-        v-model="activeType"
-      ></v-select>
+        <v-select
+          :items="types"
+          label="Type"
+          outlined
+          v-model="activeType"
+        ></v-select>
 
 
-    <h4 v-if="!loading_projects && !projects.length" class="text-center">
-      - Il n'y a pas encore de projet -
-    </h4>
+      <h4 v-if="!loading_projects && !projects.length" class="text-center">
+        - Il n'y a pas encore de projet -
+      </h4>
 
-    <h4 v-else-if="!loading_projects && !activeProjects.length" class="text-center">
-      - Il n'y a pas encore de projet de ce type -
-    </h4>
+      <h4 v-else-if="!loading_projects && !activeProjects.length" class="text-center">
+        - Il n'y a pas encore de projet de ce type -
+      </h4>
 
-    <div v-if="loading_projects" class="d-flex flex-column">
-      <v-skeleton-loader
-        v-for="item in [1, 2, 3, 4]"
-        v-bind:key="item"
-        class="boilerplate ma-1 elevation-3"
-        height="60"
-        type="table-heading"
-      ></v-skeleton-loader>
-    </div>
+      <div v-if="loading_projects" class="d-flex flex-column">
+        <v-skeleton-loader
+          v-for="item in [1, 2, 3, 4]"
+          v-bind:key="item"
+          class="boilerplate ma-1 elevation-3"
+          height="60"
+          type="table-heading"
+        ></v-skeleton-loader>
+      </div>
 
-    <div v-else>
-      <transition-group
-        class="projects d-flex flex-column"
-        name="list-complete"
-        tag="p"
-      >
-        <div v-for="(project, index) in activeProjects"
-        :key="project.id"
-        class="list-complete-item">
-          <CardProject
-          :project="project"
-          :index="index"
-          @openEdit="openEdit"
-          @deleteProject="deleteProject"/>
-        </div>
-      </transition-group>
+      <div v-else>
+        <transition-group
+          class="projects d-flex flex-column"
+          name="list-complete"
+          tag="p"
+        >
+          <div v-for="(project, index) in activeProjects"
+          :key="project.id"
+          class="list-complete-item">
+            <CardProject
+            :project="project"
+            :index="index"
+            @openEdit="openEdit"
+            @deleteProject="deleteProject"/>
+          </div>
+        </transition-group>
 
-      <v-dialog v-model="creating" width="500">
-        <CreateProject
-          @closeCreation="closeCreation"
-        />
-      </v-dialog>
+        <v-dialog v-model="creating" width="500">
+          <CreateProject
+            @closeCreation="closeCreation"
+          />
+        </v-dialog>
 
-      <v-dialog v-model="editing" width="500">
-        <EditProject
-          :propProject="editionProject"
-          @closeEdit="closeEdit"
-        />
-      </v-dialog>
-    </div>
-  </v-card>
+        <v-dialog v-model="editing" width="500">
+          <EditProject
+            :propProject="editionProject"
+            @closeEdit="closeEdit"
+          />
+        </v-dialog>
+      </div>
+    </v-card>
+    <v-card class="d-md-flex hidden-sm-and-down ma-xs-0 ma-sm-5 projects pa-8 elevation-3 flex-shrink-0 justify-center align-center"
+    width="350px"
+    max-height="600px">
+    <span style="font-style: italic">-- On verra --</span>
+    </v-card>
+  </div>
 </template>
 
 <script>

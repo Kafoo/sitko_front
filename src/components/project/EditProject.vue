@@ -1,73 +1,116 @@
 <template>
   <v-card class="pt-7 pb-3">
-    <v-form @submit.prevent="sendEdit" ref="form" v-model="form">
-      <v-text-field
-        outlined
-        class="mx-4"
-        label="Titre"
-        v-model="project.title"
-        :rules="[v => !!v || 'Titre obligatoire']"
-      ></v-text-field>
-      <v-textarea
-        outlined
-        name="input-7-4"
-        class="mx-4"
-        label="Description"
-        v-model="project.description"
-        :rules="[v => !!v || 'Description obligatoire']"
-      ></v-textarea>
+    <div class="card-body" v-if="!pickingDate">
+      <v-form @submit.prevent="sendEdit" ref="form" v-model="form">
+        <v-text-field
+          outlined
+          label="Titre"
+          v-model="editedProject.title"
+          :rules="[v => !!v || 'Titre obligatoire']"
+        ></v-text-field>
+        <v-select
+          label="Type"
+          type="type"
+          id="type"
+          :items="types"
+          :rules="[v => !!v || 'Type obligatoire']"
+          solo
+          max-width="200px"
+          v-model="editedProject.type"
+        ></v-select>
+        <v-textarea
+          outlined
+          name="input-7-4"
+          label="Description"
+          v-model="editedProject.description"
+          :rules="[v => !!v || 'Description obligatoire']"
+        ></v-textarea>
 
-      <v-chip-group>
-        <v-chip v-for="event in project.events" :key="event.start">
-          {{event.chip}}
-        </v-chip>
-      </v-chip-group>
+          <v-chip-group column>
+            <v-tooltip 
+            v-for="(event, index) in editedProject.events" 
+            :key="index" 
+            bottom>
+              <template v-slot:activator="{ on }">
+                <v-chip 
+                class="event-chip py-6 mt-0" 
+                v-on="on"
+                close
+                @click:close="removeEvent(index)">
+                  <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
+                  <v-icon class="px-2" v-else>date_range</v-icon>
+                </v-chip>
+              </template>
+              <span>{{event.chip}}</span>
+            </v-tooltip>
+          </v-chip-group>
 
-      <v-divider></v-divider>
+        <v-card-actions class="d-flex justify-center">
+          <v-spacer></v-spacer>
+          <v-btn
+          class="addEvent-btn"
+          @click="pickingDate=true">
+            Ajouter un événement
+          </v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex justify-center">
+          <v-spacer></v-spacer>
+          <v-btn @click="closeEdit" :disabled="loading">
+            Annuler
+          </v-btn>
+          <v-btn color="primary" type="submit" :disabled="loading || !form">
+            Confirmer
+          </v-btn>
+        </v-card-actions>
+        <v-progress-linear
+          v-if="loading"
+          color="green darken-4 accent-4"
+          indeterminate
+          rounded
+          height="6"
+          class="progress"
+        ></v-progress-linear>
+      </v-form>
+    </div>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn text @click="closeEdit" :disabled="loading">
-          Annuler
-        </v-btn>
-        <v-btn text color="primary" type="submit" :disabled="loading || !form">
-          Confirmer
-        </v-btn>
-      </v-card-actions>
-      <v-progress-linear
-        v-if="loading"
-        color="green darken-4 accent-4"
-        indeterminate
-        rounded
-        height="6"
-        class="progress"
-      ></v-progress-linear>
-    </v-form>
+    <ChooseDate 
+    class="choose-date"
+    v-if="pickingDate"
+    @closeDatePicker="closeDatePicker"
+    @addEvent="addEvent"/>
+
+
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
-
+import ChooseDate from '@/components/project/ChooseDate.vue';
 export default {
   name: "EditProject",
+  components:{
+    ChooseDate
+  },
   data() {
     return {
       form: false,
       loading: false,
-      project: {}
+      pickingDate: false,
+      editedProject: {},
+      types: ["commun", "idée", "perso"]
     };
   },
   mounted() {
-    this.project = { ...this.propProject };
+
+    this.editedProject = JSON.parse(JSON.stringify(this.propProject));
   },
   props: {
     propProject: Object
   },
   watch: {
     propProject(newValue) {
-      this.project = { ...newValue };
+      this.editedProject = JSON.parse(JSON.stringify(newValue));
     }
   },
   methods: {
@@ -77,7 +120,7 @@ export default {
     },
     sendEdit() {
       this.loading = true;
-      this.sendEditProject(this.project)
+      this.sendEditProject(this.editedProject)
         .then(() => {
           this.$emit("closeEdit");
           this.loading = false;
@@ -85,16 +128,40 @@ export default {
         .catch(() => {
           this.loading = false;
         });
+    },
+    closeDatePicker(){
+      this.pickingDate = false
+    },
+    addEvent(event){
+      this.editedProject.events.push(event)
+    },
+    removeEvent(index){
+      this.editedProject.events.splice(index, 1)
     }
   }
 };
 </script>
 
 <style>
-.progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+
+  .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+.choose-date, .card-body {
+  animation: fade-in 0.4s ease;
 }
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 </style>

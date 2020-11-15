@@ -1,6 +1,6 @@
 <template>
   <v-card class="pt-7 pb-3">
-    <div class="card-body">
+    <div class="card-body" v-if="!pickingDate">
       <v-form @submit.prevent="createProject" ref="form" v-model="form">
         <label for="title" class="h3 mb-5">Nouveau Projet</label>
         <v-text-field
@@ -31,14 +31,28 @@
           :disabled="loading"
         ></v-textarea>
         
-        <v-chip-group>
-          <v-chip v-for="event in newProject.events" :key="event.start">
-            {{event.chip}}
-          </v-chip>
+
+        <v-chip-group column>
+          <v-tooltip 
+          v-for="(event, index) in newProject.events" 
+          :key="index" 
+          bottom>
+            <template v-slot:activator="{ on }">
+              <v-chip 
+              class="event-chip py-6 mt-0" 
+              v-on="on"
+              close
+              @click:close="removeEvent(index)">
+                <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
+                <v-icon class="px-2" v-else>date_range</v-icon>
+              </v-chip>
+            </template>
+            <span>{{event.chip}}</span>
+          </v-tooltip>
         </v-chip-group>
 
         <v-card-actions class="d-flex justify-center">
-          <v-btn @click="pickingDate=true">Ajouter un événement dans le calendrier</v-btn>
+          <v-btn @click="pickingDate=true">Ajouter un événement</v-btn>
         </v-card-actions>
 
         <v-card-actions class="d-flex justify-center">
@@ -61,18 +75,12 @@
       </v-form>
     </div>
 
-    <v-expand-transition>
-      <v-card
-        v-if="pickingDate"
-        class="transition-fast-in-fast-out v-card--reveal"
-        style="height: 100%;"
-      >
-        <ChooseDate 
-        @closeDatePicker="closeDatePicker"
-        @addEvent="addEvent"/>
-      </v-card>
-    </v-expand-transition>
-    
+    <ChooseDate 
+    class="choose-date"
+    v-if="pickingDate"
+    @closeDatePicker="closeDatePicker"
+    @addEvent="addEvent"/>
+
   </v-card>
 </template>
 
@@ -125,6 +133,9 @@ export default {
     },
     addEvent(event){
       this.newProject.events.push(event)
+    },
+    removeEvent(index){
+      this.newProject.events.splice(index, 1)
     }
   }
 };

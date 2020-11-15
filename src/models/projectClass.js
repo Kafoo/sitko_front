@@ -9,6 +9,8 @@ export default class Project {
 
     this.events = []
 
+    this.color = this.getColor()
+
     if (rawData.events) {
 		    rawData.events.forEach((event)=>{
 		    	this.events.push(new Event(event))
@@ -21,4 +23,15 @@ export default class Project {
   get bigtitle () {
     return this.title.toUpperCase()
   }
+
+  getColor(){
+    if (this.type === 'commun') {
+      return 'red darken-3'
+    }else if(this.type === 'idée') {
+      return 'yellow darken-3'
+    }else if(this.type === 'perso') {
+      return 'blue darken-3'
+    }
+  }
+
 }
