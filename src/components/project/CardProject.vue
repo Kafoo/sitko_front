@@ -29,11 +29,11 @@
 				  <v-btn icon @click.stop="$emit('deleteProject', project.id)">
 				    <v-icon>delete</v-icon>
 				  </v-btn>
-<!-- 		      <v-btn
+ 		      <v-btn
 		        icon
 		      >
 		        <v-icon>{{ show ? 'expand_less' : 'expand_more' }}</v-icon>
-		      </v-btn> -->
+		      </v-btn>
 		    </v-card-actions>
 
 		  </div>
@@ -46,7 +46,7 @@
 			      <div class="d-flex">
 			      	
 							<v-chip 
-							class="type hidden-sm-and-up rounded-lg mt-1 mr-2" 
+							class="type hidden-sm-and-up rounded-lg my-1 mr-2" 
 							:class="project.color">
 							  {{ project.type }}
 							</v-chip>

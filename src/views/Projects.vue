@@ -73,7 +73,7 @@
     </v-card>
     <v-card class="d-md-flex hidden-sm-and-down ma-xs-0 ma-sm-5 projects pa-8 elevation-3 flex-shrink-0 justify-center align-center"
     width="350px"
-    max-height="600px">
+    height="600px">
     <span style="font-style: italic">-- On verra --</span>
     </v-card>
   </div>

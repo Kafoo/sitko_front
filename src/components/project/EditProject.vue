@@ -45,7 +45,7 @@
             </v-tooltip>
           </v-chip-group>
 
-        <v-card-actions class="d-flex justify-center">
+        <v-card-actions v-if="showEvents" class="d-flex justify-center">
           <v-spacer></v-spacer>
           <v-btn
           class="addEvent-btn"
@@ -53,6 +53,7 @@
             Ajouter un événement
           </v-btn>
         </v-card-actions>
+
         <v-card-actions class="d-flex justify-center">
           <v-spacer></v-spacer>
           <v-btn @click="closeEdit" :disabled="loading">
@@ -106,7 +107,8 @@ export default {
     this.editedProject = JSON.parse(JSON.stringify(this.propProject));
   },
   props: {
-    propProject: Object
+    propProject: Object,
+    showEvents: {type:Boolean, default:true}
   },
   watch: {
     propProject(newValue) {
@@ -120,6 +122,7 @@ export default {
     },
     sendEdit() {
       this.loading = true;
+      this.editedProject.projectOnly = !this.showEvents
       this.sendEditProject(this.editedProject)
         .then(() => {
           this.$emit("closeEdit");
