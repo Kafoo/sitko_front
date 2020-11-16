@@ -46,7 +46,7 @@
 			      <div class="d-flex">
 			      	
 							<v-chip 
-							class="type hidden-sm-and-up rounded-lg my-1 mr-2" 
+							class="type hidden-sm-and-up white--text rounded-lg my-1 mr-2" 
 							:class="project.color">
 							  {{ project.type }}
 							</v-chip>
