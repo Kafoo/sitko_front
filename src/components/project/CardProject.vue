@@ -26,7 +26,8 @@
 				  <v-btn icon @click.stop="$emit('openEdit', index)">
 				    <v-icon>create</v-icon>
 				  </v-btn>
-				  <v-btn icon @click.stop="$emit('deleteProject', project.id)">
+
+				  <v-btn icon @click.stop="deleting=true">
 				    <v-icon>delete</v-icon>
 				  </v-btn>
  		      <v-btn
@@ -69,6 +70,32 @@
 		    </div>
 		  </v-expand-transition>
 
+		  <!-- CONFIRM DELETION -->
+			<v-dialog v-model="deleting" width="500">
+        <v-card class="pt-7 pb-3">
+          <v-card-text class="text-h6">
+            Ce projet sera définitivement supprimé
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              text
+              @click="deleting = false"
+            >
+              Annuler
+            </v-btn>
+            <v-btn color="red" text @click="$emit('deleteProject', project.id)">
+              Supprimer
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+
 	  </v-card>
 	</v-hover>
 
@@ -91,6 +118,7 @@ export default {
 	},
 	data(){
 		return{
+			deleting:false,
 			show:false,
 			color:'red'
 		}

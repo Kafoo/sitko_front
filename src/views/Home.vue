@@ -26,16 +26,34 @@
           Bienvenue dans ce merveilleux site où rien ne se passe.
         </h4>
       </span>
+
+
+
+    <v-file-input
+       v-model="file"
+       chips
+       accept="image/*"
+       label="Image"
+       @change="onFileChange"
+    />
+
+    <v-btn @click="sendImage" >Valider</v-btn>
+
+
+
     </v-card>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 export default {
   name: "Home",
   data() {
     return {
+      file: null, 
+      image: null,
       success: null,
       error: null
     };
@@ -56,6 +74,25 @@ export default {
           this.error = "Error sending verification link.";
           console.log(error.response);
         });
+    },
+    onFileChange() {
+        const reader = new FileReader()
+        reader.readAsDataURL(this.file)
+        reader.onload = e => {
+            this.image = e.target.result
+            console.log(this.image)
+        }
+    },
+    sendImage(){
+      var formData = new FormData()
+      formData.append('image', 'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+
+      axios
+        .post('https://api.imgbb.com/1/upload?expiration=600&key=7618071644bd033d9b2f5b22619c5391', formData)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(() => {});
     }
   }
 };
