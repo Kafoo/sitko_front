@@ -32,6 +32,15 @@
         ></v-textarea>
         
 
+        <v-file-input
+           v-model="newProject.file"
+           :rules="[v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB']"
+           accept="image/jpeg" 
+           label="Image"
+           @change="onFileChange"
+           prepend-icon="insert_photo"
+        />
+
         <v-chip-group column>
           <v-tooltip 
           v-for="(event, index) in newProject.events" 
@@ -136,6 +145,17 @@ export default {
     },
     removeEvent(index){
       this.newProject.events.splice(index, 1)
+    },
+    onFileChange() {
+      if (this.newProject.file) {
+        const reader = new FileReader()
+        reader.readAsDataURL(this.newProject.file)
+        reader.onload = e => {
+            this.newProject.image = e.target.result
+        }
+      }else{
+        this.newProject.image = undefined
+      }
     }
   }
 };

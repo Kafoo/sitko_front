@@ -1,6 +1,8 @@
 <template>
-
-    <v-card class="account d-flex flex-column align-center ma-xs-0 ma-sm-5 elevation-4 pa-5">
+  <div class="d-flex justify-center">
+    <v-card class="account d-flex flex-column align-center ma-5 elevation-4 pa-5"
+    width="80%"
+    max-width="800px">
       <h1>Mon Compte</h1>
       <v-btn class="d-block my-4" color="grey" dark @click="logout">
         Se déconnecter
@@ -43,7 +45,7 @@
         </v-card>
       </v-dialog>
     </v-card>
-
+  </div>
 </template>
 
 <script>

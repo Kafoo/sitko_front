@@ -15,14 +15,13 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app>
+    <v-app-bar>
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
       </span>
       <v-toolbar-title>
-        <v-app-bar-nav-icon class="hidden-xs-only">
+        <v-app-bar-nav-icon @click="$router.push('/').catch(()=>{})" class="hidden-xs-only">
           <v-img
-            alt="Vuetify Logo"
             class="shrink mr-2"
             contain
             src="@/assets/logo.png"
@@ -60,22 +59,20 @@ export default {
       appTitle: "Sitko",
       drawer: false,
       menuItems: [
-        { title: "Home",
+        { title: "Accueil",
           path: "/",
           icon: "",
           vshow: true },
         {
-          title: "Calendrier",
-          path: "/calendar",
+          title: "Explorer",
+          path: "/explore",
           icon: "",
-          vshow: this.user
-        },
+          vshow: true },
         {
-          title: "Projects",
-          path: "/projects",
+          title: "Mes lieux",
+          path: "/places",
           icon: "",
-          vshow: this.user
-        },
+          vshow: this.user },
         {
           title: "Compte",
           path: "/account",
@@ -106,8 +103,7 @@ export default {
     user: {
       handler(newVal) {
         this.menuItems.find(x => x.title === "Compte").vshow = newVal;
-        this.menuItems.find(x => x.title === "Calendrier").vshow = newVal;
-        this.menuItems.find(x => x.title === "Projects").vshow = newVal;
+        this.menuItems.find(x => x.title === "Mes lieux").vshow = newVal;
         this.menuItems.find(x => x.title === "Login").vshow = !newVal;
         this.menuItems.find(x => x.title === "Register").vshow = !newVal;
       }

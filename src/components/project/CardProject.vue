@@ -41,31 +41,54 @@
 
 		  <!-- EXPAND -->
 		  <v-expand-transition>
-		    <div v-show="show">
+		    <div v-show="show" class="expand">
 		      <v-divider class="my-0"></v-divider>
 		      <v-card-text class="pt-2">
-			      <div class="d-flex">
+
+
+			      <div class="d-flex flex-column align-start flex-sm-row flex-sm-align-start">
 			      	
-							<v-chip 
-							class="type hidden-sm-and-up white--text rounded-lg my-1 mr-2" 
-							:class="project.color">
-							  {{ project.type }}
-							</v-chip>
-			      	<v-chip-group column>
-						    <v-tooltip v-for="event in project.events" :key="event.id" bottom>
-						      <template v-slot:activator="{ on }">
-						        <v-chip class="event-chip pa-2 mt-0" v-on="on">
-						          <v-icon v-if="event.singleDate">today</v-icon>
-						          <v-icon v-else>date_range</v-icon>
-						        </v-chip>
-						      </template>
-						      <span>{{event.chip}}</span>
-						    </v-tooltip>
-			      	</v-chip-group>
+
+							<v-img
+							v-if="project.image"
+							class="image mr-3 mb-3"
+
+						  :src="project.image.medium"
+							></v-img>
+
+							<div>
+								
+					      <div class="d-flex flex-wrap">
+									<v-chip 
+									class="type hidden-sm-and-up white--text rounded-lg my-1 mr-2" 
+									:class="project.color">
+									  {{ project.type }}
+									</v-chip>
+
+					      	<v-chip-group column>
+								    <v-tooltip v-for="event in project.events" :key="event.id" bottom>
+								      <template v-slot:activator="{ on }">
+								        <v-chip class="event-chip pa-2 mt-0" v-on="on">
+								          <v-icon v-if="event.singleDate">today</v-icon>
+								          <v-icon v-else>date_range</v-icon>
+								        </v-chip>
+								      </template>
+								      <span>{{event.chip}}</span>
+								    </v-tooltip>
+					      	</v-chip-group>
+					      </div>
+
+							  <v-clamp autoresize :max-lines="10"
+							  class="description">
+							  </v-clamp>
+							    {{ project.description }}
+
+							</div>
+
+
 			      </div>
-					  <v-clamp autoresize :max-lines="10">
-					    {{ project.description }}
-					  </v-clamp>
+
+
 		      </v-card-text>
 		    </div>
 		  </v-expand-transition>
@@ -128,6 +151,19 @@ export default {
 </script>
 
 <style>
+
+	.image{
+		width: 40%;
+		max-width: 40%; 
+	}
+
+	@media(max-width: 600px){
+		.image{
+			width: 100%;
+			max-width: 100%; 
+		}
+
+	}
 
 	.type{
 		font-style: italic;

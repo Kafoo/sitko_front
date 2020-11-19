@@ -1,6 +1,6 @@
 <template>
   <div class="login d-flex justify-center">
-    <v-card max-width="700px" width="80%" class="elevation-6 ma-8">
+    <v-card max-width="700px" width="80%" class="elevation-6 ma-5">
       <div class="card-body">
         <form @submit.prevent="register">
           <div class="form-group">

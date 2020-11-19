@@ -1,6 +1,7 @@
 import Project from '@/models/projectClass'
 
 
+
 export default class Event {
   constructor (rawData = {}) {
     this.timed = rawData.timed
@@ -11,8 +12,8 @@ export default class Event {
     this.end = this.timeFormat(rawData.end, false)
     this.type = rawData.type
 
+      console.log(rawData);
     if (rawData.child) {
-
       var childFactory = {
           "Project": Project  
       }

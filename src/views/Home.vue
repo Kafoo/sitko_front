@@ -1,15 +1,17 @@
 <template>
-  <div class="home mt-5 d-flex justify-center">
+  <div class="home ma-5 d-flex justify-center">
     <div class="alert alert-success" role="alert" v-if="success">
       {{ success }}
     </div>
     <div class="alert alert-danger" role="alert" v-if="error">
       {{ error }}
     </div>
-    <v-card max-width="700px" width="80%" class="pa-8 mt-2 elevation-5">
+    <v-card class="pa-8 elevation-5"
+    width="80%"
+    max-width="800px">
       <h3 v-if="!user" class="text-center">
         Salut, connecte-toi ou créé un compte pour profiter de ce site
-        merveilleux où rien ne se passe encore.
+        merveilleux où il ne se passe pas grand chose.
       </h3>
       <span v-else-if="!user.email_verified_at" class="text-center">
         <h2>Coucou {{ user.name }} !</h2>
@@ -21,25 +23,11 @@
         </h4>
       </span>
       <span v-else class="text-center">
-        <h2>Coucou {{ user.name }} !</h2>
+        <h2>Salut {{ user.name }} !</h2>
         <h4>
-          Bienvenue dans ce merveilleux site où rien ne se passe.
+          Bienvenue dans ce merveilleux site où des choses commencent à se passer.
         </h4>
       </span>
-
-
-
-    <v-file-input
-       v-model="file"
-       chips
-       accept="image/*"
-       label="Image"
-       @change="onFileChange"
-    />
-
-    <v-btn @click="sendImage" >Valider</v-btn>
-
-
 
     </v-card>
   </div>
@@ -52,8 +40,6 @@ export default {
   name: "Home",
   data() {
     return {
-      file: null, 
-      image: null,
       success: null,
       error: null
     };
@@ -74,25 +60,6 @@ export default {
           this.error = "Error sending verification link.";
           console.log(error.response);
         });
-    },
-    onFileChange() {
-        const reader = new FileReader()
-        reader.readAsDataURL(this.file)
-        reader.onload = e => {
-            this.image = e.target.result
-            console.log(this.image)
-        }
-    },
-    sendImage(){
-      var formData = new FormData()
-      formData.append('image', 'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
-
-      axios
-        .post('https://api.imgbb.com/1/upload?expiration=600&key=7618071644bd033d9b2f5b22619c5391', formData)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(() => {});
     }
   }
 };

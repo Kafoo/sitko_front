@@ -26,6 +26,29 @@
           :rules="[v => !!v || 'Description obligatoire']"
         ></v-textarea>
 
+        <div v-if="editedProject.image && !editedProject.imageChanged" class="imgContainer">
+          <img :src="editedProject.image.thumb"/>
+          <v-btn
+            class="close"
+            color="secondary"
+            fab
+            x-small
+            dark
+            @click="removeImage"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </div>
+
+        <v-file-input v-else
+           v-model="editedProject.file"
+           :rules="[v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB']"
+           accept="image/jpeg" 
+           label="Image"
+           @change="onFileChange"
+           prepend-icon="insert_photo"
+        />
+
           <v-chip-group column>
             <v-tooltip 
             v-for="(event, index) in editedProject.events" 
@@ -89,10 +112,12 @@ import axios from "axios";
 import { mapActions } from "vuex";
 import ChooseDate from '@/components/project/ChooseDate.vue';
 export default {
+
   name: "EditProject",
   components:{
     ChooseDate
   },
+
   data() {
     return {
       form: false,
@@ -102,24 +127,30 @@ export default {
       types: ["commun", "idée", "perso"]
     };
   },
+
   mounted() {
 
     this.editedProject = JSON.parse(JSON.stringify(this.propProject));
   },
+
   props: {
     propProject: Object,
     showEvents: {type:Boolean, default:true}
   },
+
   watch: {
     propProject(newValue) {
       this.editedProject = JSON.parse(JSON.stringify(newValue));
     }
   },
+
   methods: {
     ...mapActions("project", ["sendEditProject"]),
+
     closeEdit() {
       this.$emit("closeEdit");
     },
+
     sendEdit() {
       this.loading = true;
       this.editedProject.projectOnly = !this.showEvents
@@ -132,14 +163,35 @@ export default {
           this.loading = false;
         });
     },
+
     closeDatePicker(){
       this.pickingDate = false
     },
+
     addEvent(event){
       this.editedProject.events.push(event)
     },
+
     removeEvent(index){
       this.editedProject.events.splice(index, 1)
+    },
+
+    onFileChange() {
+      this.editedProject.imageChanged = true
+      if (this.editedProject.file) {
+        const reader = new FileReader()
+        reader.readAsDataURL(this.editedProject.file)
+        reader.onload = e => {
+            this.editedProject.image = e.target.result
+        }
+      }else{
+        this.editedProject.image = null
+      }
+    },
+
+    removeImage(){
+      this.editedProject.imageChanged = true
+      this.editedProject.image = null
     }
   }
 };
@@ -154,17 +206,28 @@ export default {
     width: 100%;
   }
 
-.choose-date, .card-body {
-  animation: fade-in 0.4s ease;
-}
+  .choose-date, .card-body {
+    animation: fade-in 0.4s ease;
+  }
 
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+  @keyframes fade-in {
+      0% {
+          opacity: 0;
+      }
+      100% {
+          opacity: 1;
+      }
+  }
+
+  .imgContainer{
+    position: relative;
+    display: inline-block;
+  }
+
+  .close{
+    position: absolute;
+    right: 3px;
+    top: 3px;
+  }
 
 </style>

@@ -37,24 +37,75 @@ const routes = [
     }
   },
   {
-    path: "/calendar",
-    name: "Calendar",
-    beforeEnter: auth,
+    path: "/explore",
+    name: "Explore",
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Calendar.vue"),
+      import(/* webpackChunkName: "login" */ "../views/Explore.vue"),
     meta: {
-      title: "Sitko - Calendrier"
+      title: "Sitko - Explorer"
     }
   },
   {
-    path: "/projects",
-    name: "Projects",
+    path: "/places",
+    name: "Places",
     beforeEnter: auth,
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Projects.vue"),
+      import(/* webpackChunkName: "login" */ "../views/Places.vue"),
     meta: {
-      title: "Sitko - Projets"
+      title: "Sitko - Mes lieux"
     }
+  },
+  {
+    path: "/place/:id",
+    name: "Place",
+    beforeEnter: auth,
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/place/Place.vue"),
+    meta: {
+      title: "Sitko"
+    },
+    children: [
+      {
+        path: "overview",
+        name: "Overview",
+        beforeEnter: auth,
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../views/place/Overview.vue"),
+        meta: {
+          title: "Sitko - Les Vallées"
+        }
+      },
+      {
+        path: "calendar",
+        name: "Calendar",
+        beforeEnter: auth,
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../views/place/Calendar.vue"),
+        meta: {
+          title: "Sitko - Calendrier"
+        }
+      },
+      {
+        path: "projects",
+        name: "Projects",
+        beforeEnter: auth,
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../views/place/Projects.vue"),
+        meta: {
+          title: "Sitko - Projets"
+        }
+      },
+      {
+        path: "contact",
+        name: "Contact",
+        beforeEnter: auth,
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../views/place/Contact.vue"),
+        meta: {
+          title: "Sitko - Contact"
+        }
+      }
+    ]
   },
   {
     path: "/register",

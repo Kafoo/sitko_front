@@ -7,6 +7,14 @@ export default class Project {
     this.type = rawData.type
     this.description = rawData.description
 
+    if (rawData.image) {
+      this.image = {
+        full : rawData.image.full,
+        medium : rawData.image.medium,
+        thumb : rawData.image.thumb
+      }
+    }
+
     this.events = []
 
     this.color = this.getColor()

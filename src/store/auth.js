@@ -39,6 +39,7 @@ export default {
           localStorage.removeItem("authToken");
         });
     },
+    
     sendLoginRequest({ commit }, data) {
       commit("setErrors", {}, { root: true });
       return axios
@@ -48,6 +49,7 @@ export default {
           localStorage.setItem("authToken", response.data.token);
         });
     },
+
     sendRegisterRequest({ commit }, data) {
       commit("setErrors", {}, { root: true });
       return axios
@@ -57,6 +59,7 @@ export default {
           localStorage.setItem("authToken", response.data.token);
         });
     },
+
     sendLogoutRequest({ commit }) {
       commit("setLoading");
       router.push("/").catch(() => {});
@@ -66,9 +69,11 @@ export default {
         localStorage.removeItem("authToken");
       });
     },
+
     sendVerifyResendRequest() {
       return axios.get(process.env.VUE_APP_API_URL + "email/resend");
     },
+
     sendVerifyRequest({ dispatch }, hash) {
       return axios
         .get(process.env.VUE_APP_API_URL + "email/verify/" + hash)
@@ -76,6 +81,7 @@ export default {
           dispatch("getUserData");
         });
     },
+
     sendDeleteUser({ commit }, data) {
       commit("setErrors", {}, { root: true });
       return axios
