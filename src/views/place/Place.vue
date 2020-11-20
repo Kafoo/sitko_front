@@ -2,7 +2,7 @@
 
 
 
-  <div class="place d-flex">
+  <div class="place d-flex pb-12">
     <div class="hidden-sm-and-down">
       <sidebar :subNavItems="subNavItems"/>
     </div>
@@ -61,3 +61,8 @@ export default{
 
 </script>
 
+<style>
+  
+
+
+</style>

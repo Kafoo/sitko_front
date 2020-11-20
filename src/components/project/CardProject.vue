@@ -2,12 +2,13 @@
 
 	<v-hover v-slot="{ hover }">
 	  <v-card
+	  	:id="project.id"
 	    class="project ma-1"
       :elevation="hover ? 4 : 2"
       :class="{ 'on-hover': hover }">
 
 	  	<!-- HEAD -->
-		  <div  class="d-flex project-main" @click="show = !show">
+		  <div  class="d-flex project-main" @click="$emit('toogleExpand')">
 
 				<v-card-title
 				  class="d-inline-block py-3 text-truncate"
@@ -33,7 +34,7 @@
  		      <v-btn
 		        icon
 		      >
-		        <v-icon>{{ show ? 'expand_less' : 'expand_more' }}</v-icon>
+		        <v-icon>{{ expanded ? 'expand_less' : 'expand_more' }}</v-icon>
 		      </v-btn>
 		    </v-card-actions>
 
@@ -41,18 +42,16 @@
 
 		  <!-- EXPAND -->
 		  <v-expand-transition>
-		    <div v-show="show" class="expand">
+		    <div v-show="expanded" class="expand">
 		      <v-divider class="my-0"></v-divider>
 		      <v-card-text class="pt-2">
 
-
 			      <div class="d-flex flex-column align-start flex-sm-row flex-sm-align-start">
-			      	
 
 							<v-img
 							v-if="project.image"
 							class="image mr-3 mb-3"
-
+							:lazy-src="project.image.thumb"
 						  :src="project.image.medium"
 							></v-img>
 
@@ -137,12 +136,12 @@ export default {
 	},
 	props:{
 		project: Object,
-		index: Number
+		index: Number,
+		expanded: Boolean
 	},
 	data(){
 		return{
 			deleting:false,
-			show:false,
 			color:'red'
 		}
 	}

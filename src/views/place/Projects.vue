@@ -12,14 +12,14 @@
       </v-btn>
     </div>
 
-      <v-select
-        :items="types"
-        label="Type"
-        outlined
-        v-model="activeType"
-      ></v-select>
+    <v-select
+      :items="types"
+      label="Type"
+      outlined
+      v-model="activeType"
+    ></v-select>
 
-
+    <!-- NO ACTIVE PROJECT -->
     <h4 v-if="!loading_projects && !projects.length" class="text-center">
       - Il n'y a pas encore de projet -
     </h4>
@@ -28,6 +28,7 @@
       - Il n'y a pas encore de projet de ce type -
     </h4>
 
+    <!-- LOADINGS -->
     <div v-if="loading_projects" class="d-flex flex-column">
       <v-skeleton-loader
         v-for="item in [1, 2, 3, 4]"
@@ -44,23 +45,29 @@
         name="list-complete"
         tag="p"
       >
+
+        <!-- INDEX -->
         <div v-for="(project, index) in activeProjects"
         :key="project.id"
         class="list-complete-item">
           <CardProject
           :project="project"
           :index="index"
+          :expanded="project.expanded"
+          @toogleExpand="toogleExpand(project.id)"
           @openEdit="openEdit"
           @deleteProject="deleteProject"/>
         </div>
       </transition-group>
 
+      <!-- CREATION -->
       <v-dialog v-model="creating" width="500">
         <CreateProject
           @closeCreation="closeCreation"
         />
       </v-dialog>
 
+      <!-- EDITION -->
       <v-dialog v-model="editing" width="500">
         <EditProject
           :propProject="editionProject"
@@ -96,7 +103,29 @@ export default {
     };
   },
   created() {
+    if (location.hash) {
+      this.hash = location.hash
+    }
+    location.hash = ""
     this.getProjects();
+  },
+  watch:{
+    loading_projects: function(){
+      if (this.loading_projects === false) {
+        this.$nextTick(()=>{
+          if (this.hash) {
+            var id = this.hash.slice(1)
+            this.toogleProjectExpand(id)
+            setTimeout(()=>{
+              document.getElementById(id).scrollIntoView({ 
+                behavior: 'smooth' 
+              });
+            }, 300)
+          }
+        })
+
+      }
+    }
   },
   computed: {
     ...mapGetters("project", ["loading_projects", "projects"]),
@@ -112,7 +141,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("project", ["getProjects", "deleteProject"]),
+    ...mapActions("project", ["getProjects", "deleteProject", "toogleProjectExpand"]),
     openEdit(index) {
       this.editionProject = this.projects[index];
       this.editing = true;
@@ -123,6 +152,9 @@ export default {
     },
     closeCreation() {
       this.creating = false;
+    },
+    toogleExpand(id) {
+      this.toogleProjectExpand(id)
     }
   }
 };

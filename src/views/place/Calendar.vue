@@ -108,7 +108,7 @@
           >
             <v-card
               color="grey lighten-4"
-              min-width="350px"
+
               max-width="400px"
               flat
             >
@@ -116,19 +116,27 @@
                 :color="selectedEvent.color"
                 dark
               >
-                <v-btn icon>
-                  <v-icon @click="openEdit">mdi-pencil</v-icon>
-                </v-btn>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
+                <span class="ml-2 font-italic">({{selectedEvent.frenchType}})</span>
               </v-toolbar>
-              <v-card-text>
-                <span v-html="selectedEvent.description"></span>
+
+
+              <v-card-text class="pb-0">
+                <v-clamp autoresize :max-lines="5"
+                class="description">
+                  {{selectedEvent.description}}
+                </v-clamp>
               </v-card-text>
+
+
               <v-card-actions>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$router.push('projects#'+selectedEvent.child.id)"
+                >
+                  + infos
+                </v-btn>
                 <v-btn
                   text
                   color="secondary"
@@ -143,13 +151,7 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="editing" width="500">
-      <EditProject
-        :showEvents="false"
-        :propProject="editionProject"
-        @closeEdit="closeEdit"
-      />
-    </v-dialog>
+
   </div>
 </template>
 
@@ -157,15 +159,13 @@
 
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
-import EditProject from "@/components/project/EditProject.vue";
+import VClamp from "vue-clamp";
 
 export default {
   components:{
-    EditProject
+    VClamp
   },
   data: () => ({
-    editing: false,
-    editionProject: {},
     focus: '',
     type: 'month',
     typeToLabel: {

@@ -1,17 +1,20 @@
 <template>
 
-
   <v-bottom-navigation 
   class="bottom-bar"
-  grow>
+  grow
+  shift
+  icons-and-text>
 
     <v-btn 
     v-for="(item, index) in subNavItems"
     :key="index"
-    :to="item.path">
-      <span>{{item.title}}</span>
+    :value="item.path"
+    :to='item.path'
+    >
 
-      <v-icon>{{item.icon}}</v-icon>
+      <v-icon tag='li'>{{item.icon}}</v-icon>
+      <span>{{item.title}}</span>
     </v-btn>
 
   </v-bottom-navigation>
@@ -25,6 +28,7 @@ export default {
 
 	data(){
 		return{
+      value: ''
 		}
 	},
   props:{
@@ -41,7 +45,7 @@ export default {
   .bottom-bar{
     position: fixed;
     bottom: 0;
-    z-index: 100;
+    z-index: 2;
   }
 
 </style>

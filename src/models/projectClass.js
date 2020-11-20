@@ -15,6 +15,8 @@ export default class Project {
       }
     }
 
+    this.expanded = false
+
     this.events = []
 
     this.color = this.getColor()

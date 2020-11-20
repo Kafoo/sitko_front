@@ -1,6 +1,8 @@
 <template>
   <v-card class="pt-7 pb-3">
-    <div class="card-body" v-if="!pickingDate">
+    <div 
+    class="card-body py-0" 
+    v-if="!pickingDate">
       <v-form @submit.prevent="sendEdit" ref="form" v-model="form">
         <v-text-field
           outlined
@@ -49,43 +51,58 @@
            prepend-icon="insert_photo"
         />
 
-          <v-chip-group column>
-            <v-tooltip 
-            v-for="(event, index) in editedProject.events" 
-            :key="index" 
-            bottom>
-              <template v-slot:activator="{ on }">
-                <v-chip 
-                class="event-chip py-6 mt-0" 
-                v-on="on"
-                close
-                @click:close="removeEvent(index)">
-                  <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
-                  <v-icon class="px-2" v-else>date_range</v-icon>
-                </v-chip>
-              </template>
-              <span>{{event.chip}}</span>
-            </v-tooltip>
-          </v-chip-group>
-
-        <v-card-actions v-if="showEvents" class="d-flex justify-center">
-          <v-spacer></v-spacer>
-          <v-btn
-          class="addEvent-btn"
+        <v-chip-group column class="d-flex align-center">
+          <v-chip 
+          v-if="!editedProject.events || editedProject.events && !editedProject.events.length"
+          class="py-5"
           @click="pickingDate=true">
-            Ajouter un événement
-          </v-btn>
-        </v-card-actions>
+            Ajouter un évenement
+          </v-chip>
+          <v-tooltip 
+          v-for="(event, index) in editedProject.events" 
+          :key="index" 
+          bottom>
+            <template v-slot:activator="{ on }">
+              <v-chip 
+              class="event-chip py-6 mt-0" 
+              v-on="on"
+              close
+              @click:close="removeEvent(index)">
+                <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
+                <v-icon class="px-2" v-else>date_range</v-icon>
+              </v-chip>
+            </template>
+            <span>{{event.chip}}</span>
+          </v-tooltip>
+          <v-tooltip
+          v-if="editedProject.events && editedProject.events.length"
+          bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                icon
+                height="45"
+                width="45"
+                v-on="on"
+                color="green"
+                v-if="showEvents"
+                @click="pickingDate=true">
+                <v-icon>add</v-icon>
+              </v-btn>
+            </template>
+            <span>Ajouter un événement</span>
+          </v-tooltip>
+        </v-chip-group>
 
-        <v-card-actions class="d-flex justify-center">
+          <v-divider class="mb-0"></v-divider>
+
+        <v-card-actions class="actions d-flex justify-end">
           <v-spacer></v-spacer>
-          <v-btn @click="closeEdit" :disabled="loading">
+          <v-btn @click="closeEdit" :disabled="loading" text>
             Annuler
           </v-btn>
-          <v-btn color="primary" type="submit" :disabled="loading || !form">
+          <v-btn color="primary" type="submit" :disabled="loading || !form" text>
             Confirmer
           </v-btn>
-        </v-card-actions>
         <v-progress-linear
           v-if="loading"
           color="green darken-4 accent-4"
@@ -94,6 +111,9 @@
           height="6"
           class="progress"
         ></v-progress-linear>
+        </v-card-actions>
+
+
       </v-form>
     </div>
 
@@ -129,7 +149,6 @@ export default {
   },
 
   mounted() {
-
     this.editedProject = JSON.parse(JSON.stringify(this.propProject));
   },
 
@@ -229,5 +248,6 @@ export default {
     right: 3px;
     top: 3px;
   }
+
 
 </style>

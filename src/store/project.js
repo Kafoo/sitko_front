@@ -38,6 +38,17 @@ export default {
     },
     removeLoading(state) {
       state.loading_projects = false;
+    },
+    closeExpands(state, id) {
+      state.projects.forEach((project)=>{
+        if (project.id !== id) {
+          project.expanded = false
+        }
+      })
+    },
+    toogleExpand(state, id) {
+      var project = state.projects.find(x => x.id == id);
+      project.expanded = !project.expanded
     }
   },
 
@@ -94,7 +105,12 @@ export default {
           commit('insertProject', project)
           commit('setGeneralError', "Oups, petite erreur dans la suppression du projet", {root: true});
         });
+    },
+    toogleProjectExpand({commit}, id) {
+      commit('closeExpands', id)
+      commit('toogleExpand', id)
     }
+
 
   }
 };
