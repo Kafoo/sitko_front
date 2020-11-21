@@ -1,13 +1,14 @@
 <template>
 
 
-
   <div class="place d-flex pb-12">
+
     <div class="hidden-sm-and-down">
       <sidebar :subNavItems="subNavItems"/>
     </div>
 
-    <v-card class="calendar ma-xs-0 ma-sm-5 elevation-4 pa-5 flex-grow-1 flex-shrink-10"
+    <v-card class="ma-xs-0 ma-sm-5 pa-5 flex-grow-1 flex-shrink-10"
+    :elevation="elevation"
     min-width="0">
 
       <router-view></router-view>
@@ -35,9 +36,9 @@ export default{
   data(){
     return{
       subNavItems:[
-        { title: "Présentation",
+        { title: "Accueil",
           path: "/place/1/overview",
-          icon: "info",
+          icon: "home",
         },
         {
           title: "Calendrier",
@@ -56,6 +57,18 @@ export default{
         },
       ]
     }
+  },
+  computed:{
+    elevation () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 0
+        case 'sm': return 3
+        case 'md': return 3
+        case 'lg': return 3
+        case 'xl': return 3
+      }
+      return 3
+    },
   }
 }
 

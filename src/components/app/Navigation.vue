@@ -59,20 +59,16 @@ export default {
       appTitle: "Sitko",
       drawer: false,
       menuItems: [
-        { title: "Accueil",
-          path: "/",
-          icon: "",
-          vshow: true },
-        {
-          title: "Explorer",
-          path: "/explore",
-          icon: "",
-          vshow: true },
         {
           title: "Mes lieux",
           path: "/places",
           icon: "",
           vshow: this.user },
+        {
+          title: "Explorer",
+          path: "/explore",
+          icon: "",
+          vshow: true },
         {
           title: "Compte",
           path: "/account",
@@ -80,13 +76,13 @@ export default {
           vshow: this.user
         },
         {
-          title: "Login",
+          title: "Connexion",
           path: "/login",
           icon: "",
           vshow: !this.user
         },
         {
-          title: "Register",
+          title: "Inscription",
           path: "/register",
           icon: "",
           vshow: !this.user
@@ -104,8 +100,8 @@ export default {
       handler(newVal) {
         this.menuItems.find(x => x.title === "Compte").vshow = newVal;
         this.menuItems.find(x => x.title === "Mes lieux").vshow = newVal;
-        this.menuItems.find(x => x.title === "Login").vshow = !newVal;
-        this.menuItems.find(x => x.title === "Register").vshow = !newVal;
+        this.menuItems.find(x => x.title === "Connexion").vshow = !newVal;
+        this.menuItems.find(x => x.title === "Inscription").vshow = !newVal;
       }
     },
     $route(to) {

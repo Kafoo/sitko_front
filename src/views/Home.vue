@@ -14,7 +14,7 @@
         merveilleux où il ne se passe pas grand chose.
       </h3>
       <span v-else-if="!user.email_verified_at" class="text-center">
-        <h2>Coucou {{ user.name }} !</h2>
+        <h1>Coucou {{ user.name }} !</h1>
         <h4>
           Ton compte a bien été enregistré, maintenant, tu peux confirmer ton
           mail via le lien que tu as reçu dans ta boîte de réception. Tu peux
@@ -23,10 +23,10 @@
         </h4>
       </span>
       <span v-else class="text-center">
-        <h2>Salut {{ user.name }} !</h2>
-        <h4>
+        <h1>Salut {{ user.name }} !</h1>
+        <h3>
           Bienvenue dans ce merveilleux site où des choses commencent à se passer.
-        </h4>
+        </h3>
       </span>
 
     </v-card>

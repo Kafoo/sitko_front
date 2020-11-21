@@ -3,7 +3,7 @@
 
     <h1>Les Vallées</h1>
 
-    <h5 class="mt-6">Lieu de ouf, projets de dingues, venez vite on est gentils.</h5>
+    <h3 class="mt-6">Lieu de ouf, projets de dingues, venez vite on est gentils.</h3>
 
   </div>
 </template>
