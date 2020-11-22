@@ -5,9 +5,9 @@
     width="80%"
     max-width="800px">
 
-      <h1>Mes lieux</h1>
+      <h1 class="mb-8">Mes lieux</h1>
 
-      <v-btn to='/place/1/overview'>Les Vallées</v-btn>
+      <card-place/>
 
     </v-card>
   </div>
@@ -15,11 +15,11 @@
 </template>
 
 <script>
-  
+import CardPlace from "@/components/places/CardPlace"
 
 export default{
   components:{
-
+    CardPlace
   },
   data(){
     return{

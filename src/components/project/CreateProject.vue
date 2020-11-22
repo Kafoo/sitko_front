@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pt-7 pb-3">
+  <v-card class="pt-7 pb-3 px-4">
     <div class="card-body" v-if="!pickingDate">
       <v-form @submit.prevent="createProject" ref="form" v-model="form">
         <label for="title" class="h3 mb-5">Nouveau Projet</label>
@@ -161,7 +161,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   
 .v-card--reveal {
   bottom: 0;

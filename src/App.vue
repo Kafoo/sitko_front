@@ -1,11 +1,11 @@
 <template>
   <v-app class="app">
 
-    <v-snackbar 
-    v-model="generalError"
-    color="red">
-      {{ generalError }}
-    </v-snackbar>
+    <div 
+    class="alert"
+    v-if="generalError">
+    {{generalError}}
+    </div>
 
     <navigation/>
 
@@ -32,18 +32,22 @@ export default {
   components:{
     Navigation
   },
+  data(){
+    return{
+      showGeneralError: false
+    }
+  },
   computed: {
     ...mapGetters("auth", ["loading"]),
-    ...mapGetters({
-            nameFromStore: 'generalError'
-        }),
-    generalError: {
-       get(){
-         return this.nameFromStore
-       },
-       set(newName){
-         return newName
-       } 
+    ...mapGetters(['generalError'])
+  },
+  watch: {
+    generalError(newValue){
+      if (this.generalError !== '') {
+        this.showGeneralError = true
+      }else{
+        this.showGeneralError = false
+      }
     }
   },
   methods: {
@@ -57,24 +61,35 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 .alert {
   position: fixed;
   margin: auto;
-  top: 83px;
+  bottom: 53px;
   left: 50%;
   transform: translateX(-50%);
   min-width: 200px;
   max-width: 90%;
   text-align: center;
-  opacity: 0;
   z-index: 1000;
+  animation: fade-in 0.2s ease;
+  background-color: #ff0000a3;
+  animation: fade-in 0.2s ease;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
 }
 
-.alert.visible {
-  opacity: 1;
-  transition: all 0.5s;
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+
+    }
+    100% {
+        opacity: 1;
+
+    }
 }
 
 </style>

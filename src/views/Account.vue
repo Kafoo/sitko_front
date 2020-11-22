@@ -85,7 +85,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .progress {
   position: absolute;
   bottom: 0;

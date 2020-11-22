@@ -111,7 +111,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 .navItem {
   animation: slide-up 0.4s ease;

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pt-7 pb-3">
+  <v-card class="pt-7 pb-3 px-4">
     <div 
     class="card-body py-0" 
     v-if="!pickingDate">
@@ -216,7 +216,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
   .progress {
     position: absolute;

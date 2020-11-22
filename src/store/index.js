@@ -28,8 +28,9 @@ export default new Vuex.Store({
       state.errors = errors;
     },
     setGeneralError(state, generalError) {
+     
       state.generalError = generalError;
-      setTimeout(state.generalError = "", 6000)
+      setTimeout(()=>{state.generalError = ''}, 5000)
     }
   },
 

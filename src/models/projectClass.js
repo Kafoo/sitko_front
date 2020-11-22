@@ -11,6 +11,7 @@ export default class Project {
       this.image = {
         full : rawData.image.full,
         medium : rawData.image.medium,
+        low_medium : rawData.image.low_medium,
         thumb : rawData.image.thumb
       }
     }

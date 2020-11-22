@@ -51,9 +51,11 @@
 							<v-img
 							v-if="project.image"
 							class="image mr-3 mb-3"
-							:lazy-src="project.image.thumb"
+							:lazy-src="project.image.low_medium"
 						  :src="project.image.medium"
-							></v-img>
+							>
+							</v-img>
+
 
 							<div>
 								
@@ -149,19 +151,21 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
 	.image{
-		width: 40%;
-		max-width: 40%; 
+	  width:200px;
+	  max-width: 40%;
+	  height:200px;
+	  object-fit:cover;
 	}
 
 	@media(max-width: 600px){
 		.image{
+			max-width: 100%;
 			width: 100%;
-			max-width: 100%; 
+			height: auto;
 		}
-
 	}
 
 	.type{
