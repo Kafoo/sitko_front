@@ -82,7 +82,7 @@
 							  <v-clamp autoresize :max-lines="10"
 							  class="description">
 							  </v-clamp>
-							  <span style="white-space: pre;">{{project.description}}</span>
+							  <span width="100%" style="white-space: pre-wrap;">{{project.description}}</span>
 
 							</div>
 
