@@ -96,6 +96,16 @@ const routes = [
         }
       },
       {
+        path: "events",
+        name: "Events",
+        beforeEnter: auth,
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../views/place/Events.vue"),
+        meta: {
+          title: "Sitko - Evénements"
+        }
+      },
+      {
         path: "contact",
         name: "Contact",
         beforeEnter: auth,

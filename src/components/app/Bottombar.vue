@@ -1,12 +1,14 @@
 <template>
 
   <v-bottom-navigation 
-  class="bottom-bar"
+  class="bottom-bar" height="50px"
   grow
   shift
-  icons-and-text>
+  icon and text
+  color="green">
 
-    <v-btn 
+    <v-btn
+    class="mx-n2"
     v-for="(item, index) in subNavItems"
     :key="index"
     :value="item.path"

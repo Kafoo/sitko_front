@@ -1,8 +1,7 @@
 <template>
 
   <div class="d-flex justify-center">
-    <v-card class="account d-flex flex-column align-center ma-5 elevation-4 pa-5"
-    width="80%"
+    <v-card :tile="tile" class="account d-flex flex-column flex-grow-1 align-center ma-xs-0 ma-sm-5 elevation-4 pa-5"
     max-width="800px">
 
       <h1 class="mb-8">Mes lieux</h1>
@@ -25,6 +24,14 @@ export default{
     return{
 
     }
+  },
+  computed: {
+    tile () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return true
+      }
+      return false
+    },
   }
 }
 

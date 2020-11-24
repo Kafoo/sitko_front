@@ -51,6 +51,11 @@ export default{
           icon: "handyman",
         },
         {
+          title: "Evenements",
+          path: "/place/1/events",
+          icon: "star",
+        },
+        {
           title: "Contact",
           path: "/place/1/contact",
           icon: "contact_support",
@@ -68,7 +73,7 @@ export default{
         case 'xl': return 3
       }
       return 3
-    },
+    }
   }
 }
 

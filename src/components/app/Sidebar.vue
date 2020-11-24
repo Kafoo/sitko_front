@@ -11,9 +11,9 @@
     v-for="(item, index) in subNavItems"
     :key="index"
     :to="item.path"
-    width="90%"
+    width="80%"
     class="my-2">
-    	
+   	<v-icon class='mx-3'>{{item.icon}}</v-icon>
     	{{item.title}}
 
     </v-btn>

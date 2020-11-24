@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex justify-center">
-    <v-card class="account d-flex flex-column align-center ma-5 elevation-4 pa-5"
-    width="80%"
+    <v-card :tile="tile" class="account d-flex flex-column flex-grow-1 align-center ma-xs-0 ma-sm-5 elevation-4 pa-5"
     max-width="800px">
       <h1>Mon Compte</h1>
       <v-btn class="d-block my-4" color="grey" dark @click="logout">
@@ -61,7 +60,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["user"])
+    ...mapGetters("auth", ["user"]),
+    tile () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return true
+      }
+      return false
+    }
   },
   methods: {
     ...mapActions("auth", ["sendDeleteUser", "sendLogoutRequest"]),

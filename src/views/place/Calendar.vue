@@ -6,9 +6,13 @@
 
         <v-sheet class="d-flex ma-4 mt-0">
 
-          <div class="d-flex flex-wrap flex-md-nowrap">
+          <div 
+          class="d-flex flex-wrap flex-md-nowrap flex-shrink-1" 
+          style="min-width: 0">
 
-            <v-toolbar-title v-if="$refs.calendar" class="mt-1 mr-3">
+            <v-toolbar-title 
+            v-if="$refs.calendar" 
+            class="mt-1 mr-3">
               {{ $refs.calendar.title }}
             </v-toolbar-title>
 
@@ -75,14 +79,14 @@
               </v-list>
             </v-menu>
 
-            <v-btn
-              class="ml-4"
+            <v-chip
               outlined
-              color="grey darken-2"
+              color="blue"
+              class="ml-4 ml-xs-0"
               @click="setToday"
             >
               Aujourd'hui
-            </v-btn>
+            </v-chip>
 
           </div>
 
