@@ -97,7 +97,7 @@ export default {
     return {
       editing: false,
       creating: false,
-      types: ["tous les projets", "idée", "commun", "perso"],
+      types: ["tous les projets", "ferme", "écolieu", "autre"],
       activeType: "tous les projets",
       editionProject: {},
     };

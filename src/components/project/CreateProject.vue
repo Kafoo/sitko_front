@@ -108,7 +108,7 @@ export default {
       newProject: {
         events: []
       },
-      types: ["commun", "idée", "perso"]
+      types: ["ferme", "écolieu", "autre"]
     };
   },
   components:{

@@ -144,7 +144,7 @@ export default {
       loading: false,
       pickingDate: false,
       editedProject: {},
-      types: ["commun", "idée", "perso"]
+      types: ["ferme", "écolieu", "autre"]
     };
   },
 

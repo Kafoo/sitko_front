@@ -109,6 +109,7 @@
             :close-on-content-click="false"
             :activator="selectedElement"
             offset-x
+            min-width="0"
           >
             <v-card
               color="grey lighten-4"

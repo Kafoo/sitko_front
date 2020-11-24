@@ -36,11 +36,11 @@ export default class Project {
   }
 
   getColor(){
-    if (this.type === 'commun') {
+    if (this.type === 'autre') {
       return 'red darken-3'
-    }else if(this.type === 'idée') {
+    }else if(this.type === 'ferme') {
       return 'yellow darken-3'
-    }else if(this.type === 'perso') {
+    }else if(this.type === 'écolieu') {
       return 'blue darken-3'
     }
   }
