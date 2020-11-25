@@ -24,7 +24,7 @@ axios.interceptors.response.use(
       localStorage.removeItem("authToken");
       router.push({ name: "Login" });
     } else {
-      if (error.response.data.message) {
+      if (error.response.data.custom) {
         store.commit('setGeneralError', error.response.data.message)
       }else{
         store.commit('setGeneralError', 'Petit problème de serveur')        
