@@ -2,9 +2,16 @@
   <v-app class="app">
 
     <div 
-    class="alert"
+    class="alert-container"
     v-if="generalError">
-    {{generalError}}
+      <div 
+      class="alert">
+      <v-icon color='white' class="mr-2">warning</v-icon>
+      {{generalError}}
+      <v-btn icon @click='removeGeneralError'>
+        <v-icon color='grey'>close</v-icon>
+      </v-btn>
+      </div>
     </div>
 
     <navigation/>
@@ -25,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import Navigation from '@/components/app/Navigation.vue'
 
 export default {
@@ -51,6 +58,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['removeGeneralError']),
     ...mapActions("auth", ["getUserData"])
   },
   mounted() {
@@ -63,22 +71,23 @@ export default {
 
 <style scoped>
 
+.alert-container{
+    animation: fade-in 0.2s ease;
+    display: flex;
+    position: fixed;
+    bottom: 60px;
+    width: 90%;
+    margin: 0% 5%;
+    z-index: 100;
+}
+
 .alert {
-  position: fixed;
-  margin: auto;
-  bottom: 53px;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 200px;
-  max-width: 90%;
-  text-align: center;
-  z-index: 1000;
-  animation: fade-in 0.2s ease;
-  background-color: #ff0000a3;
-  animation: fade-in 0.2s ease;
-  color: white;
-  padding: 5px;
-  border-radius: 4px;
+    margin: auto;
+    text-align: center;
+    background-color: #9d1818;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
 }
 
 @keyframes fade-in {

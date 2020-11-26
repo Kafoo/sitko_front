@@ -56,7 +56,8 @@
           :expanded="project.expanded"
           @toogleExpand="toogleExpand(project.id)"
           @openEdit="openEdit"
-          @deleteProject="deleteProject"/>
+          @deleteProject="deleteProject"
+          @toogleImage="toogleImage"/>
         </div>
       </transition-group>
 
@@ -74,6 +75,16 @@
           @closeEdit="closeEdit"
         />
       </v-dialog>
+
+      <!-- IMAGE POPUP -->
+      <v-dialog v-model="expand_image" max-width="85%">
+        <image-popup
+        :image="expanded_image"
+        @toogleImage="toogleImage"
+        />
+      </v-dialog>
+
+
     </div>
 
   </div>
@@ -85,16 +96,20 @@ import axios from "axios";
 import EditProject from "@/components/project/EditProject.vue";
 import CreateProject from "@/components/project/CreateProject.vue";
 import CardProject from "@/components/project/CardProject.vue";
+import ImagePopup from '@/components/app/ImagePopup.vue'
 
 export default {
   name: "Projects",
   components: {
     EditProject,
     CreateProject,
-    CardProject
+    CardProject,
+    ImagePopup
   },
   data() {
     return {
+      expand_image: false,
+      expanded_image: {},
       editing: false,
       creating: false,
       types: ["tous les projets", "ferme", "écolieu", "autre"],
@@ -152,6 +167,10 @@ export default {
     },
     closeCreation() {
       this.creating = false;
+    },
+    toogleImage(img={}) {
+      this.expanded_image = img;
+      this.expand_image = !this.expand_image;
     },
     toogleExpand(id) {
       this.toogleProjectExpand(id)

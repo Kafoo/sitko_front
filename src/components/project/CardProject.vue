@@ -44,20 +44,38 @@
 		  <v-expand-transition>
 		    <div v-show="expanded" class="expand">
 		      <v-divider class="my-0"></v-divider>
-		      <v-card-text class="pt-2">
+		      <v-card-text class="pt-2" min-height="200px">
 
-			      <div class="d-flex flex-column align-start flex-sm-row flex-sm-align-start">
+			      <div class="d-flex flex-column-reverse align-start flex-sm-row">
 
 							<v-img
 							v-if="project.image"
-							class="image mr-3 mb-3"
+							class="image mr-sm-3 mb-sm-3 mt-sm-0 mt-3 flex-grow-0"
 							:lazy-src="project.image.low_medium"
 						  :src="project.image.medium"
+						  @click="$emit('toogleImage', project.image)"
 							>
+							  <template v-slot:placeholder>
+					        <v-row
+					          class="image_placeholder fill-height ma-0"
+					          align="center"
+					          justify="center"
+					        >
+					          <v-progress-circular
+					            indeterminate
+					            color="grey lighten-5"
+					          ></v-progress-circular>
+					        </v-row>
+					      </template>
 							</v-img>
 
+							<v-divider
+								v-if="project.image"
+								class="hidden-xs-only mr-2"
+							  vertical
+							></v-divider>
 
-							<div>
+							<div class="flex-grow-1">
 								
 					      <div class="d-flex flex-wrap">
 									<v-chip 
@@ -154,17 +172,23 @@ export default {
 <style scoped>
 
 	.image{
-	  width:200px;
-	  max-width: 40%;
-	  height:200px;
-	  object-fit:cover;
+	  width:120px;
+	  height:120px;
+	  max-width: 60%;
+	  border-radius: 4px;
+	  cursor: pointer;
+	}
+
+	.image_placeholder{
+		background-color: #e3e3e3;
 	}
 
 	@media(max-width: 600px){
 		.image{
-			max-width: 100%;
 			width: 100%;
+			max-width: 100%;
 			height: auto;
+			max-height: 300px;
 		}
 	}
 
