@@ -6,6 +6,7 @@ export default class Event {
   constructor (rawData = {}) {
     this.timed = rawData.timed
     this.id = rawData.id
+    this.place_id = rawData.place_id
     this.rawStart = this.timeFormat(rawData.start)
     this.rawEnd = this.timeFormat(rawData.end)
     this.start = this.timeFormat(rawData.start, false)
@@ -14,6 +15,7 @@ export default class Event {
     this.frenchType = this.french(this.type)
 
     if (rawData.child) {
+
       var childFactory = {
           "Project": Project  
       }
@@ -23,7 +25,9 @@ export default class Event {
 	    this.name = rawData.child.title
 	    this.description = rawData.child.description
       this.color = this.child.color
+
     }else{
+
     	this.name = "Evénement sans child"
     	this.description = "Une description d'événement lambda"
       this.color = 'blue'

@@ -87,11 +87,7 @@ import CardProject from "@/components/project/CardProject.vue";
 
 export default {
   name: "Projects",
-  components: {
-    EditProject,
-    CreateProject,
-    CardProject
-  },
+
   data() {
     return {
       editing: false,
@@ -101,12 +97,20 @@ export default {
       editionProject: {},
     };
   },
+  
+  components: {
+    EditProject,
+    CreateProject,
+    CardProject
+  },
+
   created() {
     if (location.hash) {
       this.hash = location.hash
     }
     location.hash = ""
   },
+
   watch:{
     loading_projects: function(){
       if (this.loading_projects === false) {
@@ -125,6 +129,7 @@ export default {
       }
     }
   },
+
   computed: {
     ...mapGetters("project", ["loading_projects", "projects"]),
     ...mapGetters(["errors"]),
@@ -132,6 +137,7 @@ export default {
       return []
     }
   },
+
   methods: {
     ...mapActions("project", ["getProjects", "deleteProject", "toogleProjectExpand"]),
     openEdit(index) {

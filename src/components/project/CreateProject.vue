@@ -100,37 +100,59 @@ import ChooseDate from '@/components/project/ChooseDate.vue';
 
 export default {
   name: "CreateProject",
+
+  created(){
+    console.log(this.$route)
+  },
+
   data() {
     return {
+      place_id: this.$route.params.id,
       form: false,
       loading: false,
       pickingDate: false,
       newProject: {
+        place_id: this.$route.params.id,
         events: []
       },
       types: ["ferme", "écolieu", "autre"]
     };
   },
+
   components:{
     ChooseDate
   },
+
   props: {
     project: Object
   },
+
+  computed:{
+
+  },
+
   methods: {
     ...mapActions("project", ["sendCreateProject"]),
     cancel() {
-      this.newProject = {events: []};
+      this.resetProject()
       this.$refs.form.reset();
       this.$emit("closeCreation");
     },
+
+    resetProject(){
+      this.newProject = {
+        place_id: this.place_id,
+        events: []
+      };
+    },
+
     createProject() {
       this.loading = true;
       this.sendCreateProject(this.newProject)
         .then(() => {
           this.loading = false;
           this.$emit("closeCreation");
-          this.newProject = {events: []};
+          this.resetProject()
           this.$refs.form.reset();
         })
         .catch(() => {

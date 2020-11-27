@@ -1,6 +1,16 @@
 <template>
 
   <div>
+    <div
+    v-if="loading_events"
+    class="loading d-flex align-center justify-center">    
+      <v-progress-circular
+        indeterminate
+        :size="100"
+        color="grey lighten-5"
+      ></v-progress-circular>
+    </div>
+
     <v-row class="fill-height">
       <v-col>
 
@@ -170,27 +180,34 @@ export default {
   components:{
     VClamp
   },
-  data: () => ({
-    focus: '',
-    type: 'month',
-    typeToLabel: {
-      month: 'Mois',
-      week: 'Semaine',
-      day: 'Jour'
-    },
-    selectedEvent: {},
-    selectedElement: null,
-    selectedOpen: false,
-    oldEvents: [],
-    colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-    names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
-  }),
-  created () {
-    this.getEvents()
+
+  data(){
+    return{
+      place_id: this.$route.params.id,
+      focus: '',
+      type: 'month',
+      typeToLabel: {
+        month: 'Mois',
+        week: 'Semaine',
+        day: 'Jour'
+      },
+      selectedEvent: {},
+      selectedElement: null,
+      selectedOpen: false,
+      oldEvents: [],
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
+      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+    }
   },
+
+  created () {
+    this.getEvents(this.place_id)
+  },
+
   computed: {
     ...mapGetters("event", ["loading_events", "events"]),
   },
+
   methods: {
     ...mapActions("event", ["getEvents"]),
     openEdit() {
@@ -241,5 +258,16 @@ export default {
 </script>
 
 <style scoped>
+
+.loading{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #0000001f;
+  z-index: 2;
+}
+
 
 </style>

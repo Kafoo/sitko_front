@@ -7,7 +7,8 @@ export default {
 
   state: {
     projects: [],
-    loading_projects:false
+    loading_projects:false,
+    firstFetch:''
   },
 
   getters: {
@@ -49,15 +50,27 @@ export default {
     toogleExpand(state, id) {
       var project = state.projects.find(x => x.id == id);
       project.expanded = !project.expanded
+    },
+    setFirstFetch(state, value){
+      state.firstFetch = value
     }
   },
 
   actions: {
 
-    getProjects({commit}){
-      commit("setLoading");
+    getPlaceProjects({rootState, state, commit}, place_id){
+
+      console.log(rootState.place.place.id)
+      console.log(place_id)
+
+      if (rootState.place.place.id == place_id && state.firstFetch == place_id) {
+        // No '==' strict opposite exists
+      }else{
+        commit("setLoading");
+        commit('setFirstFetch', place_id)
+      }
       axios
-        .get(process.env.VUE_APP_API_URL + "project")
+        .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
         .then(response => {
           const newCollection = []
           for (const project of response.data) {
@@ -69,6 +82,7 @@ export default {
         .catch(() => {});
     },
     sendCreateProject({commit}, project) {
+      console.log(project)
       return axios
         .post(process.env.VUE_APP_API_URL + "project", project)
         .then(response => {

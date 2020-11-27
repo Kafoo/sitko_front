@@ -1,8 +1,11 @@
 import Event from '@/models/eventClass'
 
 export default class Project {
+  
   constructor (rawData = {}) {
+
     this.id = rawData.id
+    this.place_id = rawData.place_id
     this.title = rawData.title
     this.type = rawData.type
     this.description = rawData.description

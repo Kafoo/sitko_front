@@ -81,6 +81,7 @@ export default {
     confirm(){
 
       var newEvent = {}
+      newEvent.place_id = this.$route.params.id
       newEvent.timed = this.timed
 
       if (this.singleDate) {

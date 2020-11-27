@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 import EditProject from "@/components/project/EditProject.vue";
 import CreateProject from "@/components/project/CreateProject.vue";
@@ -99,15 +99,19 @@ import CardProject from "@/components/project/CardProject.vue";
 import ImagePopup from '@/components/app/ImagePopup.vue'
 
 export default {
+
   name: "Projects",
+
   components: {
     EditProject,
     CreateProject,
     CardProject,
     ImagePopup
   },
+
   data() {
     return {
+      place_id: this.$route.params.id,
       expand_image: false,
       expanded_image: {},
       editing: false,
@@ -117,14 +121,17 @@ export default {
       editionProject: {},
     };
   },
+
   created() {
     if (location.hash) {
       this.hash = location.hash
     }
     location.hash = ""
-    this.getProjects();
+    this.getPlaceProjects(this.place_id);
   },
+
   watch:{
+    //Slide to hashed project
     loading_projects: function(){
       if (this.loading_projects === false) {
         this.$nextTick(()=>{
@@ -138,10 +145,10 @@ export default {
             }, 300)
           }
         })
-
       }
     }
   },
+
   computed: {
     ...mapGetters("project", ["loading_projects", "projects"]),
     ...mapGetters(["errors"]),
@@ -155,8 +162,9 @@ export default {
       }
     }
   },
+
   methods: {
-    ...mapActions("project", ["getProjects", "deleteProject", "toogleProjectExpand"]),
+    ...mapActions("project", ["getPlaceProjects", "deleteProject", "toogleProjectExpand"]),
     openEdit(index) {
       this.editionProject = this.projects[index];
       this.editing = true;
@@ -177,6 +185,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped>

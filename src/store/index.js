@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import auth from "./auth";
 import project from "./project";
 import event from "./event";
+import place from "./place";
 
 Vue.use(Vuex);
 
@@ -41,6 +42,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     project,
-    event
+    event,
+    place
   }
 });

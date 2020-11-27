@@ -7,7 +7,8 @@ export default {
 
   state: {
     events: [],
-    loading_events:false
+    loading_events:false,
+    firstFetch:''
   },
 
   getters: {
@@ -24,15 +25,29 @@ export default {
     },
     removeLoading(state) {
       state.loading_events = false;
+    },
+    setFirstFetch(state, value){
+      state.firstFetch = value
     }
   },
 
   actions: {
 
-    getEvents({commit}){
-      commit("setLoading");
+    getEvents({rootState, state, commit}, place_id){
+
+      console.log(rootState.place.place.id)
+      console.log(place_id)
+
+      if (rootState.place.place.id == place_id && state.firstFetch == place_id) {
+        // No '==' strict opposite exists
+      }else{
+        commit("setLoading");
+        commit('setEvents', [])
+        commit('setFirstFetch', place_id)
+      }
+
       axios
-        .get(process.env.VUE_APP_API_URL + "event")
+        .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/event" )
         .then(response => {
           const newCollection = []
           for (const event of response.data) {
