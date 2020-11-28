@@ -40,7 +40,11 @@ export default {
   name: "ChooseDate",
   data() {
 
-    var now = this.formatDT(new Date())
+    var now = new Date()
+    now.setHours(now.getHours() + Math.round(now.getMinutes()/60) + 1);
+    now.setMinutes(0, 0, 0); // Resets also seconds and milliseconds
+
+    now = this.formatDT(now)
 
     return {
       timed: true,
