@@ -39,7 +39,8 @@
       ></v-skeleton-loader>
     </div>
 
-    <div v-else>
+    <div v-else
+    v-click-outside="closeExpands">
       <transition-group
         class="projects d-flex flex-column"
         name="list-complete"
@@ -91,12 +92,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import axios from "axios";
 import EditProject from "@/components/project/EditProject.vue";
 import CreateProject from "@/components/project/CreateProject.vue";
 import CardProject from "@/components/project/CardProject.vue";
 import ImagePopup from '@/components/app/ImagePopup.vue'
+import ClickOutside from 'vue-click-outside'
 
 export default {
 
@@ -111,6 +113,7 @@ export default {
 
   data() {
     return {
+      hash: null,
       place_id: this.$route.params.id,
       expand_image: false,
       expanded_image: {},
@@ -127,7 +130,11 @@ export default {
       this.hash = location.hash
     }
     location.hash = ""
-    this.getPlaceProjects(this.place_id);
+    var data = {
+      place_id: this.place_id,
+      hash: this.hash
+    }
+    this.getPlaceProjects(data);
   },
 
   watch:{
@@ -165,6 +172,7 @@ export default {
 
   methods: {
     ...mapActions("project", ["getPlaceProjects", "deleteProject", "toogleProjectExpand"]),
+    ...mapMutations("project", ["closeExpands"]),
     openEdit(index) {
       this.editionProject = this.projects[index];
       this.editing = true;
@@ -180,9 +188,13 @@ export default {
       this.expanded_image = img;
       this.expand_image = !this.expand_image;
     },
-    toogleExpand(id) {
+    toogleExpand(id = null) {
       this.toogleProjectExpand(id)
     }
+  },
+
+  directives: {
+    ClickOutside
   }
 };
 

@@ -200,6 +200,11 @@ export default {
     }
   },
 
+  mounted () {
+    //Force calendar to show month/year
+    this.$refs.calendar.move(0)
+  },
+
   created () {
     this.getEvents(this.place_id)
   },

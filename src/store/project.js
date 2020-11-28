@@ -40,7 +40,7 @@ export default {
     removeLoading(state) {
       state.loading_projects = false;
     },
-    closeExpands(state, id) {
+    closeExpands(state, id = null) {
       state.projects.forEach((project)=>{
         if (project.id !== id) {
           project.expanded = false
@@ -58,26 +58,37 @@ export default {
 
   actions: {
 
-    getPlaceProjects({rootState, state, commit}, place_id){
+    getPlaceProjects({rootState, state, commit}, {place_id, hash}){
 
-      console.log(rootState.place.place.id)
-      console.log(place_id)
-
+      //Loading flag only if first time fetch for this place
       if (rootState.place.place.id == place_id && state.firstFetch == place_id) {
-        // No '==' strict opposite exists
+        //If hash, we still load not to UImess
+        if (hash) {
+          commit("setLoading");
+          commit('setFirstFetch', place_id)
+        }
       }else{
         commit("setLoading");
         commit('setFirstFetch', place_id)
       }
+      //FETCH
       axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
         .then(response => {
           const newCollection = []
+
           for (const project of response.data) {
             newCollection.push(new Project(project))
           }
-          commit('setProjects', newCollection)
-          commit("removeLoading");
+
+          //Refresh project if currently loading
+          if (state.loading_projects) {
+            commit('setProjects', newCollection)
+            commit("removeLoading");
+          }else{
+            //Suggest refresh to user without messing with UI
+          }
+
         })
         .catch(() => {});
     },

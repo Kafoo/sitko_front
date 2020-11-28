@@ -1,7 +1,9 @@
 <template>
-  <div class="text-center">
 
-    <h1 class="mb-6">Les Vallées</h1>
+  <div class="text-center"
+  v-if="!loading_place">
+
+    <h1 class="mb-6">{{place.name}}</h1>
 
     <h5>Page facebook</h5>
     <h5>Instagram</h5>
@@ -21,6 +23,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("place", ["place", 'loading_place']),
   },
   methods: {
 

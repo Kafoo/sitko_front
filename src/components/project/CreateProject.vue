@@ -73,15 +73,15 @@
           </v-btn>
         </v-card-actions>
 
-        <v-progress-linear
-          v-if="loading"
-          color="green darken-4 accent-4"
-          indeterminate
-          rounded
-          height="6"
-          class="progress"
-        ></v-progress-linear>
       </v-form>
+      <v-progress-linear
+        v-if="loading"
+        color="green darken-4 accent-4"
+        indeterminate
+        rounded
+        height="6"
+        class="progress"
+      ></v-progress-linear>
     </div>
 
     <ChooseDate 
@@ -100,10 +100,6 @@ import ChooseDate from '@/components/project/ChooseDate.vue';
 
 export default {
   name: "CreateProject",
-
-  created(){
-    console.log(this.$route)
-  },
 
   data() {
     return {

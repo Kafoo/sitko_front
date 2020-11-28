@@ -6,6 +6,7 @@ export default class Project {
     this.id = rawData.id
     this.name = rawData.name
     this.description = rawData.description
+    this.image = rawData.image
 
   }
 }

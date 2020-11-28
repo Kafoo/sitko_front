@@ -1,13 +1,16 @@
 <template>
-  <div class="text-center">
+  <div 
+  v-if="!loading_place"
+  class="text-center" >
 
-    <h1 class="mb-3">Les Vallées</h1>
+    <h1 class="mb-3">{{place.name}}</h1>
 
-    <img class='image' src="https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/40451975_2674910106066657_4956392723440467968_o.jpg?_nc_cat=108&ccb=2&_nc_sid=09cbfe&_nc_ohc=MHEZIJhsSZMAX9Zv10x&_nc_ht=scontent-cdg2-1.xx&oh=887b9247a49c14922e252de423115a48&oe=5FDFA376"
+    <img class='image' 
+    :src="place.image.medium"
     width="250px"
-    height="200px" />
+    />
 
-    <h3 class="mt-6">Lieu de ouf, projets de dingues,<br> venez on est gentils.</h3>
+    <h3 class="mt-6">{{place.description}}</h3>
 
   </div>
 </template>
@@ -22,6 +25,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("place", ["place", 'loading_place']),
   },
   methods: {
 

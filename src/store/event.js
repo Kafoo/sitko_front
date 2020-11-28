@@ -35,11 +35,9 @@ export default {
 
     getEvents({rootState, state, commit}, place_id){
 
-      console.log(rootState.place.place.id)
-      console.log(place_id)
-
+      //Loading flag only if first time fetch for this place
       if (rootState.place.place.id == place_id && state.firstFetch == place_id) {
-        // No '==' strict opposite exists
+        // ('==' strict opposite doesn't exist)
       }else{
         commit("setLoading");
         commit('setEvents', [])
@@ -53,8 +51,15 @@ export default {
           for (const event of response.data) {
             newCollection.push(new Event(event))
           }
-          commit('setEvents', newCollection)
-          commit("removeLoading");
+
+          //Refresh project if currently loading
+          if (state.loading_events) {
+            commit('setEvents', newCollection)
+            commit("removeLoading");
+          }else{
+            //Suggest refresh to user without messing with UI
+          }
+
         })
         .catch(() => {});
     }
