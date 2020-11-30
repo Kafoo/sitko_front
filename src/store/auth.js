@@ -82,10 +82,10 @@ export default {
         });
     },
 
-    sendDeleteUser({ commit }, data) {
+    sendDeleteUser({ state, commit }, data) {
       commit("setErrors", {}, { root: true });
       return axios
-        .post(process.env.VUE_APP_API_URL + "destroy", data)
+        .delete(process.env.VUE_APP_API_URL + "user/" + state.userData.id, data)
         .then(() => {
           commit("setUserData", null);
           localStorage.removeItem("authToken");

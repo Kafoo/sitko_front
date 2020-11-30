@@ -39,8 +39,7 @@
       ></v-skeleton-loader>
     </div>
 
-    <div v-else
-    v-click-outside="closeExpands">
+    <div v-else>
       <transition-group
         class="projects d-flex flex-column"
         name="list-complete"
@@ -98,7 +97,6 @@ import EditProject from "@/components/project/EditProject.vue";
 import CreateProject from "@/components/project/CreateProject.vue";
 import CardProject from "@/components/project/CardProject.vue";
 import ImagePopup from '@/components/app/ImagePopup.vue'
-import ClickOutside from 'vue-click-outside'
 
 export default {
 
@@ -191,10 +189,6 @@ export default {
     toogleExpand(id = null) {
       this.toogleProjectExpand(id)
     }
-  },
-
-  directives: {
-    ClickOutside
   }
 };
 
