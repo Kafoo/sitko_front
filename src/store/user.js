@@ -7,7 +7,7 @@ export default {
 
   state: {
     user: {}
-  }
+  },
 
   getters: {
     user: state => state.user,

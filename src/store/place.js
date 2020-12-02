@@ -1,6 +1,6 @@
 import axios from "axios";
-import Vue from 'vue'
-import Place from '@/models/placeClass'
+import Vue from "vue";
+import Place from "@/models/placeClass";
 
 export default {
   namespaced: true,
@@ -8,8 +8,8 @@ export default {
   state: {
     places: [],
     place: {},
-    loading_places:false,
-    loading_place:false
+    loading_places: false,
+    loading_place: false
   },
 
   getters: {
@@ -21,10 +21,10 @@ export default {
 
   mutations: {
     setPlace(state, place) {
-      Vue.set(state, 'place', place)
+      Vue.set(state, "place", place);
     },
     setPlaces(state, places) {
-      Vue.set(state, 'places', places)
+      Vue.set(state, "places", places);
     },
     setLoadingPlaces(state) {
       state.loading_places = true;
@@ -41,9 +41,7 @@ export default {
   },
 
   actions: {
-
-    getPlaces({state, commit}){
-      console.log(state.places)
+    getPlaces({ state, commit }) {
       if (state.places.length === 0) {
         commit("setLoadingPlaces");
       }
@@ -51,26 +49,25 @@ export default {
       axios
         .get(process.env.VUE_APP_API_URL + "place")
         .then(response => {
-          const newCollection = []
+          const newCollection = [];
           for (const place of response.data) {
-            newCollection.push(new Place(place))
+            newCollection.push(new Place(place));
           }
-          commit('setPlaces', newCollection)
+          commit("setPlaces", newCollection);
           commit("removeLoadingPlaces");
         })
         .catch(() => {});
     },
 
-    getPlace({commit}, id){
+    getPlace({ commit }, id) {
       commit("setLoadingPlace");
       axios
         .get(process.env.VUE_APP_API_URL + "place/" + id)
         .then(response => {
-          commit('setPlace', response.data)
+          commit("setPlace", response.data);
           commit("removeLoadingPlace");
         })
         .catch(() => {});
     }
-
   }
-}
+};

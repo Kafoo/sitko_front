@@ -1,0 +1,75 @@
+{
+
+  "Hello": "Salut",
+
+  "Logout": "Se déconnecter",
+  "Delete my account": "Supprimer mon compte",
+  "Resend e-mail": "Renvoyer le mail",
+  "Account deletion is definitive.": "La suppression du compte est définitive",
+
+  "Are you sure ?": "Sûr(e) ?",
+  "Delete": "Supprimer",
+  "Close": "Fermer",
+	"optional": "optionnel",
+	"Required": "Requis",
+	"Confirmation": "Confirmation",
+	"All": "Tous",
+
+  "Home": "Accueil",
+  "My Account": "Mon Compte",
+  "Account": "Compte",
+  "Explore": "Explorer",
+  "Places": "Lieux",
+  "My places": "Mes lieux",
+  "Calendar": "Calendrier",
+  "Projects": "Projets",
+  "Events": "Evénements",
+  "Contact": "Contact",
+  "Connection": "Connexion",
+
+  "event": "événement",
+  "project": "projet",
+
+	"Day": "Jour",
+	"Week": "Semaine",
+	"Month": "Mois",
+	"Today": "Aujourd'hui",
+
+	"infos": "infos",
+
+  "First Name": "Prénom",
+  "Last Name": "Nom de famille",
+  "Alias": "Pseudo",
+  "E-mail": "Email",
+  "Password": "Mot de passe",
+  "E-mail Confirmation": "Confirmation de l'email",
+  "Invalid E-mail adress": "Email non valide",
+  "Login": "Se connecter",
+  "Register": "S'inscrire",
+
+
+  "home":{
+
+  	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il ne se passe pas grand chose.",
+  	"unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
+  	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer."
+  },
+
+  "confirm":{
+  	"cancel": "Annuler"
+  },
+
+  "form":{
+  	"min_carac": "Min {n} caractères"
+  },
+
+  "actions":{
+  	"create": "Créer un {item}"
+  },
+
+  "data":{
+  	"empty": "Aucun {item} pour le moment",
+  	"empty_typed": "Aucun {item} de ce type pour le moment"
+  }
+
+}

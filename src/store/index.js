@@ -11,14 +11,14 @@ export default new Vuex.Store({
   namespaced: true,
 
   state: {
-    generalError: "",
+    app_alert: null,
     errors: [],
     windowWidth: window.innerWidth
   },
 
   getters: {
     errors: state => state.errors,
-    generalError: state => state.generalError
+    app_alert: state => state.app_alert
   },
 
   mutations: {
@@ -28,12 +28,14 @@ export default new Vuex.Store({
     setErrors(state, errors) {
       state.errors = errors;
     },
-    setGeneralError(state, generalError) {
-      state.generalError = generalError;
-      setTimeout(()=>{state.generalError = ''}, 5000)
+    setAlert(state, app_alert) {
+      state.app_alert = app_alert;
+      setTimeout(() => {
+        state.app_alert = null;
+      }, 5000);
     },
-    removeGeneralError(state){
-      state.generalError = '';
+    removeAlert(state) {
+      state.app_alert = null;
     }
   },
 

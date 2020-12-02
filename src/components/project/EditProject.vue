@@ -1,8 +1,6 @@
 <template>
   <v-card class="pt-7 pb-3 px-4">
-    <div 
-    class="card-body py-0" 
-    v-if="!pickingDate">
+    <div class="card-body py-0" v-if="!pickingDate">
       <v-form @submit.prevent="sendEdit" ref="form" v-model="form">
         <v-text-field
           outlined
@@ -28,8 +26,11 @@
           :rules="[v => !!v || 'Description obligatoire']"
         ></v-textarea>
 
-        <div v-if="editedProject.image && !editedProject.imageChanged" class="imgContainer">
-          <img :src="editedProject.image.thumb"/>
+        <div
+          v-if="editedProject.image && !editedProject.imageChanged"
+          class="imgContainer"
+        >
+          <img :src="editedProject.image.thumb" />
           <v-btn
             class="close"
             color="secondary"
@@ -42,41 +43,51 @@
           </v-btn>
         </div>
 
-        <v-file-input v-else
-           v-model="editedProject.file"
-           :rules="[v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB']"
-           accept="image/jpeg" 
-           label="Image"
-           @change="onFileChange"
-           prepend-icon="insert_photo"
+        <v-file-input
+          v-else
+          v-model="editedProject.file"
+          :rules="[
+            v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB'
+          ]"
+          accept="image/jpeg"
+          label="Image"
+          @change="onFileChange"
+          prepend-icon="insert_photo"
         />
 
         <v-chip-group column class="d-flex align-center">
-          <v-chip 
-          v-if="!editedProject.events || editedProject.events && !editedProject.events.length"
-          class="py-5"
-          @click="pickingDate=true">
+          <v-chip
+            v-if="
+              !editedProject.events ||
+                (editedProject.events && !editedProject.events.length)
+            "
+            class="py-5"
+            @click="pickingDate = true"
+          >
             Ajouter un évenement
           </v-chip>
-          <v-tooltip 
-          v-for="(event, index) in editedProject.events" 
-          :key="index" 
-          bottom>
+          <v-tooltip
+            v-for="(event, index) in editedProject.events"
+            :key="index"
+            bottom
+          >
             <template v-slot:activator="{ on }">
-              <v-chip 
-              class="event-chip py-6 mt-0" 
-              v-on="on"
-              close
-              @click:close="removeEvent(index)">
+              <v-chip
+                class="event-chip py-6 mt-0"
+                v-on="on"
+                close
+                @click:close="removeEvent(index)"
+              >
                 <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
                 <v-icon class="px-2" v-else>date_range</v-icon>
               </v-chip>
             </template>
-            <span>{{event.chip}}</span>
+            <span>{{ event.chip }}</span>
           </v-tooltip>
           <v-tooltip
-          v-if="editedProject.events && editedProject.events.length"
-          bottom>
+            v-if="editedProject.events && editedProject.events.length"
+            bottom
+          >
             <template v-slot:activator="{ on }">
               <v-btn
                 icon
@@ -85,7 +96,8 @@
                 v-on="on"
                 color="green"
                 v-if="showEvents"
-                @click="pickingDate=true">
+                @click="pickingDate = true"
+              >
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
@@ -93,48 +105,49 @@
           </v-tooltip>
         </v-chip-group>
 
-          <v-divider class="mb-0"></v-divider>
+        <v-divider class="mb-0"></v-divider>
 
         <v-card-actions class="actions d-flex justify-end">
           <v-spacer></v-spacer>
           <v-btn @click="closeEdit" :disabled="loading" text>
             Annuler
           </v-btn>
-          <v-btn color="primary" type="submit" :disabled="loading || !form" text>
+          <v-btn
+            color="primary"
+            type="submit"
+            :disabled="loading || !form"
+            text
+          >
             Confirmer
           </v-btn>
-        <v-progress-linear
-          v-if="loading"
-          color="green darken-4 accent-4"
-          indeterminate
-          rounded
-          height="6"
-          class="progress"
-        ></v-progress-linear>
+          <v-progress-linear
+            v-if="loading"
+            color="green darken-4 accent-4"
+            indeterminate
+            rounded
+            height="6"
+            class="progress"
+          ></v-progress-linear>
         </v-card-actions>
-
-
       </v-form>
     </div>
 
-    <ChooseDate 
-    class="choose-date"
-    v-if="pickingDate"
-    @closeDatePicker="closeDatePicker"
-    @addEvent="addEvent"/>
-
-
+    <ChooseDate
+      class="choose-date"
+      v-if="pickingDate"
+      @closeDatePicker="closeDatePicker"
+      @addEvent="addEvent"
+    />
   </v-card>
 </template>
 
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
-import ChooseDate from '@/components/project/ChooseDate.vue';
+import ChooseDate from "@/components/project/ChooseDate.vue";
 export default {
-
   name: "EditProject",
-  components:{
+  components: {
     ChooseDate
   },
 
@@ -154,7 +167,7 @@ export default {
 
   props: {
     propProject: Object,
-    showEvents: {type:Boolean, default:true}
+    showEvents: { type: Boolean, default: true }
   },
 
   watch: {
@@ -172,7 +185,7 @@ export default {
 
     sendEdit() {
       this.loading = true;
-      this.editedProject.projectOnly = !this.showEvents
+      this.editedProject.projectOnly = !this.showEvents;
       this.sendEditProject(this.editedProject)
         .then(() => {
           this.$emit("closeEdit");
@@ -183,71 +196,69 @@ export default {
         });
     },
 
-    closeDatePicker(){
-      this.pickingDate = false
+    closeDatePicker() {
+      this.pickingDate = false;
     },
 
-    addEvent(event){
-      this.editedProject.events.push(event)
+    addEvent(event) {
+      this.editedProject.events.push(event);
     },
 
-    removeEvent(index){
-      this.editedProject.events.splice(index, 1)
+    removeEvent(index) {
+      this.editedProject.events.splice(index, 1);
     },
 
     onFileChange() {
-      this.editedProject.imageChanged = true
+      this.editedProject.imageChanged = true;
       if (this.editedProject.file) {
-        const reader = new FileReader()
-        reader.readAsDataURL(this.editedProject.file)
+        const reader = new FileReader();
+        reader.readAsDataURL(this.editedProject.file);
         reader.onload = e => {
-            this.editedProject.image = e.target.result
-        }
-      }else{
-        this.editedProject.image = null
+          this.editedProject.image = e.target.result;
+        };
+      } else {
+        this.editedProject.image = null;
       }
     },
 
-    removeImage(){
-      this.editedProject.imageChanged = true
-      this.editedProject.image = null
+    removeImage() {
+      this.editedProject.imageChanged = true;
+      this.editedProject.image = null;
     }
   }
 };
 </script>
 
 <style scoped>
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
 
-  .progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+.choose-date,
+.card-body {
+  animation: fade-in 0.4s ease;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
   }
-
-  .choose-date, .card-body {
-    animation: fade-in 0.4s ease;
+  100% {
+    opacity: 1;
   }
+}
 
-  @keyframes fade-in {
-      0% {
-          opacity: 0;
-      }
-      100% {
-          opacity: 1;
-      }
-  }
+.imgContainer {
+  position: relative;
+  display: inline-block;
+}
 
-  .imgContainer{
-    position: relative;
-    display: inline-block;
-  }
-
-  .close{
-    position: absolute;
-    right: 3px;
-    top: 3px;
-  }
-
-
+.close {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
 </style>

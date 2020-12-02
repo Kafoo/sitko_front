@@ -39,7 +39,7 @@ export default {
           localStorage.removeItem("authToken");
         });
     },
-    
+
     sendLoginRequest({ commit }, data) {
       commit("setErrors", {}, { root: true });
       return axios

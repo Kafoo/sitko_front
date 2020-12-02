@@ -1,17 +1,10 @@
 <template>
-  <div 
-  v-if="!loading_place"
-  class="text-center" >
+  <div v-if="!loading_place" class="text-center">
+    <h1 class="mb-3">{{ place.name }}</h1>
 
-    <h1 class="mb-3">{{place.name}}</h1>
+    <img class="image" :src="place.image.medium" width="250px" />
 
-    <img class='image' 
-    :src="place.image.medium"
-    width="250px"
-    />
-
-    <h3 class="mt-6">{{place.description}}</h3>
-
+    <h3 class="mt-6">{{ place.description }}</h3>
   </div>
 </template>
 
@@ -21,23 +14,18 @@ import axios from "axios";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapGetters("place", ["place", 'loading_place']),
+    ...mapGetters("place", ["place", "loading_place"])
   },
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
 
 <style scoped>
-  
-  .image{
-    border-radius: 4px;
-    box-shadow: 0 0 5px black;
-  }
-
+.image {
+  border-radius: 4px;
+  box-shadow: 0 0 5px black;
+}
 </style>

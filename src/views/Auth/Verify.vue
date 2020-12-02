@@ -3,6 +3,7 @@
     <div class="alert alert-danger" role="alert" v-if="error">
       {{ error }}
     </div>
+
     <div v-else>
       <login v-if="!user" verification="email" v-on:verify="verify" />
     </div>

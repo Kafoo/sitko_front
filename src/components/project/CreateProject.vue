@@ -30,38 +30,41 @@
           v-model="newProject.description"
           :disabled="loading"
         ></v-textarea>
-        
 
         <v-file-input
-           v-model="newProject.file"
-           :rules="[v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB']"
-           accept="image/jpeg" 
-           label="Image"
-           @change="onFileChange"
-           prepend-icon="insert_photo"
+          v-model="newProject.file"
+          :rules="[
+            v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB'
+          ]"
+          accept="image/jpeg"
+          label="Image"
+          @change="onFileChange"
+          prepend-icon="insert_photo"
         />
 
         <v-chip-group column>
-          <v-tooltip 
-          v-for="(event, index) in newProject.events" 
-          :key="index" 
-          bottom>
+          <v-tooltip
+            v-for="(event, index) in newProject.events"
+            :key="index"
+            bottom
+          >
             <template v-slot:activator="{ on }">
-              <v-chip 
-              class="event-chip py-6 mt-0" 
-              v-on="on"
-              close
-              @click:close="removeEvent(index)">
+              <v-chip
+                class="event-chip py-6 mt-0"
+                v-on="on"
+                close
+                @click:close="removeEvent(index)"
+              >
                 <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
                 <v-icon class="px-2" v-else>date_range</v-icon>
               </v-chip>
             </template>
-            <span>{{event.chip}}</span>
+            <span>{{ event.chip }}</span>
           </v-tooltip>
         </v-chip-group>
 
         <v-card-actions class="d-flex justify-center">
-          <v-btn @click="pickingDate=true">Ajouter un événement</v-btn>
+          <v-btn @click="pickingDate = true">Ajouter un événement</v-btn>
         </v-card-actions>
 
         <v-card-actions class="d-flex justify-center">
@@ -72,7 +75,6 @@
             Valider
           </v-btn>
         </v-card-actions>
-
       </v-form>
       <v-progress-linear
         v-if="loading"
@@ -84,19 +86,19 @@
       ></v-progress-linear>
     </div>
 
-    <ChooseDate 
-    class="choose-date"
-    v-if="pickingDate"
-    @closeDatePicker="closeDatePicker"
-    @addEvent="addEvent"/>
-
+    <ChooseDate
+      class="choose-date"
+      v-if="pickingDate"
+      @closeDatePicker="closeDatePicker"
+      @addEvent="addEvent"
+    />
   </v-card>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import axios from "axios";
-import ChooseDate from '@/components/project/ChooseDate.vue';
+import ChooseDate from "@/components/project/ChooseDate.vue";
 
 export default {
   name: "CreateProject",
@@ -115,7 +117,7 @@ export default {
     };
   },
 
-  components:{
+  components: {
     ChooseDate
   },
 
@@ -123,19 +125,17 @@ export default {
     project: Object
   },
 
-  computed:{
-
-  },
+  computed: {},
 
   methods: {
     ...mapActions("project", ["sendCreateProject"]),
     cancel() {
-      this.resetProject()
+      this.resetProject();
       this.$refs.form.reset();
       this.$emit("closeCreation");
     },
 
-    resetProject(){
+    resetProject() {
       this.newProject = {
         place_id: this.place_id,
         events: []
@@ -148,31 +148,31 @@ export default {
         .then(() => {
           this.loading = false;
           this.$emit("closeCreation");
-          this.resetProject()
+          this.resetProject();
           this.$refs.form.reset();
         })
         .catch(() => {
           this.loading = false;
         });
     },
-    closeDatePicker(){
-      this.pickingDate = false
+    closeDatePicker() {
+      this.pickingDate = false;
     },
-    addEvent(event){
-      this.newProject.events.push(event)
+    addEvent(event) {
+      this.newProject.events.push(event);
     },
-    removeEvent(index){
-      this.newProject.events.splice(index, 1)
+    removeEvent(index) {
+      this.newProject.events.splice(index, 1);
     },
     onFileChange() {
       if (this.newProject.file) {
-        const reader = new FileReader()
-        reader.readAsDataURL(this.newProject.file)
+        const reader = new FileReader();
+        reader.readAsDataURL(this.newProject.file);
         reader.onload = e => {
-            this.newProject.image = e.target.result
-        }
-      }else{
-        this.newProject.image = undefined
+          this.newProject.image = e.target.result;
+        };
+      } else {
+        this.newProject.image = undefined;
       }
     }
   }
@@ -180,12 +180,10 @@ export default {
 </script>
 
 <style scoped>
-  
 .v-card--reveal {
   bottom: 0;
   opacity: 1 !important;
   position: absolute;
   width: 100%;
 }
-
 </style>

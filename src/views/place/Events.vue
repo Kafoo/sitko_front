@@ -7,7 +7,7 @@
         justify="center"
         align="center"
       >
-        Créer un événement
+        {{ $t('actions.create', { item: $t('event')}) }}
       </v-btn>
     </div>
 
@@ -20,11 +20,14 @@
 
     <!-- NO ACTIVE PROJECT -->
     <h4 v-if="!loading_projects && !projects.length" class="text-center">
-      - Il n'y a pas encore d'événement -
+      -- {{ $t('data.empty', { item: $t('event')}) }} --
     </h4>
 
-    <h4 v-else-if="!loading_projects && !activeProjects.length" class="text-center">
-      - Il n'y a pas encore d'événement -
+    <h4
+      v-else-if="!loading_projects && !activeEvents.length"
+      class="text-center"
+    >
+      -- {{ $t('data.empty_typed', { item: $t('event')}) }} --
     </h4>
 
     <!-- LOADINGS -->
@@ -44,37 +47,33 @@
         name="list-complete"
         tag="p"
       >
-
         <!-- INDEX -->
-        <div v-for="(project, index) in activeProjects"
-        :key="project.id"
-        class="list-complete-item">
+        <div
+          v-for="(project, index) in activeEvents"
+          :key="project.id"
+          class="list-complete-item"
+        >
           <CardProject
-          :project="project"
-          :index="index"
-          :expanded="project.expanded"
-          @toogleExpand="toogleExpand(project.id)"
-          @openEdit="openEdit"
-          @deleteProject="deleteProject"/>
+            :project="project"
+            :index="index"
+            :expanded="project.expanded"
+            @toogleExpand="toogleExpand(project.id)"
+            @openEdit="openEdit"
+            @deleteProject="deleteProject"
+          />
         </div>
       </transition-group>
 
       <!-- CREATION -->
       <v-dialog v-model="creating" width="500">
-        <CreateProject
-          @closeCreation="closeCreation"
-        />
+        <CreateProject @closeCreation="closeCreation" />
       </v-dialog>
 
       <!-- EDITION -->
       <v-dialog v-model="editing" width="500">
-        <EditProject
-          :propProject="editionProject"
-          @closeEdit="closeEdit"
-        />
+        <EditProject :propProject="editionProject" @closeEdit="closeEdit" />
       </v-dialog>
     </div>
-
   </div>
 </template>
 
@@ -92,12 +91,11 @@ export default {
     return {
       editing: false,
       creating: false,
-      types: ["tous les événements", "public", "perso", "détente"],
-      activeType: "tous les événements",
-      editionProject: {},
+      activeType: '',
+      editionProject: {}
     };
   },
-  
+
   components: {
     EditProject,
     CreateProject,
@@ -105,41 +103,58 @@ export default {
   },
 
   created() {
+    
+    this.activeType = this.types[0]
+
     if (location.hash) {
-      this.hash = location.hash
+      this.hash = location.hash;
     }
-    location.hash = ""
+    location.hash = "";
   },
 
-  watch:{
-    loading_projects: function(){
+  watch: {
+    loading_projects: function() {
       if (this.loading_projects === false) {
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           if (this.hash) {
-            var id = this.hash.slice(1)
-            this.toogleProjectExpand(id)
-            setTimeout(()=>{
-              document.getElementById(id).scrollIntoView({ 
-                behavior: 'smooth' 
+            var id = this.hash.slice(1);
+            this.toogleProjectExpand(id);
+            setTimeout(() => {
+              document.getElementById(id).scrollIntoView({
+                behavior: "smooth"
               });
-            }, 300)
+            }, 300);
           }
-        })
-
+        });
       }
+    },
+
+    //If locale changes, types change and so must activeType
+    types(){
+      this.activeType = this.types[0]
     }
+
   },
 
   computed: {
     ...mapGetters("project", ["loading_projects", "projects"]),
     ...mapGetters(["errors"]),
-    activeProjects(){
-      return []
+
+    types(){
+      return [this.$t('All'), "public", "perso", "détente"]
+    },
+
+    activeEvents() {
+      return [];
     }
   },
 
   methods: {
-    ...mapActions("project", ["getProjects", "deleteProject", "toogleProjectExpand"]),
+    ...mapActions("project", [
+      "getProjects",
+      "deleteProject",
+      "toogleProjectExpand"
+    ]),
     openEdit(index) {
       this.editionProject = this.projects[index];
       this.editing = true;
@@ -152,27 +167,25 @@ export default {
       this.creating = false;
     },
     toogleExpand(id) {
-      this.toogleProjectExpand(id)
+      this.toogleProjectExpand(id);
     }
   }
 };
 </script>
 
 <style scoped>
-
-  .list-complete-item {
-    transition: all 0.2s;
-  }
-  .list-complete-enter {
-    opacity: 0;
-    transform: translateX(-500px);
-  }
-  .list-complete-leave-to {
-    opacity: 0;
-    transform: translateX(500px);
-  }
-  .list-complete-leave-active {
-    position: absolute;
-  }
-
+.list-complete-item {
+  transition: all 0.2s;
+}
+.list-complete-enter {
+  opacity: 0;
+  transform: translateX(-500px);
+}
+.list-complete-leave-to {
+  opacity: 0;
+  transform: translateX(500px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
 </style>

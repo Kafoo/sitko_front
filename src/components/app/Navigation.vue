@@ -1,6 +1,7 @@
 <template>
   <div>
-    
+
+    <!-- Mobile drawer -->
     <v-navigation-drawer disable-resize-watcher v-model="drawer" app>
       <v-list>
         <v-list-item
@@ -15,12 +16,16 @@
       </v-list>
     </v-navigation-drawer>
 
+    <!-- Top bar -->
     <v-app-bar>
       <span class="hidden-sm-and-up">
         <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
       </span>
       <v-toolbar-title>
-        <v-app-bar-nav-icon @click="$router.push('/').catch(()=>{})" class="hidden-xs-only">
+        <v-app-bar-nav-icon
+          @click="$router.push('/').catch(() => {})"
+          class="hidden-xs-only"
+        >
           <v-img
             class="shrink mr-2"
             contain
@@ -33,6 +38,8 @@
           {{ appTitle }}
         </router-link>
       </v-toolbar-title>
+
+
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only" v-if="!loading">
         <v-btn
@@ -46,9 +53,14 @@
           {{ item.title }}
         </v-btn>
       </v-toolbar-items>
-    </v-app-bar>
-  </div>
 
+      <select class="flag-select" v-model="$i18n.locale">
+        <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{ lang }}</option>
+      </select>
+
+    </v-app-bar>
+
+  </div>
 </template>
 
 <script>
@@ -58,52 +70,50 @@ export default {
     return {
       appTitle: "Sitko",
       drawer: false,
-      menuItems: [
+      langs: ['fr', 'en'],
+    };
+  },
+  computed: {
+    ...mapGetters("auth", ["user", "loading"]),
+    ...mapGetters(["generalError"]),
+
+    menuItems() {
+      return [
         {
-          title: "Mes lieux",
+          title: this.$t('My places'),
           path: "/places",
           icon: "",
-          vshow: this.user },
+          vshow: this.user
+        },
         {
-          title: "Explorer",
+          title: this.$t('Explore'),
           path: "/explore",
           icon: "",
-          vshow: true },
+          vshow: true
+        },
         {
-          title: "Compte",
+          title: this.$t('Account'),
           path: "/account",
           icon: "",
           vshow: this.user
         },
         {
-          title: "Connexion",
+          title: this.$t('Connection'),
           path: "/login",
           icon: "",
           vshow: !this.user
         },
         {
-          title: "Inscription",
+          title: this.$t('Register'),
           path: "/register",
           icon: "",
           vshow: !this.user
         }
       ]
-    };
-  },
-  computed: {
-    ...mapGetters("auth", ["user", "loading"]),
-    ...mapGetters(["generalError"])
+    }
+
   },
   watch: {
-    //Watching if user for showing nav items
-    user: {
-      handler(newVal) {
-        this.menuItems.find(x => x.title === "Compte").vshow = newVal;
-        this.menuItems.find(x => x.title === "Mes lieux").vshow = newVal;
-        this.menuItems.find(x => x.title === "Connexion").vshow = !newVal;
-        this.menuItems.find(x => x.title === "Inscription").vshow = !newVal;
-      }
-    },
     $route(to) {
       document.title = to.meta.title || "Sitko";
     }
@@ -112,9 +122,26 @@ export default {
 </script>
 
 <style scoped>
-
 .navItem {
   animation: slide-up 0.4s ease;
+}*
+
+.flag-select{
+    border-radius: 5px;
+    padding: 0 4px 0 2px;
+    margin-left: 9px;
+    cursor: pointer;
+    font-size: 0.8em;
+    text-align: center;
+    -moz-text-align-last: center;
+    text-align-last: center;
+    color: #717171;
+    font-style: italic;
+    border: 1px solid grey;
+}
+
+.flag-select option{
+  cursor: pointer;
 }
 
 @keyframes slide-up {

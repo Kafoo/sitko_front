@@ -1,0 +1,44 @@
+{
+
+  "Hello": "Hello",
+  "Resend e-mail": "Resend e-mail",
+
+  "Logout": "Logout",
+  "Delete my account": "Delete my account",
+  "Are you sure ?": "Are you sure ?",
+  "Account deletion is definitive.": "Account deletion is definitive.",
+
+  "Delete": "Delete",
+
+  "My Account": "My Account",
+
+  "Account": "Account",
+  "Explore": "Explore",
+  "Places": "Places",
+
+  "E-mail Confirmation": "E-mail Confirmation",
+
+  "home":{
+  	"unauthenticated": "Hello, login or register to enjoy this wonderful website where you can't do much.",
+  	"unverified": "Your account has been registered. Now, you can confirm your e-mail adress via the link we sent you.",
+  	"verified": "Welcome in this wonderful website where some things are happening."
+  },
+
+  "confirm":{
+  	"cancel": "Cancel"
+  },
+
+  "form":{
+  	"min_carac": "At least {n} characters"
+  },
+
+  "actions":{
+  	"create": "New {item}"
+  },
+
+  "data":{
+  	"empty": "There is no {item} yet",
+  	"empty_typed": "There is no such {item} yet"
+  }
+
+}

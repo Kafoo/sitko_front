@@ -1,9 +1,9 @@
 <template>
-
   <div>
     <div
-    v-if="loading_events"
-    class="loading d-flex align-center justify-center">    
+      v-if="loading_events"
+      class="loading d-flex align-center justify-center"
+    >
       <v-progress-circular
         indeterminate
         :size="100"
@@ -13,54 +13,33 @@
 
     <v-row class="fill-height">
       <v-col>
-
         <v-sheet class="d-flex ma-4 mt-0">
-
-          <div 
-          class="d-flex flex-wrap flex-md-nowrap flex-shrink-1" 
-          style="min-width: 0">
-
-            <v-toolbar-title 
-            v-if="$refs.calendar" 
-            class="mt-1 mr-3">
+          <div
+            class="d-flex flex-wrap flex-md-nowrap flex-shrink-1"
+            style="min-width: 0"
+          >
+            <v-toolbar-title v-if="$refs.calendar" class="mt-1 mr-3">
               {{ $refs.calendar.title }}
             </v-toolbar-title>
 
-            <div> 
-              <v-btn
-                fab
-                text
-                small
-                color="grey darken-2"
-                @click="prev"
-              >
+            <div>
+              <v-btn fab text small color="grey darken-2" @click="prev">
                 <v-icon>
                   mdi-chevron-left
                 </v-icon>
               </v-btn>
-              <v-btn
-                fab
-                text
-                small
-                color="grey darken-2"
-                @click="next"
-              >
+              <v-btn fab text small color="grey darken-2" @click="next">
                 <v-icon>
                   mdi-chevron-right
                 </v-icon>
               </v-btn>
             </div>
-
           </div>
 
           <v-spacer></v-spacer>
 
           <div class="d-flex flex-wrap flex-md-nowrap justify-end">
-
-            <v-menu
-              bottom
-              right
-            >
+            <v-menu bottom right>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                   class="mb-2"
@@ -78,13 +57,13 @@
 
               <v-list>
                 <v-list-item @click="type = 'day'">
-                  <v-list-item-title>Day</v-list-item-title>
+                  <v-list-item-title>{{$t('Day')}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="type = 'week'">
-                  <v-list-item-title>Week</v-list-item-title>
+                  <v-list-item-title>{{$t('Week')}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="type = 'month'">
-                  <v-list-item-title>Month</v-list-item-title>
+                  <v-list-item-title>{{$t('Month')}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -95,11 +74,9 @@
               class="ml-4 ml-xs-0"
               @click="setToday"
             >
-              Aujourd'hui
+              {{$t('Today')}}
             </v-chip>
-
           </div>
-
         </v-sheet>
 
         <v-sheet height="600">
@@ -107,6 +84,7 @@
             ref="calendar"
             v-model="focus"
             color="primary"
+            :locale="$i18n.locale"
             :events="events"
             :event-color="getEventColor"
             :type="type"
@@ -121,43 +99,30 @@
             offset-x
             min-width="0"
           >
-            <v-card
-              color="grey lighten-4"
-
-              max-width="400px"
-              flat
-            >
-              <v-toolbar
-                :color="selectedEvent.color"
-                dark
-              >
+            <v-card color="grey lighten-4" max-width="400px" flat>
+              <v-toolbar :color="selectedEvent.color" dark>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                <span class="ml-2 font-italic">({{selectedEvent.frenchType}})</span>
+                <span class="ml-2 font-italic"
+                  >({{ selectedEvent.frenchType }})</span
+                >
               </v-toolbar>
 
-
               <v-card-text class="pb-0">
-                <v-clamp autoresize :max-lines="5"
-                class="description">
-                  {{selectedEvent.description}}
+                <v-clamp autoresize :max-lines="5" class="description">
+                  {{ selectedEvent.description }}
                 </v-clamp>
               </v-card-text>
-
 
               <v-card-actions>
                 <v-btn
                   text
                   color="primary"
-                  @click="$router.push('projects#'+selectedEvent.child.id)"
+                  @click="$router.push('projects#' + selectedEvent.child.id)"
                 >
-                  + infos
+                  + {{$t('infos')}}
                 </v-btn>
-                <v-btn
-                  text
-                  color="secondary"
-                  @click="selectedOpen = false"
-                >
-                  Fermer
+                <v-btn text color="secondary" @click="selectedOpen = false">
+                  {{$t('Close')}}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -165,52 +130,50 @@
         </v-sheet>
       </v-col>
     </v-row>
-
-
   </div>
 </template>
 
 <script>
-
 import axios from "axios";
 import { mapGetters, mapActions } from "vuex";
 import VClamp from "vue-clamp";
 
 export default {
-  components:{
+  components: {
     VClamp
   },
 
-  data(){
-    return{
+  data() {
+    return {
       place_id: this.$route.params.id,
-      focus: '',
-      type: 'month',
-      typeToLabel: {
-        month: 'Mois',
-        week: 'Semaine',
-        day: 'Jour'
-      },
+      focus: "",
+      type: "month",
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
-      oldEvents: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
-    }
+    };
   },
 
-  mounted () {
+  mounted() {
     //Force calendar to show month/year
-    this.$refs.calendar.move(0)
+    this.$refs.calendar.move(0);
   },
 
-  created () {
-    this.getEvents(this.place_id)
+  created() {
+    this.getEvents(this.place_id);
   },
 
   computed: {
     ...mapGetters("event", ["loading_events", "events"]),
+
+    typeToLabel(){
+      return{
+        month: this.$t('Month'),
+        week: this.$t('Week'),
+        day: this.$t('Day')
+      }
+    }
+
   },
 
   methods: {
@@ -222,49 +185,48 @@ export default {
     closeEdit() {
       this.editing = false;
       this.editionProject = {};
-      this.getEvents()
+      this.getEvents();
     },
-    viewDay ({ date }) {
-      this.focus = date
-      this.type = 'day'
+    viewDay({ date }) {
+      this.focus = date;
+      this.type = "day";
     },
-    getEventColor (event) {
-      return event.color
+    getEventColor(event) {
+      return event.color;
     },
-    setToday () {
-      this.focus = ''
+    setToday() {
+      this.focus = "";
     },
-    prev () {
-      this.$refs.calendar.prev()
+    prev() {
+      this.$refs.calendar.prev();
     },
-    next () {
-      this.$refs.calendar.next()
+    next() {
+      this.$refs.calendar.next();
     },
-    showEvent ({ nativeEvent, event }) {
+    showEvent({ nativeEvent, event }) {
       const open = () => {
-        this.selectedEvent = event
-        this.selectedElement = nativeEvent.target
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
         setTimeout(() => {
-          this.selectedOpen = true
-        }, 10)
-      }
+          this.selectedOpen = true;
+        }, 10);
+      };
 
       if (this.selectedOpen) {
-        this.selectedOpen = false
-        setTimeout(open, 10)
+        this.selectedOpen = false;
+        setTimeout(open, 10);
       } else {
-        open()
+        open();
       }
 
-      nativeEvent.stopPropagation()
+      nativeEvent.stopPropagation();
     }
-  },
-}
+  }
+};
 </script>
 
 <style scoped>
-
-.loading{
+.loading {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -273,6 +235,4 @@ export default {
   background-color: #0000001f;
   z-index: 2;
 }
-
-
 </style>

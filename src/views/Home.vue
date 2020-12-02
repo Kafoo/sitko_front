@@ -1,52 +1,57 @@
 <template>
-  <div class="home ma-5 d-flex justify-center">
+  <primary-content-body>
     <div class="alert alert-success" role="alert" v-if="success">
       {{ success }}
     </div>
     <div class="alert alert-danger" role="alert" v-if="error">
       {{ error }}
     </div>
-    <v-card class="pa-8 elevation-5"
-    width="80%"
-    max-width="800px">
-      <h3 v-if="!user" class="text-center">
-        Salut, connecte-toi ou créé un compte pour profiter de ce site
-        merveilleux où il ne se passe pas grand chose.
-      </h3>
-      <span v-else-if="!user.email_verified_at" class="text-center">
-        <h1>Coucou {{ user.name }} !</h1>
-        <h4>
-          Ton compte a bien été enregistré, maintenant, tu peux confirmer ton
-          mail via le lien que tu as reçu dans ta boîte de réception. Tu peux
-          aussi demander un nouveau mail de confirmation en cliquant
-          <a href="#" @click="verifyResend">ici</a>.
-        </h4>
-      </span>
-      <span v-else class="text-center">
-        <h1>Salut {{ user.name }} !</h1>
-        <h3>
-          Bienvenue dans ce merveilleux site où des choses commencent à se passer.
-        </h3>
-      </span>
 
-    </v-card>
-  </div>
+    <h3 v-if="!user" class="text-center">
+      {{ $t('home.unauthenticated') }}
+    </h3>
+    <span v-else-if="!user.email_verified_at" class="text-center">
+      <h1>{{ $t('Hello') }} {{ user.name }} !</h1>
+      <h4>
+        {{ $t('home.unverified') }}
+        <a href="#" @click="verifyResend">
+          {{ $t('Resend e-mail') }}
+        </a>
+      </h4>
+    </span>
+    <span v-else class="text-center">
+      <h1>{{ $t('Hello') }} {{ user.name }} !</h1>
+      <h3>
+        {{ $t('home.verified') }}
+      </h3>
+
+    </span>
+  </primary-content-body>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
+import PrimaryContentBody from "@/components/app/templates/PrimaryContentBody";
+
 export default {
   name: "Home",
+
+  components: {
+    PrimaryContentBody
+  },
+
   data() {
     return {
       success: null,
       error: null
     };
   },
+
   computed: {
     ...mapGetters("auth", ["user"])
   },
+
   methods: {
     ...mapActions("auth", ["sendVerifyResendRequest"]),
     verifyResend() {

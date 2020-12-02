@@ -8,7 +8,7 @@
         justify="center"
         align="center"
       >
-        Créer un projet
+        {{ $t('actions.create', { item: $t('project')}) }}
       </v-btn>
     </div>
 
@@ -21,11 +21,14 @@
 
     <!-- NO ACTIVE PROJECT -->
     <h4 v-if="!loading_projects && !projects.length" class="text-center">
-      - Il n'y a pas encore de projet -
+      -- {{ $t('data.empty', { item: $t('project')}) }} --
     </h4>
 
-    <h4 v-else-if="!loading_projects && !activeProjects.length" class="text-center">
-      - Il n'y a pas encore de projet de ce type -
+    <h4
+      v-else-if="!loading_projects && !activeProjects.length"
+      class="text-center"
+    >
+      -- {{ $t('data.empty_typed', { item: $t('project')}) }} --
     </h4>
 
     <!-- LOADINGS -->
@@ -45,48 +48,39 @@
         name="list-complete"
         tag="p"
       >
-
         <!-- INDEX -->
-        <div v-for="(project, index) in activeProjects"
-        :key="project.id"
-        class="list-complete-item">
+        <div
+          v-for="(project, index) in activeProjects"
+          :key="project.id"
+          class="list-complete-item"
+        >
           <CardProject
-          :project="project"
-          :index="index"
-          :expanded="project.expanded"
-          @toogleExpand="toogleExpand(project.id)"
-          @openEdit="openEdit"
-          @deleteProject="deleteProject"
-          @toogleImage="toogleImage"/>
+            :project="project"
+            :index="index"
+            :expanded="project.expanded"
+            @toogleExpand="toogleExpand(project.id)"
+            @openEdit="openEdit"
+            @deleteProject="deleteProject"
+            @toogleImage="toogleImage"
+          />
         </div>
       </transition-group>
 
       <!-- CREATION -->
       <v-dialog v-model="creating" width="500">
-        <CreateProject
-          @closeCreation="closeCreation"
-        />
+        <CreateProject @closeCreation="closeCreation" />
       </v-dialog>
 
       <!-- EDITION -->
       <v-dialog v-model="editing" width="500">
-        <EditProject
-          :propProject="editionProject"
-          @closeEdit="closeEdit"
-        />
+        <EditProject :propProject="editionProject" @closeEdit="closeEdit" />
       </v-dialog>
 
       <!-- IMAGE POPUP -->
-      <v-dialog v-model="expand_image" max-width="85%">
-        <image-popup
-        :image="expanded_image"
-        @toogleImage="toogleImage"
-        />
+      <v-dialog v-model="expand_image" width="90%">
+        <image-popup :image="expanded_image" @toogleImage="toogleImage" />
       </v-dialog>
-
-
     </div>
-
   </div>
 </template>
 
@@ -96,7 +90,7 @@ import axios from "axios";
 import EditProject from "@/components/project/EditProject.vue";
 import CreateProject from "@/components/project/CreateProject.vue";
 import CardProject from "@/components/project/CardProject.vue";
-import ImagePopup from '@/components/app/ImagePopup.vue'
+import ImagePopup from "@/components/app/ImagePopup.vue";
 
 export default {
 
@@ -117,98 +111,121 @@ export default {
       expanded_image: {},
       editing: false,
       creating: false,
-      types: ["tous les projets", "ferme", "écolieu", "autre"],
-      activeType: "tous les projets",
-      editionProject: {},
+      activeType: '',
+      editionProject: {}
     };
   },
 
   created() {
+
+    this.activeType = this.types[0]
+    
+    console.log(this)
     if (location.hash) {
-      this.hash = location.hash
+      this.hash = location.hash;
     }
-    location.hash = ""
+    location.hash = "";
     var data = {
       place_id: this.place_id,
       hash: this.hash
-    }
+    };
     this.getPlaceProjects(data);
+
   },
 
-  watch:{
+  watch: {
     //Slide to hashed project
-    loading_projects: function(){
+    loading_projects: function() {
       if (this.loading_projects === false) {
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           if (this.hash) {
-            var id = this.hash.slice(1)
-            this.toogleProjectExpand(id)
-            setTimeout(()=>{
-              document.getElementById(id).scrollIntoView({ 
-                behavior: 'smooth' 
+            var id = this.hash.slice(1);
+            this.toogleProjectExpand(id);
+            setTimeout(() => {
+              document.getElementById(id).scrollIntoView({
+                behavior: "smooth"
               });
-            }, 300)
+            }, 300);
           }
-        })
+        });
       }
+    },
+
+    //If locale changes, types change and so must activeType
+    types(){
+      this.activeType = this.types[0]
     }
+
   },
 
   computed: {
     ...mapGetters("project", ["loading_projects", "projects"]),
     ...mapGetters(["errors"]),
-    activeProjects(){
-      if (this.activeType === "tous les projets") {
-        return this.projects
-      }else{
-        return this.projects.filter((project)=>{
-          return project.type === this.activeType
-        })
+
+    types(){
+      return [this.$t('All'), "ferme", "écolieu", "autre"]
+    },
+
+    activeProjects() {
+      if (this.activeType === this.$t('All')) {
+        return this.projects;
+      } else {
+        return this.projects.filter(project => {
+          return project.type === this.activeType;
+        });
       }
     }
   },
 
   methods: {
-    ...mapActions("project", ["getPlaceProjects", "deleteProject", "toogleProjectExpand"]),
+    ...mapActions("project", [
+      "getPlaceProjects",
+      "deleteProject",
+      "toogleProjectExpand"
+    ]),
     ...mapMutations("project", ["closeExpands"]),
+
     openEdit(index) {
       this.editionProject = this.projects[index];
       this.editing = true;
     },
+
     closeEdit() {
       this.editing = false;
       this.editionProject = {};
     },
+
     closeCreation() {
       this.creating = false;
     },
-    toogleImage(img={}) {
+
+    toogleImage(img = {}) {
       this.expanded_image = img;
       this.expand_image = !this.expand_image;
     },
+
     toogleExpand(id = null) {
-      this.toogleProjectExpand(id)
+      this.toogleProjectExpand(id);
     }
   }
 };
-
 </script>
 
 <style scoped>
 
-  .list-complete-item {
-    transition: all 0.2s;
-  }
-  .list-complete-enter {
-    opacity: 0;
-    transform: translateX(-500px);
-  }
-  .list-complete-leave-to {
-    opacity: 0;
-    transform: translateX(500px);
-  }
-  .list-complete-leave-active {
-    position: absolute;
-  }
+.list-complete-item {
+  transition: all 0.2s;
+}
+.list-complete-enter {
+  opacity: 0;
+  transform: translateX(-500px);
+}
+.list-complete-leave-to {
+  opacity: 0;
+  transform: translateX(500px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
 
 </style>

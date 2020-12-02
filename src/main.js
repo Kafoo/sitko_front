@@ -4,15 +4,21 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 import vuetify from "./plugins/vuetify";
-Vue.use(vuetify)
+Vue.use(vuetify);
 
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import './assets/css/main.css';
+import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "./assets/css/main.css";
+import i18n from "./i18n";
 
 Vue.config.productionTip = false;
 
 axios.interceptors.response.use(
-  response => response,
+  response => {
+    /*    if (response.data.message) {
+      store.commit('setAlert', {type:'success', msg: response.data.message})  
+    }*/
+    return response;
+  },
   error => {
     if (error.response.status === 422) {
       store.commit("setErrors", error.response.data.errors);
@@ -22,9 +28,15 @@ axios.interceptors.response.use(
       router.push({ name: "Login" });
     } else {
       if (error.response.data.custom) {
-        store.commit('setGeneralError', error.response.data.message)
-      }else{
-        store.commit('setGeneralError', 'Petit problème de serveur')        
+        store.commit("setAlert", {
+          type: "error",
+          msg: error.response.data.message
+        });
+      } else {
+        store.commit("setAlert", {
+          type: "error",
+          msg: "Petit problème de serveur"
+        });
       }
       return Promise.reject(error);
     }
@@ -44,5 +56,6 @@ new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount("#app");
