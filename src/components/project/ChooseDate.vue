@@ -3,32 +3,36 @@
     <div class="d-flex justify-space-around" width="100%">
       <v-switch
         class="mx-6"
-        v-model="singleDate"
-        label="Date unique"
-      ></v-switch>
-      <v-switch class="mx-6" v-model="timed" label="Horaires"></v-switch>
+        v-model="uniqueDate"
+        :label="$t('time.unique_date') | capitalize">
+      </v-switch>
+      <v-switch 
+        class="mx-6" 
+        v-model="timed" 
+        :label="$t('time.timed') | capitalize">
+      </v-switch>
     </div>
 
-    <v-date-picker
-      v-show="singleDate"
-      v-model="event.date"
-      mode="datetime"
-      is24hr
-    />
-    <v-date-picker
-      v-show="!singleDate"
-      v-model="event.range"
+    <v-date-picker 
+      v-show="uniqueDate" 
+      v-model="event.date" 
+      mode="datetime" 
+      is24hr 
+    /> 
+    <v-date-picker 
+      v-show="!uniqueDate" 
+      v-model="event.range" 
       is-range
-      mode="datetime"
-      is24hr
+      mode="datetime" 
+      is24hr 
     />
 
     <v-card-actions class="mt-3">
       <v-btn @click="$emit('closeDatePicker')">
-        Annuler
+        {{$t('confirm.cancel')}}
       </v-btn>
       <v-btn @click="confirm">
-        Valider
+        {{$t('confirm.confirm')}}
       </v-btn>
     </v-card-actions>
   </div>
@@ -40,7 +44,9 @@ import VDatePicker from "v-calendar/lib/components/date-picker.umd";
 import Event from "@/models/eventClass";
 
 export default {
+
   name: "ChooseDate",
+
   data() {
     var now = new Date();
     now.setHours(now.getHours() + Math.round(now.getMinutes() / 60) + 1);
@@ -50,7 +56,7 @@ export default {
 
     return {
       timed: true,
-      singleDate: true,
+      uniqueDate: true,
       event: {
         date: now,
         range: {
@@ -60,10 +66,13 @@ export default {
       }
     };
   },
+
   components: {
     VDatePicker
   },
+
   props: {},
+
   watch: {
     timed(value) {
       if (value == true) {
@@ -73,6 +82,7 @@ export default {
       }
     }
   },
+
   methods: {
     formatDT(dateTime) {
       if (typeof dateTime !== Object) {
@@ -92,12 +102,13 @@ export default {
         dateTime.getSeconds();
       return date + " " + time;
     },
+
     confirm() {
       var newEvent = {};
       newEvent.place_id = this.$route.params.id;
       newEvent.timed = this.timed;
 
-      if (this.singleDate) {
+      if (this.uniqueDate) {
         newEvent.start = this.formatDT(this.event.date);
         newEvent.end = this.formatDT(this.event.date);
       } else {

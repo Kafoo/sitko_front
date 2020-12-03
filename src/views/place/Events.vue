@@ -141,7 +141,7 @@ export default {
     ...mapGetters(["errors"]),
 
     types(){
-      return [this.$t('All'), "public", "perso", "détente"]
+      return [this.$t('all'), "public", "perso", "détente"]
     },
 
     activeEvents() {

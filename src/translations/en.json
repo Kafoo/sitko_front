@@ -1,44 +1,53 @@
 {
 
-  "Hello": "Hello",
-  "Resend e-mail": "Resend e-mail",
+  "password": "password | passwords",
 
-  "Logout": "Logout",
-  "Delete my account": "Delete my account",
-  "Are you sure ?": "Are you sure ?",
-  "Account deletion is definitive.": "Account deletion is definitive.",
-
-  "Delete": "Delete",
-
-  "My Account": "My Account",
-
-  "Account": "Account",
-  "Explore": "Explore",
-  "Places": "Places",
-
-  "E-mail Confirmation": "E-mail Confirmation",
-
-  "home":{
+  "home_page":{
   	"unauthenticated": "Hello, login or register to enjoy this wonderful website where you can't do much.",
   	"unverified": "Your account has been registered. Now, you can confirm your e-mail adress via the link we sent you.",
   	"verified": "Welcome in this wonderful website where some things are happening."
   },
 
   "confirm":{
-  	"cancel": "Cancel"
+  	"cancel": "cancel",
+    "confirm": "confirm",
+    "close": "close",
+    "sure": "are you sure ?"
   },
 
   "form":{
-  	"min_carac": "At least {n} characters"
+  	"min_carac": "at least {n} characters",
+    "required":"required",
+    "unvalid": "{item} must be valid",
+    "differents": "{items} are differents",
+    "optional": "optional",
+    "required": "required"
   },
 
   "actions":{
-  	"create": "New {item}"
+  	"create": "new {item}",
+    "new": "new {item}",
+    "add": "add {item}"
   },
 
   "data":{
   	"empty": "There is no {item} yet",
   	"empty_typed": "There is no such {item} yet"
+  },
+
+  "count":{
+    "hearthlings":"{n} hearthlings",
+    "currentProjects":"{n} current projects",
+    "tags": "{n} tags"
+  },
+
+  "time":{
+    "unique_date": "unique date",
+    "timed": "timed"
+  },
+
+  "media":{
+    "max_size": "size limit : {max}"
   }
 
 }

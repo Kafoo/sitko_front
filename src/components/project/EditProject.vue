@@ -4,26 +4,26 @@
       <v-form @submit.prevent="sendEdit" ref="form" v-model="form">
         <v-text-field
           outlined
-          label="Titre"
+          :label="$t('title') | capitalize"
           v-model="editedProject.title"
-          :rules="[v => !!v || 'Titre obligatoire']"
+          :rules="[rules.required]"
         ></v-text-field>
         <v-select
-          label="Type"
+          :label="$t('type') | capitalize"
           type="type"
           id="type"
           :items="types"
-          :rules="[v => !!v || 'Type obligatoire']"
+          :rules="[rules.required]"
           solo
           max-width="200px"
           v-model="editedProject.type"
         ></v-select>
         <v-textarea
           outlined
+          :label="$t('description') | capitalize"
           name="input-7-4"
-          label="Description"
           v-model="editedProject.description"
-          :rules="[v => !!v || 'Description obligatoire']"
+          :rules="[rules.required]"
         ></v-textarea>
 
         <div
@@ -46,16 +46,15 @@
         <v-file-input
           v-else
           v-model="editedProject.file"
-          :rules="[
-            v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB'
-          ]"
+          :rules="[rules.image]"
           accept="image/jpeg"
-          label="Image"
+          :label="$t('image') | capitalize"
           @change="onFileChange"
           prepend-icon="insert_photo"
         />
 
         <v-chip-group column class="d-flex align-center">
+
           <v-chip
             v-if="
               !editedProject.events ||
@@ -64,8 +63,9 @@
             class="py-5"
             @click="pickingDate = true"
           >
-            Ajouter un évenement
+            {{$t('actions.add', {item:$t('event')}) | capitalize}}
           </v-chip>
+
           <v-tooltip
             v-for="(event, index) in editedProject.events"
             :key="index"
@@ -84,6 +84,7 @@
             </template>
             <span>{{ event.chip }}</span>
           </v-tooltip>
+
           <v-tooltip
             v-if="editedProject.events && editedProject.events.length"
             bottom
@@ -101,7 +102,9 @@
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
-            <span>Ajouter un événement</span>
+            <span>
+              {{$t('actions.add', {item:$t('event')}) | capitalize}}
+            </span>
           </v-tooltip>
         </v-chip-group>
 
@@ -110,7 +113,7 @@
         <v-card-actions class="actions d-flex justify-end">
           <v-spacer></v-spacer>
           <v-btn @click="closeEdit" :disabled="loading" text>
-            Annuler
+            {{$t('confirm.cancel')}}
           </v-btn>
           <v-btn
             color="primary"
@@ -118,7 +121,7 @@
             :disabled="loading || !form"
             text
           >
-            Confirmer
+            {{$t('confirm.confirm')}}
           </v-btn>
           <v-progress-linear
             v-if="loading"
@@ -168,6 +171,17 @@ export default {
   props: {
     propProject: Object,
     showEvents: { type: Boolean, default: true }
+  },
+
+  computed:{
+    rules(){
+      return {
+        required: v => !!v || 
+        this.$options.filters.capitalize(this.$t('form.required')),
+        image: v => !v || v.size < 3000000 || 
+        this.$options.filters.capitalize(this.$t('media.max_size', {max:'3 MB'}))
+      }
+    }
   },
 
   watch: {

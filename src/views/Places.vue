@@ -1,6 +1,6 @@
 <template>
   <primary-content-body>
-    <h1 class="mb-8">{{$t('Places')}}</h1>
+    <h1 class="mb-8">{{$t('my places') | camelize}}</h1>
 
     <div v-if="loading_places" class="d-flex flex-wrap justify-center">
       <v-skeleton-loader

@@ -8,21 +8,21 @@
     </div>
 
     <h3 v-if="!user" class="text-center">
-      {{ $t('home.unauthenticated') }}
+      {{ $t('home_page.unauthenticated') }}
     </h3>
     <span v-else-if="!user.email_verified_at" class="text-center">
-      <h1>{{ $t('Hello') }} {{ user.name }} !</h1>
+      <h1>{{ $t('hello') | capitalize }} {{ user.name }} !</h1>
       <h4>
-        {{ $t('home.unverified') }}
+        {{ $t('home_page.unverified') }}
         <a href="#" @click="verifyResend">
-          {{ $t('Resend e-mail') }}
+          {{ $t('resend e-mail') | capitalize }}
         </a>
       </h4>
     </span>
     <span v-else class="text-center">
-      <h1>{{ $t('Hello') }} {{ user.name }} !</h1>
+      <h1>{{ $t('hello') }} {{ user.name }} !</h1>
       <h3>
-        {{ $t('home.verified') }}
+        {{ $t('home_page.verified') }}
       </h3>
 
     </span>
@@ -59,10 +59,10 @@ export default {
       this.sendVerifyResendRequest()
         .then(() => {
           this.success =
-            "A fresh verification link has been sent to your email address.";
+            this.$t("A fresh verification link has been sent to your email address.");
         })
         .catch(error => {
-          this.error = "Error sending verification link.";
+          this.error = this.$t("Error sending verification link.");
           console.log(error.response);
         });
     }

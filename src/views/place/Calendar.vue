@@ -57,13 +57,13 @@
 
               <v-list>
                 <v-list-item @click="type = 'day'">
-                  <v-list-item-title>{{$t('Day')}}</v-list-item-title>
+                  <v-list-item-title>{{$t('day') | capitalize}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="type = 'week'">
-                  <v-list-item-title>{{$t('Week')}}</v-list-item-title>
+                  <v-list-item-title>{{$t('week') | capitalize}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="type = 'month'">
-                  <v-list-item-title>{{$t('Month')}}</v-list-item-title>
+                  <v-list-item-title>{{$t('month') | capitalize}}</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -74,7 +74,7 @@
               class="ml-4 ml-xs-0"
               @click="setToday"
             >
-              {{$t('Today')}}
+              {{$t('today') | capitalize}}
             </v-chip>
           </div>
         </v-sheet>
@@ -122,7 +122,7 @@
                   + {{$t('infos')}}
                 </v-btn>
                 <v-btn text color="secondary" @click="selectedOpen = false">
-                  {{$t('Close')}}
+                  {{$t('confirm.close')}}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -168,9 +168,9 @@ export default {
 
     typeToLabel(){
       return{
-        month: this.$t('Month'),
-        week: this.$t('Week'),
-        day: this.$t('Day')
+        month: this.$options.filters.capitalize(this.$t('month')),
+        week: this.$options.filters.capitalize(this.$t('week')),
+        day: this.$options.filters.capitalize(this.$t('day'))
       }
     }
 

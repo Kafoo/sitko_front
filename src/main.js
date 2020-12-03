@@ -12,6 +12,26 @@ import i18n from "./i18n";
 
 Vue.config.productionTip = false;
 
+Vue.filter('capitalize', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
+Vue.filter('camelize', function (value) {
+  if (!value) return ''
+  value = value.toString()
+  var parts = value.split(' ')
+  value = ''
+  parts.forEach(function(part, index){
+    value += part.charAt(0).toUpperCase() + part.slice(1)
+    if (index < parts.length - 1 ) {
+      value += ' '
+    }
+  })
+  return value
+})
+
 axios.interceptors.response.use(
   response => {
     /*    if (response.data.message) {

@@ -41,27 +41,27 @@ export default {
     subNavItems(){
       return [
         {
-          title: this.$t('Home'),
+          title: this.$t('home'),
           path: "/place/" + this.$route.params.id + "/overview",
           icon: "home"
         },
         {
-          title: this.$t('Calendar'),
+          title: this.$t('calendar'),
           path: "/place/" + this.$route.params.id + "/calendar",
           icon: "event"
         },
         {
-          title: this.$t('Projects'),
+          title: this.$t('projects'),
           path: "/place/" + this.$route.params.id + "/projects",
           icon: "handyman"
         },
         {
-          title: this.$t('Events'),
+          title: this.$t('events'),
           path: "/place/" + this.$route.params.id + "/events",
           icon: "star"
         },
         {
-          title: this.$t('Contact'),
+          title: this.$t('contact'),
           path: "/place/" + this.$route.params.id + "/contact",
           icon: "contact_support"
         }

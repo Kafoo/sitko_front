@@ -1,18 +1,18 @@
 <template>
   <primary-content-body>
-    <h1>{{$t('My Account')}}</h1>
+    <h1>{{$t('my account') | camelize}}</h1>
     <v-btn class="d-block my-4" color="grey" dark @click="logout">
-      {{$t('Logout')}}
+      {{$t('logout')}}
     </v-btn>
 
     <v-btn class="d-block" color="red" dark @click="dialog = true">
-      {{$t('Delete my account')}}
+      {{$t('delete my account')}}
     </v-btn>
 
     <v-dialog v-model="dialog" width="500">
       <v-card class="pt-7 pb-3">
         <v-card-text class="text-h6">
-          {{$t('Are you sure ?')}}<br>
+          {{$t('confirm.sure') | capitalize}}<br>
           {{$t('Account deletion is definitive.')}}
         </v-card-text>
 
@@ -29,7 +29,7 @@
             {{$t('confirm.cancel')}}
           </v-btn>
           <v-btn color="red" text @click="deleteUser()" :disabled="loading">
-            {{$t('Delete')}}
+            {{$t('delete')}}
           </v-btn>
         </v-card-actions>
         <v-progress-linear

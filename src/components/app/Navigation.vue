@@ -80,31 +80,31 @@ export default {
     menuItems() {
       return [
         {
-          title: this.$t('My places'),
+          title: this.$t('my places'),
           path: "/places",
           icon: "",
           vshow: this.user
         },
         {
-          title: this.$t('Explore'),
+          title: this.$t('explore'),
           path: "/explore",
           icon: "",
           vshow: true
         },
         {
-          title: this.$t('Account'),
+          title: this.$t('account'),
           path: "/account",
           icon: "",
           vshow: this.user
         },
         {
-          title: this.$t('Connection'),
+          title: this.$t('connection'),
           path: "/login",
           icon: "",
           vshow: !this.user
         },
         {
-          title: this.$t('Register'),
+          title: this.$t('register'),
           path: "/register",
           icon: "",
           vshow: !this.user

@@ -30,10 +30,15 @@
             </v-card-title>
 
             <v-chip-group column>
-              <v-chip small class="c-default"><b>12 terriens</b></v-chip>
-              <v-chip small class="c-default">6 projets en cours</v-chip>
-              <v-chip small class="c-default" color="blue lighten-2"
-                >4 tags</v-chip
+              <v-chip small class="c-default">
+                <b>{{$t('count.hearthlings',{n:'12'})}}</b>
+              </v-chip>
+              <v-chip small class="c-default">
+                {{$t('count.currentProjects',{n:'6'})}}
+              </v-chip>
+              <v-chip small class="c-default" color="blue lighten-2">
+                {{$t('count.tags',{n:'4'})}}
+              </v-chip
               >
             </v-chip-group>
           </v-card-text>
@@ -44,8 +49,9 @@
               small
               text
               color="primary"
-              :to="'/place/' + place.id + '/overview'"
-              >Entrer</v-btn
+              :to="'/place/' + place.id + '/overview'">
+                {{$t('enter')}}
+              </v-btn
             >
             <v-btn small icon class="mr-2">
               <v-icon color="red">exit_to_app</v-icon>

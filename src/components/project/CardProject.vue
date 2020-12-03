@@ -108,7 +108,7 @@
       <v-dialog v-model="deleting" width="500">
         <v-card class="pt-7 pb-3">
           <v-card-text class="text-h6">
-            Ce projet sera définitivement supprimé
+            {{$t('This project will be removed definitely')}}            
           </v-card-text>
 
           <v-divider></v-divider>
@@ -116,10 +116,10 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="deleting = false">
-              Annuler
+              {{$t('confirm.cancel')}}
             </v-btn>
             <v-btn color="red" text @click="$emit('deleteProject', project.id)">
-              Supprimer
+              {{$t('delete')}}
             </v-btn>
           </v-card-actions>
         </v-card>

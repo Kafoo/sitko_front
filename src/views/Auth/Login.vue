@@ -3,7 +3,7 @@
     <v-card-text>
       <v-form ref="loginForm" v-model="valid" @submit.prevent="login">
         <div v-if="verification" class="form-group text-md-center">
-          <span class="h2">{{$t('E-mail Confirmation')}}</span>
+          <span class="h2">{{$t('e-mail confirmation') | camelize}}</span>
         </div>
         <v-row dense>
 
@@ -13,8 +13,7 @@
               id="email"
               v-model="form.email"
               :rules="emailRules"
-              :label="$t('E-mail')"
-              required
+              :label="$options.filters.capitalize($t('e-mail'))"
             ></v-text-field>
           </v-col>
 
@@ -27,7 +26,7 @@
               :type="show1 ? 'text' : 'password'"
               name="input-10-1"
               :label="$t('Password')"
-              hint="At least 8 characters"
+              :hint="$options.filters.capitalize($t('form.min_carac', {n:'8'}))"
               counter
               @click:append="show1 = !show1"
             ></v-text-field>
@@ -79,20 +78,29 @@ export default {
   },
 
   data: function() {
+
     return {
-      valid: false,
+
       form: {
         password: "",
         email: ""
       },
+
       emailRules: [
-        v => !!v || "Required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        v => !!v || 
+        this.$options.filters.capitalize(this.$t('form.required')),
+        v => /.+@.+\..+/.test(v) || 
+        this.$options.filters.capitalize(this.$t('form.unvalid', {item:this.$t('e-mail')}))
       ],
+
       rules: {
-        required: value => !!value || "Requis",
-        min: v => (v && v.length >= 8) || "Min 8 caractères"
+        required: value => !!value || 
+        this.$options.filters.capitalize(this.$t('form.required')),
+        min: v => (v && v.length >= 8) || 
+        this.$options.filters.capitalize(this.$t('form.min_carac', {n:'8'}))
       },
+
+      valid: false,
       show1: false,
       loading: false
     };

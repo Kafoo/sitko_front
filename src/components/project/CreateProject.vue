@@ -1,31 +1,40 @@
 <template>
   <v-card class="pt-7 pb-3 px-4">
     <div class="card-body" v-if="!pickingDate">
-      <v-form @submit.prevent="createProject" ref="form" v-model="form">
-        <label for="title" class="h3 mb-5">Nouveau Projet</label>
+      <v-form 
+      @submit.prevent="createProject" 
+      ref="form" 
+      v-model="form">
+        <div class="mb-4">
+          <label 
+          for="title"
+          class="title">
+            {{$t('actions.new', {item:$t('project')}) | camelize}}
+          </label>
+        </div>
         <v-text-field
-          label="Titre"
+          :label="$t('title') | capitalize"
           outlined
-          :rules="[v => !!v || 'Titre obligatoire']"
+          :rules="[rules.required]"
           v-model="newProject.title"
           :disabled="loading"
         ></v-text-field>
         <v-select
-          label="Type"
+          :label="$t('type') | capitalize"
           type="type"
           id="type"
           :items="types"
-          :rules="[v => !!v || 'Type obligatoire']"
+          :rules="[rules.required]"
           solo
           max-width="200px"
           v-model="newProject.type"
         ></v-select>
         <v-textarea
-          label="Description"
+          :label="$t('description') | capitalize"
           type="description"
           id="description"
           outlined
-          :rules="[v => !!v || 'Description obligatoire']"
+          :rules="[rules.required]"
           name="input-7-4"
           v-model="newProject.description"
           :disabled="loading"
@@ -33,16 +42,26 @@
 
         <v-file-input
           v-model="newProject.file"
-          :rules="[
-            v => !v || v.size < 2000000 || 'Poids maximal de l\'image : 2 MB'
-          ]"
+          :label="$t('image') | capitalize"
+          :rules="[rules.image]"
           accept="image/jpeg"
-          label="Image"
           @change="onFileChange"
           prepend-icon="insert_photo"
         />
 
         <v-chip-group column>
+
+          <v-chip
+            v-if="
+              !newProject.events ||
+                (newProject.events && !newProject.events.length)
+            "
+            class="py-5"
+            @click="pickingDate = true"
+          >
+            {{$t('actions.add', {item:$t('event')}) | capitalize}}
+          </v-chip>
+
           <v-tooltip
             v-for="(event, index) in newProject.events"
             :key="index"
@@ -61,18 +80,36 @@
             </template>
             <span>{{ event.chip }}</span>
           </v-tooltip>
+
+          <v-tooltip
+            v-if="newProject.events && newProject.events.length"
+            bottom
+          >
+            <template v-slot:activator="{ on }">
+              <v-btn
+                icon
+                height="45"
+                width="45"
+                v-on="on"
+                color="green"
+                @click="pickingDate = true"
+              >
+                <v-icon>add</v-icon>
+              </v-btn>
+            </template>
+            <span>
+              {{$t('actions.add', {item:$t('event')}) | capitalize}}
+            </span>
+          </v-tooltip>
+
         </v-chip-group>
 
         <v-card-actions class="d-flex justify-center">
-          <v-btn @click="pickingDate = true">Ajouter un événement</v-btn>
-        </v-card-actions>
-
-        <v-card-actions class="d-flex justify-center">
           <v-btn @click="cancel" :disabled="loading">
-            Annuler
+            {{$t('confirm.cancel')}}
           </v-btn>
           <v-btn type="submit" :disabled="loading || !form">
-            Valider
+            {{$t('confirm.confirm')}}
           </v-btn>
         </v-card-actions>
       </v-form>
@@ -125,7 +162,18 @@ export default {
     project: Object
   },
 
-  computed: {},
+  computed: {
+
+    rules(){
+      return {
+        required: v => !!v || 
+        this.$options.filters.capitalize(this.$t('form.required')),
+        image: v => !v || v.size < 3000000 || 
+        this.$options.filters.capitalize(this.$t('media.max_size', {max:'3 MB'}))
+      }
+    }
+
+  },
 
   methods: {
     ...mapActions("project", ["sendCreateProject"]),

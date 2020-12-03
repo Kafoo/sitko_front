@@ -11,7 +11,7 @@
                 autocomplete="disabled"
                 v-model="form.name"
                 :rules="[rules.required]"
-                :label="$t('First Name')+' / '+$t('Alias')"
+                :label="labels.firstName"
                 maxlength="20"
                 required
               ></v-text-field>
@@ -24,7 +24,7 @@
                 outlined
                 autocomplete="disabled"
                 v-model="form.last_name"
-                :label="$t('Last Name') +' ('+$t('optional', capitalize)+')'"
+                :label="labels.lastName"
                 maxlength="20"
                 required
               ></v-text-field>
@@ -36,7 +36,7 @@
                 id="email"
                 v-model="form.email"
                 :rules="emailRules"
-                :label="$t('E-mail')"
+                :label="$options.filters.capitalize($t('e-mail'))"
                 required
               ></v-text-field>
             </v-col>
@@ -50,8 +50,8 @@
                 :rules="[rules.required, rules.min]"
                 :type="show1 ? 'text' : 'password'"
                 name="input-10-1"
-                :label="$t('Password')"
-                :hint="this.$t('form.min_carac', {n:'8'})"
+                :label="$options.filters.capitalize($t('password'))"
+                :hint="$options.filters.capitalize($t('form.min_carac', {n:'8'}))"
                 counter
                 @click:append="show1 = !show1"
               ></v-text-field>
@@ -67,7 +67,7 @@
                 :rules="[rules.required, passwordMatch]"
                 :type="show1 ? 'text' : 'password'"
                 name="input-10-1"
-                :label="$t('Confirmation')"
+                :label="$options.filters.capitalize($t('confirmation'))"
                 counter
                 @click:append="show1 = !show1"
               ></v-text-field>
@@ -135,22 +135,38 @@ export default {
     passwordMatch() {
       return () =>
         this.form.password === this.form.password_confirmation ||
-        "Les mots de passe sont différents";
+        this.$options.filters.capitalize(this.$t('form.differents', {items: this.$tc('password', 2)}));
     },
 
     emailRules() {
       return [
-        v => !!v || this.$t('Required'),
-        v => /.+@.+\..+/.test(v) || this.$t('Invalid E-mail adress')
+        v => !!v || 
+        this.$options.filters.capitalize(this.$t('form.required')),
+        v => /.+@.+\..+/.test(v) || 
+         this.$options.filters.capitalize(this.$t('form.unvalid', {item:this.$t('e-mail')}))
       ]
     },
 
     rules() {
       return {
-        required: value => !!value || this.$t('Required'),
-        min: v => (v && v.length >= 8) || this.$t('form.min_carac', {n:'8'})
+        required: value => !!value || 
+        this.$options.filters.capitalize(this.$t('form.required')),
+        min: v => (v && v.length >= 8) || 
+        this.$options.filters.capitalize(this.$t('form.min_carac', {n:'8'}))
       }
     },
+
+    labels(){
+      return {
+        firstName: this.$options.filters.capitalize(this.$t('first name'))
+                  +' / '
+                  +this.$options.filters.capitalize(this.$t('alias')),
+        lastName: this.$options.filters.capitalize(this.$t('last name')) 
+                  +' ('
+                  +this.$t('form.optional')
+                  +')'
+      }
+    }
 
   },
 

@@ -120,7 +120,6 @@ export default {
 
     this.activeType = this.types[0]
     
-    console.log(this)
     if (location.hash) {
       this.hash = location.hash;
     }
@@ -163,11 +162,11 @@ export default {
     ...mapGetters(["errors"]),
 
     types(){
-      return [this.$t('All'), "ferme", "écolieu", "autre"]
+      return [this.$t('all'), "ferme", "écolieu", "autre"]
     },
 
     activeProjects() {
-      if (this.activeType === this.$t('All')) {
+      if (this.activeType === this.$t('all')) {
         return this.projects;
       } else {
         return this.projects.filter(project => {
