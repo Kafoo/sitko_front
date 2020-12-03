@@ -41,27 +41,27 @@ export default {
     subNavItems(){
       return [
         {
-          title: this.$t('home'),
+          title: this.$options.filters.capitalize(this.$t('home')),
           path: "/place/" + this.$route.params.id + "/overview",
           icon: "home"
         },
         {
-          title: this.$t('calendar'),
+          title: this.$options.filters.capitalize(this.$t('calendar')),
           path: "/place/" + this.$route.params.id + "/calendar",
           icon: "event"
         },
         {
-          title: this.$t('projects'),
+          title: this.$options.filters.capitalize(this.$t('projects')),
           path: "/place/" + this.$route.params.id + "/projects",
           icon: "handyman"
         },
         {
-          title: this.$t('events'),
+          title: this.$options.filters.capitalize(this.$t('events')),
           path: "/place/" + this.$route.params.id + "/events",
           icon: "star"
         },
         {
-          title: this.$t('contact'),
+          title: this.$options.filters.capitalize(this.$t('contact')),
           path: "/place/" + this.$route.params.id + "/contact",
           icon: "contact_support"
         }

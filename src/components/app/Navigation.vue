@@ -80,31 +80,31 @@ export default {
     menuItems() {
       return [
         {
-          title: this.$t('my places'),
+          title: this.$options.filters.capitalize(this.$t('my places')),
           path: "/places",
           icon: "",
           vshow: this.user
         },
         {
-          title: this.$t('explore'),
+          title: this.$options.filters.capitalize(this.$t('explore')),
           path: "/explore",
           icon: "",
           vshow: true
         },
         {
-          title: this.$t('account'),
+          title: this.$options.filters.capitalize(this.$t('account')),
           path: "/account",
           icon: "",
           vshow: this.user
         },
         {
-          title: this.$t('connection'),
+          title: this.$options.filters.capitalize(this.$t('connection')),
           path: "/login",
           icon: "",
           vshow: !this.user
         },
         {
-          title: this.$t('register'),
+          title: this.$options.filters.capitalize(this.$t('register')),
           path: "/register",
           icon: "",
           vshow: !this.user
