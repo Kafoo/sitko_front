@@ -25,7 +25,7 @@
               :rules="[rules.required, rules.min]"
               :type="show1 ? 'text' : 'password'"
               name="input-10-1"
-              :label="$t('Password')"
+              :label="$options.filters.capitalize($tc('password', 1))"
               :hint="$options.filters.capitalize($t('form.min_carac', {n:'8'}))"
               counter
               @click:append="show1 = !show1"
