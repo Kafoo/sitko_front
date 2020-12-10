@@ -12,3 +12,7 @@
   left: 0;
   width: 100%;
 }
+
+.v-calendar .v-btn--fab{
+ max-width: 100%;
+}

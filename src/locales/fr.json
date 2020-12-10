@@ -1,0 +1,102 @@
+{
+
+  "hello": "salut",
+	"all": "tous",
+  "delete": "supprimer",
+  "enter": "entrer",
+
+  "home": "accueil",
+  "my account": "mon compte",
+  "account": "compte",
+  "explore": "explorer",
+  "place": "lieu",
+  "my places": "mes lieux",
+  "calendar": "calendrier",
+  "projects": "projets",
+  "events": "événements",
+  "contact": "contact",
+  "connection": "connexion",
+
+  "event": "événement",
+  "project": "projet",
+  "title": "titre",
+  "type": "type",
+  "description": "description",
+  "image": "image",
+
+	"day": "jour",
+	"week": "semaine",
+	"month": "mois",
+	"today": "aujourd'hui",
+
+	"infos": "infos",
+  "password": "mot de passe | mots de passe",
+
+  "first name": "prénom",
+  "last name": "Nom de famille",
+  "alias": "pseudo",
+  "e-mail": "email",
+  "e-mail confirmation": "confirmation de l'email",
+  "login": "se connecter",
+  "register": "s'inscrire",
+
+  "logout": "se déconnecter",
+  "delete my account": "supprimer mon compte",
+  "resend e-mail": "renvoyer le mail",
+
+  "Account deletion is definitive.": "La suppression du compte est définitive.",
+  "A fresh verification link has been sent to your email address.": "Un nouveau mail de confirmation a été envoyé.",
+  "Error sending verification link.":"Erreur lors de l'envoie de l'email de vérification.",
+  "This project will be removed definitely": "Ce projet sera définitivement supprimé",
+
+  "home_page":{
+  	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il ne se passe pas grand chose.",
+  	"unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
+  	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer."
+  },
+
+  "confirm":{
+  	"cancel": "annuler",
+    "confirm": "confirmer",
+    "close": "fermer",
+    "sure": "sûr(e) ?"
+  },
+
+  "form":{
+  	"min_carac": "min {n} caractères",
+    "required":"requis",
+    "unvalid": "{item} invalide",
+    "differents": "les {items} sont différents",
+  	"optional": "optionnel"
+  },
+
+	"confirmation": "confirmation",
+
+  "actions":{
+  	"create": "créer un {item}",
+    "new": "nouveau {item}",
+    "add": "ajouter un {item}"
+  },
+
+  "data":{
+  	"empty": "Aucun {item} pour le moment",
+  	"empty_typed": "Aucun {item} de ce type pour le moment"
+  },
+
+  "count":{
+    "hearthlings":"{n} terriens",
+    "currentProjects":"{n} projets en cours",
+    "tags": "{n} tags"
+
+  },
+
+  "time":{
+    "unique_date": "date unique",
+    "timed": "horaires"
+  },
+
+  "media":{
+    "max_size": "poids maximal : {max}"
+  }
+
+}
