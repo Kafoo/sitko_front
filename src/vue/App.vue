@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Navigation from "@/vue/components/organisms/app/Navigation.vue";
 import Alert from "@/vue/components/molecules/app/Alert.vue";
 import LoadingCircle from "@/vue/components/atoms/app/LoadingCircle.vue";

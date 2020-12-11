@@ -55,16 +55,6 @@ export const actions: ActionTree<ProjectState, RootState> = {
           { root: true }
         );
       })
-      .catch(() => {
-        commit(
-          "app/setAlert",
-          {
-            type: "error",
-            msg: "Oups, petite erreur dans la création du projet"
-          },
-          { root: true }
-        );
-      });
   },
 
   SEND_PROJECT_EDITION({ commit }, project) {
@@ -73,23 +63,13 @@ export const actions: ActionTree<ProjectState, RootState> = {
       .then(response => {
         commit("editProject", new ProjectModel(response.data.project));
       })
-      .catch(() => {
-        commit(
-          "app/setAlert",
-          {
-            type: "error",
-            msg: "Oups, petite erreur dans l'édition du projet"
-          },
-          { root: true }
-        );
-      });
   },
 
   SEND_PROJECT_DELETION({ commit, state }, id) {
     //Deleting state
     let project = state.projects.find((x:ProjectModel) => x.id === id);
     let index = state.projects.indexOf(project);
-    commit("removeProject", project.index);
+    commit("removeProject", index);
     //Delete call to API
     axios
       .delete(process.env.VUE_APP_API_URL + "project/" + id)
@@ -98,14 +78,6 @@ export const actions: ActionTree<ProjectState, RootState> = {
       })
       .catch(() => {
         commit("insertProject", {project, index});
-        // commit(
-        //   "app/setAlert",
-        //   {
-        //     type: "error",
-        //     msg: "Oups, petite erreur dans la suppression du projet"
-        //   },
-        //   { root: true }
-        // );
       });
   },
 

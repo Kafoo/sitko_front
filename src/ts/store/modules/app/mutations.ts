@@ -13,10 +13,13 @@ export const mutations: MutationTree<AppState> = {
     state.app_alert = app_alert;
     setTimeout(() => {
       state.app_alert = undefined;
-    }, 5000);
+    }, 7000);
   },
   removeAlert(state) {
     state.app_alert = undefined;
+  },
+  setLocale(state, locale:string){
+    state.locale = locale
   }
 
 };

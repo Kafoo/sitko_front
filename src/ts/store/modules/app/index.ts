@@ -9,7 +9,8 @@ export const state: AppState = {
 
   app_alert: undefined,
   errors: [],
-  windowWidth: window.innerWidth
+  windowWidth: window.innerWidth,
+  locale: 'fr'
 
 };
 

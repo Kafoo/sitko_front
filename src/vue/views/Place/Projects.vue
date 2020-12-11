@@ -155,7 +155,6 @@ export default {
 
   computed: {
     ...mapGetters("project", ["loading_projects", "projects"]),
-    ...mapGetters('app', ["errors"]),
 
     types() {
       return [this.$t("all"), "ferme", "écolieu", "autre"];

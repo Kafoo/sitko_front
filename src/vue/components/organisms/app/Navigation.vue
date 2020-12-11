@@ -52,23 +52,26 @@
         </v-btn>
       </v-toolbar-items>
 
-      <select class="flag-select" v-model="$i18n.locale">
-        <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">{{
-          lang
-        }}</option>
+      <select class="flag-select" v-model="$i18n.locale" @change="changeLocale">
+        <option 
+        v-for="(locale, i) in locales" 
+        :key="`Lang${i}`" 
+        :value="locale">
+        {{ locale }}
+        </option>
       </select>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
       appTitle: "Sitko",
       drawer: false,
-      langs: ["fr", "en"]
+      locales: ["fr", "en"]
     };
   },
 
@@ -113,6 +116,12 @@ export default {
   watch: {
     $route(to) {
       document.title = to.meta.title || "Sitko";
+    }
+  },
+  methods: {
+    ...mapMutations("app", ["setLocale"]),
+    changeLocale(){
+      this.setLocale(this.$i18n.locale)
     }
   }
 };

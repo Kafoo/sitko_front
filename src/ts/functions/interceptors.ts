@@ -17,10 +17,11 @@ axios.interceptors.response.use(
       localStorage.removeItem("authToken");
       router.push({ name: "Login" });
     } else {
-      if (error.response.data.custom) {
+      if (error.response.data.message) {
         store.commit("app/setAlert", {
           type: "error",
-          msg: error.response.data.message
+          msg: error.response.data.message,
+          info: error.response.data.info
         });
       } else {
         store.commit("app/setAlert", {
@@ -37,7 +38,8 @@ axios.interceptors.request.use(function(config) {
   config.headers.common = {
     Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     "Content-Type": "application/json",
-    Accept: "application/json"
+    Accept: "application/json",
+    "Accept-Language": store.state.app.locale
   };
   return config;
 });

@@ -1,10 +1,22 @@
 <template>
-  <div class="alert-container" v-if="app_alert">
-    <div class="alert elevation-10" :class="app_alert.type">
-      <v-icon v-if="app_alert.type == 'error'" color="white" class="mr-2"
+  <div 
+  v-if="app_alert"
+  class="alert-container">
+    <div 
+    class="alert elevation-10 d-flex align-center" 
+    :class="app_alert.type">
+      <v-icon 
+      v-if="app_alert.type == 'error'" 
+      color="white" 
+      class="mr-2"
         >warning</v-icon
       >
-      {{ app_alert.msg }}
+      <span class="mx-2">
+        {{ app_alert.msg }}<br>
+        <span class="text-caption font-italic">
+          ({{ app_alert.info }})
+        </span>
+      </span>
       <v-btn icon @click="removeAlert">
         <v-icon color="white">close</v-icon>
       </v-btn>
@@ -36,7 +48,7 @@ export default class Alert extends Vue {
   bottom: 60px;
   width: 90%;
   margin: 0% 5%;
-  z-index: 100;
+  z-index: 1000;
 }
 
 .alert {

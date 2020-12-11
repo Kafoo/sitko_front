@@ -4,6 +4,13 @@
       <v-card-text>
         <v-form ref="registerForm" v-model="valid" @submit.prevent="register">
           <v-row dense>
+
+            <v-col cols="12">
+              <v-alert v-if="errors.name" dense outlined type="error">
+                {{ errors.name[0] }}
+              </v-alert>
+            </v-col>
+            
             <v-col cols="12" sm="6" md="6">
               <v-text-field
                 outlined
@@ -27,6 +34,12 @@
                 maxlength="20"
                 required
               ></v-text-field>
+            </v-col>
+
+            <v-col cols="12">
+              <v-alert v-if="errors.email" dense outlined type="error">
+                {{ errors.email[0] }}
+              </v-alert>
             </v-col>
 
             <v-col cols="12">
