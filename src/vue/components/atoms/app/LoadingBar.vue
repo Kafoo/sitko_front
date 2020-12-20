@@ -10,13 +10,18 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
 
-@Component
-export default class LoadingBar extends Vue {
-  @Prop(Boolean) loading?: boolean;
-}
+import {defineComponent} from "@vue/composition-api"
+
+export default defineComponent({
+  name: "LoadingBar",
+
+  props: {
+    loading:Boolean
+  },
+
+})
+
 </script>
 
 <style scoped>

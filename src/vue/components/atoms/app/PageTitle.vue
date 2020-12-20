@@ -3,11 +3,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
 
-@Component
-export default class PageTitle extends Vue {
-  @Prop(String) title: string | undefined;
-}
+import {defineComponent} from "@vue/composition-api"
+
+export default defineComponent({
+  name: "PageTitle",
+
+  props: {
+    title:String
+  },
+
+})
+
 </script>

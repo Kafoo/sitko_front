@@ -18,7 +18,7 @@
       <v-card-title>{{ place.name }}</v-card-title>
 
       <v-btn
-        v-for="(item, index) in subNavItems"
+        v-for="(item, index) in placeNavItems"
         :key="index"
         :to="item.path"
         width="80%"
@@ -40,7 +40,7 @@ export default {
   },
 
   props: {
-    subNavItems: Array
+    placeNavItems: Array
   },
 
   computed: {

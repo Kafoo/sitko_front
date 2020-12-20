@@ -13,13 +13,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import {defineComponent} from "@vue/composition-api"
 
-@Component
-export default class CreateButton extends Vue{
-  
-  @Prop(String) item?:string
+export default defineComponent({
+  name: "CreateButton",
 
-}
+  props: {
+    item:String
+  },
+
+})
 </script>

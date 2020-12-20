@@ -11,7 +11,7 @@
               outlined
               id="email"
               v-model="form.email"
-              :rules="emailRules"
+              :rules="[rules.email[0]]"
               :label="$options.filters.capitalize($t('e-mail'))"
             ></v-text-field>
           </v-col>
@@ -19,17 +19,18 @@
           <v-col cols="12">
             <v-text-field
               outlined
+              block
               v-model="form.password"
-              :append-icon="show1 ? 'eye' : 'eye-off'"
-              :rules="[rules.required, rules.min]"
-              :type="show1 ? 'text' : 'password'"
+              :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required[0], rules.min(8)[0]]"
+              :type="show_password ? 'text' : 'password'"
               name="input-10-1"
               :label="$options.filters.capitalize($tc('password', 1))"
               :hint="
                 $options.filters.capitalize($t('form.min_carac', { n: '8' }))
               "
               counter
-              @click:append="show1 = !show1"
+              @click:append="show_password = !show_password"
             ></v-text-field>
           </v-col>
 
@@ -38,6 +39,7 @@
               {{ errors.email[0] }}
             </v-alert>
           </v-col>
+          
           <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
           <v-spacer></v-spacer>
           <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
@@ -68,87 +70,79 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { State, Getter, Action, namespace } from "vuex-class";
-import { Component, Prop, Watch } from "vue-property-decorator";
-import UserModel from "@/ts/models/userClass";
-
+import {ref, defineComponent, computed, onMounted} from "@vue/composition-api"
+import { useGetters, useActions } from 'vuex-composition-helpers';
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 
-const appStore = namespace("app")
-const authStore = namespace("auth")
+import {useInputRules} from "@/ts/functions/composition/inputRules"
 
-
-@Component({
+export default defineComponent({
   name: "Login",
 
   components: {
     PrimaryContentBody
-  }
-})
-export default class Login extends Vue {
-  @Prop(String) readonly verification: string | undefined;
-  @appStore.Getter("errors") errors?: any;
-  @authStore.Action("SEND_LOGIN_REQUEST") SEND_LOGIN_REQUEST: any;
+  },
 
-  valid = false;
-  show1 = false;
-  loading: boolean = false;
+  props: {
+    verification: {type:String, default:undefined}
+  },
 
-  form = {
-    password: "",
-    email: ""
-  };
+  setup(props, {root, refs}){
+  
+    onMounted(() => {
+      root.$store.commit("app/setErrors", {});
+    })
 
-  emailRules = [
-    (v: string) =>
-      !!v || this.$options.filters!.capitalize(this.$t("form.required")),
-    (v: string) =>
-      /.+@.+\..+/.test(v) ||
-      this.$options.filters!.capitalize(
-        this.$t("form.unvalid", { item: this.$t("e-mail") })
-      )
-  ];
-
-  rules = {
-    required: (v: string) =>
-      !!v || this.$options.filters!.capitalize(this.$t("form.required")),
-    min: (v: string) =>
-      (v && v.length >= 8) ||
-      this.$options.filters!.capitalize(this.$t("form.min_carac", { n: "8" }))
-  };
-
-  mounted() {
-    this.$store.commit("app/setErrors", {});
-  }
-
-  get refForm() {
-    return this.$refs.loginForm as Vue & { validate: () => boolean };
-  }
-
-  login() {
-    if (this.refForm.validate()) {
-      this.loading = true;
-      this.SEND_LOGIN_REQUEST(this.form)
-        .then(() => {
-          if (this.verification) {
-            this.$emit("verify");
-          } else {
-            this.$router.push({ name: "Home" }).catch(() => {});
-          }
-        })
-        .catch(() => {
-          this.loading = false;
-        });
+    const rules = {
+      email: useInputRules().email,
+      required: useInputRules().required,
+      min: useInputRules().min
     }
-  }
-}
-</script>
 
-<style scoped>
-.progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-</style>
+    var { SEND_LOGIN_REQUEST } = useActions({SEND_LOGIN_REQUEST: 'auth/SEND_LOGIN_REQUEST'} as any)
+    var { errors } = useGetters({errors: 'app/errors'} as any)
+
+    var valid = ref(false)
+    var show_password = ref(false)
+    var loading = ref(false)  
+    var form = ref({
+      password: "",
+      email: ""
+    });
+
+    const refForm = computed(() => refs.loginForm as Vue & { validate: () => boolean })
+    
+    const login = () => {
+      if (refForm.value.validate()) {
+        loading.value = true;
+        SEND_LOGIN_REQUEST(form.value)
+          .then(() => {
+            if (props.verification) {
+              root.$emit("verify");
+            } else {
+              root.$router.push({ name: "Home" }).catch(() => {});
+            }
+          })
+          .catch(() => {
+            loading.value = false;
+          });
+      }
+    }
+
+    return {
+      errors,
+      valid,
+      show_password,
+      loading,
+      form,
+      rules,
+      refForm,
+      login
+    }
+
+  }
+
+
+})
+
+</script>

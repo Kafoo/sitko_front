@@ -30,14 +30,16 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {};
-  },
+import {defineComponent} from "@vue/composition-api"
+
+export default defineComponent({
+  name: "ImagePopup",
+
   props: {
-    image: Object
-  }
-};
+    image:Object
+  },
+
+})
 </script>
 
 <style scoped>

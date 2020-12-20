@@ -65,7 +65,7 @@
   "form":{
   	"min_carac": "min {n} caractères",
     "required":"requis",
-    "unvalid": "{item} invalide",
+    "unvalid": "{item} non valide",
     "differents": "les {items} sont différents",
   	"optional": "optionnel"
   },
@@ -84,7 +84,7 @@
   },
 
   "count":{
-    "hearthlings":"{n} terriens",
+    "sitkers":"{n} sitkers",
     "currentProjects":"{n} projets en cours",
     "tags": "{n} tags"
 

@@ -13,7 +13,9 @@
       >
       <span class="mx-2">
         {{ app_alert.msg }}<br>
-        <span class="text-caption font-italic">
+        <span
+        v-if="app_alert.info" 
+        class="text-caption font-italic">
           ({{ app_alert.info }})
         </span>
       </span>

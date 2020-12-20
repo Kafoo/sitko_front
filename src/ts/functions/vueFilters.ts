@@ -1,12 +1,13 @@
 import Vue from "vue";
+import { TranslateResult } from 'vue-i18n'
 
-Vue.filter("capitalize", function(value: String) {
+export function capitalize(value: string | TranslateResult ){
   if (!value) return "";
   value = value.toString();
   return value.charAt(0).toUpperCase() + value.slice(1);
-});
+}
 
-Vue.filter("camelize", function(value: String) {
+export function camelize(value: string | TranslateResult){
   if (!value) return "";
   value = value.toString();
   var parts = value.split(" ");
@@ -18,4 +19,8 @@ Vue.filter("camelize", function(value: String) {
     }
   });
   return value;
-});
+}
+
+
+Vue.filter("capitalize", capitalize);
+Vue.filter("camelize", camelize);

@@ -1,7 +1,7 @@
 <template>
   <div class="place d-flex pb-12">
     <div class="hidden-sm-and-down">
-      <sidebar :subNavItems="subNavItems" />
+      <sidebar :placeNavItems="placeNavItems" />
     </div>
 
     <v-card
@@ -13,7 +13,7 @@
     </v-card>
 
     <div class="hidden-md-and-up">
-      <bottombar :subNavItems="subNavItems" />
+      <bottombar :placeNavItems="placeNavItems" />
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ export default {
   computed: {
     ...mapGetters("place", ["place"]),
 
-    subNavItems() {
+    placeNavItems() {
       return [
         {
           title: this.$options.filters.capitalize(this.$t("home")),

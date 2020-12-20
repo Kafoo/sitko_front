@@ -16,8 +16,8 @@
                 outlined
                 autocomplete="disabled"
                 v-model="form.name"
-                :rules="[rules.required]"
-                :label="labels.firstName"
+                :rules="[rules.required[0]]"
+                :label="firstName"
                 maxlength="20"
                 required
               ></v-text-field>
@@ -30,7 +30,7 @@
                 outlined
                 autocomplete="disabled"
                 v-model="form.last_name"
-                :label="labels.lastName"
+                :label="lastName"
                 maxlength="20"
                 required
               ></v-text-field>
@@ -47,7 +47,7 @@
                 outlined
                 id="email"
                 v-model="form.email"
-                :rules="emailRules"
+                :rules="[rules.required[0], rules.email[0]]"
                 :label="$options.filters.capitalize($t('e-mail'))"
                 required
               ></v-text-field>
@@ -58,16 +58,16 @@
                 outlined
                 autocomplete="disabled"
                 v-model="form.password"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required, rules.min]"
-                :type="show1 ? 'text' : 'password'"
+                :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required[0], rules.min(8)[0]]"
+                :type="show_password ? 'text' : 'password'"
                 name="input-10-1"
                 :label="$options.filters.capitalize($tc('password', 1))"
                 :hint="
                   $options.filters.capitalize($t('form.min_carac', { n: '8' }))
                 "
                 counter
-                @click:append="show1 = !show1"
+                @click:append="show_password = !show_password"
               ></v-text-field>
             </v-col>
 
@@ -77,13 +77,13 @@
                 autocomplete="disabled"
                 block
                 v-model="form.password_confirmation"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required, passwordMatch]"
-                :type="show1 ? 'text' : 'password'"
+                :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.required[0], rules.match(form.password, form.password_confirmation)[0]]"
+                :type="show_password ? 'text' : 'password'"
                 name="input-10-1"
                 :label="$options.filters.capitalize($t('confirmation'))"
                 counter
-                @click:append="show1 = !show1"
+                @click:append="show_password = !show_password"
               ></v-text-field>
             </v-col>
 
@@ -116,108 +116,92 @@
   </primary-content-body>
 </template>
 
-<script>
-import { mapGetters, mapActions } from "vuex";
-import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody";
+<script lang="ts">
+import Vue from "vue";
+import {ref, defineComponent, computed, onMounted} from "@vue/composition-api"
+import { useGetters, useActions } from 'vuex-composition-helpers';
+import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
+import { capitalize } from '@/ts/functions/vueFilters'
+import useRouter from 'vue-router'
 
-export default {
+
+import {useInputRules} from "@/ts/functions/composition/inputRules"
+
+export default defineComponent({
   name: "Home",
 
   components: {
     PrimaryContentBody
   },
 
-  data() {
-    return {
-      valid: false,
-      form: {
-        name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        password_confirmation: ""
-      },
-      show1: false,
-      loading: false
-    };
-  },
+  setup(props, {root, refs}){
+  
+    var { SEND_REGISTER_REQUEST } = useActions({SEND_REGISTER_REQUEST: 'auth/SEND_REGISTER_REQUEST'} as any)
+    var { errors } = useGetters({errors: 'app/errors'} as any)
 
-  computed: {
-    ...mapGetters('app', ["errors"]),
+    onMounted(() => {
+      root.$store.commit("app/setErrors", {});
+    })
 
-    passwordMatch() {
-      return () =>
-        this.form.password === this.form.password_confirmation ||
-        this.$options.filters.capitalize(
-          this.$t("form.differents", { items: this.$tc("password", 2) })
-        );
-    },
+    var valid = ref(false)
+    var form = ref({
+      name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      password_confirmation: ""
+    })
+    var show_password = ref(false)
+    var loading = ref(false)
 
-    emailRules() {
-      return [
-        v => !!v || this.$options.filters.capitalize(this.$t("form.required")),
-        v =>
-          /.+@.+\..+/.test(v) ||
-          this.$options.filters.capitalize(
-            this.$t("form.unvalid", { item: this.$t("e-mail") })
-          )
-      ];
-    },
-
-    rules() {
-      return {
-        required: value =>
-          !!value || this.$options.filters.capitalize(this.$t("form.required")),
-        min: v =>
-          (v && v.length >= 8) ||
-          this.$options.filters.capitalize(
-            this.$t("form.min_carac", { n: "8" })
-          )
-      };
-    },
-
-    labels() {
-      return {
-        firstName:
-          this.$options.filters.capitalize(this.$t("first name")) +
+    const firstName = computed(() =>
+          capitalize(root.$t("first name")) +
           " / " +
-          this.$options.filters.capitalize(this.$t("alias")),
-        lastName:
-          this.$options.filters.capitalize(this.$t("last name")) +
+          capitalize(root.$t("alias"))
+    )
+
+    const lastName = computed(() => 
+          capitalize(root.$t("last name")) +
           " (" +
-          this.$t("form.optional") +
+          root.$t("form.optional") +
           ")"
-      };
-    }
-  },
+    )
 
-  mounted() {
-    this.$store.commit("app/setErrors", {});
-  },
+  const rules = ref({
+    email: useInputRules().email,
+    required: useInputRules().required,
+    min: useInputRules().min,
+    match: useInputRules().match
+  })
 
-  methods: {
-    ...mapActions("auth", ["SEND_REGISTER_REQUEST"]),
-    register: function() {
-      if (this.$refs.registerForm.validate()) {
-        this.loading = true;
-        this.SEND_REGISTER_REQUEST(this.form)
+  console.log(rules)
+
+    const refForm = computed(() => refs.registerForm as Vue & { validate: () => boolean })
+
+    const register = () => {
+      if (refForm.value.validate()) {
+        loading.value = true;
+        SEND_REGISTER_REQUEST(form.value)
           .then(() => {
-            this.$router.push({ name: "Home" }).catch(() => {});
+            root.$router.push({ name: "Home" }).catch(() => {});
           })
           .catch(() => {
-            this.loading = false;
+            loading.value = false;
           });
       }
     }
-  }
-};
-</script>
 
-<style scoped>
-.progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
-</style>
+    return {
+      errors,
+      valid,
+      form,
+      show_password,
+      loading,
+      firstName,
+      lastName,
+      rules,
+      register
+    }
+  }
+})
+</script>

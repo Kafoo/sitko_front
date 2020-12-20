@@ -49,7 +49,7 @@
           :rules="[rules.image]"
           accept="image/jpeg"
           :label="$t('image') | capitalize"
-          @change="onFileChange"
+          @change="imageChange"
           prepend-icon="insert_photo"
         />
 
@@ -225,7 +225,7 @@ export default {
       this.editedProject.events.splice(index, 1);
     },
 
-    onFileChange() {
+    imageChange() {
       this.editedProject.imageChanged = true;
       if (this.editedProject.file) {
         const reader = new FileReader();
@@ -247,12 +247,6 @@ export default {
 </script>
 
 <style scoped>
-.progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
 
 .choose-date,
 .card-body {

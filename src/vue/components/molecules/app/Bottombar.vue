@@ -11,7 +11,7 @@
   >
     <v-btn
       class="mx-n2"
-      v-for="(item, index) in subNavItems"
+      v-for="(item, index) in placeNavItems"
       :key="index"
       :value="item.path"
       :to="item.path"
@@ -23,16 +23,17 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      value: ""
-    };
-  },
+
+import {defineComponent} from "@vue/composition-api"
+
+export default defineComponent({
+  name: "Bottombar",
+
   props: {
-    subNavItems: Array
-  }
-};
+    placeNavItems:Array
+  },
+
+})
 </script>
 
 <style>

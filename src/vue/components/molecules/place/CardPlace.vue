@@ -1,12 +1,15 @@
 <template>
   <v-hover>
-    <v-card class="ma-3" width="170px" slot-scope="{ hover }">
+    <v-card 
+    class="ma-3" 
+    :width="winWidth<500? '100%' : '170px'" 
+    slot-scope="{ hover }">
       <!-- BODY -->
       <div class="card-body">
         <img
           :src="place.image.medium"
           class="image"
-          width="170px"
+          width="100%"
           height="150px"
         />
 
@@ -19,31 +22,40 @@
       <v-expand-transition>
         <v-card
           v-if="hover"
-          class="transition-fast-in-fast-out v-card--reveal"
+          class="transition-fast-in-fast-out v-card--reveal c-pointer"
           style="height: 100%;"
+          :to="winWidth>500? '/place/' + place.id + '/overview':''"
         >
-          <v-card-text class="pt-3 pb-0">
-            <v-card-title class="pa-0 body-2">
+            <v-card-title class="pa-2 ma-0 body-2 grey lighten-2 font-weight-bold">
               <v-clamp autoresize :max-lines="2" class="description">
                 {{ place.name }}
               </v-clamp>
             </v-card-title>
+          <v-card-text class="pt-3 pb-0">
 
-            <v-chip-group column>
-              <v-chip small class="c-default">
-                <b>{{ $t("count.hearthlings", { n: "12" }) }}</b>
-              </v-chip>
-              <v-chip small class="c-default">
-                {{ $t("count.currentProjects", { n: "6" }) }}
-              </v-chip>
-              <v-chip small class="c-default" color="blue lighten-2">
-                {{ $t("count.tags", { n: "4" }) }}
-              </v-chip>
-            </v-chip-group>
+              <div>
+                <b>{{ $t("count.sitkers", { n: "12" }) }}</b>
+              </div>
+              <div>
+                <i>
+                  {{ $t("count.currentProjects", { n: "6" }) }}
+                </i>
+              </div>
+              <div>
+                <tag-chip>Boulange</tag-chip>
+                <tag-chip>Menuiserie</tag-chip>
+                <tag-chip>Phytoépuration</tag-chip>
+                <span style="font-size:0.8em">
+                  +{{ $t("count.tags", { n: "4" }) }}
+                </span>               
+              </div>
+
           </v-card-text>
 
           <!-- ACTIONS -->
-          <v-card-actions style="position: absolute;bottom: 0;left: 0">
+          <div 
+          class="d-flex justify-end pa-2" 
+          style="position: absolute;bottom: 0;left: 0; width: 100%;">
             <v-btn
               small
               text
@@ -52,50 +64,61 @@
             >
               {{ $t("enter") }}
             </v-btn>
-            <v-btn small icon class="mr-2">
+            <v-btn 
+            small
+            @click.prevent="true" 
+            icon 
+            class="mr-2">
               <v-icon color="red">exit_to_app</v-icon>
             </v-btn>
-            <v-btn small icon>
-              <v-icon>info</v-icon>
+            <v-btn 
+            small
+            @click.prevent="true" 
+            icon>
+              <v-icon>star_outline</v-icon>
             </v-btn>
-          </v-card-actions>
+          </div>
         </v-card>
       </v-expand-transition>
     </v-card>
   </v-hover>
 </template>
 
-<script>
-import VClamp from "vue-clamp";
 
-export default {
+<script lang="ts">
+import {ref, defineComponent} from "@vue/composition-api"
+import { isMobile, windowWidth } from "@/ts/functions/composition/displayHelpers"
+import VClamp from "vue-clamp";
+import TagChip from "@/vue/components/atoms/app/TagChip.vue"
+
+export default defineComponent({
+
   components: {
-    VClamp
+    VClamp,
+    TagChip
   },
-  data() {
-    return {};
-  },
+
   props: {
-    place: Object
+    place:Object
+  },
+
+  setup(props, {root}){
+
+    const winWidth = windowWidth(root)
+
+    const mobile = isMobile(root)
+
+    return {winWidth, mobile}
+
   }
-};
+});
+
 </script>
 
 <style scoped>
-.more_info {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
 
 .image {
   border-radius: 5px 5px 0 0;
-}
-
-.v-card--reveal {
-  bottom: 0;
-  opacity: 1 !important;
-  position: absolute;
-  width: 100%;
+  object-fit: cover;
 }
 </style>

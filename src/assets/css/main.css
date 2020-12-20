@@ -6,6 +6,10 @@
 	cursor: default;
 }
 
+.c-pointer{
+	cursor: pointer;
+}
+
 .progress {
   position: absolute;
   bottom: 0;
@@ -15,4 +19,26 @@
 
 .v-calendar .v-btn--fab{
  max-width: 100%;
+}
+
+.v-card--reveal {
+  bottom: 0;
+  opacity: 1 !important;
+  position: absolute;
+  width: 100%;
+}
+
+.autocomplete-input{
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+  box-shadow: inset 0 0 8px 0px #a5a5a5;
+}
+
+.v-list-item--active:before{
+  opacity: 0 !important;
+}
+
+.v-list-item--active:hover:before{
+  opacity: 0.04 !important;
 }

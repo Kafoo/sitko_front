@@ -31,6 +31,7 @@ import PageTitle from "@/vue/components/atoms/app/PageTitle.vue";
 import ConfirmDialog from "@/vue/components/molecules/app/ConfirmDialog.vue";
 
 export default {
+
   name: "Home",
 
   components: {
@@ -74,6 +75,8 @@ export default {
     }
   }
 };
+
+
 </script>
 
 <style scoped></style>

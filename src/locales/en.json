@@ -35,7 +35,7 @@
   },
 
   "count":{
-    "hearthlings":"{n} hearthlings",
+    "sitkers":"{n} sitkers",
     "currentProjects":"{n} current projects",
     "tags": "{n} tags"
   },

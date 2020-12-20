@@ -1,13 +1,17 @@
 <template>
   <div>
-    <!-- Mobile drawer -->
-    <v-navigation-drawer disable-resize-watcher v-model="drawer" app>
+  
+    <!-- "Account" drawer -->
+    <v-navigation-drawer 
+    right 
+    disable-resize-watcher 
+    v-model="drawer" 
+    app>
       <v-list>
         <v-list-item
-          v-for="item in menuItems"
+          v-for="item in accountItems"
           :key="item.title"
           :to="item.path"
-          v-show="item.vshow"
         >
           <v-list-item-action> </v-list-item-action>
           <v-list-item-content>{{ item.title }}</v-list-item-content>
@@ -17,9 +21,6 @@
 
     <!-- Top bar -->
     <v-app-bar>
-      <span class="hidden-sm-and-up">
-        <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
-      </span>
       <v-toolbar-title>
         <v-app-bar-nav-icon
           @click="$router.push('/').catch(() => {})"
@@ -33,33 +34,69 @@
             width="55"
           />
         </v-app-bar-nav-icon>
-        <router-link to="/" tag="span" style="cursor: pointer">
+        <router-link 
+        to="/" 
+        tag="span" 
+        style="cursor: pointer">
           {{ appTitle }}
         </router-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-xs-only" v-if="!loading">
-        <v-btn
-          class="navItem"
-          text
-          v-for="item in menuItems"
-          :key="item.title"
-          :to="item.path"
-          v-show="item.vshow"
-        >
-          {{ item.title }}
-        </v-btn>
-      </v-toolbar-items>
 
-      <select class="flag-select" v-model="$i18n.locale" @change="changeLocale">
+      <!-- Search -->
+      <autocomplete 
+      v-if="!loading"
+      :search="search"
+      class="mr-3 hidden-xs-only">
+      </autocomplete>
+
+      <v-btn 
+      v-if="!loading"
+      icon 
+      fab
+      class="hidden-sm-and-up mr-3">
+        <v-icon 
+        large>
+          search
+        </v-icon>
+      </v-btn>
+
+      <!-- Locale Change -->
+      <!-- <select class="locale-select" v-model="$i18n.locale" @change="changeLocale">
         <option 
         v-for="(locale, i) in locales" 
         :key="`Lang${i}`" 
         :value="locale">
         {{ locale }}
         </option>
-      </select>
+      </select> -->
+
+      <v-menu
+      class="acccount-drawer"
+      v-if="!loading"
+      bottom
+      left
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-app-bar-nav-icon 
+          class="mr-sm-3 mr-n2"
+          v-bind="attrs"
+          v-on="on">
+            <v-icon large>face</v-icon>
+          </v-app-bar-nav-icon>
+        </template>
+
+        <v-list>
+          <v-list-item
+          v-for="item in activeItems"
+          :key="item.title"
+          :to="item.path">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu> 
+
     </v-app-bar>
   </div>
 </template>
@@ -78,41 +115,45 @@ export default {
   computed: {
     ...mapGetters("auth", ["user", "loading"]),
 
-    menuItems() {
+    activeItems(){
+      if (this.user == undefined) {
+        return this.topNavItems
+      }else{
+        return this.accountItems
+      }
+    },
+
+    topNavItems() {
       return [
-        {
-          title: this.$options.filters.capitalize(this.$t("my places")),
-          path: "/places",
-          icon: "",
-          vshow: this.user
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("explore")),
-          path: "/explore",
-          icon: "",
-          vshow: true
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("account")),
-          path: "/account",
-          icon: "",
-          vshow: this.user
-        },
         {
           title: this.$options.filters.capitalize(this.$t("connection")),
           path: "/login",
           icon: "",
-          vshow: !this.user
         },
         {
           title: this.$options.filters.capitalize(this.$t("register")),
           path: "/register",
           icon: "",
-          vshow: !this.user
+        }
+      ];
+    },
+
+    accountItems() {
+      return [
+        {
+          title: this.$options.filters.capitalize(this.$t("my places")),
+          path: "/places/myplaces",
+          icon: "",
+        },
+        {
+          title: this.$options.filters.capitalize(this.$t("account")),
+          path: "/account",
+          icon: "",
         }
       ];
     }
   },
+
   watch: {
     $route(to) {
       document.title = to.meta.title || "Sitko";
@@ -122,6 +163,10 @@ export default {
     ...mapMutations("app", ["setLocale"]),
     changeLocale(){
       this.setLocale(this.$i18n.locale)
+    },
+
+    search(){
+      return []
     }
   }
 };
@@ -131,7 +176,7 @@ export default {
 .navItem {
   animation: slide-up 0.4s ease;
 }
-* .flag-select {
+* .locale-select {
   border-radius: 5px;
   padding: 0 4px 0 2px;
   margin-left: 9px;
@@ -145,7 +190,7 @@ export default {
   border: 1px solid grey;
 }
 
-.flag-select option {
+.locale-select option {
   cursor: pointer;
 }
 
@@ -159,4 +204,9 @@ export default {
     transform: translateY(0);
   }
 }
+
+.v-menu__content{
+    top: 55px !important;
+}
+
 </style>

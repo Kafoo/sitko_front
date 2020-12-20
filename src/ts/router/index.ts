@@ -49,8 +49,28 @@ const routes = [
     beforeEnter: auth,
     component: () => import("@/vue/views/Places.vue"),
     meta: {
-      title: "Sitko - Mes lieux"
-    }
+      title: "Sitko"
+    },
+    children: [
+      {
+        path: "create",
+        name: "CreatePlace",
+        beforeEnter: auth,
+        component: () => import("@/vue/views/Places/CreatePlace.vue"),
+        meta: {
+          title: "Sitko - Création d'un lieu"
+        }
+      },
+      {
+        path: "myplaces",
+        name: "MyPlaces",
+        beforeEnter: auth,
+        component: () => import("@/vue/views/Places/MyPlaces.vue"),
+        meta: {
+          title: "Sitko - Mes Lieux"
+        }
+      }      
+    ]
   },
   {
     path: "/Place/:id",

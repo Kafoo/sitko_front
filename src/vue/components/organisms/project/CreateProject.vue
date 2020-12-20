@@ -40,7 +40,7 @@
           :label="$t('image') | capitalize"
           :rules="[rules.image]"
           accept="image/jpeg"
-          @change="onFileChange"
+          @change="changeImage"
           prepend-icon="insert_photo"
         />
 
@@ -207,7 +207,8 @@ export default {
     removeEvent(index) {
       this.newProject.events.splice(index, 1);
     },
-    onFileChange() {
+
+    changeImage() {
       if (this.newProject.file) {
         const reader = new FileReader();
         reader.readAsDataURL(this.newProject.file);
@@ -221,12 +222,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.v-card--reveal {
-  bottom: 0;
-  opacity: 1 !important;
-  position: absolute;
-  width: 100%;
-}
-</style>
