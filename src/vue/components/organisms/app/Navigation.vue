@@ -24,7 +24,6 @@
       <v-toolbar-title>
         <v-app-bar-nav-icon
           @click="$router.push('/').catch(() => {})"
-          class="hidden-xs-only"
         >
           <v-img
             class="shrink mr-2"
