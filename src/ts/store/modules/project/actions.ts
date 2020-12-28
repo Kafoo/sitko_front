@@ -43,7 +43,6 @@ export const actions: ActionTree<ProjectState, RootState> = {
   },
 
   SEND_PROJECT_CREATION({ commit }, project) {
-    console.log(project);
     return axios
       .post(process.env.VUE_APP_API_URL + "project", project)
       .then(response => {
@@ -73,9 +72,6 @@ export const actions: ActionTree<ProjectState, RootState> = {
     //Delete call to API
     axios
       .delete(process.env.VUE_APP_API_URL + "project/" + id)
-      .then(response => {
-        console.log(response.data.success);
-      })
       .catch(() => {
         commit("insertProject", {project, index});
       });

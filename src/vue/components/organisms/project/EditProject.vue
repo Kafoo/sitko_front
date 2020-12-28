@@ -146,7 +146,7 @@
 <script>
 import axios from "axios";
 import { mapActions } from "vuex";
-import ChooseDate from "@/vue/components/organisms/app/ChooseDate.vue";
+import ChooseDate from "@c/organisms/app/ChooseDate.vue";
 export default {
   name: "EditProject",
   components: {

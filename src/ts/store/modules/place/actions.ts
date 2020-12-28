@@ -27,9 +27,15 @@ export const actions: ActionTree<PlaceState, RootState> = {
     axios
       .get(process.env.VUE_APP_API_URL + "place/" + id)
       .then(response => {
-        commit("setPlace", response.data);
+        commit("setPlace", new PlaceModel(response.data));
         commit("removeLoadingPlace");
       })
       .catch(() => {});
-  }
+  },
+
+  SEND_PLACE_CREATION({ commit }, place) {
+    return axios
+      .post(process.env.VUE_APP_API_URL + "place", place)
+  },
+
 };

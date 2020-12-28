@@ -1,26 +1,64 @@
 <template>
   <div v-if="!loading_place" class="text-center">
-    <h1 class="mb-3">{{ place.name }}</h1>
+
+    <h1 class="mb-3">
+      {{ place.name }}
+
+      <settings-button 
+      :items="settingsItems"/>
+
+    </h1>
 
     <img class="image" :src="place.image.medium" width="250px" />
 
     <h3 class="mt-6">{{ place.description }}</h3>
+
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from "vuex";
+<script lang="ts">
+import { defineComponent, ref } from "@vue/composition-api"
+import { useGetters } from 'vuex-composition-helpers';
+import SettingsButton from "@c/molecules/app/SettingsButton.vue"
 import axios from "axios";
 
-export default {
-  data() {
-    return {};
+export default defineComponent({
+
+  name : "Overview",
+
+  components:{
+    SettingsButton
   },
-  computed: {
-    ...mapGetters("place", ["place", "loading_place"])
-  },
-  methods: {}
-};
+
+  setup() {
+
+    const { place } = useGetters({place: 'place/place'} as any)
+    const { loading_place } = useGetters({loading_place: 'place/loading_place'} as any)
+
+    const settingsItems= ref([
+      {
+        title : 'Changer la photo',
+        action : () => {console.log('yop')}
+      },
+      {
+        title : 'Editer l\'introduction',
+        action : () => {console.log('tak')}
+      },
+      {
+        title : 'Editer la description',
+        action : () => {console.log('flik')}
+      },
+    ])
+
+    return{
+      settingsItems,
+      place,
+      loading_place
+    }
+
+  }
+
+});
 </script>
 
 <style scoped>

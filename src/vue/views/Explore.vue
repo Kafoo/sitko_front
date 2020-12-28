@@ -10,7 +10,7 @@
 <script lang="ts">
 import {ref, defineComponent} from "@vue/composition-api"
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
-import PageTitle from "@/vue/components/atoms/app/PageTitle.vue";
+import PageTitle from "@c/atoms/app/PageTitle.vue";
 
 
 export default defineComponent({

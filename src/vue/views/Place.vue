@@ -20,8 +20,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Bottombar from "@/vue/components/molecules/app/Bottombar.vue";
-import Sidebar from "@/vue/components/molecules/app/Sidebar.vue";
+import Bottombar from "@c/molecules/app/Bottombar.vue";
+import Sidebar from "@c/molecules/app/Sidebar.vue";
 
 export default {
   name: "Place",

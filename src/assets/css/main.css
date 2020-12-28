@@ -42,3 +42,29 @@
 .v-list-item--active:hover:before{
   opacity: 0.04 !important;
 }
+
+*::-webkit-scrollbar { 
+	width: 7px;
+	height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+    background: rgba(50,50,50,0.7);
+    border-radius: 2px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff
+}
+
+textarea {
+    cursor: auto;
+}
+
+.v-list.v-select-list.v-sheet.theme--light.theme--light{
+    background-color:#ffffff
+}
+
+.v-autocomplete__content.v-menu__content {
+    box-shadow: 0px 0px 20px #00000096;
+    border-radius: 7px;
+}

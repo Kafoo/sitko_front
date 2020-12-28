@@ -15,7 +15,9 @@
       width="350px"
       height="600px"
     >
-      <v-card-title>{{ place.name }}</v-card-title>
+      <v-card-title>
+        {{ place.name }}
+      </v-card-title>
 
       <v-btn
         v-for="(item, index) in placeNavItems"
@@ -36,7 +38,8 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
-    return {};
+    return {
+    };
   },
 
   props: {

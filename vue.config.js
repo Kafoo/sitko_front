@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   transpileDependencies: [
     "vuetify",
@@ -13,5 +15,16 @@ module.exports = {
       localeDir: "translations",
       enableInSFC: true
     }
+  },
+
+  configureWebpack: {
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+        "@c": path.resolve(__dirname, "./src/vue/components")
+      },
+      extensions: ['.js', '.vue', '.json']
+    }
   }
+
 };

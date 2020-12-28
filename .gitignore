@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 .env
+code_templates
 
 # local env files
 .env.local

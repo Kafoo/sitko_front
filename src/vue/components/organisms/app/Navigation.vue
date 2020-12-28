@@ -1,23 +1,5 @@
 <template>
   <div>
-  
-    <!-- "Account" drawer -->
-    <v-navigation-drawer 
-    right 
-    disable-resize-watcher 
-    v-model="drawer" 
-    app>
-      <v-list>
-        <v-list-item
-          v-for="item in accountItems"
-          :key="item.title"
-          :to="item.path"
-        >
-          <v-list-item-action> </v-list-item-action>
-          <v-list-item-content>{{ item.title }}</v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
 
     <!-- Top bar -->
     <v-app-bar>
@@ -106,7 +88,6 @@ export default {
   data() {
     return {
       appTitle: "Sitko",
-      drawer: false,
       locales: ["fr", "en"]
     };
   },

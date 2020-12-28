@@ -10,6 +10,6 @@ export default class PlaceModel {
     this.id = rawData.id;
     this.name = rawData.name;
     this.description = rawData.description;
-    this.image = rawData.image;
+    this.image = new ImageModel(rawData.image);    
   }
 }

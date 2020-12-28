@@ -80,9 +80,9 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import axios from "axios";
-import EditProject from "@/vue/components/organisms/project/EditProject.vue";
-import CreateProject from "@/vue/components/organisms/project/CreateProject.vue";
-import CardProject from "@/vue/components/molecules/project/CardProject.vue";
+import EditProject from "@c/organisms/project/EditProject.vue";
+import CreateProject from "@c/organisms/project/CreateProject.vue";
+import CardProject from "@c/molecules/project/CardProject.vue";
 
 export default {
   name: "Projects",

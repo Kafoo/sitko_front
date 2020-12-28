@@ -81,12 +81,12 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import axios from "axios";
-import EditProject from "@/vue/components/organisms/project/EditProject.vue";
-import CreateProject from "@/vue/components/organisms/project/CreateProject.vue";
-import CardProject from "@/vue/components/molecules/project/CardProject.vue";
-import ImagePopup from "@/vue/components/organisms/app/ImagePopup.vue";
-import CreateButton from "@/vue/components/atoms/app/CreateButton.vue";
-import SkeletonIndex from "@/vue/components/molecules/project/SkeletonIndex.vue"
+import EditProject from "@c/organisms/project/EditProject.vue";
+import CreateProject from "@c/organisms/project/CreateProject.vue";
+import CardProject from "@c/molecules/project/CardProject.vue";
+import ImagePopup from "@c/organisms/app/ImagePopup.vue";
+import CreateButton from "@c/atoms/app/CreateButton.vue";
+import SkeletonIndex from "@c/molecules/project/SkeletonIndex.vue"
 
 export default {
   name: "Projects",

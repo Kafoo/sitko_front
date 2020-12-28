@@ -34,7 +34,7 @@ import Vue from "vue";
 import { State, Getter, Action } from "vuex-class";
 import { Component } from "vue-property-decorator";
 import PlaceModel from "@/ts/models/placeClass";
-import CardPlace from "@/vue/components/molecules/place/CardPlace.vue";
+import CardPlace from "@c/molecules/place/CardPlace.vue";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 
 const namespace: string = "place";

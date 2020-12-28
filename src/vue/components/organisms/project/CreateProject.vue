@@ -41,7 +41,6 @@
           :rules="[rules.image]"
           accept="image/jpeg"
           @change="changeImage"
-          prepend-icon="insert_photo"
         />
 
         <v-chip-group column>
@@ -128,7 +127,7 @@
 <script>
 import { mapActions } from "vuex";
 import axios from "axios";
-import ChooseDate from "@/vue/components/organisms/app/ChooseDate.vue";
+import ChooseDate from "@c/organisms/app/ChooseDate.vue";
 
 export default {
   name: "CreateProject",
@@ -148,7 +147,7 @@ export default {
   },
 
   components: {
-    ChooseDate
+    ChooseDate,
   },
 
   props: {
@@ -174,7 +173,6 @@ export default {
     ...mapActions("project", ["SEND_PROJECT_CREATION"]),
     cancel() {
       this.resetProject();
-      this.$refs.form.reset();
       this.$emit("closeCreation");
     },
 
@@ -192,7 +190,6 @@ export default {
           this.loading = false;
           this.$emit("closeCreation");
           this.resetProject();
-          this.$refs.form.reset();
         })
         .catch(() => {
           this.loading = false;

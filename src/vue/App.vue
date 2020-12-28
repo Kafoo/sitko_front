@@ -18,9 +18,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Navigation from "@/vue/components/organisms/app/Navigation.vue";
-import Alert from "@/vue/components/molecules/app/Alert.vue";
-import LoadingCircle from "@/vue/components/atoms/app/LoadingCircle.vue";
+import Navigation from "@c/organisms/app/Navigation.vue";
+import Alert from "@c/molecules/app/Alert.vue";
+import LoadingCircle from "@c/atoms/app/LoadingCircle.vue";
 
 export default {
   components: {

@@ -5,6 +5,7 @@ import { auth } from "./modules/auth";
 import { event } from "./modules/event";
 import { place } from "./modules/place";
 import { app } from "./modules/app";
+import { tag } from "./modules/tag";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     auth,
     project,
     event,
-    place
+    place,
+    tag
   }
 });

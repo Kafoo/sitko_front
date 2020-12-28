@@ -27,8 +27,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody";
-import PageTitle from "@/vue/components/atoms/app/PageTitle.vue";
-import ConfirmDialog from "@/vue/components/molecules/app/ConfirmDialog.vue";
+import PageTitle from "@c/atoms/app/PageTitle.vue";
+import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
 
 export default {
 

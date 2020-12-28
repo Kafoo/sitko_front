@@ -89,7 +89,7 @@
 import {ref, defineComponent} from "@vue/composition-api"
 import { isMobile, windowWidth } from "@/ts/functions/composition/displayHelpers"
 import VClamp from "vue-clamp";
-import TagChip from "@/vue/components/atoms/app/TagChip.vue"
+import TagChip from "@c/atoms/app/TagChip.vue"
 
 export default defineComponent({
 
@@ -102,7 +102,7 @@ export default defineComponent({
     place:Object
   },
 
-  setup(props, {root}){
+  setup(props:any, {root}:any){
 
     const winWidth = windowWidth(root)
 

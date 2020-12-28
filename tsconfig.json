@@ -20,9 +20,8 @@
       "vuetify"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "@c/*": [ "src/vue/components/*" ]
     },
     "lib": [
       "esnext",

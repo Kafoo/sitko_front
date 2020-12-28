@@ -11,6 +11,15 @@ import { capitalize } from '@/ts/functions/vueFilters'
         )
     ]
 
+    const image = [
+      (v: File) =>
+        !v ||
+        v.size < 3000000 ||
+        capitalize(
+          i18n.t("media.max_size", { max: "3 MB" })
+        )
+    ]
+
     const required = [
       (v: string) =>
         !!v || capitalize(i18n.t("form.required")),
@@ -31,6 +40,7 @@ import { capitalize } from '@/ts/functions/vueFilters'
     return {
       email,
       required,
+      image,
       match,
       min
     }

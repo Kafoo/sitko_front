@@ -36,7 +36,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import LoadingBar from "@/vue/components/atoms/app/LoadingBar.vue";
+import LoadingBar from "@c/atoms/app/LoadingBar.vue";
 
 @Component({
   name: "ConfirmDialog",
