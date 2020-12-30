@@ -2,6 +2,8 @@
 
   "password": "password | passwords",
 
+  "404": "page not found",
+
   "home_page":{
   	"unauthenticated": "Hello, login or register to enjoy this wonderful website where you can't do much.",
   	"unverified": "Your account has been registered. Now, you can confirm your e-mail adress via the link we sent you.",

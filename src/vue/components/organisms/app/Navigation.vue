@@ -18,10 +18,24 @@
         <router-link 
         to="/" 
         tag="span" 
-        style="cursor: pointer">
+        style="cursor: pointer"
+        class="font-weight-bold">
           {{ appTitle }}
         </router-link>
       </v-toolbar-title>
+
+      <!-- Locale Change -->
+      <select 
+      class="locale-select" 
+      v-model="$i18n.locale" 
+      @change="changeLocale">
+        <option 
+        v-for="(locale, i) in locales" 
+        :key="`Lang${i}`" 
+        :value="locale">
+        {{ locale }}
+        </option>
+      </select> 
 
       <v-spacer></v-spacer>
 
@@ -42,16 +56,6 @@
           search
         </v-icon>
       </v-btn>
-
-      <!-- Locale Change -->
-      <!-- <select class="locale-select" v-model="$i18n.locale" @change="changeLocale">
-        <option 
-        v-for="(locale, i) in locales" 
-        :key="`Lang${i}`" 
-        :value="locale">
-        {{ locale }}
-        </option>
-      </select> -->
 
       <v-menu
       class="acccount-drawer"
@@ -85,7 +89,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
-  data() {
+  data : () => {
     return {
       appTitle: "Sitko",
       locales: ["fr", "en"]
@@ -167,7 +171,6 @@ export default {
   text-align-last: center;
   color: #717171;
   font-style: italic;
-  border: 1px solid grey;
 }
 
 .locale-select option {

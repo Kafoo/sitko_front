@@ -5,20 +5,35 @@ export default class ImageModel {
   thumb: String;
   public_id?: String;
 
-  constructor(data: any) {
+  constructor(data: any = {}) {
 
-    if (data) {
+    if (data === 0) {
+      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.public_id = '';
+
+    } else if (data === 1){
+      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1609233677/eco_tsuyut.jpg";
+      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1609233677/eco_tsuyut.jpg";
+      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1609233677/eco_tsuyut.jpg";
+      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1609233677/eco_tsuyut.jpg";
+      this.public_id = '';
+
+    } else if (data) {
       this.full = data.full;
       this.medium = data.medium;
       this.low_medium = data.low_medium;
       this.thumb = data.thumb;
       this.public_id = data.public_id;
+
     }else{
-      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1606566148/ojty0jq09f6z8ttshbrx.jpg";
-      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1606566148/ojty0jq09f6z8ttshbrx.jpg";
-      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1606566148/ojty0jq09f6z8ttshbrx.jpg";
-      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1606566148/ojty0jq09f6z8ttshbrx.jpg";
-      this.public_id = undefined;
+      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.public_id = '';
     }
 
   }

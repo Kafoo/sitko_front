@@ -1,6 +1,5 @@
 <template>
 
-
   <v-btn
     class="close"
     color="secondary"

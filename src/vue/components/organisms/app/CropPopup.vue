@@ -14,6 +14,7 @@
       class="cropper"
       :src="image"
       :stencil-props="{aspectRatio: 1}"
+      @change="crop"
     ></cropper>
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">
@@ -23,11 +24,14 @@
         ></v-progress-circular>
       </v-row>
     </template>
+
+    <v-btn class="validate-button" @click="validate">Valider</v-btn>
+
   </v-card>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "@vue/composition-api"
+import {defineComponent, ref} from "@vue/composition-api"
 import { Cropper } from 'vue-advanced-cropper'
 
 export default defineComponent({
@@ -39,6 +43,26 @@ export default defineComponent({
 
   components: {
     Cropper
+  },
+
+  setup(props, {emit}){
+  
+    var croppedImage = ref("")
+
+    const validate = () => {
+      emit('confirm', croppedImage.value)
+      emit('toogle')
+    }
+
+    var crop = (e:any) => {
+      croppedImage.value = e.canvas.toDataURL()
+    }
+
+    return{
+      crop,
+        validate
+    }
+
   }
 
 })
@@ -51,4 +75,10 @@ export default defineComponent({
   top: 10px;
   z-index: 2;
 }
+
+.validate-button{
+  position: absolute;
+  bottom: 0;
+}
+
 </style>

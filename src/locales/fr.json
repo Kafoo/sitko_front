@@ -1,9 +1,12 @@
 {
 
   "hello": "salut",
+  "oops": "oups",
 	"all": "tous",
   "delete": "supprimer",
   "enter": "entrer",
+
+  "404": "page introuvable",
 
   "home": "accueil",
   "my account": "mon compte",

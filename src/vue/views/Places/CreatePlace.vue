@@ -27,12 +27,9 @@
         :disabled="loading"
       ></v-textarea>
 
-      <v-file-input 
-      v-model="newPlace.file"
-      :label="$t('image') | capitalize"
-      :rules="[rules.image[0]]"
-      accept="image/jpeg"
-      @change="onFileChange" />
+      <image-input 
+      :image="newPlace.image" 
+      @changeImage="changeImage"/>
 
       <v-card-actions>
       <v-spacer></v-spacer>
@@ -40,7 +37,8 @@
         type="submit" 
         color="success"
         :disabled="loading || !form">
-          C'est parti
+          <!-- TOTRANSLATE -->
+          C'est parti !
         </v-btn>
       </v-card-actions>
     </v-form>
@@ -57,14 +55,14 @@ import {ref, defineComponent, onMounted, computed, Ref} from "@vue/composition-a
 import { useActions } from 'vuex-composition-helpers';
 import { useInputRules } from "@/ts/functions/composition/inputRules"
 import LoadingBar from "@c/atoms/app/LoadingBar.vue"
-
+import ImageInput from "@c/molecules/media/ImageInput.vue"
+import Image from "@/ts/models/imageClass"
 
 interface NewPlace {
   name:String
   description:String
-  image:String
+  image:String | object
   tags:Array<{title: string}>
-  file?:File
 }
 
 export default defineComponent({
@@ -72,7 +70,8 @@ export default defineComponent({
   name: "CreatePlace",
 
   components: {
-    LoadingBar
+    LoadingBar,
+    ImageInput
   },
 
   setup(props, {root}){
@@ -81,9 +80,8 @@ export default defineComponent({
     var newPlace: Ref<NewPlace> = ref({
       name:"",
       description:"",
-      image:"",
-      tags:[],
-      file:undefined
+      image: new Image(0),
+      tags:[]
     })
 
     var form = ref(false)
@@ -91,6 +89,10 @@ export default defineComponent({
     const rules = useInputRules()
 
     const { SEND_PLACE_CREATION } = useActions({SEND_PLACE_CREATION: 'place/SEND_PLACE_CREATION'} as any)
+
+    const changeImage = (data:any) => {
+      newPlace.value.image = data
+    }
 
     const createPlace = () =>{
       loading.value = true
@@ -106,28 +108,14 @@ export default defineComponent({
 
   var showCrop = ref(false)
 
-  const onFileChange = (e:any) => {
-
-      if (newPlace.value.file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(newPlace.value.file);
-        reader.onload = e => {
-          newPlace.value.image = e.target!.result as string;
-        };
-      } else {
-        newPlace.value.image = "";
-      }
-
-  }
-
     return{
       createPlace,
       rules,
       loading,
       form,
       newPlace,
-      onFileChange,
-      showCrop
+      showCrop,
+      changeImage
     }
   }
 })
