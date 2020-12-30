@@ -121,4 +121,5 @@ export default defineComponent({
   border-radius: 5px 5px 0 0;
   object-fit: cover;
 }
+
 </style>
