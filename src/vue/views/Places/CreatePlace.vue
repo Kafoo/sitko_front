@@ -1,35 +1,52 @@
 <template>
 
-  <v-card-text >
+  <v-card-text class="pa-0">
     <v-form 
     @submit.prevent="createPlace" 
     v-model="form">
-      <div class="mb-4">
+
+      <v-row justify="center">
         <label 
         for="name" 
-        class="name">
+        class="name text-h5 font-weight-bold black--text mb-5">
           {{ $t("actions.new", { item: $t("place") }) | camelize }}
         </label>
-      </div>
-      <v-text-field
-        :label="$t('name') | capitalize"
-        outlined
-        :rules="[rules.required[0]]"
-        v-model="newPlace.name"
-        :disabled="loading"
-      ></v-text-field>
-      <v-textarea
-        :label="$t('description') | capitalize"
-        outlined
-        rows="6"
-        :rules="[rules.required[0]]"
-        v-model="newPlace.description"
-        :disabled="loading"
-      ></v-textarea>
+      </v-row>
 
-      <image-input 
-      :image="newPlace.image" 
-      @changeImage="changeImage"/>
+      <v-row justify="center">
+        <image-input
+        icon
+        :image="newPlace.image" 
+        @changeImage="changeImage"/>
+      </v-row>
+
+      <v-row justify="center" dense>
+        <v-col cols="6">
+          <v-text-field
+            class="mt-5"
+            :label="$t('name') | capitalize"
+            outlined
+            maxlength="40"
+            :rules="[rules.required[0]]"
+            v-model="newPlace.name"
+            :disabled="loading"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+
+      <v-row justify="center" dense>
+        <v-col cols="10">
+          <v-textarea
+            :label="$t('description') | capitalize"
+            outlined
+            rows="6"
+            :rules="[rules.required[0]]"
+            v-model="newPlace.description"
+            :disabled="loading"
+          ></v-textarea>
+        </v-col>
+      </v-row>
+
 
       <v-card-actions>
       <v-spacer></v-spacer>
@@ -57,13 +74,7 @@ import { useInputRules } from "@/ts/functions/composition/inputRules"
 import LoadingBar from "@c/atoms/app/LoadingBar.vue"
 import ImageInput from "@c/molecules/media/ImageInput.vue"
 import Image from "@/ts/models/imageClass"
-
-interface NewPlace {
-  name:String
-  description:String
-  image:String | object
-  tags:Array<{title: string}>
-}
+import PlaceModel from "@/ts/models/placeClass";
 
 export default defineComponent({
 
@@ -77,7 +88,7 @@ export default defineComponent({
   setup(props, {root}){
 
     // PLACE //
-    var newPlace: Ref<NewPlace> = ref({
+    var newPlace: Ref<PlaceModel> = ref({
       name:"",
       description:"",
       image: new Image(0),
@@ -90,7 +101,7 @@ export default defineComponent({
 
     const { SEND_PLACE_CREATION } = useActions({SEND_PLACE_CREATION: 'place/SEND_PLACE_CREATION'} as any)
 
-    const changeImage = (data:any) => {
+    const changeImage = (data:string|Image) => {
       newPlace.value.image = data
     }
 

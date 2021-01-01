@@ -129,6 +129,15 @@ const routes = [
     ]
   },
   {
+    path: "/dashboard/place/:id",
+    name: "Dashboard",
+    beforeEnter: auth,
+    component: () => import("@/vue/views/Place/Dashboard.vue"),
+    meta: {
+      title: "Sitko - Tableau de bord"
+    }
+  },
+  {
     path: "/register",
     name: "Register",
     beforeEnter: guest,

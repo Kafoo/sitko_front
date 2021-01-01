@@ -1,14 +1,14 @@
 <template>
-  <v-card class="d-flex" color="black" height="90vh">
+  <v-card class="d-flex justify-center" color="black" height="90vh">
     <v-btn
       class="close"
       color="secondary"
       fab
-      x-small
+      small
       dark
       @click="$emit('toogle')"
     >
-      <v-icon>close</v-icon>
+      <v-icon>arrow_back</v-icon>
     </v-btn>
     <cropper
       class="cropper"
@@ -25,7 +25,10 @@
       </v-row>
     </template>
 
-    <v-btn class="validate-button" @click="validate">Valider</v-btn>
+    <v-btn 
+    class="validate-button"
+    color="success" 
+    @click="validate">Valider</v-btn>
 
   </v-card>
 </template>
@@ -71,14 +74,14 @@ export default defineComponent({
 <style scoped>
 .close {
   position: absolute;
-  right: 10px;
+  left: 10px;
   top: 10px;
   z-index: 2;
 }
 
 .validate-button{
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
 }
 
 </style>

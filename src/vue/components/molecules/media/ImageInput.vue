@@ -2,14 +2,22 @@
   
   <div>
 
-    <v-btn icon fab>
+    <div class="input-container">
       <v-img 
-      class="choose-img"
-      :src="imageSrc" 
-      @click="pickingImage = true"></v-img>
-    </v-btn>
+      class="choose-img rounded-lg elevation-3"
+      :width="size"
+      :height="size"
+      :src="imageSrc">
+      </v-img>
+      <v-hover v-slot="{ hover }">
+        <v-icon 
+        class='edit-icon'
+        :class="` elevation-${hover ? 5 : 2}`"
+        @click="pickingImage = true">edit</v-icon>
+      </v-hover>
+    </div>
 
-    <v-dialog v-model="pickingImage" width="80%">
+    <v-dialog v-model="pickingImage" width="unset">
       <choose-image 
       @change="changeImage" 
       @close="pickingImage = false"/>
@@ -35,6 +43,14 @@ export default defineComponent({
     image: {
       type: [Object, String],
       default: new ImageModel
+    },
+    size: {
+      type:String,
+      default: "150px"
+    },
+    icon: {
+      type:Boolean,
+      default:false
     }
   },
 
@@ -48,7 +64,6 @@ export default defineComponent({
 
     const changeImage = (img:string) => {
       emit('changeImage', img)
-      pickingImage.value = false
     }
 
     const imageSrc = computed(() => {
@@ -76,9 +91,22 @@ export default defineComponent({
 
 <style scoped>
 
-.choose-img{
-  width: 50px;
-  cursor: pointer;
+.input-container{
+  width: fit-content;
+  position: relative;
 }
+
+.edit-icon{
+    background-color: #ffffffad;
+    border: 1px solid #767676;
+    border-radius: 31px;
+    padding: 5px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: #252525;
+    cursor: pointer;
+}
+
 
 </style>

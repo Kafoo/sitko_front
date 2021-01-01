@@ -9,6 +9,7 @@ import Autocomplete from '@trevoreyre/autocomplete-vue'
 import '@trevoreyre/autocomplete-vue/dist/style.css'
 
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "./assets/css/main.css";
 import "@/ts/functions/interceptors"
 import "@/ts/functions/vueFilters"
 
@@ -16,7 +17,6 @@ Vue.config.productionTip = false;
 Vue.extend(vuetify);
 Vue.use(VueComp)
 Vue.use(Autocomplete)
-import "./assets/css/main.css";
 
 new Vue({
   router,
