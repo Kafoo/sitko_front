@@ -55,6 +55,12 @@
           <v-card-actions>
           <v-spacer></v-spacer>
             <v-btn 
+            color="red" dark
+            @click="deletion = true">
+              <!-- TOTRANSLATE -->
+              Supprimer le lieu
+            </v-btn>
+            <v-btn 
             type="submit" 
             color="success"
             :disabled="loading || !form">
@@ -65,6 +71,18 @@
         </v-form>
 
         <loading-bar :loading="loading"/>
+
+        <!-- Confirm deletion -->
+        <confirm-dialog
+          :show="deletion"
+          :text="$t('Place deletion is definitive.')"
+          :cancel="$t('confirm.cancel')"
+          @cancel-action="deletion = false"
+          :confirm="$t('delete')"
+          @confirm-action="deletePlace()"
+          confirm_color="red"
+          :loading="loading_deletion"
+        />
 
       </v-card-text>
 
@@ -80,19 +98,23 @@ import LoadingBar from "@c/atoms/app/LoadingBar.vue"
 import ImageInput from "@c/molecules/media/ImageInput.vue"
 import Image from "@/ts/models/imageClass"
 import PlaceModel from "@/ts/models/placeClass"
-
+import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
 
 export default defineComponent({
 
   components: {
     PrimaryContentBody,
     LoadingBar,
-    ImageInput
+    ImageInput,
+    ConfirmDialog
   },
 
   name : "Dashboard",
 
   setup(props, { root }) {
+
+    var deletion = ref(false)
+    var loading_deletion = ref(false)
 
     const { place } = useGetters({place: 'place/place'} as any)
     const { loading_place } = useGetters({loading_place: 'place/loading_place'} as any)
@@ -105,6 +127,7 @@ export default defineComponent({
 
     const { GET_PLACE } = useActions({GET_PLACE: 'place/GET_PLACE'} as any)
     const { SEND_PLACE_EDITION } = useActions({SEND_PLACE_EDITION: 'place/SEND_PLACE_EDITION'} as any)
+    const { SEND_PLACE_DELETION } = useActions({SEND_PLACE_DELETION: 'place/SEND_PLACE_DELETION'} as any)
 
     onMounted(() =>{
       GET_PLACE(root.$route.params.id)
@@ -125,6 +148,18 @@ export default defineComponent({
         });
     }
 
+    const deletePlace = () =>{
+      loading_deletion.value = true
+      SEND_PLACE_DELETION(editedPlace.value.id)
+        .then(() => {
+          loading_deletion.value = false;
+          root.$router.push("/places/myplaces")
+        })
+        .catch(() => {
+          loading_deletion.value = false;
+        });
+    }
+
     const changeImage = (data:string|Image) => {
       editedPlace.value.image = data
     } 
@@ -137,7 +172,10 @@ export default defineComponent({
       rules,
       editedPlace,
       changeImage,
-      editPlace
+      editPlace,
+      deletePlace,
+      deletion,
+      loading_deletion
     }
 
   }

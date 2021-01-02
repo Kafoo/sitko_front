@@ -27,10 +27,10 @@ export const mutations: MutationTree<PlaceState> = {
     state.loading_place = false;
   },
 
-  editPlace(state, project:PlaceModel) {
-    let oldPlace = state.places.find((x:PlaceModel) => x.id === project.id);
-    let oldPlaceIndex = state.places.indexOf(oldPlace);
-    state.places.splice(oldPlaceIndex, 1, project);
-  },
+  // editPlace(state, project:PlaceModel) {
+  //   let oldPlace = state.places.find((x:PlaceModel) => x.id === project.id);
+  //   let oldPlaceIndex = state.places.indexOf(oldPlace);
+  //   state.places.splice(oldPlaceIndex, 1, project);
+  // },
 
 };

@@ -38,12 +38,19 @@ export const actions: ActionTree<PlaceState, RootState> = {
       .post(process.env.VUE_APP_API_URL + "place", place)
   },
 
-  SEND_PLACE_EDITION({ commit }, place) {
+  SEND_PLACE_EDITION({ commit }, place  ) {
     return axios
-      .put(process.env.VUE_APP_API_URL + "place/" + place.id, place)
+      .put(process.env.VUE_APP_API_URL + "place/" + place .id, place )
       .then(response => {
-        commit("editPlace", new PlaceModel(response.data.place));
+        // commit("editPlace", new PlaceModel(response.data.place));
       })
+  },
+
+  SEND_PLACE_DELETION({ commit }, id) {
+
+    //Delete call to API
+    return axios
+      .delete(process.env.VUE_APP_API_URL + "place/" + id)
   },
 
 };
