@@ -51,6 +51,13 @@
             </v-col>
           </v-row>
 
+          <v-row justify="center" dense>
+
+            <choose-tags
+            :propTags="editedPlace.tags"
+            @update="(tags)=>{editedPlace.tags = tags}"/>
+
+          </v-row>
 
           <v-card-actions>
           <v-spacer></v-spacer>
@@ -99,6 +106,7 @@ import ImageInput from "@c/molecules/media/ImageInput.vue"
 import Image from "@/ts/models/imageClass"
 import PlaceModel from "@/ts/models/placeClass"
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
+import ChooseTags from "@c/molecules/tag/ChooseTags.vue"
 
 export default defineComponent({
 
@@ -106,7 +114,8 @@ export default defineComponent({
     PrimaryContentBody,
     LoadingBar,
     ImageInput,
-    ConfirmDialog
+    ConfirmDialog,
+    ChooseTags
   },
 
   name : "Dashboard",

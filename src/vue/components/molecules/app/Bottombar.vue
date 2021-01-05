@@ -24,7 +24,7 @@
       </v-btn> -->
 
 
-      <v-btn
+      <!-- <v-btn
 
       v-if="$route.path !== placeNavItems[0].path"
       color="white"
@@ -40,7 +40,7 @@
       >
         </v-avatar>
         {{place.name}}
-      </v-btn>
+      </v-btn> -->
 
 
     <v-bottom-navigation
@@ -55,7 +55,7 @@
     >
       <v-btn
         class="mx-n2"
-        v-for="(item, index) in navItems"
+        v-for="(item, index) in placeNavItems"
         :key="index"
         :value="item.path"
         :to="item.path"

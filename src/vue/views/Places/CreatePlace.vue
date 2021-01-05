@@ -47,6 +47,14 @@
         </v-col>
       </v-row>
 
+      <v-row justify="center" dense>
+
+        <choose-tags
+        :propTags="newPlace.tags"
+        @update="updateTags"/>
+
+      </v-row>
+
 
       <v-card-actions>
       <v-spacer></v-spacer>
@@ -75,6 +83,8 @@ import LoadingBar from "@c/atoms/app/LoadingBar.vue"
 import ImageInput from "@c/molecules/media/ImageInput.vue"
 import Image from "@/ts/models/imageClass"
 import PlaceModel from "@/ts/models/placeClass";
+import ChooseTags from "@c/molecules/tag/ChooseTags.vue"
+import TagModel from "@/ts/models/tagClass"
 
 export default defineComponent({
 
@@ -82,7 +92,8 @@ export default defineComponent({
 
   components: {
     LoadingBar,
-    ImageInput
+    ImageInput,
+    ChooseTags
   },
 
   setup(props, {root}){
@@ -117,6 +128,10 @@ export default defineComponent({
         });
     }
 
+    const updateTags = (tags:Array<TagModel>) => {
+      newPlace.value.tags = tags    
+    }
+
   var showCrop = ref(false)
 
     return{
@@ -126,14 +141,13 @@ export default defineComponent({
       form,
       newPlace,
       showCrop,
-      changeImage
+      changeImage,
+      updateTags
     }
   }
 })
 </script>
 
 <style scoped>
-
-::v-deep .v-select__selection { display:none }
 
 </style>

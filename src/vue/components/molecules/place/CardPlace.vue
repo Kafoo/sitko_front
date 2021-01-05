@@ -34,19 +34,24 @@
           <v-card-text class="pt-3 pb-0">
 
               <div>
-                <b>{{ $t("count.sitkers", { n: "12" }) }}</b>
+                <b>{{ $t("count.sitkers", { n: "0" }) }}</b>
               </div>
               <div>
                 <i>
-                  {{ $t("count.currentProjects", { n: "6" }) }}
+                  {{ $t("count.currentProjects", { n: place.projects.length }) }}
                 </i>
               </div>
               <div>
-                <tag-chip>Boulange</tag-chip>
-                <tag-chip>Menuiserie</tag-chip>
-                <tag-chip>Phytoépuration</tag-chip>
-                <span style="font-size:0.8em">
-                  +{{ $t("count.tags", { n: "4" }) }}
+
+                <tag-chip 
+                v-for="(tag, index) in place.tags.slice(0,3)" 
+                :key="index">
+                  {{tag.title}}
+                </tag-chip>
+                <span 
+                v-if="place.tags.length > 3"
+                style="font-size:0.8em">
+                  +{{ $t("count.tags", { n: place.tags.length - 3 }) }}
                 </span>               
               </div>
 
@@ -90,6 +95,7 @@ import {ref, defineComponent} from "@vue/composition-api"
 import { isMobile, windowWidth } from "@/ts/functions/composition/displayHelpers"
 import VClamp from "vue-clamp";
 import TagChip from "@c/atoms/app/TagChip.vue"
+import PlaceModel from "@/ts/models/placeClass"
 
 export default defineComponent({
 
@@ -99,7 +105,10 @@ export default defineComponent({
   },
 
   props: {
-    place:Object
+    place:{
+      type:PlaceModel,
+      default:{}
+    }
   },
 
   setup(props:any, {root}:any){
