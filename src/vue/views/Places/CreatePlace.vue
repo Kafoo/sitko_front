@@ -103,7 +103,8 @@ export default defineComponent({
       name:"",
       description:"",
       image: new Image(0),
-      tags:[]
+      tags:[],
+      projects:[]
     })
 
     var form = ref(false)
