@@ -142,7 +142,7 @@ export default {
         place_id: this.$route.params.id,
         caldates: []
       },
-      types: ["ferme", "écolieu", "autre"]
+      types: ["public", "privé", "autre"]
     };
   },
 

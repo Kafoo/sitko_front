@@ -41,9 +41,9 @@ export default class Event {
   get color():string {
     if (this.type === "autre") {
       return "red darken-3";
-    } else if (this.type === "ferme") {
+    } else if (this.type === "public") {
       return "yellow darken-3";
-    } else if (this.type === "écolieu") {
+    } else if (this.type === "privé") {
       return "blue darken-3";
     } else {
       return "green darken-3";
