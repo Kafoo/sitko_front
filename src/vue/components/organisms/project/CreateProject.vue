@@ -52,7 +52,7 @@
             class="py-5"
             @click="pickingDate = true"
           >
-            {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
+            {{ $t("actions.add_f", { item: $t("caldate") }) | capitalize }}
           </v-chip>
 
           <v-tooltip
@@ -91,7 +91,7 @@
               </v-btn>
             </template>
             <span>
-              {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
+              {{ $t("actions.add_f", { item: $t("caldate") }) | capitalize }}
             </span>
           </v-tooltip>
         </v-chip-group>

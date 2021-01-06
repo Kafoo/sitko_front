@@ -17,7 +17,7 @@
   "calendar": "calendrier",
   "projects": "projets",
   "events": "événements",
-  "calendar date": "date",
+  "caldate": "date",
   "contact": "contact",
   "connection": "connexion",
 
@@ -80,8 +80,11 @@
 
   "actions":{
   	"create": "créer un {item}",
+  	"create_f": "créer une {item}",
     "new": "nouveau {item}",
-    "add": "ajouter un {item}"
+    "new_f": "nouvelle {item}",
+    "add": "ajouter un {item}",
+    "add_f": "ajouter une {item}"
   },
 
   "data":{

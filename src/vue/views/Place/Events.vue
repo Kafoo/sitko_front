@@ -157,7 +157,7 @@ export default {
     ...mapGetters("event", ["loading_events", "events"]),
 
     types() {
-      return [this.$t("all"), "ferme", "écolieu", "autre"];
+      return [this.$t("all"), "public", "privé", "autre"];
     },
 
     activeEvents() {

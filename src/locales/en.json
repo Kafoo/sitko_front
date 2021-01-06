@@ -2,6 +2,8 @@
 
   "password": "password | passwords",
 
+  "caldate": "date",
+
   "404": "page not found",
 
   "home_page":{
@@ -27,8 +29,11 @@
 
   "actions":{
   	"create": "new {item}",
+  	"create_f": "new {item}",
     "new": "new {item}",
-    "add": "add {item}"
+    "new_f": "new {item}",
+    "add": "add {item}",
+    "add_f": "add {item}"
   },
 
   "data":{
