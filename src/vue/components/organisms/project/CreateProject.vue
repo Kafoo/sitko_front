@@ -46,36 +46,36 @@
         <v-chip-group column>
           <v-chip
             v-if="
-              !newProject.events ||
-                (newProject.events && !newProject.events.length)
+              !newProject.caldates ||
+                (newProject.caldates && !newProject.caldates.length)
             "
             class="py-5"
             @click="pickingDate = true"
           >
-            {{ $t("actions.add", { item: $t("event") }) | capitalize }}
+            {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
           </v-chip>
 
           <v-tooltip
-            v-for="(event, index) in newProject.events"
+            v-for="(caldate, index) in newProject.caldates"
             :key="index"
             bottom
           >
             <template v-slot:activator="{ on }">
               <v-chip
-                class="event-chip py-6 mt-0"
+                class="caldate-chip py-6 mt-0"
                 v-on="on"
                 close
-                @click:close="removeEvent(index)"
+                @click:close="removeCaldate(index)"
               >
-                <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
+                <v-icon class="px-2" v-if="caldate.singleDate">today</v-icon>
                 <v-icon class="px-2" v-else>date_range</v-icon>
               </v-chip>
             </template>
-            <span>{{ event.chip }}</span>
+            <span>{{ caldate.chip }}</span>
           </v-tooltip>
 
           <v-tooltip
-            v-if="newProject.events && newProject.events.length"
+            v-if="newProject.caldates && newProject.caldates.length"
             bottom
           >
             <template v-slot:activator="{ on }">
@@ -91,7 +91,7 @@
               </v-btn>
             </template>
             <span>
-              {{ $t("actions.add", { item: $t("event") }) | capitalize }}
+              {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
             </span>
           </v-tooltip>
         </v-chip-group>
@@ -119,7 +119,7 @@
       class="choose-date"
       v-if="pickingDate"
       @closeDatePicker="closeDatePicker"
-      @addEvent="addEvent"
+      @addCaldate="addCaldate"
     />
   </v-card>
 </template>
@@ -140,7 +140,7 @@ export default {
       pickingDate: false,
       newProject: {
         place_id: this.$route.params.id,
-        events: []
+        caldates: []
       },
       types: ["ferme", "écolieu", "autre"]
     };
@@ -179,7 +179,7 @@ export default {
     resetProject() {
       this.newProject = {
         place_id: this.place_id,
-        events: []
+        caldates: []
       };
     },
 
@@ -198,11 +198,11 @@ export default {
     closeDatePicker() {
       this.pickingDate = false;
     },
-    addEvent(event) {
-      this.newProject.events.push(event);
+    addCaldate(caldate) {
+      this.newProject.caldates.push(caldate);
     },
-    removeEvent(index) {
-      this.newProject.events.splice(index, 1);
+    removeCaldate(index) {
+      this.newProject.caldates.splice(index, 1);
     },
 
     changeImage() {

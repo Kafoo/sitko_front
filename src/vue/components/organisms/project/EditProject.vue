@@ -56,36 +56,36 @@
         <v-chip-group column class="d-flex align-center">
           <v-chip
             v-if="
-              !editedProject.events ||
-                (editedProject.events && !editedProject.events.length)
+              !editedProject.caldates ||
+                (editedProject.caldates && !editedProject.caldates.length)
             "
             class="py-5"
             @click="pickingDate = true"
           >
-            {{ $t("actions.add", { item: $t("event") }) | capitalize }}
+            {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
           </v-chip>
 
           <v-tooltip
-            v-for="(event, index) in editedProject.events"
+            v-for="(caldate, index) in editedProject.caldates"
             :key="index"
             bottom
           >
             <template v-slot:activator="{ on }">
               <v-chip
-                class="event-chip py-6 mt-0"
+                class="caldate-chip py-6 mt-0"
                 v-on="on"
                 close
-                @click:close="removeEvent(index)"
+                @click:close="removeCaldate(index)"
               >
-                <v-icon class="px-2" v-if="event.singleDate">today</v-icon>
+                <v-icon class="px-2" v-if="caldate.singleDate">today</v-icon>
                 <v-icon class="px-2" v-else>date_range</v-icon>
               </v-chip>
             </template>
-            <span>{{ event.chip }}</span>
+            <span>{{ caldate.chip }}</span>
           </v-tooltip>
 
           <v-tooltip
-            v-if="editedProject.events && editedProject.events.length"
+            v-if="editedProject.caldates && editedProject.caldates.length"
             bottom
           >
             <template v-slot:activator="{ on }">
@@ -95,14 +95,14 @@
                 width="45"
                 v-on="on"
                 color="green"
-                v-if="showEvents"
+                v-if="showCaldates"
                 @click="pickingDate = true"
               >
                 <v-icon>add</v-icon>
               </v-btn>
             </template>
             <span>
-              {{ $t("actions.add", { item: $t("event") }) | capitalize }}
+              {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
             </span>
           </v-tooltip>
         </v-chip-group>
@@ -138,7 +138,7 @@
       class="choose-date"
       v-if="pickingDate"
       @closeDatePicker="closeDatePicker"
-      @addEvent="addEvent"
+      @addCaldate="addCaldate"
     />
   </v-card>
 </template>
@@ -169,7 +169,7 @@ export default {
 
   props: {
     propProject: Object,
-    showEvents: { type: Boolean, default: true }
+    showCaldates: { type: Boolean, default: true }
   },
 
   computed: {
@@ -202,7 +202,7 @@ export default {
 
     sendEdit() {
       this.loading = true;
-      this.editedProject.projectOnly = !this.showEvents;
+      this.editedProject.projectOnly = !this.showCaldates;
       this.SEND_PROJECT_EDITION(this.editedProject)
         .then(() => {
           this.$emit("closeEdit");
@@ -217,12 +217,12 @@ export default {
       this.pickingDate = false;
     },
 
-    addEvent(event) {
-      this.editedProject.events.push(event);
+    addCaldate(caldate) {
+      this.editedProject.caldates.push(caldate);
     },
 
-    removeEvent(index) {
-      this.editedProject.events.splice(index, 1);
+    removeCaldate(index) {
+      this.editedProject.caldates.splice(index, 1);
     },
 
     imageChange() {

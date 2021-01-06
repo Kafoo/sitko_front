@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="loading_events"
+      v-if="loading_caldates"
       class="loading d-flex align-center justify-center"
     >
       <v-progress-circular
@@ -91,10 +91,10 @@
             v-model="focus"
             color="primary"
             :locale="$i18n.locale"
-            :events="events"
-            :event-color="getEventColor"
+            :events="caldates"
+            :event-color="getCaldateColor"
             :type="type"
-            @click:event="showEvent"
+            @click:event="showCaldate"
             @click:more="viewDay"
             @click:date="viewDay"
           ></v-calendar>
@@ -106,16 +106,16 @@
             min-width="0"
           >
             <v-card color="grey lighten-4" max-width="400px" flat>
-              <v-toolbar :color="selectedEvent.color" dark>
-                <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <v-toolbar :color="selectedCaldate.color" dark>
+                <v-toolbar-title v-html="selectedCaldate.name"></v-toolbar-title>
                 <span class="ml-2 font-italic"
-                  >({{ $t(selectedEvent.type) }})</span
+                  >({{ $t(selectedCaldate.type) }})</span
                 >
               </v-toolbar>
 
               <v-card-text class="pb-0">
                 <v-clamp autoresize :max-lines="5" class="description">
-                  {{ selectedEvent.description }}
+                  {{ selectedCaldate.description }}
                 </v-clamp>
               </v-card-text>
 
@@ -123,7 +123,7 @@
                 <v-btn
                   text
                   color="primary"
-                  @click="$router.push('projects#' + selectedEvent.child_id)"
+                  @click="$router.push('projects#' + selectedCaldate.child_id)"
                 >
                   + {{ $t("infos") }}
                 </v-btn>
@@ -154,7 +154,7 @@ export default {
       place_id: this.$route.params.id,
       focus: "",
       type: "month",
-      selectedEvent: {},
+      selectedCaldate: {},
       selectedElement: null,
       selectedOpen: false
     };
@@ -170,7 +170,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters("event", ["loading_events", "events"]),
+    ...mapGetters("caldate", ["loading_caldates", "caldates"]),
 
     typeToLabel() {
       return {
@@ -182,9 +182,9 @@ export default {
   },
 
   methods: {
-    ...mapActions("event", ["GET_EVENTS"]),
-    getEventColor(event) {
-      return event.color;
+    ...mapActions("caldate", ["GET_EVENTS"]),
+    getCaldateColor(caldate) {
+      return caldate.color;
     },
     viewDay({ date }) {
       this.focus = date;
@@ -199,10 +199,10 @@ export default {
     next() {
       this.$refs.calendar.next();
     },
-    showEvent({ nativeEvent, event }) {
+    showCaldate({ nativeCaldate, caldate }) {
       const open = () => {
-        this.selectedEvent = event;
-        this.selectedElement = nativeEvent.target;
+        this.selectedCaldate = caldate;
+        this.selectedElement = nativeCaldate.target;
         setTimeout(() => {
           this.selectedOpen = true;
         }, 10);
@@ -215,7 +215,7 @@ export default {
         open();
       }
 
-      nativeEvent.stopPropagation();
+      nativeCaldate.stopPropagation();
     }
   }
 };

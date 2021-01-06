@@ -50,6 +50,7 @@ export const actions: ActionTree<ProjectState, RootState> = {
         commit("pushProject", newProject);
         commit(
           "app/setAlert",
+          // TOTRANSLATE
           { type: "success", msg: "Projet créé avec succès" },
           { root: true }
         );

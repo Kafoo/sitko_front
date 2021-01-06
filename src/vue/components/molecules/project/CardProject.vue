@@ -78,17 +78,17 @@
 
                   <v-chip-group column>
                     <v-tooltip
-                      v-for="event in project.events"
-                      :key="event.id"
+                      v-for="caldate in project.caldates"
+                      :key="caldate.id"
                       bottom
                     >
                       <template v-slot:activator="{ on }">
                         <v-chip class="c-default pa-2 mt-0" v-on="on">
-                          <v-icon v-if="event.singleDate">today</v-icon>
+                          <v-icon v-if="caldate.singleDate">today</v-icon>
                           <v-icon v-else>date_range</v-icon>
                         </v-chip>
                       </template>
-                      <span>{{ event.chip }}</span>
+                      <span>{{ caldate.chip }}</span>
                     </v-tooltip>
                   </v-chip-group>
                 </div>

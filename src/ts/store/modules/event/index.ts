@@ -7,9 +7,9 @@ import { RootState } from "@/ts/store/types";
 import EventModel from "@/ts/models/eventClass";
 
 export const state: EventState = {
-  events: Array<EventModel>(),
-  loading_events: false,
-  firstFetch: ""
+    events: Array<EventModel>(),
+    loading_events: false,
+    firstFetch: ""
 };
 
 const namespaced: boolean = true;

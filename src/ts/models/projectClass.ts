@@ -1,5 +1,5 @@
 import ImageModel from "@/ts/models/imageClass";
-import EventModel from "@/ts/models/eventClass";
+import CaldateModel from "@/ts/models/caldateClass";
 
 export default class Project {
 
@@ -10,7 +10,7 @@ export default class Project {
   description:string
   image?:ImageModel
   expanded:boolean
-  events:Array<EventModel>
+  caldates:Array<CaldateModel>
 
   constructor(rawData:any = {}) {
     this.id = rawData.id;
@@ -25,11 +25,11 @@ export default class Project {
 
     this.expanded = false;
 
-    this.events = [];
+    this.caldates = [];
 
-    if (rawData.events) {
-      rawData.events.forEach((event:any) => {
-        this.events.push(new EventModel(event));
+    if (rawData.caldates) {
+      rawData.caldates.forEach((caldate:any) => {
+        this.caldates.push(new CaldateModel(caldate));
       });
     }
   }

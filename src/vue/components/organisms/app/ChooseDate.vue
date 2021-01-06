@@ -17,13 +17,13 @@
 
     <v-date-picker
       v-show="uniqueDate"
-      v-model="event.date"
+      v-model="caldate.date"
       mode="datetime"
       is24hr
     />
     <v-date-picker
       v-show="!uniqueDate"
-      v-model="event.range"
+      v-model="caldate.range"
       is-range
       mode="datetime"
       is24hr
@@ -43,7 +43,7 @@
 <script>
 import $ from "jquery";
 import VDatePicker from "v-calendar/lib/components/date-picker.umd";
-import Event from "@/ts/models/eventClass";
+import Caldate from "@/ts/models/caldateClass";
 
 export default {
   name: "ChooseDate",
@@ -58,7 +58,7 @@ export default {
     return {
       timed: true,
       uniqueDate: true,
-      event: {
+      caldate: {
         date: now,
         range: {
           start: now,
@@ -105,18 +105,18 @@ export default {
     },
 
     confirm() {
-      var newEvent = {};
-      newEvent.place_id = this.$route.params.id;
-      newEvent.timed = this.timed;
+      var newCaldate = {};
+      newCaldate.place_id = this.$route.params.id;
+      newCaldate.timed = this.timed;
 
       if (this.uniqueDate) {
-        newEvent.start = this.formatDT(this.event.date);
-        newEvent.end = this.formatDT(this.event.date);
+        newCaldate.start = this.formatDT(this.caldate.date);
+        newCaldate.end = this.formatDT(this.caldate.date);
       } else {
-        newEvent.start = this.formatDT(this.event.range.start);
-        newEvent.end = this.formatDT(this.event.range.end);
+        newCaldate.start = this.formatDT(this.caldate.range.start);
+        newCaldate.end = this.formatDT(this.caldate.range.end);
       }
-      this.$emit("addEvent", new Event(newEvent));
+      this.$emit("addCaldate", new Caldate(newCaldate));
       this.$emit("closeDatePicker");
     }
   }

@@ -1,16 +1,13 @@
 <template>
   <div>
     <div class="text-center">
-      <v-btn
-        large
-        class="center mb-8 green lighten-1"
-        justify="center"
-        align="center"
-      >
-        {{ $t("actions.create", { item: $t("event") }) }}
-      </v-btn>
+      <create-button
+        :item="$t('event')"
+        @action="creating = true"
+      />
     </div>
 
+    <!-- Select Type -->
     <v-select
       :items="types"
       label="Type"
@@ -18,61 +15,65 @@
       v-model="activeType"
     ></v-select>
 
-    <!-- NO ACTIVE PROJECT -->
-    <h4 v-if="!loading_projects && !projects.length" class="text-center">
+    <!-- No Event -->
+    <h4 v-if="!loading_events && !events.length" class="text-center">
       -- {{ $t("data.empty", { item: $t("event") }) }} --
     </h4>
 
+    <!-- No Active Event -->
     <h4
-      v-else-if="!loading_projects && !activeEvents.length"
+      v-else-if="!loading_events && !activeEvents.length"
       class="text-center"
     >
       -- {{ $t("data.empty_typed", { item: $t("event") }) }} --
     </h4>
 
-    <!-- LOADINGS -->
-    <div v-if="loading_projects" class="d-flex flex-column">
-      <v-skeleton-loader
-        v-for="item in [1, 2, 3, 4]"
-        v-bind:key="item"
-        class="boilerplate ma-1 elevation-3"
-        height="60"
-        type="table-heading"
-      ></v-skeleton-loader>
+    <!-- Loadings -->
+    <div v-if="loading_events" class="d-flex flex-column">
+
+      <skeleton-index/>
+
     </div>
 
+    <!-- Index -->
     <div v-else>
       <transition-group
-        class="projects d-flex flex-column"
+        class="events d-flex flex-column"
         name="list-complete"
         tag="p"
       >
-        <!-- INDEX -->
         <div
-          v-for="(project, index) in activeEvents"
-          :key="project.id"
+          v-for="(event, index) in activeEvents"
+          :key="event.id"
           class="list-complete-item"
         >
-          <CardProject
-            :project="project"
+          <card-event
+            :event="event"
             :index="index"
-            :expanded="project.expanded"
-            @toogleExpand="toogleExpand(project.id)"
+            :expanded="event.expanded"
+            @toogleExpand="toogleExpand(event.id)"
             @openEdit="openEdit"
-            @deleteProject="SEND_PROJECT_DELETION"
+            @deleteEvent="SEND_EVENT_DELETION"
+            @toogleImage="toogleImage"
           />
         </div>
       </transition-group>
 
-      <!-- CREATION -->
+      <!-- Creation -->
       <v-dialog v-model="creating" width="500">
-        <CreateProject @closeCreation="closeCreation" />
+        <create-event @closeCreation="closeCreation" />
       </v-dialog>
 
-      <!-- EDITION -->
+      <!-- Edition -->
       <v-dialog v-model="editing" width="500">
-        <EditProject :propProject="editionProject" @closeEdit="closeEdit" />
+        <edit-event :propEvent="editionEvent" @closeEdit="closeEdit" />
       </v-dialog>
+
+      <!-- Image Pop-up -->
+      <v-dialog v-model="expand_image" width="90%">
+        <image-popup :image="expanded_image" @toogleImage="toogleImage" />
+      </v-dialog>
+      
     </div>
   </div>
 </template>
@@ -80,44 +81,62 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import axios from "axios";
-import EditProject from "@c/organisms/project/EditProject.vue";
-import CreateProject from "@c/organisms/project/CreateProject.vue";
-import CardProject from "@c/molecules/project/CardProject.vue";
+import EditEvent from "@c/organisms/event/EditEvent.vue";
+import CreateEvent from "@c/organisms/event/CreateEvent.vue";
+import CardEvent from "@c/molecules/event/CardEvent.vue";
+import ImagePopup from "@c/organisms/app/ImagePopup.vue";
+import CreateButton from "@c/atoms/app/CreateButton.vue";
+import SkeletonIndex from "@c/molecules/event/SkeletonIndex.vue"
 
 export default {
-  name: "Projects",
+  name: "Events",
+
+  components: {
+    EditEvent,
+    CreateEvent,
+    CardEvent,
+    ImagePopup,
+    CreateButton,
+    SkeletonIndex
+  },
 
   data() {
     return {
+      hash: null,
+      place_id: this.$route.params.id,
+      expand_image: false,
+      expanded_image: {},
       editing: false,
       creating: false,
       activeType: "",
-      editionProject: {}
+      editionEvent: {}
     };
   },
 
-  components: {
-    EditProject,
-    CreateProject,
-    CardProject
-  },
-
-  created() {
+  mounted() {
     this.activeType = this.types[0];
 
     if (location.hash) {
       this.hash = location.hash;
     }
     location.hash = "";
+
+    var data = {
+      place_id: this.place_id,
+      hash: this.hash
+    };
+
+    this.GET_PLACE_EVENTS(data);
   },
 
   watch: {
-    loading_projects: function() {
-      if (this.loading_projects === false) {
+    //Slide to hashed event
+    loading_events: function() {
+      if (this.loading_events === false) {
         this.$nextTick(() => {
           if (this.hash) {
             var id = this.hash.slice(1);
-            this.TOOGLE_PROJECT_EXPAND(id);
+            this.TOOGLE_EVENT_EXPAND(id);
             setTimeout(() => {
               document.getElementById(id).scrollIntoView({
                 behavior: "smooth"
@@ -135,36 +154,52 @@ export default {
   },
 
   computed: {
-    ...mapGetters("project", ["loading_projects", "projects"]),
+    ...mapGetters("event", ["loading_events", "events"]),
 
     types() {
-      return [this.$t("all"), "public", "perso", "détente"];
+      return [this.$t("all"), "ferme", "écolieu", "autre"];
     },
 
     activeEvents() {
-      return [];
+      if (this.activeType === this.$t("all")) {
+        return this.events;
+      } else {
+        return this.events.filter(event => {
+          return event.type === this.activeType;
+        });
+      }
     }
   },
 
   methods: {
-    ...mapActions("project", [
-      "getProjects",
-      "SEND_PROJECT_DELETION",
-      "TOOGLE_PROJECT_EXPAND"
+    ...mapActions("event", [
+      "GET_PLACE_EVENTS",
+      "SEND_EVENT_DELETION",
+      "TOOGLE_EVENT_EXPAND"
     ]),
+    ...mapMutations("event", ["closeExpands"]),
+
     openEdit(index) {
-      this.editionProject = this.projects[index];
+      this.editionEvent = this.events[index];
       this.editing = true;
     },
+
     closeEdit() {
       this.editing = false;
-      this.editionProject = {};
+      this.editionEvent = {};
     },
+
     closeCreation() {
       this.creating = false;
     },
-    toogleExpand(id) {
-      this.TOOGLE_PROJECT_EXPAND(id);
+
+    toogleImage(img = {}) {
+      this.expanded_image = img;
+      this.expand_image = !this.expand_image;
+    },
+
+    toogleExpand(id = null) {
+      this.TOOGLE_EVENT_EXPAND(id);
     }
   }
 };

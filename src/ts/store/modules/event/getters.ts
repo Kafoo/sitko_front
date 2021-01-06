@@ -8,6 +8,6 @@ export const getters: GetterTree<EventState, RootState> = {
     return state.events;
   },
   loading_events(state): Boolean {
-    return state.loading_events!;
-  },
+    return state.loading_events;
+  }
 };
