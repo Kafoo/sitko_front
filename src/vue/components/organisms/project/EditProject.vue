@@ -26,32 +26,11 @@
           :rules="[rules.required]"
         ></v-textarea>
 
-        <div
-          v-if="editedProject.image && !editedProject.imageChanged"
-          class="imgContainer"
-        >
-          <img :src="editedProject.image.thumb" />
-          <v-btn
-            class="close"
-            color="secondary"
-            fab
-            x-small
-            dark
-            @click="removeImage"
-          >
-            <v-icon>close</v-icon>
-          </v-btn>
-        </div>
-
-        <v-file-input
-          v-else
-          v-model="editedProject.file"
-          :rules="[rules.image]"
-          accept="image/jpeg"
-          :label="$t('image') | capitalize"
-          @change="imageChange"
-          prepend-icon="insert_photo"
-        />
+        <image-input
+        size="100px"
+        circle
+        :image="editedProject.image" 
+        @changeImage="changeImage"/>
 
         <v-chip-group column class="d-flex align-center">
           <v-chip
@@ -147,10 +126,14 @@
 import axios from "axios";
 import { mapActions } from "vuex";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
+import ImageInput from "@c/molecules/media/ImageInput.vue"
+
+
 export default {
   name: "EditProject",
   components: {
-    ChooseDate
+    ChooseDate,
+    ImageInput
   },
 
   data() {
@@ -225,17 +208,8 @@ export default {
       this.editedProject.caldates.splice(index, 1);
     },
 
-    imageChange() {
-      this.editedProject.imageChanged = true;
-      if (this.editedProject.file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(this.editedProject.file);
-        reader.onload = e => {
-          this.editedProject.image = e.target.result;
-        };
-      } else {
-        this.editedProject.image = null;
-      }
+    changeImage(data) {
+      this.editedProject.image = data
     },
 
     removeImage() {

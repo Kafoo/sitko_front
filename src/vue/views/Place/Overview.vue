@@ -16,7 +16,7 @@
 
     <img class="image" :src="place.image.medium" width="250px" />
 
-    <h3 class="mt-6">{{ place.description }}</h3>
+    <div class="mt-6 breakwrap">{{ place.description }}</div>
 
   </div>
 </template>

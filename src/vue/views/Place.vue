@@ -1,5 +1,5 @@
 <template>
-  <div class="place d-flex pb-12">
+  <div class="place d-flex pb-12" style="max-width:1200px; margin:auto">
     <div class="hidden-sm-and-down">
       <sidebar :placeNavItems="placeNavItems" />
     </div>

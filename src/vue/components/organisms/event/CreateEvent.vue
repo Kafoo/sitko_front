@@ -35,13 +35,11 @@
           :disabled="loading"
         ></v-textarea>
 
-        <v-file-input
-          v-model="newEvent.file"
-          :label="$t('image') | capitalize"
-          :rules="[rules.image]"
-          accept="image/jpeg"
-          @change="changeImage"
-        />
+        <image-input
+        size="100px"
+        circle
+        :image="newEvent.image" 
+        @changeImage="changeImage"/>
 
         <v-chip-group column>
           <v-chip
@@ -128,6 +126,7 @@
 import { mapActions } from "vuex";
 import axios from "axios";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
+import ImageInput from "@c/molecules/media/ImageInput.vue"
 
 export default {
   name: "CreateEvent",
@@ -140,7 +139,8 @@ export default {
       pickingDate: false,
       newEvent: {
         place_id: this.$route.params.id,
-        caldates: []
+        caldates: [],
+        image:{}
       },
       types: ["public", "privé", "autre"]
     };
@@ -148,6 +148,7 @@ export default {
 
   components: {
     ChooseDate,
+    ImageInput
   },
 
   props: {
@@ -205,17 +206,9 @@ export default {
       this.newEvent.caldates.splice(index, 1);
     },
 
-    changeImage() {
-      if (this.newEvent.file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(this.newEvent.file);
-        reader.onload = e => {
-          this.newEvent.image = e.target.result;
-        };
-      } else {
-        this.newEvent.image = undefined;
-      }
-    }
+    changeImage(data) {
+      this.newEvent.image = data
+    },
   }
 };
 </script>

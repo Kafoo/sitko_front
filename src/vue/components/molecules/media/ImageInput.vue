@@ -3,18 +3,24 @@
   <div>
 
     <div class="input-container">
-      <v-img 
-      class="choose-img rounded-lg elevation-3"
-      :width="size"
-      :height="size"
-      :src="imageSrc">
-      </v-img>
-      <v-hover v-slot="{ hover }">
-        <v-icon 
-        class='edit-icon'
-        :class="` elevation-${hover ? 5 : 2}`"
-        @click="pickingImage = true">edit</v-icon>
-      </v-hover>
+      <div v-if="!image.thumb">
+        <v-btn @click="pickingImage = true">ajouter une image</v-btn>
+      </div>
+      <div v-else>
+        <v-img
+        class="choose-img rounded-lg elevation-3"
+        :class="circle?'rounded-circle':'rounded-lg'"
+        :width="size"
+        :height="size"
+        :src="imageSrc">
+        </v-img>
+        <v-hover v-slot="{ hover }">
+          <v-icon 
+          class='edit-icon'
+          :class="[circle?'edit-icon-circle':'', ` elevation-${hover ? 5 : 2}`]"
+          @click="pickingImage = true">edit</v-icon>
+        </v-hover>
+      </div>
     </div>
 
     <v-dialog v-model="pickingImage" width="unset">
@@ -30,7 +36,7 @@
 
 <script lang="ts">
 
-import { computed, defineComponent, ref, PropType } from "@vue/composition-api"
+import { computed, defineComponent, ref, PropType, onMounted } from "@vue/composition-api"
 import {useInputRules} from "@/ts/functions/composition/inputRules"
 import ChooseImage from "@c/molecules/media/ChooseImage.vue"
 import ImageModel from "@/ts/models/imageClass"
@@ -42,13 +48,13 @@ export default defineComponent({
   props : {
     image: {
       type: [Object, String],
-      default: new ImageModel
+      default: ():ImageModel=>{return new ImageModel}
     },
     size: {
       type:String,
       default: "150px"
     },
-    icon: {
+    circle: {
       type:Boolean,
       default:false
     }
@@ -69,7 +75,7 @@ export default defineComponent({
     const imageSrc = computed(() => {
       if (typeof props.image === "string") {
         return props.image
-      }else if (props.image){
+      }else if (typeof props.image === "object"){
         return props.image.thumb
       }
     })
@@ -108,5 +114,10 @@ export default defineComponent({
     cursor: pointer;
 }
 
+.edit-icon-circle{
+
+    bottom: 0px;
+    right: 0px;
+}
 
 </style>

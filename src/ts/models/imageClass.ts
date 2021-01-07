@@ -7,7 +7,14 @@ export default class ImageModel {
 
   constructor(data: any = {}) {
 
-    if (data === 0) {
+    if (data === 'default_avatar') {
+      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1610015867/default-user-icon_xuqjw7.jpg";
+      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1610015867/default-user-icon_xuqjw7.jpg";
+      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1610015867/default-user-icon_xuqjw7.jpg";
+      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1610015867/default-user-icon_xuqjw7.jpg";
+      this.public_id = '';
+
+    }else if (data === 0) {
       this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
       this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
       this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";

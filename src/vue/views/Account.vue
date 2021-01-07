@@ -2,6 +2,15 @@
   <primary-content-body>
     <page-title :title="$t('my account')" />
 
+    <image-input
+    icon
+    :image="user.image" 
+    @changeImage="editUser"/>
+
+    <span v-if="loading_image">
+      Updating
+    </span>
+
     <v-btn class="d-block my-4" color="grey" dark @click="logout">
       {{ $t("logout") }}
     </v-btn>
@@ -29,15 +38,17 @@ import { mapGetters, mapActions } from "vuex";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody";
 import PageTitle from "@c/atoms/app/PageTitle.vue";
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
+import ImageInput from "@c/molecules/media/ImageInput.vue"
 
 export default {
 
-  name: "Home",
+  name: "Account",
 
   components: {
     PrimaryContentBody,
     PageTitle,
-    ConfirmDialog
+    ConfirmDialog,
+    ImageInput
   },
 
   data() {
@@ -45,7 +56,8 @@ export default {
       dialog: false,
       success: null,
       error: null,
-      loading: false
+      loading: false,
+      loading_image: false
     };
   },
 
@@ -54,7 +66,7 @@ export default {
   },
 
   methods: {
-    ...mapActions("auth", ["SEND_DELETE_USER", "SEND_LOGOUT_REQUEST"]),
+    ...mapActions("auth", ["SEND_USER_EDITION", "SEND_DELETE_USER", "SEND_LOGOUT_REQUEST"]),
 
     deleteUser() {
       this.success = this.error = null;
@@ -67,6 +79,19 @@ export default {
         .catch(error => {
           this.error = "Error deleting user.";
           console.log(error.response);
+        });
+    },
+
+    editUser(newImage) {
+      this.user.image = newImage
+      this.loading_image = true;
+      this.SEND_USER_EDITION(this.user)
+        .then(() => {
+          this.loading_image = false;
+          //display some confirmation ?
+        })
+        .catch(error => {
+          this.loading_image = false;
         });
     },
 

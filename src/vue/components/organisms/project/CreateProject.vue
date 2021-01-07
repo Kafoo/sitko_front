@@ -35,13 +35,11 @@
           :disabled="loading"
         ></v-textarea>
 
-        <v-file-input
-          v-model="newProject.file"
-          :label="$t('image') | capitalize"
-          :rules="[rules.image]"
-          accept="image/jpeg"
-          @change="changeImage"
-        />
+        <image-input
+        size="100px"
+        circle
+        :image="newProject.image" 
+        @changeImage="changeImage"/>
 
         <v-chip-group column>
           <v-chip
@@ -128,6 +126,7 @@
 import { mapActions } from "vuex";
 import axios from "axios";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
+import ImageInput from "@c/molecules/media/ImageInput.vue"
 
 export default {
   name: "CreateProject",
@@ -140,7 +139,8 @@ export default {
       pickingDate: false,
       newProject: {
         place_id: this.$route.params.id,
-        caldates: []
+        caldates: [],
+        image:{}
       },
       types: ["ferme", "écolieu", "autre"]
     };
@@ -148,6 +148,7 @@ export default {
 
   components: {
     ChooseDate,
+    ImageInput
   },
 
   props: {
@@ -205,16 +206,8 @@ export default {
       this.newProject.caldates.splice(index, 1);
     },
 
-    changeImage() {
-      if (this.newProject.file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(this.newProject.file);
-        reader.onload = e => {
-          this.newProject.image = e.target.result;
-        };
-      } else {
-        this.newProject.image = undefined;
-      }
+    changeImage(data) {
+      this.newProject.image = data
     }
   }
 };
