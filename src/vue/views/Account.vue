@@ -1,35 +1,37 @@
 <template>
   <primary-content-body>
-    <page-title :title="$t('my account')" />
+    <div class="d-flex flex-column align-center">
+      <page-title :title="$t('my account')" />
 
-    <image-input
-    icon
-    :image="user.image" 
-    @changeImage="editUser"/>
+      <image-input
+      icon
+      :image="user.image" 
+      @changeImage="editUser"/>
 
-    <span v-if="loading_image">
-      Updating
-    </span>
+      <span v-if="loading_image">
+        Updating
+      </span>
 
-    <v-btn class="d-block my-4" color="grey" dark @click="logout">
-      {{ $t("logout") }}
-    </v-btn>
+      <v-btn class="d-block my-4" color="grey" dark @click="logout">
+        {{ $t("logout") }}
+      </v-btn>
 
-    <v-btn class="d-block" color="red" dark @click="dialog = true">
-      {{ $t("delete my account") }}
-    </v-btn>
+      <v-btn class="d-block" color="red" dark @click="dialog = true">
+        {{ $t("delete my account") }}
+      </v-btn>
 
-    <!-- Confirm deletion -->
-    <confirm-dialog
-      :show="dialog"
-      :text="$t('Account deletion is definitive.')"
-      :cancel="$t('confirm.cancel')"
-      @cancel-action="dialog = false"
-      :confirm="$t('delete')"
-      @confirm-action="deleteUser()"
-      confirm_color="red"
-      :loading="loading"
-    />
+      <!-- Confirm deletion -->
+      <confirm-dialog
+        :show="dialog"
+        :text="$t('Account deletion is definitive.')"
+        :cancel="$t('confirm.cancel')"
+        @cancel-action="dialog = false"
+        :confirm="$t('delete')"
+        @confirm-action="deleteUser()"
+        confirm_color="red"
+        :loading="loading"
+      />
+    </div>
   </primary-content-body>
 </template>
 
