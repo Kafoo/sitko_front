@@ -37,10 +37,16 @@ export default {
     ...mapActions("auth", ["GET_USER_DATA"])
   },
 
+  beforeDestroy () {
+    document.removeEventListener("backbutton", this.yourCallBackFunction);
+  },
+
+
   mounted() {
     if (localStorage.getItem("authToken")) {
       this.GET_USER_DATA();
     }
+    document.addEventListener("backbutton", function(){console.log('plop')}, false);
   }
 };
 </script>

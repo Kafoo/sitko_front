@@ -15,7 +15,12 @@ export default class PlaceModel {
     this.name = rawData.name;
     this.description = rawData.description;
     this.image = new ImageModel(rawData.image);
-    this.tags = rawData.tags;
+    this.tags = []
+    if (rawData.tags) {      
+      rawData.tags.forEach((tag:TagModel) => {
+        this.tags.push(new TagModel(tag))  
+      });
+    }
     this.projects = rawData.projects;
   }
 }

@@ -109,7 +109,7 @@ export default {
       editing: false,
       creating: false,
       activeType: "",
-      editionProject: {}
+      editionProject: undefined
     };
   },
 
@@ -186,7 +186,7 @@ export default {
 
     closeEdit() {
       this.editing = false;
-      this.editionProject = {};
+      this.editionProject = undefined;
     },
 
     closeCreation() {

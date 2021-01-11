@@ -109,7 +109,7 @@ export default {
       editing: false,
       creating: false,
       activeType: "",
-      editionEvent: {}
+      editionEvent: undefined 
     };
   },
 
@@ -186,7 +186,7 @@ export default {
 
     closeEdit() {
       this.editing = false;
-      this.editionEvent = {};
+      this.editionEvent = undefined;
     },
 
     closeCreation() {

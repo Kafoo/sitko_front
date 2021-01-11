@@ -3,7 +3,7 @@
   <div>
 
     <div class="input-container">
-      <div v-if="!image.thumb">
+      <div v-if="!image">
         <v-btn @click="pickingImage = true">ajouter une image</v-btn>
       </div>
       <div v-else>
@@ -16,9 +16,17 @@
         </v-img>
         <v-hover v-slot="{ hover }">
           <v-icon 
+          small
           class='edit-icon'
           :class="[circle?'edit-icon-circle':'', ` elevation-${hover ? 5 : 2}`]"
           @click="pickingImage = true">edit</v-icon>
+        </v-hover>
+        <v-hover v-slot="{ hover }">
+          <v-icon 
+          small
+          class='delete-icon'
+          :class="[circle?'edit-icon-circle':'', ` elevation-${hover ? 5 : 2}`]"
+          @click="$emit('changeImage', undefined)">close</v-icon>
         </v-hover>
       </div>
     </div>
@@ -38,7 +46,7 @@
 
 import { computed, defineComponent, ref, PropType, onMounted } from "@vue/composition-api"
 import {useInputRules} from "@/ts/functions/composition/inputRules"
-import ChooseImage from "@c/molecules/media/ChooseImage.vue"
+import ChooseImage from "@c/organisms/media/ChooseImage.vue"
 import ImageModel from "@/ts/models/imageClass"
 
 export default defineComponent({
@@ -47,8 +55,8 @@ export default defineComponent({
 
   props : {
     image: {
-      type: [Object, String],
-      default: ():ImageModel=>{return new ImageModel}
+      type: [Object as ()=>ImageModel, String],
+      default: undefined
     },
     size: {
       type:String,
@@ -57,7 +65,11 @@ export default defineComponent({
     circle: {
       type:Boolean,
       default:false
-    }
+    },
+    delete: {
+      type:Boolean,
+      default:false
+    },
   },
 
   components: {
@@ -75,7 +87,7 @@ export default defineComponent({
     const imageSrc = computed(() => {
       if (typeof props.image === "string") {
         return props.image
-      }else if (typeof props.image === "object"){
+      }else if (props.image){
         return props.image.thumb
       }
     })
@@ -118,6 +130,18 @@ export default defineComponent({
 
     bottom: 0px;
     right: 0px;
+}
+
+.delete-icon{
+    background-color: #ffffffad;
+    border: 1px solid #767676;
+    border-radius: 31px;
+    padding: 5px;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    color: #000000;
+    cursor: pointer;
 }
 
 </style>

@@ -7,12 +7,24 @@ export const mutations: MutationTree<TagState> = {
     state.tags = payload;
   },
 
+  setCategories(state, payload: Array<Object>) {
+    state.categories = payload;
+  },
+
   setLoading(state) {
     state.loading = true;
   },
 
   removeLoading(state) {
     state.loading = false;
+  },
+
+  setCategoriesLoading(state) {
+    state.loading_categories = true;
+  },
+
+  removeCategoriesLoading(state) {
+    state.loading_categories = false;
   },
 
 };

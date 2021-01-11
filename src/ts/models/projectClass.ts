@@ -21,6 +21,8 @@ export default class Project {
 
     if (rawData.image) {
       this.image = new ImageModel(rawData.image)
+    }else{
+      this.image = undefined
     }
 
     this.expanded = false;

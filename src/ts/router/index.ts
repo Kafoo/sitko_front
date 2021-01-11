@@ -73,7 +73,7 @@ const routes = [
     ]
   },
   {
-    path: "/Place/:id",
+    path: "/place/:id",
     name: "Place",
     beforeEnter: auth,
     component: () => import("@/vue/views/Place.vue"),
@@ -129,12 +129,12 @@ const routes = [
     ]
   },
   {
-    path: "/dashboard/place/:id",
-    name: "Dashboard",
+    path: "/place/edit/:id",
+    name: "EditPlace",
     beforeEnter: auth,
-    component: () => import("@/vue/views/Place/Dashboard.vue"),
+    component: () => import("@/vue/views/Place/EditPlace.vue"),
     meta: {
-      title: "Sitko - Tableau de bord"
+      title: "Sitko - Edition du lieu"
     }
   },
   {

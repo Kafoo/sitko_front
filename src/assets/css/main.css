@@ -43,17 +43,24 @@
   opacity: 0.04 !important;
 }
 
+
 *::-webkit-scrollbar { 
+
 	width: 7px;
 	height: 8px;
 }
+
+*::-webkit-scrollbar-track{
+  display: none;
+}
+
 *::-webkit-scrollbar-thumb {
     background: rgba(50,50,50,0.7);
     border-radius: 2px;
 }
 
-*::-webkit-scrollbar-track {
-  background: #ffffff
+div.pill-scroll::-webkit-scrollbar-button {
+  height: 15px;
 }
 
 textarea {
@@ -71,4 +78,21 @@ textarea {
 
 .breakwrap{
   white-space: pre-wrap;
+}
+
+.v-slide-group__next, .v-slide-group__prev {
+
+    min-width: 20px;
+}
+
+.inset-shadow{
+  box-shadow: inset 0px 1px 9px 0px gainsboro;
+}
+
+.theme--light.v-icon {
+    color: rgb(0 0 0);
+}
+
+.v-slide-group__content {
+    justify-content: center;
 }

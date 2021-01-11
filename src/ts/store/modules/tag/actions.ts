@@ -18,5 +18,21 @@ export const actions: ActionTree<TagState, RootState> = {
         commit("removeLoading");
       })
       .catch(() => {});
+  },
+
+  GET_TAGS_CATEGORIES({ state, commit }) {
+    commit("setCategoriesLoading");
+    axios
+      .get(process.env.VUE_APP_API_URL + "tags_category")
+      .then(response => {
+        const newCollection = [];
+        for (const category of response.data) {
+          newCollection.push(category);
+        }
+        commit("setCategories", newCollection);
+        commit("removeCategoriesLoading");
+      })
+      .catch(() => {});
   }
+
 };

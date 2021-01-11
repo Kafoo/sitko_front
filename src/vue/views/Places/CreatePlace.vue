@@ -21,7 +21,7 @@
       </v-row>
 
       <v-row justify="center" dense>
-        <v-col cols="6">
+        <v-col cols="12" sm="6">
           <v-text-field
             class="mt-5"
             :label="$t('name') | capitalize"
@@ -35,7 +35,7 @@
       </v-row>
 
       <v-row justify="center" dense>
-        <v-col cols="10">
+        <v-col cols="12" sm="10">
           <v-textarea
             :label="$t('description') | capitalize"
             outlined
@@ -48,11 +48,14 @@
       </v-row>
 
       <v-row justify="center" dense>
-
-        <choose-tags
-        :propTags="newPlace.tags"
-        @update="updateTags"/>
-
+        <v-col cols="12" sm="10">
+          <!-- TOTRANSLATE -->
+          <tags-input
+          :tags="newPlace.tags"
+          @update="updateTags"
+          label="Tags du lieu"
+          />
+        </v-col>
       </v-row>
 
 
@@ -83,7 +86,7 @@ import LoadingBar from "@c/atoms/app/LoadingBar.vue"
 import ImageInput from "@c/molecules/media/ImageInput.vue"
 import Image from "@/ts/models/imageClass"
 import PlaceModel from "@/ts/models/placeClass";
-import ChooseTags from "@c/molecules/tag/ChooseTags.vue"
+import TagsInput from "@c/molecules/tag/TagsInput.vue"
 import TagModel from "@/ts/models/tagClass"
 
 export default defineComponent({
@@ -93,7 +96,7 @@ export default defineComponent({
   components: {
     LoadingBar,
     ImageInput,
-    ChooseTags
+    TagsInput
   },
 
   setup(props, {root}){

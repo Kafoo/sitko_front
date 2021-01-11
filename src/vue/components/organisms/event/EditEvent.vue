@@ -27,8 +27,8 @@
         ></v-textarea>
 
         <image-input
+        delete
         size="100px"
-        circle
         :image="editedEvent.image" 
         @changeImage="changeImage"/>
 
@@ -41,7 +41,7 @@
             class="py-5"
             @click="pickingDate = true"
           >
-            {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
+            {{ $t("actions.add_f", { item: $t("caldate") }) | capitalize }}
           </v-chip>
 
           <v-tooltip
@@ -81,7 +81,7 @@
               </v-btn>
             </template>
             <span>
-              {{ $t("actions.add", { item: $t("caldate") }) | capitalize }}
+              {{ $t("actions.add_f", { item: $t("caldate") }) | capitalize }}
             </span>
           </v-tooltip>
         </v-chip-group>
@@ -127,7 +127,7 @@ import axios from "axios";
 import { mapActions } from "vuex";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue"
-
+import EventModel from "@/ts/models/eventClass"
 
 export default {
   name: "EditEvent",
@@ -141,13 +141,13 @@ export default {
       form: false,
       loading: false,
       pickingDate: false,
-      editedEvent: {},
+      editedEvent: new EventModel,
       types: ["ferme", "écolieu", "autre"]
     };
   },
 
   mounted() {
-    this.editedEvent = JSON.parse(JSON.stringify(this.propEvent));
+    this.editedEvent = new EventModel(this.propEvent);
   },
 
   props: {
@@ -172,7 +172,7 @@ export default {
 
   watch: {
     propEvent(newValue) {
-      this.editedEvent = JSON.parse(JSON.stringify(newValue));
+      this.editedEvent = new EventModel(newValue);
     }
   },
 

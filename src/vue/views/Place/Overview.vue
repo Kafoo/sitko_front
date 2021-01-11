@@ -9,12 +9,21 @@
       fab
       small
       class="ml-1"
-      :to="`/dashboard/place/${place.id}`">
+      :to="`/place/edit/${place.id}`">
         <v-icon>edit</v-icon>
       </v-btn>
     </h1>
 
-    <img class="image" :src="place.image.medium" width="250px" />
+    <img 
+    class="image mb-2" 
+    :src="place.image.medium" 
+    width="250px"
+    />
+
+    <current-tags
+    :tags="place.tags"
+    :label="`Tags de &quot;${place.name}&quot;`"
+    />
 
     <div class="mt-6 breakwrap">{{ place.description }}</div>
 
@@ -25,10 +34,15 @@
 import { defineComponent, ref } from "@vue/composition-api"
 import { useGetters } from 'vuex-composition-helpers';
 import axios from "axios";
+import CurrentTags from "@c/molecules/tag/CurrentTags.vue"
 
 export default defineComponent({
 
   name : "Overview",
+
+  components:{
+    CurrentTags
+  },
 
   setup() {
 

@@ -8,7 +8,9 @@ import TagModel from "@/ts/models/tagClass";
 
 export const state: TagState = {
   tags: Array<TagModel>(),
-  loading: false
+  loading: false,
+  categories: Array(),
+  loading_categories: false
 };
 
 const namespaced: boolean = true;

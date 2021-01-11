@@ -36,8 +36,8 @@
         ></v-textarea>
 
         <image-input
+        delete
         size="100px"
-        circle
         :image="newEvent.image" 
         @changeImage="changeImage"/>
 
@@ -140,7 +140,7 @@ export default {
       newEvent: {
         place_id: this.$route.params.id,
         caldates: [],
-        image:{}
+        image:undefined
       },
       types: ["public", "privé", "autre"]
     };

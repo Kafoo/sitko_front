@@ -95,7 +95,7 @@
   "count":{
     "sitkers":"{n} sitkers",
     "currentProjects":"{n} projets en cours",
-    "tags": "{n} tags"
+    "tags": "{n} tag | {n} tags"
 
   },
 

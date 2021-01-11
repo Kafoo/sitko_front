@@ -43,15 +43,16 @@
               </div>
               <div>
 
-                <tag-chip 
+                <tiny-tag-chip 
                 v-for="(tag, index) in place.tags.slice(0,3)" 
-                :key="index">
-                  {{tag.title}}
-                </tag-chip>
+                :key="index"
+                :tag="tag"
+                />
+
                 <span 
                 v-if="place.tags.length > 3"
                 style="font-size:0.8em">
-                  +{{ $t("count.tags", { n: place.tags.length - 3 }) }}
+                  +{{ place.tags.length - 3 }} tag{{place.tags.length - 3 > 1?'s':''}}
                 </span>               
               </div>
 
@@ -94,14 +95,14 @@
 import {ref, defineComponent} from "@vue/composition-api"
 import { isMobile, windowWidth } from "@/ts/functions/composition/displayHelpers"
 import VClamp from "vue-clamp";
-import TagChip from "@c/atoms/app/TagChip.vue"
+import TinyTagChip from "@c/atoms/tag/TinyTagChip.vue"
 import PlaceModel from "@/ts/models/placeClass"
 
 export default defineComponent({
 
   components: {
     VClamp,
-    TagChip
+    TinyTagChip
   },
 
   props: {
