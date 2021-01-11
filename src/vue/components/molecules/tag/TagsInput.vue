@@ -1,9 +1,8 @@
 <template>
   
-  <div style="width:100%">
+  <div>
     
-    <v-row justify="center" dense>
-        
+    
       <!-- TOTRANSLATE -->
       <current-tags
       :tags="compTags"
@@ -12,7 +11,6 @@
       @edit="pickingTags = true"
       />
 
-    </v-row>
 
     <v-dialog v-model="pickingTags" width="90%" max-width="800px">
       <choose-tags 

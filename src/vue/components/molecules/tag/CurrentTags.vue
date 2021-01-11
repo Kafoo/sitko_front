@@ -91,7 +91,7 @@ export default defineComponent({
 
 ::v-deep .edit-icon{
   position: absolute;
-  bottom: -2px;
+  bottom: -20px;
   left: 50%;
   transform: translate(-50%, 0%);
 }

@@ -2,8 +2,7 @@
 
   <primary-content-body>
 
-
-      <v-card-text v-if="!loading_place" class="pa-0">
+      <div v-if="!loading_place" class="pa-0">
         <v-form 
         @submit.prevent="editPlace" 
         v-model="form">
@@ -52,7 +51,7 @@
           </v-row>
 
           <v-row justify="center" dense>
-            <v-col cols="12" sm="10">
+            <v-col cols="12" class="mb-4">
               <!-- TOTRANSLATE -->
               <tags-input
               :tags="editedPlace.tags"
@@ -61,6 +60,7 @@
               />
             </v-col>
           </v-row>
+
 
           <v-card-actions>
           <v-spacer></v-spacer>
@@ -94,7 +94,7 @@
           :loading="loading_deletion"
         />
 
-      </v-card-text>
+      </div>
 
   </primary-content-body>
 </template>
