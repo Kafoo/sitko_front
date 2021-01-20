@@ -9,13 +9,13 @@ export const actions: ActionTree<AuthState, RootState> = {
   GET_USER_DATA({ commit }) {
     commit("setLoading");
     axios
-      .get(process.env.VUE_APP_API_URL + "user")
+      .get(process.env.VUE_APP_API_URL + "auth")
       .then(response => {
         commit("setUserData", new UserModel(response.data));
         commit("removeLoading");
       })
       .catch(() => {
-        localStorage.removeItem("authToken");
+        commit("removeLoading");
       });
   },
 
@@ -64,11 +64,16 @@ export const actions: ActionTree<AuthState, RootState> = {
   SEND_USER_EDITION({ state, commit }, user  ) {
 
     var oldUser = state.userData
-
     return axios
       .put(process.env.VUE_APP_API_URL + "user/" + user.id, user)
         .then((response) => {
           commit("setUserData", response.data.user);
+          commit(
+            "app/setAlert",
+            // TOTRANSLATE
+            { type: "success", msg: "Modifications enregistrées" },
+            { root: true }
+          );
         })
         .catch(() => {
           commit("setUserData", oldUser);

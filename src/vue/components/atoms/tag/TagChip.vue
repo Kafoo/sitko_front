@@ -58,6 +58,11 @@ export default defineComponent({
 
 .noselect.theme--light.v-chip:hover::before {
     opacity: 0;
+    cursor: unset;
+}
+
+.noselect{
+    cursor: unset;
 }
 
 </style>

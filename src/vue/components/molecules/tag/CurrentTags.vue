@@ -96,5 +96,8 @@ export default defineComponent({
   transform: translate(-50%, 0%);
 }
 
+::v-deep .v-slide-group__content {
+    justify-content: center;
+}
 
 </style>

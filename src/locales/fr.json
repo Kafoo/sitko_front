@@ -47,6 +47,7 @@
 
   "logout": "se déconnecter",
   "delete my account": "supprimer mon compte",
+  "save" : "enregistrer",
   "resend e-mail": "renvoyer le mail",
 
   "Account deletion is definitive.": "La suppression du compte est définitive.",

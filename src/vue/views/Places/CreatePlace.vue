@@ -17,7 +17,8 @@
         <image-input
         icon
         :image="newPlace.image" 
-        @changeImage="changeImage"/>
+        @changeImage="changeImage"
+        />
       </v-row>
 
       <v-row justify="center" dense>

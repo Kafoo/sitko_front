@@ -35,6 +35,12 @@
           :disabled="loading"
         ></v-textarea>
 
+        <tags-input
+          :tags="newEvent.tags"
+          @update="updateTags"
+          label="Tags du lieu"
+        />
+
         <image-input
         delete
         size="100px"
@@ -127,6 +133,7 @@ import { mapActions } from "vuex";
 import axios from "axios";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue"
+import TagsInput from "@c/molecules/tag/TagsInput.vue"
 
 export default {
   name: "CreateEvent",
@@ -140,7 +147,8 @@ export default {
       newEvent: {
         place_id: this.$route.params.id,
         caldates: [],
-        image:undefined
+        image:undefined,
+        tags: []
       },
       types: ["public", "privé", "autre"]
     };
@@ -148,7 +156,8 @@ export default {
 
   components: {
     ChooseDate,
-    ImageInput
+    ImageInput,
+    TagsInput
   },
 
   props: {
@@ -209,6 +218,11 @@ export default {
     changeImage(data) {
       this.newEvent.image = data
     },
+
+    updateTags(tags) {
+      this.newEvent.tags = tags    
+    }
+
   }
 };
 </script>

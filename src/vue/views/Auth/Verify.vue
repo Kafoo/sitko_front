@@ -60,5 +60,6 @@ export default class Verify extends Vue {
   get getUser() {
     return this.user;
   }
+
 }
 </script>

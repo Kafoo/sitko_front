@@ -17,10 +17,10 @@ axios.interceptors.response.use(
       localStorage.removeItem("authToken");
       router.push({ name: "Login" });
     } else {
-      if (error.response.data.message) {
+      if (error.response.data.customMessage) {
         store.commit("app/setAlert", {
           type: "error",
-          msg: error.response.data.message,
+          msg: error.response.data.customMessage,
           info: error.response.data.info
         });
       } else {

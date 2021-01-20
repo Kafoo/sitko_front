@@ -3,10 +3,7 @@
   <div>
 
     <div class="input-container">
-      <div v-if="!image">
-        <v-btn @click="pickingImage = true">ajouter une image</v-btn>
-      </div>
-      <div v-else>
+      <div>
         <v-img
         class="choose-img rounded-lg elevation-3"
         :class="circle?'rounded-circle':'rounded-lg'"
@@ -21,11 +18,13 @@
           :class="[circle?'edit-icon-circle':'', ` elevation-${hover ? 5 : 2}`]"
           @click="pickingImage = true">edit</v-icon>
         </v-hover>
-        <v-hover v-slot="{ hover }">
+        <v-hover 
+        v-if="deletable"
+        v-slot="{ hover }">
           <v-icon 
           small
           class='delete-icon'
-          :class="[circle?'edit-icon-circle':'', ` elevation-${hover ? 5 : 2}`]"
+          :class="[circle?'delete-icon-circle':'', ` elevation-${hover ? 5 : 2}`]"
           @click="$emit('changeImage', undefined)">close</v-icon>
         </v-hover>
       </div>
@@ -62,11 +61,15 @@ export default defineComponent({
       type:String,
       default: "150px"
     },
+    default_image: {
+      type:String,
+      default: undefined
+    },
     circle: {
       type:Boolean,
       default:false
     },
-    delete: {
+    deletable: {
       type:Boolean,
       default:false
     },
@@ -89,6 +92,9 @@ export default defineComponent({
         return props.image
       }else if (props.image){
         return props.image.thumb
+      }else{
+        const defaultModel = new ImageModel(props.default_image)
+        return defaultModel.thumb
       }
     })
 
@@ -126,11 +132,7 @@ export default defineComponent({
     cursor: pointer;
 }
 
-.edit-icon-circle{
 
-    bottom: 0px;
-    right: 0px;
-}
 
 .delete-icon{
     background-color: #ffffffad;

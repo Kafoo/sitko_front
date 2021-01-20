@@ -5,9 +5,9 @@ export default class ImageModel {
   thumb: String;
   public_id?: String;
 
-  constructor(data: any = {}) {
+  constructor(data?: any) {
 
-    if (data === 'default_avatar') {
+    if (data === 'avatar') {
       this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1610015867/default-user-icon_xuqjw7.jpg";
       this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1610015867/default-user-icon_xuqjw7.jpg";
       this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1610015867/default-user-icon_xuqjw7.jpg";
@@ -36,10 +36,10 @@ export default class ImageModel {
       this.public_id = data.public_id;
 
     }else{
-      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
-      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
-      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
-      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";
+      this.full = "https://res.cloudinary.com/dyigive9u/image/upload/v1611173096/default_image_01_scb2id.png";
+      this.medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1611173096/default_image_01_scb2id.png";
+      this.low_medium = "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1611173096/default_image_01_scb2id.png";
+      this.thumb = "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1611173096/default_image_01_scb2id.png";
       this.public_id = '';
     }
 

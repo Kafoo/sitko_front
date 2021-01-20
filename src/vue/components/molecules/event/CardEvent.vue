@@ -39,6 +39,15 @@
         <div v-show="expanded" class="expand">
           <v-divider class="my-0"></v-divider>
           <v-card-text class="pt-2" min-height="200px">
+
+            <v-chip-group>
+              <tag-chip 
+              v-for="tag in event.tags"
+              :key="tag.id"
+              :tag="tag"
+              noselect/>
+            </v-chip-group>
+
             <div class="d-flex flex-column-reverse align-start flex-sm-row">
               <v-img
                 v-if="event.image"
@@ -130,11 +139,13 @@
 
 <script>
 import VClamp from "vue-clamp";
+import TagChip from '@c/atoms/tag/TagChip.vue';
 
 export default {
   name: "CardEvent",
   components: {
-    VClamp
+    VClamp,
+    TagChip
   },
   props: {
     event: Object,

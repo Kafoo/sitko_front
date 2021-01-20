@@ -26,6 +26,12 @@
           :rules="[rules.required]"
         ></v-textarea>
 
+        <tags-input
+        :tags="editedProject.tags"
+        @update="(tags)=>{editedProject.tags = tags}"
+        label="Tags du lieu"
+        />
+
         <image-input
         delete
         size="100px"
@@ -128,12 +134,14 @@ import { mapActions } from "vuex";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue"
 import ProjectModel from "@/ts/models/projectClass"
+import TagsInput from "@c/molecules/tag/TagsInput.vue"
 
 export default {
   name: "EditProject",
   components: {
     ChooseDate,
-    ImageInput
+    ImageInput,
+    TagsInput
   },
 
   data() {

@@ -39,6 +39,15 @@
         <div v-show="expanded" class="expand">
           <v-divider class="my-0"></v-divider>
           <v-card-text class="pt-2" min-height="200px">
+
+            <v-chip-group>
+              <tag-chip 
+              v-for="tag in project.tags"
+              :key="tag.id"
+              :tag="tag"
+              noselect/>
+            </v-chip-group>
+
             <div class="d-flex flex-column-reverse align-start flex-sm-row">
               <v-img
                 v-if="project.image"
@@ -67,7 +76,10 @@
                 vertical
               ></v-divider>
 
+
               <div class="flex-grow-1">
+
+
                 <div class="d-flex flex-wrap">
                   <v-chip
                     class="type hidden-sm-and-up white--text rounded-lg my-1 mr-2"
@@ -130,11 +142,13 @@
 
 <script>
 import VClamp from "vue-clamp";
+import TagChip from '@c/atoms/tag/TagChip.vue';
 
 export default {
   name: "CardProject",
   components: {
-    VClamp
+    VClamp,
+    TagChip
   },
   props: {
     project: Object,

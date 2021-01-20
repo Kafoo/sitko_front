@@ -2,7 +2,7 @@
   <div>
 
     <!-- Top bar -->
-    <v-app-bar>
+    <v-app-bar height="60px">
       <v-toolbar-title>
         <v-app-bar-nav-icon
           @click="$router.push('/').catch(() => {})"
@@ -64,12 +64,26 @@
       left
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-app-bar-nav-icon 
-          class="mr-sm-3 mr-n2"
+
+          <v-btn
+          height="40px"
+          rounded
+          class="mr-sm-3"
           v-bind="attrs"
           v-on="on">
-            <v-icon large>face</v-icon>
-          </v-app-bar-nav-icon>
+        
+
+            <v-icon class="mr-2">menu</v-icon> 
+
+            <tiny-avatar 
+            v-if="user && user.image"
+            :image="user.image.thumb"/>
+
+            <v-icon v-else large>face</v-icon>
+          
+          </v-btn>
+            
+
         </template>
 
         <v-list>
@@ -87,13 +101,20 @@
 </template>
 
 <script>
+
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
+
 export default {
   data : () => {
     return {
       appTitle: "Sitko",
       locales: ["fr", "en"]
     };
+  },
+
+  components: {
+    TinyAvatar
   },
 
   computed: {

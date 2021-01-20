@@ -47,4 +47,8 @@ export default defineComponent({
     opacity: 0;
 }
 
+.noselect{
+    cursor: unset;
+}
+
 </style>

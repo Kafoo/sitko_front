@@ -13,6 +13,7 @@ export default class Caldate {
   description:string
   chip:string
   singleDate:boolean
+  child?:any
 
   constructor(rawData:any = {}) {
 
@@ -32,6 +33,8 @@ export default class Caldate {
     }
 
     if (rawData.child) {
+
+      this.child = rawData.child
 
       this.type.charAt(0).toUpperCase() + this.type.slice(1);
       this.child_id = rawData.child.id;

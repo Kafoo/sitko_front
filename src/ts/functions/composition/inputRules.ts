@@ -26,12 +26,12 @@ import { capitalize } from '@/ts/functions/vueFilters'
     ]
 
     const min = (n:number) => { return [
-      (v: string) => (v && v.length >= n) ||
+      (v: string) => (v && v.length >= n || v.length == 0) ||
         capitalize(i18n.t("form.min_carac", { n: n }))
       ]
     }
   
-    const match = (item1:string, item2:string) => { return [
+    const match = (item1:string = "", item2:string = "") => { return [
       item1 === item2 ||
         capitalize(i18n.t("form.differents", { items: i18n.tc("password", 2) }))
       ]

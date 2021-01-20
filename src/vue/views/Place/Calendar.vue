@@ -199,10 +199,11 @@ export default {
     next() {
       this.$refs.calendar.next();
     },
-    showCaldate({ nativeCaldate, caldate }) {
+    showCaldate({ nativeEvent, event }) {
+      debugger
       const open = () => {
-        this.selectedCaldate = caldate;
-        this.selectedElement = nativeCaldate.target;
+        this.selectedCaldate = event;
+        this.selectedElement = nativeEvent.target;
         setTimeout(() => {
           this.selectedOpen = true;
         }, 10);
@@ -215,7 +216,7 @@ export default {
         open();
       }
 
-      nativeCaldate.stopPropagation();
+      nativeEvent.stopPropagation();
     }
   }
 };

@@ -17,7 +17,7 @@
                 autocomplete="disabled"
                 v-model="form.name"
                 :rules="[rules.required[0]]"
-                :label="firstName"
+                :label="firstNameLabel"
                 maxlength="20"
                 required
               ></v-text-field>
@@ -30,7 +30,7 @@
                 outlined
                 autocomplete="disabled"
                 v-model="form.last_name"
-                :label="lastName"
+                :label="lastNameLabel"
                 maxlength="20"
                 required
               ></v-text-field>
@@ -154,13 +154,13 @@ export default defineComponent({
     var show_password = ref(false)
     var loading = ref(false)
 
-    const firstName = computed(() =>
+    const firstNameLabel = computed(() =>
           capitalize(root.$t("first name")) +
           " / " +
           capitalize(root.$t("alias"))
     )
 
-    const lastName = computed(() => 
+    const lastNameLabel = computed(() => 
           capitalize(root.$t("last name")) +
           " (" +
           root.$t("form.optional") +
@@ -197,8 +197,8 @@ export default defineComponent({
       form,
       show_password,
       loading,
-      firstName,
-      lastName,
+      firstNameLabel,
+      lastNameLabel,
       rules,
       register
     }

@@ -181,7 +181,7 @@ export default defineComponent({
 
     var filteredTags:any = computed(() => {
       return categorizedTags.value.filter((tag:TagModel) => {
-          return tag.title.match(search.value);
+          return tag.title.match(search.value.toLowerCase());
       }).sort((a:TagModel, b:TagModel) => a.title.localeCompare(b.title))
     })
 

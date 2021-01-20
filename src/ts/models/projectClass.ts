@@ -1,5 +1,6 @@
 import ImageModel from "@/ts/models/imageClass";
 import CaldateModel from "@/ts/models/caldateClass";
+import TagModel from "@/ts/models/tagClass";
 
 export default class Project {
 
@@ -11,6 +12,7 @@ export default class Project {
   image?:ImageModel
   expanded:boolean
   caldates:Array<CaldateModel>
+  tags: Array<TagModel>
 
   constructor(rawData:any = {}) {
     this.id = rawData.id;
@@ -34,6 +36,14 @@ export default class Project {
         this.caldates.push(new CaldateModel(caldate));
       });
     }
+
+    this.tags = []
+    if (rawData.tags) {      
+      rawData.tags.forEach((tag:TagModel) => {
+        this.tags.push(new TagModel(tag))  
+      });
+    }
+
   }
 
   get bigtitle():string {
