@@ -15,7 +15,6 @@
 
       <v-row justify="center">
         <image-input
-        icon
         :image="newPlace.image" 
         @changeImage="changeImage"
         />

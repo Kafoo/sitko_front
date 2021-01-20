@@ -68,12 +68,12 @@
           <v-btn
           height="40px"
           rounded
-          class="mr-sm-3"
+          class="mr-sm-3 px-2"
           v-bind="attrs"
           v-on="on">
         
 
-            <v-icon class="mr-2">menu</v-icon> 
+            <v-icon class="mr-1">menu</v-icon> 
 
             <tiny-avatar 
             v-if="user && user.image"

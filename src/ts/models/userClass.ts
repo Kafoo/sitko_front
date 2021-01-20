@@ -25,6 +25,8 @@ export default class UserModel {
 
     if (rawData.image) {
       this.image = new ImageModel(rawData.image);
+    }else{
+      this.image = undefined
     }
 
     this.tags = []

@@ -3,7 +3,7 @@
     <div class="d-flex flex-column align-center">
       <page-title :title="$t('my account')" />
 
-       <v-form ref="registerForm" v-model="valid" @submit.prevent="register">
+       <v-form v-model="valid">
 
         <v-row justify="center" class="my-4">
           <image-input
