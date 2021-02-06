@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="loading_caldates"
-      class="loading d-flex align-center justify-center"
-    >
+    <div v-if="loading" class="loading d-flex align-center justify-center">
       <v-progress-circular
         indeterminate
         :size="100"
@@ -33,7 +30,6 @@
             <v-toolbar-title v-if="$refs.calendar" class="mt-1 mr-3">
               {{ $refs.calendar.title }}
             </v-toolbar-title>
-
           </div>
 
           <v-spacer></v-spacer>
@@ -105,33 +101,9 @@
             offset-x
             min-width="0"
           >
-            <v-card color="grey lighten-4" max-width="400px" flat>
-              <v-toolbar :color="selectedCaldate.color" dark>
-                <v-toolbar-title v-html="selectedCaldate.name"></v-toolbar-title>
-                <span class="ml-2 font-italic"
-                  >({{ $t(selectedCaldate.type) }})</span
-                >
-              </v-toolbar>
 
-              <v-card-text class="pb-0">
-                <v-clamp autoresize :max-lines="5" class="description">
-                  {{ selectedCaldate.description }}
-                </v-clamp>
-              </v-card-text>
+            <project-card :project="selectedCaldate.child" />
 
-              <v-card-actions>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$router.push('projects#' + selectedCaldate.child_id)"
-                >
-                  + {{ $t("infos") }}
-                </v-btn>
-                <v-btn text color="secondary" @click="selectedOpen = false">
-                  {{ $t("confirm.close") }}
-                </v-btn>
-              </v-card-actions>
-            </v-card>
           </v-menu>
         </v-sheet>
       </v-col>
@@ -139,91 +111,120 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import { mapGetters, mapActions } from "vuex";
+<script lang="ts">
+import { defineComponent, ref, onMounted } from "@vue/composition-api";
+import { useGetters, useActions } from "vuex-composition-helpers";
 import VClamp from "vue-clamp";
+import CaldateModel from "@/ts/models/caldateClass";
+import ProjectCard from "@c/molecules/project/ProjectCard.vue";
 
-export default {
+export default defineComponent({
+  name: "Calendar",
+
   components: {
-    VClamp
+    VClamp,
+    ProjectCard
   },
 
-  data() {
-    return {
-      place_id: this.$route.params.id,
-      focus: "",
-      type: "month",
-      selectedCaldate: {},
-      selectedElement: null,
-      selectedOpen: false
+  setup(props, { root, refs }) {
+    var calendar = ref({
+      move: (arg: any) => {},
+      prev: () => {},
+      next: () => {}
+    });
+
+    var focus = ref("");
+    var type = ref("month");
+    var selectedCaldate = ref({});
+    var selectedElement = ref(null);
+    var selectedOpen = ref(false);
+
+    const { GET_CALDATES_BY_PLACE } = useActions({
+      GET_CALDATES_BY_PLACE: "caldate/GET_CALDATES_BY_PLACE"
+    } as any);
+    const { caldates } = useGetters({ caldates: "caldate/caldates" } as any);
+    const place_id = parseInt(root.$route.params.id);
+
+    var loading = ref(false);
+
+    onMounted(() => {
+      //Force calendar to show month/year
+      calendar.value.move(0);
+      //Get caldates
+      loading.value = true;
+      GET_CALDATES_BY_PLACE(place_id).then(() => {
+        loading.value = false;
+      });
+    });
+
+    const typeToLabel = {
+      month: root.$options.filters!.capitalize(root.$t("month")),
+      week: root.$options.filters!.capitalize(root.$t("week")),
+      day: root.$options.filters!.capitalize(root.$t("day"))
     };
-  },
 
-  mounted() {
-    //Force calendar to show month/year
-    this.$refs.calendar.move(0);
-  },
-
-  created() {
-    this.GET_EVENTS(this.place_id);
-  },
-
-  computed: {
-    ...mapGetters("caldate", ["loading_caldates", "caldates"]),
-
-    typeToLabel() {
-      return {
-        month: this.$options.filters.capitalize(this.$t("month")),
-        week: this.$options.filters.capitalize(this.$t("week")),
-        day: this.$options.filters.capitalize(this.$t("day"))
-      };
-    }
-  },
-
-  methods: {
-    ...mapActions("caldate", ["GET_EVENTS"]),
-    getCaldateColor(caldate) {
+    const getCaldateColor = (caldate: CaldateModel) => {
       return caldate.color;
-    },
-    viewDay({ date }) {
-      this.focus = date;
-      this.type = "day";
-    },
-    setToday() {
-      this.focus = "";
-    },
-    prev() {
-      this.$refs.calendar.prev();
-    },
-    next() {
-      this.$refs.calendar.next();
-    },
-    showCaldate({ nativeEvent, event }) {
-      debugger
+    };
+
+    const viewDay = ({ date }: any) => {
+      focus.value = date;
+      type.value = "day";
+    };
+
+    const setToday = () => {
+      focus.value = "";
+    };
+
+    const prev = () => {
+      calendar.value.prev();
+    };
+
+    const next = () => {
+      calendar.value.next();
+    };
+
+    const showCaldate = ({ nativeEvent, event }: any) => {
       const open = () => {
-        this.selectedCaldate = event;
-        this.selectedElement = nativeEvent.target;
+        selectedCaldate.value = event;
+        selectedElement.value = nativeEvent.target;
         setTimeout(() => {
-          this.selectedOpen = true;
+          selectedOpen.value = true;
         }, 10);
       };
 
-      if (this.selectedOpen) {
-        this.selectedOpen = false;
+      if (selectedOpen.value) {
+        selectedOpen.value = false;
         setTimeout(open, 10);
       } else {
         open();
       }
 
       nativeEvent.stopPropagation();
-    }
+    };
+
+    return {
+      focus,
+      typeToLabel,
+      type,
+      selectedCaldate,
+      selectedElement,
+      selectedOpen,
+      caldates,
+      loading,
+      viewDay,
+      setToday,
+      getCaldateColor,
+      prev,
+      next,
+      showCaldate,
+      calendar
+    };
   }
-};
+});
 </script>
 
 <style scoped>
-
 .loading {
   width: 100%;
   height: 100%;
@@ -233,5 +234,4 @@ export default {
   background-color: #0000001f;
   z-index: 2;
 }
-
 </style>

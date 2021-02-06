@@ -1,5 +1,4 @@
 <template>
-
   <v-btn
     class="close"
     color="secondary"
@@ -10,17 +9,14 @@
   >
     <v-icon>close</v-icon>
   </v-btn>
-
 </template>
 
 <script lang="ts">
-import {defineComponent} from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-  name: "CloseDialog",
-
-
-})
+  name: "CloseDialog"
+});
 </script>
 
 <style scoped>

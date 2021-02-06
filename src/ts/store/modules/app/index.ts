@@ -6,12 +6,10 @@ import { AppState } from "./types";
 import { RootState } from "@/ts/store/types";
 
 export const state: AppState = {
-
   app_alert: undefined,
   errors: [],
   windowWidth: window.innerWidth,
-  locale: 'fr'
-
+  locale: "fr"
 };
 
 const namespaced: boolean = true;

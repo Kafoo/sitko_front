@@ -10,31 +10,29 @@ export default class UserModel {
   password?: string;
   password_confirmation?: string;
   image?: ImageModel | String;
-  tags: Array<TagModel>
+  tags: Array<TagModel>;
 
   constructor(rawData: any = {}) {
-
     this.id = rawData.id;
     this.name = rawData.name || "";
     this.last_name = rawData.last_name || "";
     this.email = rawData.email || "";
     this.email_verified_at = rawData.email_verified_at;
 
-    this.password = ""
-    this.password_confirmation = ""
+    this.password = "";
+    this.password_confirmation = "";
 
     if (rawData.image) {
       this.image = new ImageModel(rawData.image);
-    }else{
-      this.image = undefined
+    } else {
+      this.image = undefined;
     }
 
-    this.tags = []
-    if (rawData.tags) {      
-      rawData.tags.forEach((tag:TagModel) => {
-        this.tags.push(new TagModel(tag))  
+    this.tags = [];
+    if (rawData.tags) {
+      rawData.tags.forEach((tag: TagModel) => {
+        this.tags.push(new TagModel(tag));
       });
     }
-
   }
 }

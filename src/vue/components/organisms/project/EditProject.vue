@@ -8,16 +8,6 @@
           v-model="editedProject.title"
           :rules="[rules.required]"
         ></v-text-field>
-        <v-select
-          :label="$t('type') | capitalize"
-          type="type"
-          id="type"
-          :items="types"
-          :rules="[rules.required]"
-          solo
-          max-width="200px"
-          v-model="editedProject.type"
-        ></v-select>
         <v-textarea
           outlined
           :label="$t('description') | capitalize"
@@ -27,16 +17,21 @@
         ></v-textarea>
 
         <tags-input
-        :tags="editedProject.tags"
-        @update="(tags)=>{editedProject.tags = tags}"
-        label="Tags du lieu"
+          :tags="editedProject.tags"
+          @update="
+            tags => {
+              editedProject.tags = tags;
+            }
+          "
+          label="Tags du projet"
         />
 
         <image-input
-        delete
-        size="100px"
-        :image="editedProject.image" 
-        @changeImage="changeImage"/>
+          nullable
+          size="100px"
+          :image="editedProject.image"
+          @update="changeImage"
+        />
 
         <v-chip-group column class="d-flex align-center">
           <v-chip
@@ -80,7 +75,6 @@
                 width="45"
                 v-on="on"
                 color="green"
-                v-if="showCaldates"
                 @click="pickingDate = true"
               >
                 <v-icon>add</v-icon>
@@ -132,9 +126,9 @@
 import axios from "axios";
 import { mapActions } from "vuex";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
-import ImageInput from "@c/molecules/media/ImageInput.vue"
-import ProjectModel from "@/ts/models/projectClass"
-import TagsInput from "@c/molecules/tag/TagsInput.vue"
+import ImageInput from "@c/molecules/media/ImageInput.vue";
+import ProjectModel from "@/ts/models/projectClass";
+import TagsInput from "@c/molecules/tag/TagsInput.vue";
 
 export default {
   name: "EditProject",
@@ -149,8 +143,7 @@ export default {
       form: false,
       loading: false,
       pickingDate: false,
-      editedProject: new ProjectModel,
-      types: ["ferme", "écolieu", "autre"]
+      editedProject: new ProjectModel()
     };
   },
 
@@ -159,41 +152,14 @@ export default {
   },
 
   props: {
-    propProject: Object,
-    showCaldates: { type: Boolean, default: true }
-  },
-
-  computed: {
-    rules() {
-      return {
-        required: v =>
-          !!v || this.$options.filters.capitalize(this.$t("form.required")),
-        image: v =>
-          !v ||
-          v.size < 3000000 ||
-          this.$options.filters.capitalize(
-            this.$t("media.max_size", { max: "3 MB" })
-          )
-      };
-    }
-  },
-
-  watch: {
-    propProject(newValue) {
-      this.editedProject = new ProjectModel(newValue);
-    }
+    propProject: Object
   },
 
   methods: {
     ...mapActions("project", ["SEND_PROJECT_EDITION"]),
 
-    closeEdit() {
-      this.$emit("closeEdit");
-    },
-
     sendEdit() {
       this.loading = true;
-      this.editedProject.projectOnly = !this.showCaldates;
       this.SEND_PROJECT_EDITION(this.editedProject)
         .then(() => {
           this.$emit("closeEdit");
@@ -217,19 +183,13 @@ export default {
     },
 
     changeImage(data) {
-      this.editedProject.image = data
-    },
-
-    removeImage() {
-      this.editedProject.imageChanged = true;
-      this.editedProject.image = null;
+      this.editedProject.image = data;
     }
   }
 };
 </script>
 
 <style scoped>
-
 .choose-date,
 .card-body {
   animation: fade-in 0.4s ease;

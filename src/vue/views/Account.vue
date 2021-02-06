@@ -3,27 +3,24 @@
     <div class="d-flex flex-column align-center">
       <page-title :title="$t('my account')" />
 
-       <v-form v-model="valid">
-
+      <v-form v-model="valid">
         <v-row justify="center" class="my-4">
           <image-input
-          circle
-          default_image="avatar"
-          :image="editedUser.image" 
-          :deletable="editedUser.image !== undefined"
-          @changeImage="changeImage"
+            nullable
+            circle
+            default_image="avatar"
+            :image="editedUser.image"
+            @update="changeImage"
           />
         </v-row>
 
-
         <v-row dense>
-
           <v-col cols="12">
             <v-alert v-if="errors.name" dense outlined type="error">
               {{ errors.name[0] }}
             </v-alert>
           </v-col>
-          
+
           <v-col cols="12" sm="6" md="6">
             <v-text-field
               outlined
@@ -74,7 +71,11 @@
             <tags-input
               :tags="editedUser.tags"
               label="Mes tags"
-              @update="(tags)=>{editedUser.tags = tags}"
+              @update="
+                tags => {
+                  editedUser.tags = tags;
+                }
+              "
             />
           </v-col>
 
@@ -104,7 +105,12 @@
               block
               v-model="editedUser.password_confirmation"
               :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-              :rules="[rules.match(editedUser.password, editedUser.password_confirmation)[0]]"
+              :rules="[
+                rules.match(
+                  editedUser.password,
+                  editedUser.password_confirmation
+                )[0]
+              ]"
               :type="show_password ? 'text' : 'password'"
               name="input-10-1"
               :label="$options.filters.capitalize($t('confirmation'))"
@@ -115,39 +121,36 @@
           </v-col>
         </v-row>
 
-
         <v-row justify="center">
-
           <v-col class="d-flex flex-column" cols="12" sm="auto" xsm="12">
+            <v-btn
+              class="d-block mb-4"
+              color="success"
+              :disabled="!valid || loading"
+              @click="editUser"
+            >
+              {{ $t("save") }}
+            </v-btn>
 
-        <v-btn 
-        class="d-block mb-4" 
-        color="success"
-        :disabled="!valid || loading"
-        @click="editUser">
-          {{ $t("save") }}
-        </v-btn>
+            <v-btn
+              class="d-block my-4"
+              color="grey"
+              :disabled="loading"
+              @click="logout"
+            >
+              {{ $t("logout") }}
+            </v-btn>
 
-        <v-btn 
-        class="d-block my-4" 
-        color="grey" 
-        :disabled="loading"
-        @click="logout">
-          {{ $t("logout") }}
-        </v-btn>
-
-        <v-btn 
-        class="d-block" 
-        color="red" 
-        :disabled="loading"
-        @click="dialog = true">
-          {{ $t("delete my account") }}
-        </v-btn>
+            <v-btn
+              class="d-block"
+              color="red"
+              :disabled="loading"
+              @click="dialog = true"
+            >
+              {{ $t("delete my account") }}
+            </v-btn>
           </v-col>
-
         </v-row>
-
-
       </v-form>
 
       <!-- Confirm deletion -->
@@ -163,28 +166,31 @@
       />
     </div>
 
-    <loading-bar :loading="loading"/>
-
+    <loading-bar :loading="loading" />
   </primary-content-body>
 </template>
 
 <script lang="ts">
-
-import {ref, defineComponent, computed, onMounted, watch} from "@vue/composition-api"
-import { useGetters, useActions } from 'vuex-composition-helpers';
-import { useInputRules } from "@/ts/functions/composition/inputRules"
-import { capitalize } from '@/ts/functions/vueFilters'
+import {
+  ref,
+  defineComponent,
+  computed,
+  onMounted,
+  watch
+} from "@vue/composition-api";
+import { useGetters, useActions } from "vuex-composition-helpers";
+import { useInputRules } from "@/ts/functions/composition/inputRules";
+import { capitalize } from "@/ts/functions/vueFilters";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
-import LoadingBar from "@c/atoms/app/LoadingBar.vue"
+import LoadingBar from "@c/atoms/app/LoadingBar.vue";
 import PageTitle from "@c/atoms/app/PageTitle.vue";
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
-import ImageInput from "@c/molecules/media/ImageInput.vue"
-import UserModel from "@/ts/models/userClass"
-import ImageModel from "@/ts/models/imageClass"
-import TagsInput from "@c/molecules/tag/TagsInput.vue"
+import ImageInput from "@c/molecules/media/ImageInput.vue";
+import UserModel from "@/ts/models/userClass";
+import ImageModel from "@/ts/models/imageClass";
+import TagsInput from "@c/molecules/tag/TagsInput.vue";
 
 export default defineComponent({
-
   name: "Account",
 
   components: {
@@ -196,41 +202,43 @@ export default defineComponent({
     TagsInput
   },
 
-  setup(props, {root}) {
+  setup(props, { root }) {
+    const rules = useInputRules();
 
-    const rules = useInputRules()
+    var valid = ref(false);
+    var show_password = ref(false);
+    var dialog = ref(false);
+    var success = ref(null);
+    var error = ref(null);
+    var loading = ref(false);
+    var loading_deletion = ref(false);
+    var editedUser = ref(new UserModel());
 
-    var valid = ref(false)
-    var show_password = ref(false)
-    var dialog = ref(false)
-    var success = ref(null)
-    var error = ref(null)
-    var loading = ref(false)
-    var loading_deletion = ref(false)
-    var editedUser = ref(new UserModel())
-
-    const { SEND_USER_EDITION } = useActions({SEND_USER_EDITION: 'auth/SEND_USER_EDITION'} as any)
-    const { SEND_DELETE_USER } = useActions({SEND_DELETE_USER: 'auth/SEND_DELETE_USER'} as any)
-    const { SEND_LOGOUT_REQUEST } = useActions({SEND_LOGOUT_REQUEST: 'auth/SEND_LOGOUT_REQUEST'} as any)
-    const { user } = useGetters({ user: 'auth/user' } as any)
-    var { errors } = useGetters({ errors: 'app/errors' } as any)
+    const { SEND_USER_EDITION } = useActions({
+      SEND_USER_EDITION: "auth/SEND_USER_EDITION"
+    } as any);
+    const { SEND_DELETE_USER } = useActions({
+      SEND_DELETE_USER: "auth/SEND_DELETE_USER"
+    } as any);
+    const { SEND_LOGOUT_REQUEST } = useActions({
+      SEND_LOGOUT_REQUEST: "auth/SEND_LOGOUT_REQUEST"
+    } as any);
+    const { user } = useGetters({ user: "auth/user" } as any);
+    var { errors } = useGetters({ errors: "app/errors" } as any);
 
     onMounted(() => {
-      editedUser.value = new UserModel(user.value)
-    })
+      editedUser.value = new UserModel(user.value);
+    });
 
-    const firstNameLabel = computed(() =>
-          capitalize(root.$t("first name")) +
-          " / " +
-          capitalize(root.$t("alias"))
-    )
+    const firstNameLabel = computed(
+      () =>
+        capitalize(root.$t("first name")) + " / " + capitalize(root.$t("alias"))
+    );
 
-    const lastNameLabel = computed(() => 
-          capitalize(root.$t("last name")) +
-          " (" +
-          root.$t("form.optional") +
-          ")"
-    )
+    const lastNameLabel = computed(
+      () =>
+        capitalize(root.$t("last name")) + " (" + root.$t("form.optional") + ")"
+    );
 
     const deleteUser = () => {
       success.value = error.value = null;
@@ -244,10 +252,10 @@ export default defineComponent({
           loading_deletion.value = false;
           dialog.value = false;
         });
-    }
+    };
 
     const editUser = () => {
-      loading.value = true
+      loading.value = true;
       SEND_USER_EDITION(editedUser.value)
         .then(() => {
           loading.value = false;
@@ -256,23 +264,22 @@ export default defineComponent({
         .catch(() => {
           loading.value = false;
         });
-    }
+    };
 
-    const changeImage = (data:string|ImageModel) => {
-      editedUser.value.image = data
-    } 
+    const changeImage = (data: string | ImageModel) => {
+      editedUser.value.image = data;
+    };
 
     const logout = () => {
       SEND_LOGOUT_REQUEST();
-    }
+    };
 
-    return{
+    return {
       dialog,
       success,
       error,
       loading,
       loading_deletion,
-      user,
       editedUser,
       SEND_USER_EDITION,
       SEND_DELETE_USER,
@@ -287,13 +294,9 @@ export default defineComponent({
       firstNameLabel,
       lastNameLabel,
       valid
-    }
-
+    };
   }
 });
-
-
-
 </script>
 
 <style scoped></style>

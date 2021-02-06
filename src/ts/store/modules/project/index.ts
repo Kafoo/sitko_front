@@ -7,9 +7,11 @@ import { RootState } from "@/ts/store/types";
 import ProjectModel from "@/ts/models/projectClass";
 
 export const state: ProjectState = {
-    projects: Array<ProjectModel>(),
-    loading_projects: false,
-    firstFetch: ""
+  projects: Array<ProjectModel>(),
+  fetched: {
+    place_projects: [],
+    all_projects:undefined
+  }
 };
 
 const namespaced: boolean = true;

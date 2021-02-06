@@ -21,7 +21,8 @@
     ],
     "paths": {
       "@/*": ["src/*"],
-      "@c/*": [ "src/vue/components/*" ]
+      "@c/*": [ "src/vue/components/*" ],
+      "@use/*": [ "src/ts/functions/composition/*" ]
     },
     "lib": [
       "esnext",

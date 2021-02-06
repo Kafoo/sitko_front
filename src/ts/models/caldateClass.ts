@@ -1,22 +1,22 @@
+import PlaceModel from "@/ts/models/placeClass";
+import ProjectModel from "@/ts/models/projectClass";
+
 export default class Caldate {
+  id: number;
+  timed: boolean;
+  place_id: number;
+  rawStart: string;
+  rawEnd: string;
+  start: string;
+  end: string;
+  child_id?: number;
+  child_type: string;
+  name: string;
+  chip: string;
+  singleDate: boolean;
+  child?: any;
 
-  id:number
-  timed:boolean
-  place_id:number 
-  rawStart:string
-  rawEnd:string
-  start:string 
-  end:string
-  type:string
-  child_id?:number
-  name:string
-  description:string
-  chip:string
-  singleDate:boolean
-  child?:any
-
-  constructor(rawData:any = {}) {
-
+  constructor(rawData: any = {}) {
     this.timed = rawData.timed;
     this.id = rawData.id;
     this.place_id = rawData.place_id;
@@ -24,45 +24,48 @@ export default class Caldate {
     this.rawEnd = this.timeFormat(rawData.end);
     this.start = this.timeFormat(rawData.start, false);
     this.end = this.timeFormat(rawData.end, false);
-    this.type = rawData.type;
+    this.child_type = rawData.child_type
 
     if (this.start === this.end) {
       this.singleDate = true;
-    }else{
-      this.singleDate = false;    
+    } else {
+      this.singleDate = false;
+    }
+
+
+    const classes:any = { 
+      'project' : ProjectModel, 
+      'place' : PlaceModel 
+    };
+
+      function dynamicClass (name:string) {
+      return classes[name];
     }
 
     if (rawData.child) {
 
-      this.child = rawData.child
-
-      this.type.charAt(0).toUpperCase() + this.type.slice(1);
-      this.child_id = rawData.child.id;
       this.name = rawData.child.title;
-      this.description = rawData.child.description;
+      const entity_model = dynamicClass(this.child_type)
+      this.child = new entity_model(rawData.child)
+
     } else {
       this.name = "Evénement sans child";
-      this.description = "Une description d'événement lambda";
     }
 
     this.chip = this.chipFormat();
   }
 
-  get color():string{
-
-    switch (this.type) {
+  get color(): string {
+    switch (this.child_type) {
       case "project":
-        return "yellow darken-3"
-        break;
-    
-      default:
-      return "blue darken-3"
-        break;
-    }
+        return "yellow darken-3";
 
+      default:
+        return "blue darken-3";
+    }
   }
 
-  timeFormat(dateTime:string, sec = true) {
+  timeFormat(dateTime: string, sec = true) {
     var date = dateTime.split(" ")[0];
 
     if (!this.timed) {
@@ -89,7 +92,7 @@ export default class Caldate {
     return date + " " + newTime;
   }
 
-  day(d:number) {
+  day(d: number) {
     switch (d) {
       case 1:
         return "lundi";
@@ -108,7 +111,7 @@ export default class Caldate {
     }
   }
 
-  month(m:number) {
+  month(m: number) {
     switch (m) {
       case 0:
         return "jan.";
@@ -137,7 +140,7 @@ export default class Caldate {
     }
   }
 
-  fullMonth(m:number) {
+  fullMonth(m: number) {
     switch (m) {
       case 0:
         return "janvier";
@@ -169,6 +172,8 @@ export default class Caldate {
   chipFormat() {
     let chip = "";
     var date = new Date(this.start);
+
+    //SINGLE DATE
     if (this.start === this.end) {
       chip =
         this.day(date.getDay()) +
@@ -179,26 +184,25 @@ export default class Caldate {
       if (this.timed == true) {
         chip += " à " + this.start.split(" ")[1];
       }
+
+      //RANGE DATE
     } else {
       var start = new Date(this.start);
       var end = new Date(this.end);
-
+      //From
       chip =
         this.day(start.getDay()) +
         " " +
         start.getDate() +
         " " +
         this.month(start.getMonth());
+
       if (this.timed == true) {
-        chip += " (" + this.start.split(" ")[1] + ") ";
+        chip += " (" + this.start.split(" ")[1] + ")";
       }
-      chip +=
-        " - " +
-        this.day(end.getDay()) +
-        " " +
-        end.getDate() +
-        " " +
-        this.month(end.getMonth());
+      //To
+      chip += " - " + end.getDate() + " " + this.month(end.getMonth());
+
       if (this.timed == true) {
         chip += " (" + this.end.split(" ")[1] + ") ";
       }

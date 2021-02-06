@@ -1,41 +1,25 @@
 <template>
-  
-    <v-avatar
-    :size="35">
-      <img
-        :src="image"
-      >
-    </v-avatar>
-
+  <v-avatar :size="35">
+    <img :src="image" />
+  </v-avatar>
 </template>
 
 <script lang="ts">
-
-import { defineComponent } from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+  name: "",
 
-  name : "",
-
-  props : {
-    image:{
-      type:String
+  props: {
+    image: {
+      type: String
     }
   },
 
   setup() {
-
-
-    return{
- 
-    }
-
+    return {};
   }
 });
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>

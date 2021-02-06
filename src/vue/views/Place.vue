@@ -1,71 +1,63 @@
 <template>
   <div class="place d-flex pb-12" style="max-width:1200px; margin:auto">
-    <div class="hidden-sm-and-down">
-      <sidebar :placeNavItems="placeNavItems" />
+    <div v-if="$route.name != 'PlaceOverview'" class="hidden-sm-and-down">
+      <v-skeleton-loader
+        v-if="loading"
+        type="heading, list-item@5"
+        class="pt-10 pa-8 ma-5 elevation-3 flex-shrink-0"
+        width="300px"
+        height="400px"
+      >
+      </v-skeleton-loader>
+
+      <sidebar v-else :place="place" />
+
     </div>
 
+    <v-divider 
+      v-if="$route.name != 'PlaceOverview'" 
+      class="hidden-sm-and-down"
+      vertical
+    ></v-divider>
+
     <v-card
-      class="ma-xs-0 ma-sm-5 pa-5 flex-grow-1 flex-shrink-10"
-      :elevation="elevation"
+      class="ma-xs-0 ma-sm-5 pa-0 flex-grow-1 flex-shrink-10"
+      elevation="0"
       min-width="0"
     >
       <router-view></router-view>
     </v-card>
 
-    <div class="hidden-md-and-up">
-      <bottombar :placeNavItems="placeNavItems" />
-    </div>
+    <float-menu v-if="place" :place="place"/>
+
+
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Bottombar from "@c/molecules/app/Bottombar.vue";
 import Sidebar from "@c/molecules/app/Sidebar.vue";
+import FloatMenu from "@c/molecules/place/FloatMenu.vue"
 
 export default {
   name: "Place",
   components: {
     Sidebar,
-    Bottombar
+    FloatMenu
   },
   data() {
     return {
-      place_id: this.$route.params.id
+      place_id: parseInt(this.$route.params.id),
+      loading: false
     };
+    
   },
 
   computed: {
-    ...mapGetters("place", ["place"]),
+    ...mapGetters("place", ["places"]),
 
-    placeNavItems() {
-      return [
-        {
-          title: this.$options.filters.capitalize(this.$t("home")),
-          path: "/place/" + this.$route.params.id + "/overview",
-          icon: "home"
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("calendar")),
-          path: "/place/" + this.$route.params.id + "/calendar",
-          icon: "event"
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("projects")),
-          path: "/place/" + this.$route.params.id + "/projects",
-          icon: "handyman"
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("events")),
-          path: "/place/" + this.$route.params.id + "/events",
-          icon: "star"
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("contact")),
-          path: "/place/" + this.$route.params.id + "/contact",
-          icon: "contact_support"
-        }
-      ];
+    place() {
+      return this.places.find(x => x.id === this.place_id);
     },
 
     elevation() {
@@ -78,7 +70,10 @@ export default {
   },
 
   created() {
-    this.GET_PLACE(this.place_id);
+    this.loading = true;
+    this.GET_PLACE(this.place_id).then(() => {
+      this.loading = false;
+    });
   },
 
   methods: {
@@ -87,4 +82,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

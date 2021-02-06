@@ -80,14 +80,41 @@ textarea {
   white-space: pre-wrap;
 }
 
-.v-slide-group__next, .v-slide-group__prev {
-    min-width: 20px;
+.v-slide-group__next.tiny, .v-slide-group__prev.tiny {
+    min-width: 0;
+    width: 5px;
+}
+
+.v-slide-group__next.tiny{
+    margin-right: -15px;
+}
+
+.v-slide-group__prev.tiny {
+    margin-left: -15px;
 }
 
 .inset-shadow{
-  box-shadow: inset 0px 1px 9px 0px gainsboro;
+    box-shadow: inset 0px 1px 20px 6px #90909030 !important;
 }
 
 .theme--light.v-icon {
     color: rgb(0 0 0);
+}
+
+.noselect{
+-webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+}
+
+.favorite-btn {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  background-color: rgb(0 0 0 / 22%);
+}
+
+.v-slide-group__wrapper {
+  touch-action: pan-y !important 
 }

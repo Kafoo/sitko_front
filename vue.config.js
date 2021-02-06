@@ -2,6 +2,10 @@ const path = require("path");
 
 module.exports = {
 
+  devServer: {
+    host: 'localhost'
+  },
+
   transpileDependencies: [
     "vuetify",
     "vue-clamp",
@@ -22,10 +26,10 @@ module.exports = {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        "@c": path.resolve(__dirname, "./src/vue/components")
+        "@c": path.resolve(__dirname, "./src/vue/components"),
+        "@use": path.resolve(__dirname, "./src/ts/functions/composition")
       },
-      extensions: ['.js', '.vue', '.json']
+      extensions: [".js", ".vue", ".json"]
     }
   }
-
 };

@@ -3,18 +3,12 @@ import { CaldateState } from "./types";
 import CaldateModel from "@/ts/models/caldateClass";
 
 export const mutations: MutationTree<CaldateState> = {
-
-  setCaldates(state, payload:Array<CaldateModel>) {
-    state.caldates = payload
-  },
-  setLoading(state) {
-    state.loading_caldates = true;
-  },
-  removeLoading(state) {
-    state.loading_caldates = false;
-  },
-  setFirstFetch(state, value:string) {
-    state.firstFetch = value;
+  pushCaldate(state, caldate: CaldateModel) {
+    var exists = state.caldates.find((x: CaldateModel) => x.id === caldate.id);
+    if (exists) {
+      exists = caldate;
+    } else {
+      state.caldates.push(caldate);
+    }
   }
-
 };

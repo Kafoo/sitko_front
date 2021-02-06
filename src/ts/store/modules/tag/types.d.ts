@@ -1,6 +1,8 @@
 export interface TagState {
   tags?: Array;
   categories?: Array;
-  loading:boolean
-  loading_categories:boolean
+  fetched: {
+    all_tags?: number;
+    categories?: number;
+  };
 }

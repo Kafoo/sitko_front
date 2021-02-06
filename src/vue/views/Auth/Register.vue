@@ -4,13 +4,12 @@
       <v-card-text>
         <v-form ref="registerForm" v-model="valid" @submit.prevent="register">
           <v-row dense>
-
             <v-col cols="12">
               <v-alert v-if="errors.name" dense outlined type="error">
                 {{ errors.name[0] }}
               </v-alert>
             </v-col>
-            
+
             <v-col cols="12" sm="6" md="6">
               <v-text-field
                 outlined
@@ -78,7 +77,10 @@
                 block
                 v-model="form.password_confirmation"
                 :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required[0], rules.match(form.password, form.password_confirmation)[0]]"
+                :rules="[
+                  rules.required[0],
+                  rules.match(form.password, form.password_confirmation)[0]
+                ]"
                 :type="show_password ? 'text' : 'password'"
                 name="input-10-1"
                 :label="$options.filters.capitalize($t('confirmation'))"
@@ -118,14 +120,18 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {ref, defineComponent, computed, onMounted} from "@vue/composition-api"
-import { useGetters, useActions } from 'vuex-composition-helpers';
+import {
+  ref,
+  defineComponent,
+  computed,
+  onMounted
+} from "@vue/composition-api";
+import { useGetters, useActions } from "vuex-composition-helpers";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
-import { capitalize } from '@/ts/functions/vueFilters'
-import useRouter from 'vue-router'
+import { capitalize } from "@/ts/functions/vueFilters";
+import useRouter from "vue-router";
 
-
-import {useInputRules} from "@/ts/functions/composition/inputRules"
+import { useInputRules } from "@/ts/functions/composition/inputRules";
 
 export default defineComponent({
   name: "Home",
@@ -134,49 +140,49 @@ export default defineComponent({
     PrimaryContentBody
   },
 
-  setup(props, {root, refs}){
-  
-    var { SEND_REGISTER_REQUEST } = useActions({SEND_REGISTER_REQUEST: 'auth/SEND_REGISTER_REQUEST'} as any)
-    var { errors } = useGetters({errors: 'app/errors'} as any)
+  setup(props, { root, refs }) {
+    var { SEND_REGISTER_REQUEST } = useActions({
+      SEND_REGISTER_REQUEST: "auth/SEND_REGISTER_REQUEST"
+    } as any);
+    var { errors } = useGetters({ errors: "app/errors" } as any);
 
     onMounted(() => {
       root.$store.commit("app/setErrors", {});
-    })
+    });
 
-    var valid = ref(false)
+    var valid = ref(false);
     var form = ref({
       name: "",
       last_name: "",
       email: "",
       password: "",
       password_confirmation: ""
-    })
-    var show_password = ref(false)
-    var loading = ref(false)
+    });
+    var show_password = ref(false);
+    var loading = ref(false);
 
-    const firstNameLabel = computed(() =>
-          capitalize(root.$t("first name")) +
-          " / " +
-          capitalize(root.$t("alias"))
-    )
+    const firstNameLabel = computed(
+      () =>
+        capitalize(root.$t("first name")) + " / " + capitalize(root.$t("alias"))
+    );
 
-    const lastNameLabel = computed(() => 
-          capitalize(root.$t("last name")) +
-          " (" +
-          root.$t("form.optional") +
-          ")"
-    )
+    const lastNameLabel = computed(
+      () =>
+        capitalize(root.$t("last name")) + " (" + root.$t("form.optional") + ")"
+    );
 
-  const rules = ref({
-    email: useInputRules().email,
-    required: useInputRules().required,
-    min: useInputRules().min,
-    match: useInputRules().match
-  })
+    const rules = ref({
+      email: useInputRules().email,
+      required: useInputRules().required,
+      min: useInputRules().min,
+      match: useInputRules().match
+    });
 
-  console.log(rules)
+    console.log(rules);
 
-    const refForm = computed(() => refs.registerForm as Vue & { validate: () => boolean })
+    const refForm = computed(
+      () => refs.registerForm as Vue & { validate: () => boolean }
+    );
 
     const register = () => {
       if (refForm.value.validate()) {
@@ -189,7 +195,7 @@ export default defineComponent({
             loading.value = false;
           });
       }
-    }
+    };
 
     return {
       errors,
@@ -201,7 +207,7 @@ export default defineComponent({
       lastNameLabel,
       rules,
       register
-    }
+    };
   }
-})
+});
 </script>

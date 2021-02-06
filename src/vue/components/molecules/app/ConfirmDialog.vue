@@ -1,5 +1,8 @@
 <template>
-  <v-dialog v-model="show" width="500">
+  <v-dialog 
+  v-model="show" 
+  width="500"
+  persistent>
     <v-card class="pt-7 pb-3">
       <v-card-text class="text-h6">
         {{ $t("confirm.sure") | capitalize }}<br />

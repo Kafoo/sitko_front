@@ -10,18 +10,15 @@
 </template>
 
 <script lang="ts">
-
-import {defineComponent} from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
   name: "LoadingBar",
 
   props: {
-    loading:Boolean
-  },
-
-})
-
+    loading: Boolean
+  }
+});
 </script>
 
 <style scoped>

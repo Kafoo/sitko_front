@@ -2,14 +2,13 @@ import { MutationTree } from "vuex";
 import { AppState, AppAlert } from "./types";
 
 export const mutations: MutationTree<AppState> = {
-
   setWindowWidth(state) {
     state.windowWidth = window.innerWidth;
   },
   setErrors(state, errors) {
     state.errors = errors;
   },
-  setAlert(state, app_alert:AppAlert) {
+  setAlert(state, app_alert: AppAlert) {
     state.app_alert = app_alert;
     setTimeout(() => {
       state.app_alert = undefined;
@@ -18,8 +17,7 @@ export const mutations: MutationTree<AppState> = {
   removeAlert(state) {
     state.app_alert = undefined;
   },
-  setLocale(state, locale:string){
-    state.locale = locale
+  setLocale(state, locale: string) {
+    state.locale = locale;
   }
-
 };

@@ -8,5 +8,4 @@
       type="table-heading"
     ></v-skeleton-loader>
   </div>
-
 </template>

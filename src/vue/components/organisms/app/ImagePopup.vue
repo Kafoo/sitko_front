@@ -6,7 +6,7 @@
       fab
       x-small
       dark
-      @click="$emit('toogleImage')"
+      @click="$emit('close')"
     >
       <v-icon>close</v-icon>
     </v-btn>
@@ -30,16 +30,15 @@
 </template>
 
 <script>
-import {defineComponent} from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
   name: "ImagePopup",
 
   props: {
-    image:Object
-  },
-
-})
+    image: Object
+  }
+});
 </script>
 
 <style scoped>

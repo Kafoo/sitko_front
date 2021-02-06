@@ -1,21 +1,12 @@
 <template>
-  <div 
-  v-if="app_alert"
-  class="alert-container">
-    <div 
-    class="alert elevation-10 d-flex align-center" 
-    :class="app_alert.type">
-      <v-icon 
-      v-if="app_alert.type == 'error'" 
-      color="white" 
-      class="mr-2"
+  <div v-if="app_alert" class="alert-container">
+    <div class="alert elevation-10 d-flex align-center" :class="app_alert.type">
+      <v-icon v-if="app_alert.type == 'error'" color="white" class="mr-2"
         >warning</v-icon
       >
       <span class="mx-2">
-        {{ app_alert.msg }}<br>
-        <span
-        v-if="app_alert.info" 
-        class="text-caption font-italic">
+        {{ app_alert.msg }}<br />
+        <span v-if="app_alert.info" class="text-caption font-italic">
           ({{ app_alert.info }})
         </span>
       </span>
@@ -31,7 +22,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import { Getter, Mutation, namespace } from "vuex-class";
 
-const appStore = namespace("app")
+const appStore = namespace("app");
 
 @Component({
   name: "Alert"

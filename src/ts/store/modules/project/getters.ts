@@ -6,8 +6,5 @@ import ProjectModel from "@/ts/models/projectClass";
 export const getters: GetterTree<ProjectState, RootState> = {
   projects(state): Array<ProjectModel> {
     return state.projects;
-  },
-  loading_projects(state): Boolean {
-    return state.loading_projects;
   }
 };

@@ -8,16 +8,6 @@
           v-model="editedEvent.title"
           :rules="[rules.required]"
         ></v-text-field>
-        <v-select
-          :label="$t('type') | capitalize"
-          type="type"
-          id="type"
-          :items="types"
-          :rules="[rules.required]"
-          solo
-          max-width="200px"
-          v-model="editedEvent.type"
-        ></v-select>
         <v-textarea
           outlined
           :label="$t('description') | capitalize"
@@ -27,16 +17,21 @@
         ></v-textarea>
 
         <tags-input
-        :tags="editedEvent.tags"
-        @update="(tags)=>{editedEvent.tags = tags}"
-        label="Tags du lieu"
+          :tags="editedEvent.tags"
+          @update="
+            tags => {
+              editedEvent.tags = tags;
+            }
+          "
+          label="Tags de l'événement"
         />
 
         <image-input
-        delete
-        size="100px"
-        :image="editedEvent.image" 
-        @changeImage="changeImage"/>
+          nullable
+          size="100px"
+          :image="editedEvent.image"
+          @update="changeImage"
+        />
 
         <v-chip-group column class="d-flex align-center">
           <v-chip
@@ -80,7 +75,6 @@
                 width="45"
                 v-on="on"
                 color="green"
-                v-if="showCaldates"
                 @click="pickingDate = true"
               >
                 <v-icon>add</v-icon>
@@ -132,9 +126,9 @@
 import axios from "axios";
 import { mapActions } from "vuex";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
-import ImageInput from "@c/molecules/media/ImageInput.vue"
-import EventModel from "@/ts/models/eventClass"
-import TagsInput from "@c/molecules/tag/TagsInput.vue"
+import ImageInput from "@c/molecules/media/ImageInput.vue";
+import EventModel from "@/ts/models/eventClass";
+import TagsInput from "@c/molecules/tag/TagsInput.vue";
 
 export default {
   name: "EditEvent",
@@ -149,8 +143,7 @@ export default {
       form: false,
       loading: false,
       pickingDate: false,
-      editedEvent: new EventModel,
-      types: ["ferme", "écolieu", "autre"]
+      editedEvent: new EventModel()
     };
   },
 
@@ -159,8 +152,7 @@ export default {
   },
 
   props: {
-    propEvent: Object,
-    showCaldates: { type: Boolean, default: true }
+    propEvent: Object
   },
 
   computed: {
@@ -193,7 +185,6 @@ export default {
 
     sendEdit() {
       this.loading = true;
-      this.editedEvent.eventOnly = !this.showCaldates;
       this.SEND_EVENT_EDITION(this.editedEvent)
         .then(() => {
           this.$emit("closeEdit");
@@ -217,7 +208,7 @@ export default {
     },
 
     changeImage(data) {
-      this.editedEvent.image = data
+      this.editedEvent.image = data;
     },
 
     removeImage() {
@@ -229,7 +220,6 @@ export default {
 </script>
 
 <style scoped>
-
 .choose-date,
 .card-body {
   animation: fade-in 0.4s ease;

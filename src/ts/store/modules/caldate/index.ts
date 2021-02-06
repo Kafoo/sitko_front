@@ -8,8 +8,9 @@ import CaldateModel from "@/ts/models/caldateClass";
 
 export const state: CaldateState = {
   caldates: Array<CaldateModel>(),
-  loading_caldates: false,
-  firstFetch: ""
+  fetched: {
+    place_caldates: []
+  }
 };
 
 const namespaced: boolean = true;

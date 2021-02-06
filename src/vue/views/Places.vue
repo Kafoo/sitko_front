@@ -1,6 +1,6 @@
 <template>
   <primary-content-body>
-    <router-view/>
+    <router-view />
   </primary-content-body>
 </template>
 
@@ -12,7 +12,6 @@ export default {
 
   components: {
     PrimaryContentBody
-  },
-
+  }
 };
 </script>

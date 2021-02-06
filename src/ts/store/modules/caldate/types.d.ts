@@ -1,5 +1,6 @@
 export interface CaldateState {
-    caldates: Array,
-    loading_caldates: Boolean,
-    firstFetch: String
+  caldates: Array;
+  fetched: {
+    place_caldates: Array<number>;
+  };
 }

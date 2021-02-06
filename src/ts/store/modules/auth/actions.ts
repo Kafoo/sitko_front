@@ -3,7 +3,7 @@ import { AuthState } from "./types";
 import { RootState } from "@/ts/store/types";
 import axios from "axios";
 import router from "@/ts/router";
-import UserModel from "@/ts/models/userClass"
+import UserModel from "@/ts/models/userClass";
 
 export const actions: ActionTree<AuthState, RootState> = {
   GET_USER_DATA({ commit }) {
@@ -61,23 +61,22 @@ export const actions: ActionTree<AuthState, RootState> = {
       });
   },
 
-  SEND_USER_EDITION({ state, commit }, user  ) {
-
-    var oldUser = state.userData
+  SEND_USER_EDITION({ state, commit }, user) {
+    var oldUser = state.userData;
     return axios
       .put(process.env.VUE_APP_API_URL + "user/" + user.id, user)
-        .then((response) => {
-          commit("setUserData", response.data.user);
-          commit(
-            "app/setAlert",
-            // TOTRANSLATE
-            { type: "success", msg: "Modifications enregistrées" },
-            { root: true }
-          );
-        })
-        .catch(() => {
-          commit("setUserData", oldUser);
-        })
+      .then(response => {
+        commit("setUserData", response.data.user);
+        commit(
+          "app/setAlert",
+          // TOTRANSLATE
+          { type: "success", msg: "Modifications enregistrées" },
+          { root: true }
+        );
+      })
+      .catch(() => {
+        commit("setUserData", oldUser);
+      });
   },
 
   SEND_DELETE_USER({ state, commit }, data) {

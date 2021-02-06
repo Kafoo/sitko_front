@@ -6,9 +6,9 @@
     <navigation />
 
     <!-- Content -->
-    <v-main>
+    <v-main style="margin-top:5px">
       <div v-if="loading" class="mt-5 d-flex justify-center">
-        <loading-circle />
+        <loading-circle app />
       </div>
 
       <router-view v-else></router-view>
@@ -37,16 +37,21 @@ export default {
     ...mapActions("auth", ["GET_USER_DATA"])
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     document.removeEventListener("backbutton", this.yourCallBackFunction);
   },
-
 
   mounted() {
     if (localStorage.getItem("authToken")) {
       this.GET_USER_DATA();
     }
-    document.addEventListener("backbutton", function(){console.log('plop')}, false);
+    document.addEventListener(
+      "backbutton",
+      function() {
+        console.log("plop");
+      },
+      false
+    );
   }
 };
 </script>

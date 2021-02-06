@@ -13,7 +13,7 @@
     <cropper
       class="cropper"
       :src="image"
-      :stencil-props="{aspectRatio: 1}"
+      :stencil-props="{ aspectRatio: 1 }"
       @change="crop"
     ></cropper>
     <template v-slot:placeholder>
@@ -25,50 +25,45 @@
       </v-row>
     </template>
 
-    <v-btn 
-    class="validate-button"
-    color="success" 
-    @click="validate">Valider</v-btn>
-
+    <v-btn class="validate-button" color="success" @click="validate"
+      >Valider</v-btn
+    >
   </v-card>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "@vue/composition-api"
-import { Cropper } from 'vue-advanced-cropper'
+import { defineComponent, ref } from "@vue/composition-api";
+import { Cropper } from "vue-advanced-cropper";
 
 export default defineComponent({
   name: "CropPopup",
 
   props: {
-    image:String
+    image: String
   },
 
   components: {
     Cropper
   },
 
-  setup(props, {emit}){
-  
-    var croppedImage = ref("")
+  setup(props, { emit }) {
+    var croppedImage = ref("");
 
     const validate = () => {
-      emit('confirm', croppedImage.value)
-      emit('toogle')
-    }
+      emit("confirm", croppedImage.value);
+      emit("toogle");
+    };
 
-    var crop = (e:any) => {
-      croppedImage.value = e.canvas.toDataURL()
-    }
+    var crop = (e: any) => {
+      croppedImage.value = e.canvas.toDataURL();
+    };
 
-    return{
+    return {
       crop,
-        validate
-    }
-
+      validate
+    };
   }
-
-})
+});
 </script>
 
 <style scoped>
@@ -79,9 +74,8 @@ export default defineComponent({
   z-index: 2;
 }
 
-.validate-button{
+.validate-button {
   position: absolute;
   bottom: 20px;
 }
-
 </style>

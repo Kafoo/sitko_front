@@ -1,5 +1,4 @@
 <template>
-  
   <v-btn
     large
     @click="$emit('action')"
@@ -9,18 +8,16 @@
   >
     {{ $t("actions.create", { item: item }) }}
   </v-btn>
-
 </template>
 
 <script lang="ts">
-import {defineComponent} from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
   name: "CreateButton",
 
   props: {
-    item:String
-  },
-
-})
+    item: String
+  }
+});
 </script>

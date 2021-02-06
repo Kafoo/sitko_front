@@ -13,17 +13,14 @@
 </template>
 
 <script>
-import {ref, defineComponent, computed} from "@vue/composition-api"
-import { isMobile } from "@/ts/functions/composition/displayHelpers"
+import { ref, defineComponent, computed } from "@vue/composition-api";
+import { isMobile } from "@/ts/functions/composition/displayHelpers";
 
 export default defineComponent({
+  setup(props, { root }) {
+    const mobile = isMobile(root);
 
-  setup(props, {root}){
-    
-    const mobile = isMobile(root)
-
-    return {mobile}
-
+    return { mobile };
   }
 });
 </script>

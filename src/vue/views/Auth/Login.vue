@@ -39,7 +39,7 @@
               {{ errors.email[0] }}
             </v-alert>
           </v-col>
-          
+
           <v-col class="d-flex" cols="12" sm="6" xsm="12"> </v-col>
           <v-spacer></v-spacer>
           <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
@@ -70,11 +70,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {ref, defineComponent, computed, onMounted} from "@vue/composition-api"
-import { useGetters, useActions } from 'vuex-composition-helpers';
+import {
+  ref,
+  defineComponent,
+  computed,
+  onMounted
+} from "@vue/composition-api";
+import { useGetters, useActions } from "vuex-composition-helpers";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 
-import {useInputRules} from "@/ts/functions/composition/inputRules"
+import { useInputRules } from "@/ts/functions/composition/inputRules";
 
 export default defineComponent({
   name: "Login",
@@ -84,34 +89,37 @@ export default defineComponent({
   },
 
   props: {
-    verification: {type:String, default:undefined}
+    verification: { type: String, default: undefined }
   },
 
-  setup(props, {root, refs}){
-  
+  setup(props, { root, refs }) {
     onMounted(() => {
       root.$store.commit("app/setErrors", {});
-    })
+    });
 
     const rules = {
       email: useInputRules().email,
       required: useInputRules().required,
       min: useInputRules().min
-    }
+    };
 
-    var { SEND_LOGIN_REQUEST } = useActions({SEND_LOGIN_REQUEST: 'auth/SEND_LOGIN_REQUEST'} as any)
-    var { errors } = useGetters({errors: 'app/errors'} as any)
+    var { SEND_LOGIN_REQUEST } = useActions({
+      SEND_LOGIN_REQUEST: "auth/SEND_LOGIN_REQUEST"
+    } as any);
+    var { errors } = useGetters({ errors: "app/errors" } as any);
 
-    var valid = ref(false)
-    var show_password = ref(false)
-    var loading = ref(false)  
+    var valid = ref(false);
+    var show_password = ref(false);
+    var loading = ref(false);
     var form = ref({
       password: "",
       email: ""
     });
 
-    const refForm = computed(() => refs.loginForm as Vue & { validate: () => boolean })
-    
+    const refForm = computed(
+      () => refs.loginForm as Vue & { validate: () => boolean }
+    );
+
     const login = () => {
       if (refForm.value.validate()) {
         loading.value = true;
@@ -127,7 +135,7 @@ export default defineComponent({
             loading.value = false;
           });
       }
-    }
+    };
 
     return {
       errors,
@@ -138,11 +146,7 @@ export default defineComponent({
       rules,
       refForm,
       login
-    }
-
+    };
   }
-
-
-})
-
+});
 </script>

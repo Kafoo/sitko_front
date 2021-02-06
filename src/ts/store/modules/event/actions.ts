@@ -6,40 +6,50 @@ import axios from "axios";
 
 export const actions: ActionTree<EventState, RootState> = {
 
-  GET_PLACE_EVENTS({ rootState, state, commit }, { place_id, hash }) {
-    //Loading flag only if first time fetch for this place
-    if (
-      rootState.place.place.id == place_id &&
-      state.firstFetch == place_id
-    ) {
-      //If hash, we still load not to UImess
-      if (hash) {
-        commit("setLoading");
-        commit("setFirstFetch", place_id);
-      }
+  GET_EVENT({ commit, state }, event_id) {
+    if (state.events.find((x: EventModel) => x.id === event_id)) {
+      return true;
     } else {
-      commit("setLoading");
-      commit("setFirstFetch", place_id);
+      return axios
+        .get(process.env.VUE_APP_API_URL + "event/" + event_id)
+        .then(response => {
+          //(Le projet aura été push dans le store)
+          commit("pushEvent", new EventModel(response.data));
+        })
+        .catch(() => {});
     }
-    //FETCH
-    axios
-      .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/event")
-      .then(response => {
-        const newCollection = [];
+  },
 
-        for (const event of response.data) {
-          newCollection.push(new EventModel(event));
-        }
+  GET_ALL_EVENTS({ state, commit }) {
+    if (state.fetched.all_events) {
+      return true;
+    } else {
+      return axios
+        .get(process.env.VUE_APP_API_URL + "event")
+        .then(response => {
+          state.fetched.all_events = Date.now();
+          for (const event of response.data) {
+            commit("pushEvent", new EventModel(event));
+          }
+        })
+        .catch(() => {});
+    }
+  },
 
-        //Refresh event if currently loading
-        if (state.loading_events) {
-          commit("setEvents", newCollection);
-          commit("removeLoading");
-        } else {
-          //Suggest refresh to user without messing with UI
-        }
-      })
-      .catch(() => {});
+  GET_EVENTS_BY_PLACE({ state, commit }, place_id) {
+    if (state.fetched.place_events[place_id]) {
+      return true;
+    } else {
+      state.fetched.place_events[place_id] = Date.now();
+      return axios
+        .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/event")
+        .then(response => {
+          for (const event of response.data) {
+            commit("pushEvent", new EventModel(event));
+          }
+        })
+        .catch(() => {});
+    }
   },
 
   SEND_EVENT_CREATION({ commit }, event) {
@@ -48,39 +58,23 @@ export const actions: ActionTree<EventState, RootState> = {
       .then(response => {
         var newEvent = new EventModel(response.data.event);
         commit("pushEvent", newEvent);
-        commit(
-          "app/setAlert",
-          // TOTRANSLATE
-          { type: "success", msg: "Evénement créé avec succès" },
-          { root: true }
-        );
-      })
+      });
   },
 
   SEND_EVENT_EDITION({ commit }, event) {
     return axios
       .put(process.env.VUE_APP_API_URL + "event/" + event.id, event)
       .then(response => {
-        commit("editEvent", new EventModel(response.data.event));
-      })
-  },
-
-  SEND_EVENT_DELETION({ commit, state }, id) {
-    //Deleting state
-    let event = state.events.find((x:EventModel) => x.id === id);
-    let index = state.events.indexOf(event);
-    commit("removeEvent", index);
-    //Delete call to API
-    axios
-      .delete(process.env.VUE_APP_API_URL + "event/" + id)
-      .catch(() => {
-        commit("insertEvent", {event, index});
+        commit("pushEvent", new EventModel(response.data.event));
       });
   },
 
-  TOOGLE_EVENT_EXPAND({ commit }, id) {
-    commit("closeExpands", id);
-    commit("toogleExpand", id);
+  SEND_EVENT_DELETION({ commit }, event_id) {
+    //Delete call to API
+    return axios.delete(process.env.VUE_APP_API_URL + "event/" + event_id)
+      .then(response => {
+        commit("removeEvent", event_id);
+      });
   }
 
 };

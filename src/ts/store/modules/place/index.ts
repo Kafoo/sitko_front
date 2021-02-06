@@ -8,9 +8,7 @@ import PlaceModel from "@/ts/models/placeClass";
 
 export const state: PlaceState = {
   places: Array<PlaceModel>(),
-  place: <PlaceModel>{},
-  loading_places: false,
-  loading_place: false
+  fetched: {}
 };
 
 const namespaced: boolean = true;

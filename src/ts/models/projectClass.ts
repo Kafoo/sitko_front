@@ -3,26 +3,23 @@ import CaldateModel from "@/ts/models/caldateClass";
 import TagModel from "@/ts/models/tagClass";
 
 export default class Project {
+  id: number;
+  place_id: number;
+  title: string;
+  description: string;
+  image?: ImageModel;
+  expanded: boolean;
+  caldates: Array<CaldateModel>;
+  tags: Array<TagModel>;
 
-  id:number
-  place_id:number
-  title:string
-  type:string
-  description:string
-  image?:ImageModel
-  expanded:boolean
-  caldates:Array<CaldateModel>
-  tags: Array<TagModel>
-
-  constructor(rawData:any = {}) {
+  constructor(rawData: any = {}) {
     this.id = rawData.id;
     this.place_id = rawData.place_id;
     this.title = rawData.title;
-    this.type = rawData.type;
     this.description = rawData.description;
 
     if (rawData.image) {
-      this.image = new ImageModel(rawData.image)
+      this.image = new ImageModel(rawData.image);
     }else{
       this.image = undefined
     }
@@ -30,35 +27,25 @@ export default class Project {
     this.expanded = false;
 
     this.caldates = [];
-
     if (rawData.caldates) {
-      rawData.caldates.forEach((caldate:any) => {
+      rawData.caldates.forEach((caldate: CaldateModel) => {
         this.caldates.push(new CaldateModel(caldate));
       });
     }
 
-    this.tags = []
-    if (rawData.tags) {      
-      rawData.tags.forEach((tag:TagModel) => {
-        this.tags.push(new TagModel(tag))  
+    this.tags = [];
+    if (rawData.tags) {
+      rawData.tags.forEach((tag: TagModel) => {
+        this.tags.push(new TagModel(tag));
       });
     }
-
   }
 
-  get bigtitle():string {
+  get bigtitle(): string {
     return this.title.toUpperCase();
   }
 
-  get color():string {
-    if (this.type === "autre") {
-      return "red darken-3";
-    } else if (this.type === "ferme") {
-      return "yellow darken-3";
-    } else if (this.type === "écolieu") {
-      return "blue darken-3";
-    } else {
-      return "green darken-3";
-    }
+  get color(): string {
+    return "red darken-3";
   }
 }

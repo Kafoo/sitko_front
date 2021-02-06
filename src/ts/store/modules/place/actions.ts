@@ -5,52 +5,55 @@ import PlaceModel from "@/ts/models/placeClass";
 import axios from "axios";
 
 export const actions: ActionTree<PlaceState, RootState> = {
-  GET_PLACES({ state, commit }) {
-    if (state.places.length === 0) {
-      commit("setLoadingPlaces");
+
+  GET_ALL_PLACES({ state, commit }) {
+    if (state.fetched.all_places) {
+      return true;
+    } else {
+      return axios
+        .get(process.env.VUE_APP_API_URL + "place")
+        .then(response => {
+          state.fetched.all_places = Date.now();
+          for (const place of response.data) {
+            commit("pushPlace", new PlaceModel(place));
+          }
+        });
     }
-    axios
-      .get(process.env.VUE_APP_API_URL + "place")
-      .then(response => {
-        const newCollection = [];
-        for (const place of response.data) {
-          newCollection.push(new PlaceModel(place));
-        }
-        commit("setPlaces", newCollection);
-        commit("removeLoadingPlaces");
-      })
-      .catch(() => {});
   },
 
-  GET_PLACE({ commit }, id) {
-    commit("setLoadingPlace");
-    return axios
-      .get(process.env.VUE_APP_API_URL + "place/" + id)
-      .then(response => {
-        commit("setPlace", new PlaceModel(response.data));
-        commit("removeLoadingPlace");
-      })
-      .catch(() => {});
+  GET_PLACE({ commit, state }, place_id) {
+    if (state.places.find((x: PlaceModel) => x.id === place_id)) {
+      return true;
+    } else {
+      return axios
+        .get(process.env.VUE_APP_API_URL + "place/" + place_id)
+        .then(response => {
+          commit("pushPlace", new PlaceModel(response.data));
+        });
+    }
   },
 
   SEND_PLACE_CREATION({ commit }, place) {
     return axios
       .post(process.env.VUE_APP_API_URL + "place", place)
-  },
-
-  SEND_PLACE_EDITION({ commit }, place  ) {
-    return axios
-      .put(process.env.VUE_APP_API_URL + "place/" + place .id, place )
       .then(response => {
-        // commit("editPlace", new PlaceModel(response.data.place));
-      })
+        commit("pushPlace", new PlaceModel(response.data.place));
+      });
   },
 
-  SEND_PLACE_DELETION({ commit }, id) {
-
-    //Delete call to API
+  SEND_PLACE_EDITION({ commit }, place) {
     return axios
-      .delete(process.env.VUE_APP_API_URL + "place/" + id)
+      .put(process.env.VUE_APP_API_URL + "place/" + place.id, place)
+      .then(response => {
+        commit("pushPlace", new PlaceModel(response.data.place));
+      });
   },
 
+  SEND_PLACE_DELETION({ commit }, place_id) {
+    //Delete call to API
+    return axios.delete(process.env.VUE_APP_API_URL + "place/" + place_id)
+      .then(response => {
+        commit("removePlace", place_id);
+      });
+  }
 };

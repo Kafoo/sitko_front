@@ -14,16 +14,6 @@
           v-model="newEvent.title"
           :disabled="loading"
         ></v-text-field>
-        <v-select
-          :label="$t('type') | capitalize"
-          type="type"
-          id="type"
-          :items="types"
-          :rules="[rules.required]"
-          solo
-          max-width="200px"
-          v-model="newEvent.type"
-        ></v-select>
         <v-textarea
           :label="$t('description') | capitalize"
           type="description"
@@ -42,10 +32,11 @@
         />
 
         <image-input
-        delete
-        size="100px"
-        :image="newEvent.image" 
-        @changeImage="changeImage"/>
+          nullable
+          size="100px"
+          :image="newEvent.image"
+          @update="changeImage"
+        />
 
         <v-chip-group column>
           <v-chip
@@ -132,8 +123,8 @@
 import { mapActions } from "vuex";
 import axios from "axios";
 import ChooseDate from "@c/organisms/app/ChooseDate.vue";
-import ImageInput from "@c/molecules/media/ImageInput.vue"
-import TagsInput from "@c/molecules/tag/TagsInput.vue"
+import ImageInput from "@c/molecules/media/ImageInput.vue";
+import TagsInput from "@c/molecules/tag/TagsInput.vue";
 
 export default {
   name: "CreateEvent",
@@ -147,10 +138,9 @@ export default {
       newEvent: {
         place_id: this.$route.params.id,
         caldates: [],
-        image:undefined,
+        image: undefined,
         tags: []
-      },
-      types: ["public", "privé", "autre"]
+      }
     };
   },
 
@@ -216,13 +206,12 @@ export default {
     },
 
     changeImage(data) {
-      this.newEvent.image = data
+      this.newEvent.image = data;
     },
 
     updateTags(tags) {
-      this.newEvent.tags = tags    
+      this.newEvent.tags = tags;
     }
-
   }
 };
 </script>

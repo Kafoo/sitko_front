@@ -6,7 +6,7 @@ export const getters: GetterTree<AppState, RootState> = {
   errors(state): Array<any> {
     return state.errors;
   },
-  app_alert(state):AppAlert | undefined {
+  app_alert(state): AppAlert | undefined {
     return state.app_alert;
   }
 };

@@ -6,40 +6,50 @@ import axios from "axios";
 
 export const actions: ActionTree<ProjectState, RootState> = {
 
-  GET_PLACE_PROJECTS({ rootState, state, commit }, { place_id, hash }) {
-    //Loading flag only if first time fetch for this place
-    if (
-      rootState.place.place.id == place_id &&
-      state.firstFetch == place_id
-    ) {
-      //If hash, we still load not to UImess
-      if (hash) {
-        commit("setLoading");
-        commit("setFirstFetch", place_id);
-      }
+  GET_PROJECT({ commit, state }, project_id) {
+    if (state.projects.find((x: ProjectModel) => x.id === project_id)) {
+      return true;
     } else {
-      commit("setLoading");
-      commit("setFirstFetch", place_id);
+      return axios
+        .get(process.env.VUE_APP_API_URL + "project/" + project_id)
+        .then(response => {
+          //(Le projet aura été push dans le store)
+          commit("pushProject", new ProjectModel(response.data));
+        })
+        .catch(() => {});
     }
-    //FETCH
-    axios
-      .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
-      .then(response => {
-        const newCollection = [];
+  },
 
-        for (const project of response.data) {
-          newCollection.push(new ProjectModel(project));
-        }
+  GET_ALL_PROJECTS({ state, commit }) {
+    if (state.fetched.all_projects) {
+      return true;
+    } else {
+      return axios
+        .get(process.env.VUE_APP_API_URL + "project")
+        .then(response => {
+          state.fetched.all_projects = Date.now();
+          for (const project of response.data) {
+            commit("pushProject", new ProjectModel(project));
+          }
+        })
+        .catch(() => {});
+    }
+  },
 
-        //Refresh project if currently loading
-        if (state.loading_projects) {
-          commit("setProjects", newCollection);
-          commit("removeLoading");
-        } else {
-          //Suggest refresh to user without messing with UI
-        }
-      })
-      .catch(() => {});
+  GET_PROJECTS_BY_PLACE({ state, commit }, place_id) {
+    if (state.fetched.place_projects[place_id]) {
+      return true;
+    } else {
+      state.fetched.place_projects[place_id] = Date.now();
+      return axios
+        .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
+        .then(response => {
+          for (const project of response.data) {
+            commit("pushProject", new ProjectModel(project));
+          }
+        })
+        .catch(() => {});
+    }
   },
 
   SEND_PROJECT_CREATION({ commit }, project) {
@@ -48,39 +58,23 @@ export const actions: ActionTree<ProjectState, RootState> = {
       .then(response => {
         var newProject = new ProjectModel(response.data.project);
         commit("pushProject", newProject);
-        commit(
-          "app/setAlert",
-          // TOTRANSLATE
-          { type: "success", msg: "Projet créé avec succès" },
-          { root: true }
-        );
-      })
+      });
   },
 
   SEND_PROJECT_EDITION({ commit }, project) {
     return axios
       .put(process.env.VUE_APP_API_URL + "project/" + project.id, project)
       .then(response => {
-        commit("editProject", new ProjectModel(response.data.project));
-      })
-  },
-
-  SEND_PROJECT_DELETION({ commit, state }, id) {
-    //Deleting state
-    let project = state.projects.find((x:ProjectModel) => x.id === id);
-    let index = state.projects.indexOf(project);
-    commit("removeProject", index);
-    //Delete call to API
-    axios
-      .delete(process.env.VUE_APP_API_URL + "project/" + id)
-      .catch(() => {
-        commit("insertProject", {project, index});
+        commit("pushProject", new ProjectModel(response.data.project));
       });
   },
 
-  TOOGLE_PROJECT_EXPAND({ commit }, id) {
-    commit("closeExpands", id);
-    commit("toogleExpand", id);
+  SEND_PROJECT_DELETION({ commit }, project_id) {
+    //Delete call to API
+    return axios.delete(process.env.VUE_APP_API_URL + "project/" + project_id)
+      .then(response => {
+        commit("removeProject", project_id);
+      });
   }
 
 };

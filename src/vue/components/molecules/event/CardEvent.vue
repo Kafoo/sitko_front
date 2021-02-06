@@ -9,12 +9,6 @@
       <!-- HEAD -->
       <div class="d-flex event-main" @click="$emit('toogleExpand')">
         <v-card-title class="d-inline-block py-3 text-truncate">
-          <v-chip
-            class="type hidden-xs-only white--text rounded-lg"
-            :class="event.color"
-          >
-            {{ event.type }}
-          </v-chip>
           {{ event.title }}
         </v-card-title>
 
@@ -39,13 +33,13 @@
         <div v-show="expanded" class="expand">
           <v-divider class="my-0"></v-divider>
           <v-card-text class="pt-2" min-height="200px">
-
             <v-chip-group>
-              <tag-chip 
-              v-for="tag in event.tags"
-              :key="tag.id"
-              :tag="tag"
-              noselect/>
+              <tag-chip
+                v-for="tag in event.tags"
+                :key="tag.id"
+                :tag="tag"
+                noselect
+              />
             </v-chip-group>
 
             <div class="d-flex flex-column-reverse align-start flex-sm-row">
@@ -78,13 +72,6 @@
 
               <div class="flex-grow-1">
                 <div class="d-flex flex-wrap">
-                  <v-chip
-                    class="type hidden-sm-and-up white--text rounded-lg my-1 mr-2"
-                    :class="event.color"
-                  >
-                    {{ event.type }}
-                  </v-chip>
-
                   <v-chip-group column>
                     <v-tooltip
                       v-for="caldate in event.caldates"
@@ -139,7 +126,7 @@
 
 <script>
 import VClamp from "vue-clamp";
-import TagChip from '@c/atoms/tag/TagChip.vue';
+import TagChip from "@c/atoms/tag/TagChip.vue";
 
 export default {
   name: "CardEvent",

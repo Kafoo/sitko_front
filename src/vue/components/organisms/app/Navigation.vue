@@ -1,12 +1,9 @@
 <template>
   <div>
-
     <!-- Top bar -->
     <v-app-bar height="60px">
       <v-toolbar-title>
-        <v-app-bar-nav-icon
-          @click="$router.push('/').catch(() => {})"
-        >
+        <v-app-bar-nav-icon @click="$router.push('/').catch(() => {})">
           <v-img
             class="shrink mr-2"
             contain
@@ -15,98 +12,83 @@
             width="55"
           />
         </v-app-bar-nav-icon>
-        <router-link 
-        to="/" 
-        tag="span" 
-        style="cursor: pointer"
-        class="font-weight-bold">
+        <span
+        @click="$router.push('/').catch(() => {})"
+        class="font-weight-bold c-pointer"
+        >
           {{ appTitle }}
-        </router-link>
+        </span>
+          
       </v-toolbar-title>
 
       <!-- Locale Change -->
-      <select 
-      class="locale-select" 
-      v-model="$i18n.locale" 
-      @change="changeLocale">
-        <option 
-        v-for="(locale, i) in locales" 
-        :key="`Lang${i}`" 
-        :value="locale">
-        {{ locale }}
+      <!-- <select
+        class="locale-select"
+        v-model="$i18n.locale"
+        @change="changeLocale"
+      >
+        <option
+          v-for="(locale, i) in locales"
+          :key="`Lang${i}`"
+          :value="locale"
+        >
+          {{ locale }}
         </option>
-      </select> 
+      </select> -->
 
       <v-spacer></v-spacer>
 
       <!-- Search -->
-      <autocomplete 
-      v-if="!loading"
-      :search="search"
-      class="mr-3 hidden-xs-only">
+      <!-- <autocomplete
+        v-if="!loading"
+        :search="search"
+        class="mr-3 hidden-xs-only"
+      >
       </autocomplete>
 
-      <v-btn 
-      v-if="!loading"
-      icon 
-      fab
-      class="hidden-sm-and-up mr-3">
-        <v-icon 
-        large>
+      <v-btn v-if="!loading" icon fab class="hidden-sm-and-up mr-3">
+        <v-icon large>
           search
         </v-icon>
-      </v-btn>
+      </v-btn> -->
 
-      <v-menu
-      class="acccount-drawer"
-      v-if="!loading"
-      bottom
-      left
-      >
+      <v-menu class="acccount-drawer" v-if="!loading" bottom left>
         <template v-slot:activator="{ on, attrs }">
-
           <v-btn
-          height="40px"
-          rounded
-          class="mr-sm-3 px-2"
-          v-bind="attrs"
-          v-on="on">
-        
+            height="40px"
+            rounded
+            class="mr-sm-3 px-2"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon class="mr-1">menu</v-icon>
 
-            <v-icon class="mr-1">menu</v-icon> 
-
-            <tiny-avatar 
-            v-if="user && user.image"
-            :image="user.image.thumb"/>
+            <tiny-avatar v-if="user && user.image" :image="user.image.thumb" />
 
             <v-icon v-else large>face</v-icon>
-          
           </v-btn>
-            
-
         </template>
 
         <v-list>
           <v-list-item
-          v-for="item in activeItems"
-          :key="item.title"
-          :to="item.path">
+            v-for="item in activeItems"
+            :key="item.title"
+            :to="item.path"
+          >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu> 
-
+      </v-menu>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
+import TinyAvatar from "@c/atoms/user/TinyAvatar.vue";
 
 export default {
-  data : () => {
+  data: () => {
     return {
       appTitle: "Sitko",
       locales: ["fr", "en"]
@@ -120,11 +102,11 @@ export default {
   computed: {
     ...mapGetters("auth", ["user", "loading"]),
 
-    activeItems(){
+    activeItems() {
       if (this.user == undefined) {
-        return this.topNavItems
-      }else{
-        return this.accountItems
+        return this.topNavItems;
+      } else {
+        return this.accountItems;
       }
     },
 
@@ -133,12 +115,12 @@ export default {
         {
           title: this.$options.filters.capitalize(this.$t("connection")),
           path: "/login",
-          icon: "",
+          icon: ""
         },
         {
           title: this.$options.filters.capitalize(this.$t("register")),
           path: "/register",
-          icon: "",
+          icon: ""
         }
       ];
     },
@@ -146,14 +128,14 @@ export default {
     accountItems() {
       return [
         {
-          title: this.$options.filters.capitalize(this.$t("my places")),
+          title: this.$options.filters.capitalize(this.$t("places")),
           path: "/places/myplaces",
-          icon: "",
+          icon: ""
         },
         {
           title: this.$options.filters.capitalize(this.$t("account")),
           path: "/account",
-          icon: "",
+          icon: ""
         }
       ];
     }
@@ -166,12 +148,12 @@ export default {
   },
   methods: {
     ...mapMutations("app", ["setLocale"]),
-    changeLocale(){
-      this.setLocale(this.$i18n.locale)
+    changeLocale() {
+      this.setLocale(this.$i18n.locale);
     },
 
-    search(){
-      return []
+    search() {
+      return [];
     }
   }
 };
@@ -209,8 +191,7 @@ export default {
   }
 }
 
-.v-menu__content{
-    top: 55px !important;
+.v-menu__content {
+  top: 55px !important;
 }
-
 </style>

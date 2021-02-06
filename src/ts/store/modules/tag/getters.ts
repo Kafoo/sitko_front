@@ -7,13 +7,7 @@ export const getters: GetterTree<TagState, RootState> = {
   tags(state): Array<TagModel> {
     return state.tags;
   },
-  loading(state): Boolean {
-    return state.loading!;
-  },
   categories(state): Array<Object> {
     return state.categories;
-  },
-  loading_categories(state): Boolean {
-    return state.loading_categories!;
   }
 };

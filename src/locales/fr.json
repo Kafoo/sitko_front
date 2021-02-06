@@ -3,6 +3,7 @@
   "hello": "salut",
   "oops": "oups",
 	"all": "tous",
+  "none": "aucune",
   "delete": "supprimer",
   "enter": "entrer",
 
@@ -13,6 +14,7 @@
   "account": "compte",
   "explore": "explorer",
   "place": "lieu",
+  "places": "lieux",
   "my places": "mes lieux",
   "calendar": "calendrier",
   "projects": "projets",
@@ -50,6 +52,7 @@
   "save" : "enregistrer",
   "resend e-mail": "renvoyer le mail",
 
+  "Project deletion is definitive.": "La suppression du projet est définitive.",
   "Account deletion is definitive.": "La suppression du compte est définitive.",
   "Place deletion is definitive.": "La suppression du lieu est définitive.",
   "A fresh verification link has been sent to your email address.": "Un nouveau mail de confirmation a été envoyé.",

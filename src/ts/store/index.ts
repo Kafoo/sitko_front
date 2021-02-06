@@ -11,7 +11,6 @@ import { tag } from "./modules/tag";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-
   modules: {
     app,
     auth,
