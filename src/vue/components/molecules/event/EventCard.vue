@@ -7,7 +7,7 @@
         :elevation="hover ? 4 : 2"
         class="event-card c-pointer"
         width="220"
-        height="260px"
+        height="252px"
         @click="$router.push('/event/' + event.id)"
       >
         <v-img
@@ -65,26 +65,7 @@
         :caldates="event.caldates"
         />
 
-        <v-spacer></v-spacer>
-
-        
-
-        <v-card-text class="px-2 py-1 pb-0">
-          <div>
-            <tag-chip
-              tiny
-              v-for="tag in event.tags.slice(0, 3)"
-              :key="tag.id"
-              :tag="tag"
-              noselect
-            />
-            <span v-if="event.tags.length > 3" class="text-caption">
-              +{{ event.tags.length - 3 }} tag{{
-                event.tags.length - 3 > 1 ? "s" : ""
-              }}
-            </span>
-          </div>
-        </v-card-text>
+        <tags-in-card :tags="event.tags"/>
 
         <v-spacer></v-spacer>
       </v-card>
@@ -95,18 +76,18 @@
 <script lang="ts">
 
 import { defineComponent, ref, computed } from "@vue/composition-api"
-import TagChip from "@c/atoms/tag/TagChip.vue";
 import EventModel from "@/ts/models/eventClass"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
 import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
 import ImageModel from "@/ts/models/imageClass"
+import TagsInCard from "@c/molecules/card/TagsInCard.vue"
 
 export default defineComponent({
 
   name : "EventCard",
 
   components: {
-    TagChip,
+    TagsInCard,
     CurrentCaldates,
     TinyAvatar
   },

@@ -4,9 +4,9 @@
       <v-card
         :id="place.id"
         :elevation="hover ? 4 : 2"
-        class="c-pointer"
+        class="c-pointer pb-0"
         width="220"
-        height="260px"
+        height="252px"
         @click="$router.push('/place/' + place.id)"
       >
         <v-img
@@ -39,34 +39,23 @@
             class="px-3 pt-2 pb-1"
             :class="hover ? 'text-decoration-underline' : ''"
           >
-            {{ place.name }}
+            <v-clamp autoresize :max-lines="2" class="description">
+              {{ place.name }}
+            </v-clamp>
           </v-card-title>
         </v-hover>
 
-        <v-card-text class="mx-1 px-2">
-            <div class="text-caption font-weight-bold" style="line-height:14px">
-              {{ $t("count.sitkers", { n: "0" }) }}
-            </div>
-            <div class="text-caption font-italic">
-              {{ $t("count.currentProjects", { n: place.projects_count }) }}
-            </div>
-          <div>
-            <tag-chip
-              tiny
-              v-for="tag in place.tags.slice(0, 3)"
-              :key="tag.id"
-              :tag="tag"
-              noselect
-            />
-            <span v-if="place.tags.length > 3" class="text-caption">
-              +{{ place.tags.length - 3 }} tag{{
-                place.tags.length - 3 > 1 ? "s" : ""
-              }}
-            </span>
+        <v-card-text class="mx-1 px-2 py-0">
+          <div class="text-caption font-weight-bold" style="line-height:14px">
+            {{ $t("count.sitkers", { n: "0" }) }}
+          </div>
+          <div class="text-caption">
+            {{ $t("count.currentProjects", { n: place.projects_count }) }}
           </div>
         </v-card-text>
 
-        <v-spacer></v-spacer>
+        <tags-in-card :tags="place.tags"/>
+
       </v-card>
     </v-hover>
   </div>
@@ -78,17 +67,15 @@ import {
   isMobile,
   windowWidth
 } from "@/ts/functions/composition/displayHelpers";
-import VClamp from "vue-clamp";
-import TagChip from "@c/atoms/tag/TagChip.vue";
 import PlaceModel from "@/ts/models/placeClass";
+import TagsInCard from "@c/molecules/card/TagsInCard.vue"
 
 export default defineComponent({
 
   name: "PlaceCard",
 
   components: {
-    VClamp,
-    TagChip
+    TagsInCard
   },
 
   props: {

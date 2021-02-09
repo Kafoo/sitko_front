@@ -114,7 +114,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
-import VClamp from "vue-clamp";
 import CaldateModel from "@/ts/models/caldateClass";
 import ProjectCard from "@c/molecules/project/ProjectCard.vue";
 
@@ -122,7 +121,6 @@ export default defineComponent({
   name: "Calendar",
 
   components: {
-    VClamp,
     ProjectCard
   },
 

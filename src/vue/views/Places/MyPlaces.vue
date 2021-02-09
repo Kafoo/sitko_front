@@ -1,15 +1,8 @@
 <template>
   <div>
+
     <div class="text-center">
-      <v-btn
-        large
-        to="/place/create"
-        class="center mb-8 green lighten-1"
-        justify="center"
-        align="center"
-      >
-        {{ $t("actions.create", { item: $t("place") }) }}
-      </v-btn>
+      <create-place-button class="mb-8"/>
     </div>
 
     <div v-if="loading" class="d-flex flex-wrap justify-center">
@@ -36,6 +29,7 @@ import { Component } from "vue-property-decorator";
 import PlaceModel from "@/ts/models/placeClass";
 import PlaceCard from "@c/molecules/place/PlaceCard.vue";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
+import CreatePlaceButton from "@c/atoms/button/CreatePlaceButton.vue"
 
 const namespace: string = "place";
 
@@ -44,7 +38,8 @@ const namespace: string = "place";
 
   components: {
     PlaceCard,
-    PrimaryContentBody
+    PrimaryContentBody,
+    CreatePlaceButton
   }
 })
 export default class Places extends Vue {

@@ -97,7 +97,7 @@ export default defineComponent({
 <style scoped>
 
 .v-slide-group{
-  min-height: 250px;
+  min-height: 268px;
 }
 
 .no-item {

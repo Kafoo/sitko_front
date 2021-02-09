@@ -134,13 +134,11 @@
 </template>
 
 <script>
-import VClamp from "vue-clamp";
 import TagChip from "@c/atoms/tag/TagChip.vue";
 
 export default {
   name: "CardProject",
   components: {
-    VClamp,
     TagChip
   },
   props: {

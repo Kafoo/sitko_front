@@ -90,7 +90,6 @@ import {
   isMobile,
   windowWidth
 } from "@/ts/functions/composition/displayHelpers";
-import VClamp from "vue-clamp";
 import TinyTagChip from "@c/atoms/tag/TinyTagChip.vue";
 import PlaceModel from "@/ts/models/placeClass";
 
@@ -99,7 +98,6 @@ export default defineComponent({
   name: "PlaceCard",
 
   components: {
-    VClamp,
     TinyTagChip
   },
 

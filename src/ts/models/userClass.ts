@@ -1,5 +1,6 @@
 import ImageModel from "@/ts/models/imageClass";
 import TagModel from "@/ts/models/tagClass";
+import PlaceModel from "@/ts/models/placeClass"
 
 export default class UserModel {
   id: number;
@@ -11,6 +12,7 @@ export default class UserModel {
   password_confirmation?: string;
   image?: ImageModel | String;
   tags: Array<TagModel>;
+  place?:PlaceModel
 
   constructor(rawData: any = {}) {
     this.id = rawData.id;
@@ -18,6 +20,8 @@ export default class UserModel {
     this.last_name = rawData.last_name || "";
     this.email = rawData.email || "";
     this.email_verified_at = rawData.email_verified_at;
+
+    this.place = rawData.place
 
     this.password = "";
     this.password_confirmation = "";

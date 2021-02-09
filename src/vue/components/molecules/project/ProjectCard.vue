@@ -7,7 +7,7 @@
         :elevation="hover ? 4 : 2"
         class="project-card c-pointer"
         width="220"
-        height="260px"
+        height="252px"
         @click="$router.push('/project/' + project.id)"
       >
         <v-img
@@ -65,26 +65,7 @@
         :caldates="project.caldates"
         />
 
-        <v-spacer></v-spacer>
-
-        
-
-        <v-card-text class="px-2 py-1 pb-0">
-          <div>
-            <tag-chip
-              tiny
-              v-for="tag in project.tags.slice(0, 3)"
-              :key="tag.id"
-              :tag="tag"
-              noselect
-            />
-            <span v-if="project.tags.length > 3" class="text-caption">
-              +{{ project.tags.length - 3 }} tag{{
-                project.tags.length - 3 > 1 ? "s" : ""
-              }}
-            </span>
-          </div>
-        </v-card-text>
+        <tags-in-card :tags="project.tags"/>
 
         <v-spacer></v-spacer>
       </v-card>
@@ -95,18 +76,18 @@
 <script lang="ts">
 
 import { defineComponent, ref, computed } from "@vue/composition-api"
-import TagChip from "@c/atoms/tag/TagChip.vue";
 import ProjectModel from "@/ts/models/projectClass"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
 import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
 import ImageModel from "@/ts/models/imageClass"
+import TagsInCard from "@c/molecules/card/TagsInCard.vue"
 
 export default defineComponent({
 
   name : "ProjectCard",
 
   components: {
-    TagChip,
+    TagsInCard,
     CurrentCaldates,
     TinyAvatar
   },

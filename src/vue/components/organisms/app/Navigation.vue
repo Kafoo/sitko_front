@@ -52,7 +52,12 @@
         </v-icon>
       </v-btn> -->
 
-      <v-menu class="acccount-drawer" v-if="!loading" bottom left>
+      <v-menu 
+      class="acccount-drawer" 
+      v-if="!loading" 
+      rounded="xl"
+      bottom 
+      left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             height="40px"
@@ -75,7 +80,10 @@
             :key="item.title"
             :to="item.path"
           >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>
+              <v-icon v-if="item.icon">{{item.icon}}</v-icon>
+              {{ item.title }}
+            </v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -126,16 +134,28 @@ export default {
     },
 
     accountItems() {
+
+      var first = {}
+      if (this.user.place) {
+        first = {
+          title: this.user.place.name,
+          path: "/place/" + this.user.place.id,
+          icon: "home"
+        }
+      } else {
+        first = {
+          title: this.$options.filters.capitalize(this.$t("actions.create", { item: this.$t("place") })),
+          path: "/place/create",
+          icon: "home"
+        }
+      }
+
       return [
-        {
-          title: this.$options.filters.capitalize(this.$t("places")),
-          path: "/places/myplaces",
-          icon: ""
-        },
+        first,
         {
           title: this.$options.filters.capitalize(this.$t("account")),
           path: "/account",
-          icon: ""
+          icon: "account_circle"
         }
       ];
     }

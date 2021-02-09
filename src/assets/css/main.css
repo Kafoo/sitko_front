@@ -118,3 +118,8 @@ user-select: none; /* Standard */
 .v-slide-group__wrapper {
   touch-action: pan-y !important 
 }
+
+.end{
+  position: absolute;
+  bottom: 0;
+}
