@@ -89,7 +89,7 @@ export default defineComponent({
     const changeImage = (e: any) => {
       var file = e.target.files[0];
 
-      if (file.size < 3000000) {
+      if (file.size < 4000000) {
         error.value = "";
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -100,7 +100,7 @@ export default defineComponent({
         };
       } else {
         // TOTRANSLATE
-        error.value = "Poids max : 3Mo";
+        error.value = "Poids max : 4Mo";
       }
     };
 
