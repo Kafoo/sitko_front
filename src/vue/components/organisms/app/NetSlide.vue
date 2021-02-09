@@ -1,7 +1,7 @@
 <template>
   
   <div>
-    <div class="text-h5 font-weight-bold ml-sm-15 ml-2">{{title}}</div>
+    <div class="text-h5 font-weight-bold ml-sm-15 ml-2 mb-1">{{title}}</div>
 
     <v-slide-group 
     class="slide-group mb-5" 
@@ -37,7 +37,7 @@
         <event-card 
         v-else-if="type == 'event'" 
         class="ma-2" 
-        :place="item"
+        :event="item"
         withPlace
         />
 
@@ -51,6 +51,7 @@
 
 import { defineComponent } from "@vue/composition-api"
 import ProjectCard from "@c/molecules/project/ProjectCard.vue"
+import EventCard from "@c/molecules/event/EventCard.vue"
 import PlaceCard from "@c/molecules/place/PlaceCard.vue"
 
 export default defineComponent({
@@ -59,7 +60,8 @@ export default defineComponent({
 
   components:{
     ProjectCard,
-    PlaceCard
+    PlaceCard,
+    EventCard
   },
 
   props:{

@@ -1,25 +1,17 @@
 <template>
   
-  <div>
+  <div class="d-flex flex-column justify-center align-center">
   
-    <h3 v-if="!user" class="text-center">
+    <h2 v-if="!user" class="text-center mb-3">
       {{ $t("home_page.unauthenticated") }}
-    </h3>
-    <span v-else-if="!user.email_verified_at" class="text-center">
-      <h1>{{ $t("hello") | capitalize }} {{ user.name }} !</h1>
-      <h4>
-        {{ $t("home_page.unverified") }}
-        <a href="#" @click="verifyResend">
-          {{ $t("resend e-mail") | capitalize }}
-        </a>
-      </h4>
-    </span>
+    </h2>
     <span v-else class="text-center">
       <h1>{{ $t("hello") | capitalize }} {{ user.name }} !</h1>
       <h3>
-        {{ $t("home_page.verified") }}
+        {{ $t("home_page.authenticated") }}
       </h3>
     </span>
+    <a class="discord-link" href="https://discord.gg/dV5yWgZz9G">Rejoins-nous sur Discord</a>
   
   </div>
 
@@ -71,6 +63,9 @@ export default defineComponent({
 
 <style scoped>
 
-
+.discord-link{
+  display: inline-block ;
+  color: grey;
+}
 
 </style>

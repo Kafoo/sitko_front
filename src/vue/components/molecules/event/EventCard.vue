@@ -2,19 +2,36 @@
   <div>
     <v-hover v-if="event" v-slot="{ hover }">
       <v-card
+        v-if="event"
         :id="event.id"
         :elevation="hover ? 4 : 2"
-        class="c-pointer"
+        class="event-card c-pointer"
         width="220"
         height="260px"
         @click="$router.push('/event/' + event.id)"
       >
         <v-img
-          v-if="event.image"
-          :lazy-src="event.image.low_medium"
-          :src="event.image.medium"
+          :lazy-src="image.low_medium"
+          :src="image.medium"
           height="130px"
         >
+
+          <v-tooltip v-if="withPlace" right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn 
+              class="ml-1 mt-1"
+              v-on="on" 
+              v-bind="attrs" 
+              fab 
+              icon 
+              small 
+              @click.stop="$router.push('/place/' + event.place_id )">
+                <tiny-avatar class="place-image elevation-5" :image="event.place.image.thumb" />
+              </v-btn>
+            </template>
+            <span>{{event.place.name}}</span>
+          </v-tooltip>
+
           <template v-slot:placeholder>
             <v-row
               class="image_placeholder fill-height ma-0"
@@ -48,6 +65,10 @@
         :caldates="event.caldates"
         />
 
+        <v-spacer></v-spacer>
+
+        
+
         <v-card-text class="px-2 py-1 pb-0">
           <div>
             <tag-chip
@@ -73,11 +94,12 @@
 
 <script lang="ts">
 
-import { defineComponent, ref } from "@vue/composition-api"
+import { defineComponent, ref, computed } from "@vue/composition-api"
 import TagChip from "@c/atoms/tag/TagChip.vue";
-import useEventGetter from "@use/useEventGetter";
 import EventModel from "@/ts/models/eventClass"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
+import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
+import ImageModel from "@/ts/models/imageClass"
 
 export default defineComponent({
 
@@ -85,17 +107,30 @@ export default defineComponent({
 
   components: {
     TagChip,
-    CurrentCaldates
+    CurrentCaldates,
+    TinyAvatar
   },
 
   props: {
-    event: Object as () => EventModel
+    event: Object as () => EventModel,
+    withPlace:{
+      type:Boolean,
+      default:false
+    }
   },
 
   setup(props, context) {
 
     var deleting = ref(false)
     var color = ref("red")
+
+    var image:any = computed(() => {
+      if (props.event && props.event.image) {
+        return props.event.image
+      } else {
+        return new ImageModel()
+      }
+    })
 
     const addFavorite = () => {
       //
@@ -104,7 +139,8 @@ export default defineComponent({
     return{
       deleting,
       color,
-      addFavorite
+      addFavorite,
+      image
     }
 
   }
@@ -113,6 +149,10 @@ export default defineComponent({
 
 
 <style scoped>
+
+.place-image{
+  border : 2px solid white
+}
 
 .image {
   width: 120px;
@@ -124,4 +164,5 @@ export default defineComponent({
 .image_placeholder {
   background-color: #e3e3e3;
 }
+
 </style>

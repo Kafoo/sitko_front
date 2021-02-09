@@ -61,8 +61,9 @@
   "This project will be removed definitely": "Ce projet sera définitivement supprimé",
 
   "home_page":{
-  	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il ne se passe pas grand chose.",
-  	"unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
+  	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il commence à se passer des choses.",
+  	"authenticated": "Merci d'être là pour tester le site, enjoy =)",
+    "unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
   	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer."
   },
 

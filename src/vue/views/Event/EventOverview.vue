@@ -14,10 +14,22 @@
         <h1 class="mt-2">
           {{ event.title }}
 
-          <v-btn icon fab small class="ml-1" :to="`/event/${event.id}/edit`">
+          <v-btn
+          v-if="user.id == event.author.id"
+          icon 
+          fab 
+          small 
+          class="ml-1" 
+          :to="`/event/${event.id}/edit`">
             <v-icon>edit</v-icon>
           </v-btn>
         </h1>
+
+        <div></div>
+
+        <place-chip :place="event.place"/>
+
+        <span class="ml-1 text-caption grey--text text--darken-1">Evenement créé par {{event.author.name}}</span>
 
         <current-caldates
         class="ml-1"
@@ -25,6 +37,7 @@
         title="Dates du projet"
         more
         />
+
 
       </div>
     </div>
@@ -58,6 +71,7 @@ import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
 import useEventGetter from "@use/useEventGetter";
 import MediumImage from "@c/molecules/media/MediumImage.vue"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
+import PlaceChip from "@c/atoms/place/PlaceChip.vue"
 
 export default defineComponent({
   name: "EventOverview",
@@ -65,17 +79,21 @@ export default defineComponent({
   components: {
     CurrentTags,
     MediumImage,
-    CurrentCaldates
+    CurrentCaldates,
+    PlaceChip
   },
 
   setup(props, {root}) {
   
+    const { user } = useGetters({ user: "auth/user" } as any);
+
     const event_id = parseInt(root.$route.params.id)
     var { event, loading } = useEventGetter(event_id);
 
     return {
       event,
-      loading
+      loading,
+      user
     };
   }
 });

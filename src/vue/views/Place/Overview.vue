@@ -15,12 +15,20 @@
 
       <div class="d-flex flex-column flex-wrap align-center align-sm-start">
         <h1 class="mt-2 mx-2 text-center">
-          <v-btn icon fab small class="ml-1" :to="`/place/edit/${place.id}`">
+          <v-btn 
+          v-if="user.id == place.author.id"
+          icon 
+          fab 
+          small 
+          class="ml-1" 
+          :to="`/place/edit/${place.id}`">
             <v-icon>edit</v-icon>
           </v-btn>
           {{ place.name }}
 
         </h1>
+
+<span class="ml-2 text-caption grey--text text--darken-1">Lieu créé par {{place.author.name}}</span>
 
         <div class="placeNavItem-container d-flex flex-column align-center">
           <v-btn
@@ -73,6 +81,7 @@ export default defineComponent({
 
   setup(props, { root }) {
 
+    const { user } = useGetters({ user: "auth/user" } as any);
     const { places } = useGetters({ places: "place/places" } as any);
     const place_id = parseInt(root.$route.params.id);
     var place = computed(() => {
@@ -109,7 +118,8 @@ export default defineComponent({
 
     return {
       place,
-      placeNavItems
+      placeNavItems,
+      user
     };
   }
 });

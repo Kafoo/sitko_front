@@ -26,7 +26,7 @@
               icon 
               small 
               @click.stop="$router.push('/place/' + project.place_id )">
-                <tiny-avatar class="elevation-5" :image="project.place.image.thumb" />
+                <tiny-avatar class="place-image elevation-5" :image="project.place.image.thumb" />
               </v-btn>
             </template>
             <span>{{project.place.name}}</span>
@@ -96,7 +96,6 @@
 
 import { defineComponent, ref, computed } from "@vue/composition-api"
 import TagChip from "@c/atoms/tag/TagChip.vue";
-import useProjectGetter from "@use/useProjectGetter";
 import ProjectModel from "@/ts/models/projectClass"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
 import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
@@ -150,6 +149,10 @@ export default defineComponent({
 
 
 <style scoped>
+
+.place-image{
+  border : 2px solid white
+}
 
 .image {
   width: 120px;

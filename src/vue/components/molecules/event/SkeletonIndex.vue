@@ -1,11 +1,8 @@
 <template>
-  <div>
-    <v-skeleton-loader
-      v-for="item in [1, 2, 3, 4]"
-      v-bind:key="item"
-      class="boilerplate ma-1 elevation-3"
-      height="60"
-      type="table-heading"
-    ></v-skeleton-loader>
-  </div>
+  <v-skeleton-loader
+    type="card"
+    class="ma-2"
+    width="220px"
+    height="260px"
+  ></v-skeleton-loader>
 </template>

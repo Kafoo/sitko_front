@@ -16,29 +16,20 @@
       <div class="d-flex flex-column flex-wrap align-center text-center align-sm-start">
         <h1 class="mt-2">
           {{ project.title }}
-
-          <v-btn icon fab small class="ml-1" :to="`/project/${project.id}/edit`">
+          <v-btn
+          v-if="user.id == project.author.id"
+          icon 
+          fab 
+          small 
+          class="ml-1" 
+          :to="`/project/${project.id}/edit`">
             <v-icon>edit</v-icon>
           </v-btn>
         </h1>
 
-        <v-btn
-          :to="'/place/' + project.place_id"
-          height="40px"
-          rounded
-          text
-          color="grey darken-2"
-          small
-          class="mb-2 pl-0 pr-3"
-        >
-          <tiny-avatar 
-          class="d-inline mr-2" 
-          :image="project.place.image.thumb" 
-          /> 
-          <span>{{project.place.name}}</span>
-          
-        </v-btn>
+        <place-chip :place="project.place"/>
 
+        <span class="ml-1 text-caption grey--text text--darken-1">Projet créé par {{project.author.name}}</span>
 
         <current-caldates
         class="ml-1"
@@ -80,7 +71,7 @@ import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
 import useProjectGetter from "@use/useProjectGetter";
 import MediumImage from "@c/molecules/media/MediumImage.vue"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
-import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
+import PlaceChip from "@c/atoms/place/PlaceChip.vue"
 
 export default defineComponent({
   name: "ProjectOverview",
@@ -89,17 +80,20 @@ export default defineComponent({
     CurrentTags,
     MediumImage,
     CurrentCaldates,
-    TinyAvatar
+    PlaceChip
   },
 
   setup(props, {root}) {
   
+    const { user } = useGetters({ user: "auth/user" } as any);
+
     const project_id = parseInt(root.$route.params.id)
     var { project, loading } = useProjectGetter(project_id);
 
     return {
       project,
-      loading
+      loading,
+      user
     };
   }
 });

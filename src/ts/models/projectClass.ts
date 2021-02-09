@@ -2,6 +2,7 @@ import ImageModel from "@/ts/models/imageClass";
 import CaldateModel from "@/ts/models/caldateClass";
 import TagModel from "@/ts/models/tagClass";
 import PlaceModel from "@/ts/models/placeClass"
+import UserModel from "@/ts/models/userClass"
 
 export default class Project {
   id: number;
@@ -13,10 +14,12 @@ export default class Project {
   expanded: boolean;
   caldates: Array<CaldateModel>;
   tags: Array<TagModel>;
+  author: UserModel;
 
   constructor(rawData: any = {}) {
     this.id = rawData.id;
     this.place_id = rawData.place_id;
+    this.author = rawData.author;
     this.title = rawData.title;
     this.description = rawData.description;
 

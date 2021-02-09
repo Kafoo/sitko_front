@@ -101,7 +101,8 @@ export default defineComponent({
       description: "",
       image: new ImageModel(0),
       tags: [],
-      projects: []
+      projects: [],
+      author:{id:0,name:'',email:'',tags:[]}
     });
 
     var form = ref(false);
