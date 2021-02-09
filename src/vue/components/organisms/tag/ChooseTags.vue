@@ -204,8 +204,23 @@ export default defineComponent({
         custom: true,
         category: category
       });
-      compTags.value.push(newTag);
-      search.value = "";
+
+      if (newTag && newTag.title) {
+
+        var exists = allTags.value.find((x:TagModel) => 
+          x.title === newTag.title &&
+          x.category?.name === newTag.category?.name
+        )
+
+        if (!exists) {          
+          compTags.value.push(newTag);
+        }else{
+          compTags.value.push(exists);
+        }
+
+        search.value = "";
+      }
+
     };
 
     const updateTags = () => {

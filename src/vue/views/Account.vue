@@ -3,7 +3,7 @@
     <div class="d-flex flex-column align-center">
       <page-title :title="$t('my account')" />
 
-      <v-form v-model="valid">
+      <v-form v-model="form">
         <v-row justify="center" class="my-4">
           <image-input
             nullable
@@ -30,6 +30,7 @@
               :label="firstNameLabel"
               maxlength="20"
               required
+              @input="modified = true"
               :disabled="loading"
             ></v-text-field>
           </v-col>
@@ -43,7 +44,7 @@
               v-model="editedUser.last_name"
               :label="lastNameLabel"
               maxlength="20"
-              required
+              @input="modified = true"
               :disabled="loading"
             ></v-text-field>
           </v-col>
@@ -62,6 +63,7 @@
               :rules="[rules.required[0], rules.email[0]]"
               :label="$options.filters.capitalize($t('e-mail'))"
               required
+              @input="modified = true"
               :disabled="loading"
             ></v-text-field>
           </v-col>
@@ -74,6 +76,7 @@
               @update="
                 tags => {
                   editedUser.tags = tags;
+                  modified = true
                 }
               "
             />
@@ -82,7 +85,7 @@
           <v-col cols="12">
             <v-text-field
               outlined
-              autocomplete="disabled"
+              autocomplete="off"
               v-model="editedUser.password"
               :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.min(8)[0]]"
@@ -93,6 +96,7 @@
                 $options.filters.capitalize($t('form.min_carac', { n: '8' }))
               "
               counter
+              @input="modified = true"
               @click:append="show_password = !show_password"
               :disabled="loading"
             ></v-text-field>
@@ -101,7 +105,7 @@
           <v-col cols="12">
             <v-text-field
               outlined
-              autocomplete="disabled"
+              autocomplete="off"
               block
               v-model="editedUser.password_confirmation"
               :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
@@ -126,7 +130,7 @@
             <v-btn
               class="d-block mb-4"
               color="success"
-              :disabled="!valid || loading"
+              :disabled="!modified || !form || loading"
               @click="editUser"
             >
               {{ $t("save") }}
@@ -205,7 +209,8 @@ export default defineComponent({
   setup(props, { root }) {
     const rules = useInputRules();
 
-    var valid = ref(false);
+    var modified = ref(false)
+    var form = ref(false);
     var show_password = ref(false);
     var dialog = ref(false);
     var success = ref(null);
@@ -259,7 +264,7 @@ export default defineComponent({
       SEND_USER_EDITION(editedUser.value)
         .then(() => {
           loading.value = false;
-          //some confirmation
+          modified.value = false
         })
         .catch(() => {
           loading.value = false;
@@ -268,6 +273,7 @@ export default defineComponent({
 
     const changeImage = (data: string | ImageModel) => {
       editedUser.value.image = data;
+      modified.value = true
     };
 
     const logout = () => {
@@ -293,7 +299,8 @@ export default defineComponent({
       errors,
       firstNameLabel,
       lastNameLabel,
-      valid
+      form,
+      modified
     };
   }
 });

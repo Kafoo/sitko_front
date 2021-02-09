@@ -1,5 +1,5 @@
 <template>
-  <v-card class="d-flex justify-center" color="black" height="90vh">
+  <v-card class="d-flex justify-center" color="black" height="80vh">
     <v-btn
       class="close"
       color="secondary"

@@ -9,7 +9,21 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
+<script lang="ts">
+
+import { defineComponent } from "@vue/composition-api"
+
+export default defineComponent({
+
+  name : "",
+
+  setup() {
+
+
+    return{
+ 
+    }
+
+  }
+});
 </script>
