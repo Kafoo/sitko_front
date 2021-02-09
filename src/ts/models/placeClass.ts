@@ -9,7 +9,7 @@ export default class PlaceModel {
   description: string;
   image?: ImageModel | String;
   tags: Array<TagModel>;
-  projects: Array<ProjectModel>;
+  projects_count: number;
   author: UserModel;
 
   constructor(rawData: any = {}) {
@@ -32,10 +32,6 @@ export default class PlaceModel {
       });
     }
 
-    if (rawData.projects) {
-      this.projects = rawData.projects;
-    }else{
-      this.projects = [];
-    }
+    this.projects_count = rawData.projects_count;
   }
 }

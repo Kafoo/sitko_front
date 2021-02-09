@@ -48,7 +48,7 @@
               {{ $t("count.sitkers", { n: "0" }) }}
             </div>
             <div class="text-caption font-italic">
-              {{ $t("count.currentProjects", { n: place.projects.length }) }}
+              {{ $t("count.currentProjects", { n: place.projects_count }) }}
             </div>
           <div>
             <tag-chip

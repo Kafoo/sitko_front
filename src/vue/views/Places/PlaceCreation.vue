@@ -101,7 +101,7 @@ export default defineComponent({
       description: "",
       image: new ImageModel(0),
       tags: [],
-      projects: [],
+      projects_count: 0,
       author:{id:0,name:'',email:'',tags:[]}
     });
 
