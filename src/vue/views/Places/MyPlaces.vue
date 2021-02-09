@@ -24,7 +24,7 @@
     </div>
 
     <div v-else class="d-flex flex-wrap justify-center">
-      <place-card v-for="place in places" :key="place.id" :place="place" />
+      <place-card class="ma-2" v-for="place in places" :key="place.id" :place="place" />
     </div>
   </div>
 </template>
