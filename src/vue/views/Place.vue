@@ -21,11 +21,12 @@
     ></v-divider>
 
     <v-card
-      class="ma-xs-0 ma-sm-5 pa-0 flex-grow-1 flex-shrink-10"
+      class="flex-grow-1 flex-shrink-10"
       elevation="0"
       min-width="0"
+      min-height="500px"
     >
-      <router-view></router-view>
+      <router-view :loading_place="loading"></router-view>
     </v-card>
 
     <float-menu v-if="place" :place="place"/>

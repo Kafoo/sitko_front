@@ -7,11 +7,12 @@
     </div>
     <div class="d-flex flex-column align-center">
       <v-chip
-        class="chip my-1 mx-2 flex-grow-0 text-center"
-        v-for="caldate in caldates"
-        :key="caldate.id"
-        ><!--
-      -->{{ caldate.chip }}
+      class="chip my-1 mx-2 flex-grow-0 text-center"
+      v-for="caldate in caldates"
+      :key="caldate.id"
+      >
+        <v-icon class="mr-1">{{caldate.icon}}</v-icon>
+        {{ caldate.chip }}
       </v-chip>
     </div>
   </v-card>

@@ -20,13 +20,11 @@
 import { mapGetters, mapActions } from "vuex";
 import Navigation from "@c/organisms/app/Navigation.vue";
 import Alert from "@c/molecules/app/Alert.vue";
-import LoadingCircle from "@c/atoms/app/LoadingCircle.vue";
 
 export default {
   components: {
     Navigation,
-    Alert,
-    LoadingCircle
+    Alert
   },
 
   computed: {

@@ -11,6 +11,7 @@ export default class Caldate {
   end: string;
   child_id?: number;
   child_type: string;
+  icon:string;
   name: string;
   chip: string;
   singleDate: boolean;
@@ -32,6 +33,11 @@ export default class Caldate {
       this.singleDate = false;
     }
 
+    if (this.singleDate) {
+      this.icon = 'today'
+    }else{
+      this.icon = 'date_range'
+    }
 
     const classes:any = { 
       'project' : ProjectModel, 

@@ -1,6 +1,7 @@
 import ImageModel from "@/ts/models/imageClass";
 import CaldateModel from "@/ts/models/caldateClass";
 import TagModel from "@/ts/models/tagClass";
+import PlaceModel from "@/ts/models/placeClass"
 
 export default class Event {
   id: number;
@@ -8,6 +9,7 @@ export default class Event {
   title: string;
   description: string;
   image?: ImageModel;
+  place?: PlaceModel;
   expanded: boolean;
   caldates: Array<CaldateModel>;
   tags: Array<TagModel>;
@@ -20,16 +22,17 @@ export default class Event {
 
     if (rawData.image) {
       this.image = new ImageModel(rawData.image);
-    } else {
-      this.image = undefined;
+    }else{
+      this.image = undefined
     }
+
+    this.place = rawData.place
 
     this.expanded = false;
 
     this.caldates = [];
-
     if (rawData.caldates) {
-      rawData.caldates.forEach((caldate: any) => {
+      rawData.caldates.forEach((caldate: CaldateModel) => {
         this.caldates.push(new CaldateModel(caldate));
       });
     }
@@ -47,6 +50,6 @@ export default class Event {
   }
 
   get color(): string {
-    return "blue darken-3";
+    return "red darken-3";
   }
 }

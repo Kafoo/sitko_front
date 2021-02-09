@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="text-center">
-      <create-button :item="$t('event')" @action="$router.push('/event/create/'+place_id)" />
+    <div class="text-center mt-5">
+      <create-button :item="$t('event')" @action="$router.push('/event/create/' + place_id)" />
     </div>
 
     <!-- No Event -->
@@ -15,8 +15,12 @@
     </h4>
 
     <!-- Loadings -->
-    <div v-if="loading" class="d-flex flex-column">
-      <skeleton-index />
+    <div 
+    v-if="loading" 
+    class="events d-flex justify-center flex-wrap">
+      <skeleton-index
+      v-for="item in 6"
+      v-bind:key="item"/>
     </div>
 
     <!-- Index -->
@@ -32,7 +36,7 @@
           :key="event.id"
           class="list-complete-item ma-2"
         >
-          <event-card :event="event" />
+          <event-card class="mb-sm-2 mb-5" :event="event" />
         </div>
       </transition-group>
 
@@ -94,6 +98,7 @@ export default {
   content: "";
   width: 472px;
 }
+
 
 .list-complete-item {
   transition: all 0.2s;

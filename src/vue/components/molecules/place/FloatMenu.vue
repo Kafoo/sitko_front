@@ -2,7 +2,8 @@
   
     <v-menu 
     v-if="$route.name != 'PlaceOverview'" 
-    class="acccount-drawer rounded-lg" 
+    class="acccount-drawer" 
+    rounded="xl"
     transition="scroll-y-reverse-transition"
     top 
     left>
@@ -20,11 +21,11 @@
         </v-btn>
       </template>
 
-      <v-list class="pt-0 hidden-md-and-up rounded-lg">
+      <v-list class="py-0 hidden-md-and-up">
         <div 
-        class="d-flex justify-center align-center grey lighten-2 c-pointer pa-4"
+        class="d-flex justify-center align-center grey lighten-2 c-pointer px-4 py-3"
         @click="$router.push('/place/'+place.id)">
-          <v-img width="50px" class="rounded" :src="place.image.thumb">
+          <v-img width="40px" class="rounded-lg" :src="place.image.thumb">
           </v-img>
           <v-card-title class="px-2 py-1">
             {{place.name}}
@@ -96,8 +97,8 @@ export default defineComponent({
 
 .float-button{
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 15px;
+  right: 20px;
 }
 
 </style>

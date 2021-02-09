@@ -13,6 +13,7 @@ import "./assets/css/main.css";
 import "@/ts/functions/interceptors";
 import "@/ts/functions/vueFilters";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
+import LoadingCircle from "@c/atoms/app/LoadingCircle.vue"
 
 Vue.config.productionTip = false;
 Vue.extend(vuetify);
@@ -20,6 +21,7 @@ Vue.use(VueComp);
 Vue.use(Autocomplete);
 
 Vue.component("primary-content-body", PrimaryContentBody);
+Vue.component("loading-circle", LoadingCircle);
 
 new Vue({
   router,

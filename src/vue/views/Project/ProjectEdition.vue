@@ -141,7 +141,6 @@ export default defineComponent({
     } as any);
 
     const editProject = () => {
-    console.log(project.value.image)
       loading_edit.value = true;
       SEND_PROJECT_EDITION(project.value)
         .then(() => {

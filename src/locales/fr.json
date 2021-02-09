@@ -55,6 +55,7 @@
   "Project deletion is definitive.": "La suppression du projet est définitive.",
   "Account deletion is definitive.": "La suppression du compte est définitive.",
   "Place deletion is definitive.": "La suppression du lieu est définitive.",
+  "Event deletion is definitive.": "La suppression de l'événement est définitive.",
   "A fresh verification link has been sent to your email address.": "Un nouveau mail de confirmation a été envoyé.",
   "Error sending verification link.":"Erreur lors de l'envoie de l'email de vérification.",
   "This project will be removed definitely": "Ce projet sera définitivement supprimé",

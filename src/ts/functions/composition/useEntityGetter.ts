@@ -1,4 +1,4 @@
-import { onMounted, ref } from "@vue/composition-api";
+import { onMounted, ref, Ref } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
 import store from "@/ts/store";
 import PlaceModel from "@/ts/models/placeClass";
@@ -20,7 +20,7 @@ export default function useEntityGetter(entity_id: number, entity_name:string, c
   const entity_model = dynamicClass(entity_name)
   const action_name = 'GET_' + entity_name.toUpperCase()
   var loading = ref(false);
-  var entity = ref(new entity_model())
+  var entity: Ref<typeof entity_model | undefined> = ref(undefined)
 
   const {GET_ENTITY} = useActions(store, {
     GET_ENTITY: entity_name + "/" + action_name

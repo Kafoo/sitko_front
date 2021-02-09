@@ -21,11 +21,25 @@
       :key="item.id"
       >
 
-        <project-card v-if="type == 'project'" class="ma-2" :project="item"/>
+        <project-card 
+        v-if="type == 'project'" 
+        class="ma-2" 
+        :project="item"
+        withPlace
+        />
 
-        <place-card v-else-if="type == 'place'" class="ma-2" :place="item"/>
+        <place-card 
+        v-else-if="type == 'place'" 
+        class="ma-2" 
+        :place="item"
+        />
 
-        <event-card v-else-if="type == 'event'" class="ma-2" :place="item"/>
+        <event-card 
+        v-else-if="type == 'event'" 
+        class="ma-2" 
+        :place="item"
+        withPlace
+        />
 
       </v-slide-item>
     </v-slide-group>
@@ -38,7 +52,6 @@
 import { defineComponent } from "@vue/composition-api"
 import ProjectCard from "@c/molecules/project/ProjectCard.vue"
 import PlaceCard from "@c/molecules/place/PlaceCard.vue"
-import LoadingCircle from "@c/atoms/app/LoadingCircle.vue"
 
 export default defineComponent({
 
@@ -46,8 +59,7 @@ export default defineComponent({
 
   components:{
     ProjectCard,
-    PlaceCard,
-    LoadingCircle
+    PlaceCard
   },
 
   props:{

@@ -1,6 +1,7 @@
 import ImageModel from "@/ts/models/imageClass";
 import CaldateModel from "@/ts/models/caldateClass";
 import TagModel from "@/ts/models/tagClass";
+import PlaceModel from "@/ts/models/placeClass"
 
 export default class Project {
   id: number;
@@ -8,6 +9,7 @@ export default class Project {
   title: string;
   description: string;
   image?: ImageModel;
+  place?: PlaceModel;
   expanded: boolean;
   caldates: Array<CaldateModel>;
   tags: Array<TagModel>;
@@ -23,6 +25,8 @@ export default class Project {
     }else{
       this.image = undefined
     }
+
+    this.place = rawData.place
 
     this.expanded = false;
 

@@ -1,6 +1,9 @@
 <template>
+
+  <loading-circle v-if="loading_place" small/>
+
   <div 
-  v-if="place"
+  v-else-if="place"
   style="max-width:1000px; margin:auto">
 
     <div class="d-flex flex-column flex-sm-row justify-center align-center mb-5">
@@ -19,20 +22,18 @@
 
         </h1>
 
-      <div class="d-flex flex-column align-center">
-        <v-btn
-          v-for="(item, index) in placeNavItems"
-          :key="index"
-          :to="item.path"
-          min-width="200px"
-          class="my-2 mx-1"
-        >
-          <v-icon class="mr-3">{{ item.icon }}</v-icon>
-          {{ item.title }}
-        </v-btn>
-      </div>
-
-
+        <div class="placeNavItem-container d-flex flex-column align-center">
+          <v-btn
+            v-for="(item, index) in placeNavItems"
+            :key="index"
+            :to="item.path"
+            min-width="200px"
+            class="placeNavItem my-2 mx-1"
+          >
+            <v-icon class="mr-3">{{ item.icon }}</v-icon>
+            {{ item.title }}
+          </v-btn>
+        </div>
 
       </div>
 
@@ -51,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "@vue/composition-api";
+import { defineComponent, ref, computed, onMounted } from "@vue/composition-api";
 import { useGetters } from "vuex-composition-helpers";
 import axios from "axios";
 import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
@@ -61,18 +62,26 @@ import MediumImage from "@c/molecules/media/MediumImage.vue"
 export default defineComponent({
   name: "Overview",
 
+  props:{
+    loading_place:Boolean
+  },
+
   components: {
     CurrentTags,
     MediumImage
   },
 
   setup(props, { root }) {
+
     const { places } = useGetters({ places: "place/places" } as any);
     const place_id = parseInt(root.$route.params.id);
     var place = computed(() => {
       return places.value.find((x: PlaceModel) => x.id === place_id);
     });
 
+    onMounted(() => {
+      window.scrollTo(0, 0)
+    })
 
     const placeNavItems = ref([
         {
@@ -121,5 +130,10 @@ export default defineComponent({
     border-radius: 0px;
     box-shadow: none;
   }
+
+  .placeNavItem{
+    width: 80vw !important;
+  }
+
 }
 </style>

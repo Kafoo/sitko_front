@@ -1,16 +1,19 @@
 <template>
+
+  <loading-circle v-if="loading" small/>  
+
   <div 
-  v-if="!loading && project"
+  v-else-if="project"
   class="pt-sm-5"
   style="max-width:800px; margin:auto">
 
-    <div class="d-flex flex-column flex-sm-row justify-center align-center mb-5">
+    <div class="mb-9 d-flex flex-column flex-sm-row justify-center align-center mb-5">
 
         <medium-image 
         class="image mr-sm-5 flex-grow-0"
         :image="project.image"/>
 
-      <div class="d-flex flex-column flex-wrap align-center align-sm-start">
+      <div class="d-flex flex-column flex-wrap align-center text-center align-sm-start">
         <h1 class="mt-2">
           {{ project.title }}
 
@@ -18,6 +21,24 @@
             <v-icon>edit</v-icon>
           </v-btn>
         </h1>
+
+        <v-btn
+          :to="'/place/' + project.place_id"
+          height="40px"
+          rounded
+          text
+          color="grey darken-2"
+          small
+          class="mb-2 pl-0 pr-3"
+        >
+          <tiny-avatar 
+          class="d-inline mr-2" 
+          :image="project.place.image.thumb" 
+          /> 
+          <span>{{project.place.name}}</span>
+          
+        </v-btn>
+
 
         <current-caldates
         class="ml-1"
@@ -32,6 +53,7 @@
     <div class="mx-2">
     
       <current-tags :tags="project.tags" label="Tags du projet" />
+
     </div>
 
 
@@ -58,6 +80,7 @@ import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
 import useProjectGetter from "@use/useProjectGetter";
 import MediumImage from "@c/molecules/media/MediumImage.vue"
 import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
+import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
 
 export default defineComponent({
   name: "ProjectOverview",
@@ -65,7 +88,8 @@ export default defineComponent({
   components: {
     CurrentTags,
     MediumImage,
-    CurrentCaldates
+    CurrentCaldates,
+    TinyAvatar
   },
 
   setup(props, {root}) {

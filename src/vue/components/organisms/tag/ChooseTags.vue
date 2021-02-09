@@ -93,15 +93,13 @@ import TagModel from "@/ts/models/tagClass";
 import TagsCategoryModel from "@/ts/models/tagsCategoryClass";
 import TagChip from "@c/atoms/tag/TagChip.vue";
 import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
-import LoadingCircle from "@c/atoms/app/LoadingCircle.vue";
 
 export default defineComponent({
   name: "ChooseTags",
 
   components: {
     TagChip,
-    CurrentTags,
-    LoadingCircle
+    CurrentTags
   },
 
   props: {

@@ -64,6 +64,7 @@ export default defineComponent({
 
     onMounted(() => {
     loading_all_projects.value = true;
+    loading_all_places.value = true;
     GET_ALL_PROJECTS().then(() => {
       loading_all_projects.value = false;
     });

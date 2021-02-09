@@ -7,8 +7,7 @@
         close
         @click:close="$emit('remove', caldate)"
       >
-        <v-icon class="px-2" v-if="caldate.singleDate">today</v-icon>
-        <v-icon class="px-2" v-else>date_range</v-icon>
+        <v-icon class="px-2">{{caldate.icon}}</v-icon>
       </v-chip>
     </template>
     <span>{{ caldate.chip }}</span>
