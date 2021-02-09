@@ -1,8 +1,10 @@
 <template>
   <primary-content-body>
-    <div class="d-flex flex-column align-center">
-      <page-title :title="$t('my account')" />
-
+    <div>
+      
+      <v-row justify="center">
+        <page-title :title="$t('my account')" />
+      </v-row>
       <v-form v-model="form">
         <v-row justify="center" class="my-4">
           <image-input
@@ -20,7 +22,9 @@
               {{ errors.name[0] }}
             </v-alert>
           </v-col>
+        </v-row>
 
+        <v-row dense>
           <v-col cols="12" sm="6" md="6">
             <v-text-field
               outlined
@@ -48,13 +52,17 @@
               :disabled="loading"
             ></v-text-field>
           </v-col>
+        </v-row>
 
+        <v-row dense>
           <v-col cols="12">
             <v-alert v-if="errors.email" dense outlined type="error">
               {{ errors.email[0] }}
             </v-alert>
           </v-col>
+        </v-row>
 
+        <v-row dense>
           <v-col cols="12">
             <v-text-field
               outlined
@@ -67,8 +75,10 @@
               :disabled="loading"
             ></v-text-field>
           </v-col>
+        </v-row>
 
-          <!-- TOTRANSLATE -->
+        <!-- TOTRANSLATE -->
+        <v-row justify="center" dense>
           <v-col cols="12" class="mb-4">
             <tags-input
               :tags="editedUser.tags"
@@ -81,7 +91,9 @@
               "
             />
           </v-col>
+        </v-row>
 
+        <v-row justify="center" dense>
           <v-col cols="12">
             <v-text-field
               outlined
@@ -101,7 +113,9 @@
               :disabled="loading"
             ></v-text-field>
           </v-col>
+        </v-row>
 
+        <v-row justify="center" dense>
           <v-col cols="12">
             <v-text-field
               outlined
