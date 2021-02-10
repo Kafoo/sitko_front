@@ -4,17 +4,22 @@
 
   "caldate": "date",
 
+  "other caldate": "other caldate | other caldates",
+
   "404": "page not found",
 
   "home_page":{
   	"unauthenticated": "Hello, login or register to enjoy this wonderful website where you can't do much.",
+  	"authenticated": "Thank you for testing Sitko, enjoy =)",
   	"unverified": "Your account has been registered. Now, you can confirm your e-mail adress via the link we sent you.",
-  	"verified": "Welcome in this wonderful website where some things are happening."
+  	"verified": "Welcome in this wonderful website where some things are happening.",
+    "discord": "Join us on Discord"
   },
 
   "confirm":{
   	"cancel": "cancel",
     "confirm": "confirm",
+    "edit": "edit",
     "close": "close",
     "sure": "are you sure ?"
   },
@@ -25,6 +30,16 @@
     "unvalid": "{item} must be valid",
     "differents": "{items} are differents",
     "optional": "optional"
+  },
+
+  "options":{
+    "edit":"edit"
+  },
+
+  "created_by":{
+    "project":"project created by {user}",
+    "event":"event created by {user}",
+    "place":"place created by {user}"
   },
 
   "actions":{

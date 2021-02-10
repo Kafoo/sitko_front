@@ -1,6 +1,8 @@
 import router from "@/ts/router";
 import store from "@/ts/store";
 import axios from "axios";
+import i18n from '@/ts/plugins/i18n.js' 
+import { capitalize } from "@/ts/functions/vueFilters"
 
 axios.interceptors.response.use(
   response => {
@@ -26,7 +28,7 @@ axios.interceptors.response.use(
       } else {
         store.commit("app/setAlert", {
           type: "error",
-          msg: "Petit problème de serveur"
+          msg: capitalize(i18n.t("internal server issue"))
         });
       }
       return Promise.reject(error);

@@ -45,11 +45,10 @@
 
         <v-row justify="center" dense>
           <v-col cols="12" sm="10">
-            <!-- TOTRANSLATE -->
             <tags-input
               :tags="newPlace.tags"
               @update="updateTags"
-              label="Tags du lieu"
+              :label="$t('place tags') | capitalize"
             />
           </v-col>
         </v-row>
@@ -57,8 +56,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn type="submit" color="success" :disabled="loading || !form">
-            <!-- TOTRANSLATE -->
-            C'est parti !
+            {{ $t("confirm.confirm") }}
           </v-btn>
         </v-card-actions>
       </v-form>

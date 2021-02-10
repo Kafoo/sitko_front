@@ -29,7 +29,9 @@
 
         <place-chip :place="event.place"/>
 
-        <span class="ml-1 text-caption grey--text text--darken-1">Evenement créé par {{event.author.name}}</span>
+        <span class="ml-1 text-caption grey--text text--darken-1">
+          {{$t('created_by.event', {user:event.author.name}) | capitalize}}
+        </span>
 
         <current-caldates
         class="ml-1"
@@ -44,7 +46,10 @@
 
     <div class="mx-2">
     
-      <current-tags :tags="event.tags" label="Tags du projet" />
+      <current-tags 
+      :tags="event.tags" 
+      :label="$t('event tags') | capitalize" 
+      />
     </div>
 
 

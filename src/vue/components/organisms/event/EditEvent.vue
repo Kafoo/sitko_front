@@ -159,13 +159,7 @@ export default {
     rules() {
       return {
         required: v =>
-          !!v || this.$options.filters.capitalize(this.$t("form.required")),
-        image: v =>
-          !v ||
-          v.size < 3000000 ||
-          this.$options.filters.capitalize(
-            this.$t("media.max_size", { max: "3 MB" })
-          )
+          !!v || this.$options.filters.capitalize(this.$t("form.required"))
       };
     }
   },

@@ -22,9 +22,9 @@
       </v-toolbar-title>
 
       <!-- Locale Change -->
-      <!-- <select
+      <select
         class="locale-select"
-        v-model="$i18n.locale"
+        v-model="selected_locale"
         @change="changeLocale"
       >
         <option
@@ -34,7 +34,7 @@
         >
           {{ locale }}
         </option>
-      </select> -->
+      </select>
 
       <v-spacer></v-spacer>
 
@@ -94,12 +94,14 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import TinyAvatar from "@c/atoms/user/TinyAvatar.vue";
+import i18n from '@/ts/plugins/i18n.js';
 
 export default {
   data: () => {
     return {
       appTitle: "Sitko",
-      locales: ["fr", "en"]
+      locales: ["fr", "en"],
+      selected_locale: i18n.locale
     };
   },
 
@@ -169,7 +171,8 @@ export default {
   methods: {
     ...mapMutations("app", ["setLocale"]),
     changeLocale() {
-      this.setLocale(this.$i18n.locale);
+      this.setLocale(this.selected_locale);
+      this.$router.go()
     },
 
     search() {

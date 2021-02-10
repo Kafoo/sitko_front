@@ -37,8 +37,7 @@
             cloud_upload
           </v-icon>
           <span>
-            <!-- TOTRANSLATE -->
-            Télécharger
+            {{$t('upload')}}
           </span>
         </v-btn>
 
@@ -70,7 +69,11 @@ export default defineComponent({
 
   components: { CropPopup, CloseDialog },
 
-  setup(props, { emit }) {
+  setup(props, { root, emit }) {
+
+    const capitalize = root.$options.filters!.capitalize
+    const t = root.$t
+
     var cropping = ref(false);
 
     var customImage = ref("");
@@ -99,8 +102,7 @@ export default defineComponent({
           cropping.value = true;
         };
       } else {
-        // TOTRANSLATE
-        error.value = "Poids max : 4Mo";
+        error.value = capitalize(t("media.max_size", { max: "4 MB" }))
       }
     };
 

@@ -8,9 +8,8 @@
     >
       <div class="text-caption labelized noselect">{{ label }}</div>
 
-      <!-- TOTRANSLATE -->
       <span v-if="!tags.length" class="font-italic noselect"
-        >-- Pas encore de tag --</span
+        >-- {{$t('no tag yet') | capitalize}} --</span
       >
       <v-chip-group
         v-else
@@ -38,7 +37,7 @@
       <v-icon small outlined class="mr-1">
         edit
       </v-icon>
-      Modifier
+      {{$t('options.edit')}}
     </v-btn>
   </div>
 </template>

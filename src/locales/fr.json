@@ -3,11 +3,19 @@
   "hello": "salut",
   "oops": "oups",
 	"all": "tous",
+  "and": "et",
   "none": "aucune",
   "delete": "supprimer",
+  "upload": "télécharger",
+  "download": "télécharger",
+  "search": "chercher",
+  "create": "créer",
   "enter": "entrer",
 
   "404": "page introuvable",
+  "user not found" : "utilisateur inconnu",
+  "internal server issue" : "petit problème de serveur",
+  "no tag yet" : "pas encore de tag",
 
   "home": "accueil",
   "my account": "mon compte",
@@ -31,6 +39,21 @@
   "type": "type",
   "description": "description",
   "image": "image",
+  "category": "catégorie",
+
+  "other caldate": "autre date | autres dates",
+
+  "my tags": "mes tags",
+  "project tags": "tags du projet",
+  "event tags": "tags de l'événement",
+  "place tags": "tags du lieu",
+
+  "every projects": "tous les projets",
+  "every events": "tous les événements",
+  "every places": "tous les lieux",
+  "no project": "aucun projet",
+  "no event": "aucun événement",
+  "no place": "aucun lieu",
 
 	"day": "jour",
 	"week": "semaine",
@@ -50,9 +73,18 @@
 
   "logout": "se déconnecter",
   "delete my account": "supprimer mon compte",
+  "delete project": "supprimer le projet",
+  "delete event": "supprimer l'événement",
+  "delete place": "supprimer le lieu",
   "save" : "enregistrer",
+  "modifications saved" : "modifications enregistrées",
   "resend e-mail": "renvoyer le mail",
 
+  "project edition": "edition du projet",
+  "event edition": "edition de l'événement",
+  "place edition": "edition du lieu",
+
+  "Deletion is definitive": "La suppression est définitive",
   "Project deletion is definitive.": "La suppression du projet est définitive.",
   "Account deletion is definitive.": "La suppression du compte est définitive.",
   "Place deletion is definitive.": "La suppression du lieu est définitive.",
@@ -65,12 +97,14 @@
   	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il commence à se passer des choses.",
   	"authenticated": "Merci d'être là pour tester le site, enjoy =)",
     "unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
-  	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer."
+  	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer.",
+    "discord": "Rejoins-nous sur Discord"
   },
 
   "confirm":{
   	"cancel": "annuler",
     "confirm": "confirmer",
+    "edit": "éditer",
     "close": "fermer",
     "sure": "sûr.e ?"
   },
@@ -84,6 +118,16 @@
   },
 
 	"confirmation": "confirmation",
+
+  "options":{
+    "edit":"modifier"
+  },
+
+  "created_by":{
+    "project":"projet créé par {user}",
+    "event":"événement créé par {user}",
+    "place":"lieu créé par {user}"
+  },
 
   "actions":{
   	"create": "créer un {item}",

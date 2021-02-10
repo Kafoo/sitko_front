@@ -8,8 +8,7 @@
             for="name"
             class="name text-h5 font-weight-bold black--text mb-5"
           >
-            <!-- TOTRANSLATE -->
-            Edition du lieu
+            {{$t('place edition') | capitalize}}
           </label>
         </v-row>
 
@@ -49,7 +48,6 @@
 
         <v-row justify="center" dense>
           <v-col cols="12" class="mb-4">
-            <!-- TOTRANSLATE -->
             <tags-input
               :tags="place.tags"
               @update="
@@ -57,7 +55,7 @@
                   place.tags = tags;
                 }
               "
-              label="Tags du lieu"
+              :label="$t('place tags') | capitalize"
             />
           </v-col>
         </v-row>
@@ -65,11 +63,10 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <!-- TOTRANSLATE -->
           <delete-button
             :disabled="loading_edit"
             :loading="loading_deletion"
-            text="Supprimer le lieu"
+            :text="$t('delete place')"
             :confirmation_text="$t('Place deletion is definitive.')"
             @confirm-action="deletePlace"
           />
@@ -80,8 +77,7 @@
           :loading="loading_edit" 
           :disabled="loading_edit || !form"
           >
-            <!-- TOTRANSLATE -->
-            Valider
+            {{$t('confirm.edit')}}
           </v-btn>
         </v-card-actions>
       </v-form>

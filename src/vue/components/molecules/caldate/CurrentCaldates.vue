@@ -17,10 +17,9 @@
     :class="more?'text-decoration-underline c-pointer':''"
     @click="more?morePopup = true:undefined"
     ><!--
-    -->et {{ caldates.length - 1 }} autre{{
-        caldates.length - 1 > 1 ? "s" : ""
-      }}
-      date{{ caldates.length - 1 > 1 ? "s" : "" }}
+    -->{{$t('and')}}
+      {{caldates.length - 1 }}
+      {{$tc('other caldate', caldates.length - 1 > 1 ? 2 : 1)}}
     </span>
 
     <v-dialog v-model="morePopup" max-width="400px">    

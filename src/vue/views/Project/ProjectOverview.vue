@@ -29,7 +29,9 @@
 
         <place-chip :place="project.place"/>
 
-        <span class="ml-1 text-caption grey--text text--darken-1">Projet créé par {{project.author.name}}</span>
+        <span class="ml-1 text-caption grey--text text--darken-1">
+          {{$t('created_by.project', {user:project.author.name}) | capitalize}}
+        </span>
 
         <current-caldates
         class="ml-1"
@@ -43,7 +45,10 @@
 
     <div class="mx-2">
     
-      <current-tags :tags="project.tags" label="Tags du projet" />
+      <current-tags 
+      :tags="project.tags" 
+      :label="$t('project tags') | capitalize" 
+      />
 
     </div>
 

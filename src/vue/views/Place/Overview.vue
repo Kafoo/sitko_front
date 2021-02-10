@@ -28,7 +28,9 @@
 
         </h1>
 
-<span class="ml-2 text-caption grey--text text--darken-1">Lieu créé par {{place.author.name}}</span>
+        <span class="ml-2 text-caption grey--text text--darken-1">
+          {{$t('created_by.place', {user:place.author.name}) | capitalize}}
+        </span>
 
         <div class="placeNavItem-container d-flex flex-column align-center">
           <v-btn
@@ -48,7 +50,10 @@
     </div>
 
     <div class="mx-2">
-      <current-tags :tags="place.tags" label="Tags du lieu" />
+      <current-tags 
+      :tags="place.tags" 
+      :label="$t('place tags') | capitalize"
+      />
     </div>
 
     <div 

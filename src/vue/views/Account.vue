@@ -69,7 +69,7 @@
               id="email"
               v-model="editedUser.email"
               :rules="[rules.required[0], rules.email[0]]"
-              :label="$options.filters.capitalize($t('e-mail'))"
+              :label="$t('e-mail') | capitalize"
               required
               @input="modified = true"
               :disabled="loading"
@@ -77,12 +77,11 @@
           </v-col>
         </v-row>
 
-        <!-- TOTRANSLATE -->
         <v-row justify="center" dense>
           <v-col cols="12" class="mb-4">
             <tags-input
               :tags="editedUser.tags"
-              label="Mes tags"
+              :label="$t('my tags') | capitalize"
               @update="
                 tags => {
                   editedUser.tags = tags;
@@ -103,10 +102,8 @@
               :rules="[rules.min(8)[0]]"
               :type="show_password ? 'text' : 'password'"
               name="input-10-1"
-              :label="$options.filters.capitalize($tc('password', 1))"
-              :hint="
-                $options.filters.capitalize($t('form.min_carac', { n: '8' }))
-              "
+              :label="$tc('password', 1) | capitalize"
+              :hint="$t('form.min_carac', { n: '8' }) | capitalize"
               counter
               @input="modified = true"
               @click:append="show_password = !show_password"
@@ -131,7 +128,7 @@
               ]"
               :type="show_password ? 'text' : 'password'"
               name="input-10-1"
-              :label="$options.filters.capitalize($t('confirmation'))"
+              :label="$t('confirmation') | capitalize"
               counter
               @click:append="show_password = !show_password"
               :disabled="loading"

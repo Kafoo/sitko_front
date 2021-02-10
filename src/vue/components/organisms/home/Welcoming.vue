@@ -11,7 +11,9 @@
         {{ $t("home_page.authenticated") }}
       </h3>
     </span>
-    <a class="discord-link" href="https://discord.gg/dV5yWgZz9G">Rejoins-nous sur Discord</a>
+    <a class="discord-link" href="https://discord.gg/dV5yWgZz9G">
+      {{$t('home_page.discord')}}
+    </a>
   
   </div>
 

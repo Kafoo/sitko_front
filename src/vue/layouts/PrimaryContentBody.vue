@@ -6,6 +6,7 @@
       class="account flex-grow-1 align-center ma-xs-0 ma-sm-5 pa-5"
       max-width="800px"
       min-width="0"
+      min-height="500px"
     >
       <slot></slot>
     </v-card>

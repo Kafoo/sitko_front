@@ -6,7 +6,7 @@
     @click="deletion = true"
     :disabled="disabled"
     >
-      <!-- TOTRANSLATE -->
+
       {{text}}
 
       <confirm-dialog
@@ -28,6 +28,7 @@
 
 import { defineComponent, ref, watch } from "@vue/composition-api"
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
+import i18n from '@/ts/plugins/i18n.js' 
 
 export default defineComponent({
 
@@ -44,13 +45,11 @@ export default defineComponent({
     },
     text:{
       type:String,
-      //TOTRANSLATE
-      default: 'Supprimer'
+      default: i18n.t('delete')
     },
     confirmation_text:{
       type:String,
-      //TOTRANSLATE
-      default: 'La suppression est définitive'
+      default: i18n.t('Deletion is definitive')
     },
     loading:{
       type:Boolean,

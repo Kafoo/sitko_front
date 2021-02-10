@@ -125,6 +125,10 @@ export default defineComponent({
   },
 
   setup(props, { root, refs }) {
+
+    const capitalize = root.$options.filters!.capitalize
+    const t = root.$t
+
     var calendar = ref({
       move: (arg: any) => {},
       prev: () => {},
@@ -156,9 +160,9 @@ export default defineComponent({
     });
 
     const typeToLabel = {
-      month: root.$options.filters!.capitalize(root.$t("month")),
-      week: root.$options.filters!.capitalize(root.$t("week")),
-      day: root.$options.filters!.capitalize(root.$t("day"))
+      month: capitalize(t("month")),
+      week: capitalize(t("week")),
+      day: capitalize(t("day"))
     };
 
     const getCaldateColor = (caldate: CaldateModel) => {

@@ -1,5 +1,4 @@
 <template>
-  <!-- TOTRANSLATE -->
   <v-card class="pa-5">
     <v-row justify="center" dense>
       <v-card class="pa-3 mb-5 mt-1 inset-shadow rounded-lg" width="100%">
@@ -9,7 +8,7 @@
               :items="categories"
               item-text="name"
               item-value="name"
-              label="Category"
+              :label="$t('category') | capitalize"
               outlined
               return-object
               hide-details
@@ -25,7 +24,7 @@
 
           <v-col cols="9" sm="6">
             <v-text-field
-              label="Search/create"
+              :label="$t('search')+`/`+$t('create') | capitalize"
               outlined
               hide-details
               v-model="search"
@@ -70,10 +69,10 @@
     <v-card-actions>
       <v-spacer />
       <v-btn @click="$emit('close')">
-        Cancel
+        {{$t('confirm.cancel')}}
       </v-btn>
       <v-btn @click="confirm">
-        Confirm
+        {{$t('confirm.confirm')}}
       </v-btn>
     </v-card-actions>
   </v-card>

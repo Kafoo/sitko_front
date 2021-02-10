@@ -45,11 +45,10 @@
 
         <v-row justify="center" dense>
           <v-col cols="12" sm="10">
-            <!-- TOTRANSLATE -->
             <tags-input
               :tags="newProject.tags"
               @update="(tags) => {newProject.tags = tags}"
-              label="Tags du projet"
+              :label="$t('project tags') | capitalize"
             />
           </v-col>
         </v-row>

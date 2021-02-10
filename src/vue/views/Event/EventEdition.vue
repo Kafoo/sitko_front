@@ -1,6 +1,7 @@
 <template>
   <primary-content-body>
-    <div v-if="!loading && event" class="card-body py-0">
+    <loading-circle v-if="loading" small/>
+    <div v-else-if="event" class="card-body py-0">
       <v-form @submit.prevent="editEvent" v-model="form">
 
         <v-row justify="center">
@@ -8,8 +9,7 @@
             for="name"
             class="name text-h5 font-weight-bold black--text mb-3"
           >
-            <!-- TOTRANSLATE -->
-            Edition du Projet
+            {{$t('event edition') | capitalize}}
           </label>
         </v-row>
 
@@ -57,7 +57,7 @@
                   event.tags = tags;
                 }
               "
-              label="Tags du projet"
+              :label="$t('event tags') | capitalize"
             />
           </v-col>
         </v-row>
@@ -76,11 +76,10 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <!-- TOTRANSLATE -->
           <delete-button
             :disabled="loading_edit"
             :loading="loading_deletion"
-            text="Supprimer le projet"
+            :text="$t('delete event')"
             :confirmation_text="$t('Event deletion is definitive.')"
             @confirm-action="deleteEvent"
           />
@@ -91,8 +90,7 @@
           :loading="loading_edit" 
           :disabled="loading_edit || !form"
           >
-            <!-- TOTRANSLATE -->
-            Valider
+            {{$t('confirm.edit')}}
           </v-btn>
         </v-card-actions>
 

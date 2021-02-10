@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- TOTRANSLATE -->
     <current-tags
       :tags="compTags"
       :label="label"
@@ -44,7 +43,6 @@ export default defineComponent({
     },
     label: {
       type: String,
-      // TOTRANSLATE
       default: "Tags"
     }
   },

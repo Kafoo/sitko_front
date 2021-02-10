@@ -3,22 +3,22 @@
   <div>
   
     <net-slide 
-    title="Tous les lieux"
-    empty="Aucun lieu"
+    :title="$t('every places') | capitalize"
+    :empty="$t('no place') | capitalize"
     type="place" 
     :items="places" 
     :loading="loading_all_places" 
     class="mt-8 mb-7"/>
     <net-slide 
-    title="Tous les projets"
-    empty="Aucun projet"
+    :title="$t('every projects') | capitalize"
+    :empty="$t('no project') | capitalize"
     type="project" 
     :items="projects" 
     :loading="loading_all_projects"
     class="mb-7"/>
     <net-slide 
-    title="Tous les événements"
-    empty="Aucun événement"
+    :title="$t('every events') | capitalize"
+    :empty="$t('no event') | capitalize"
     type="event" 
     :items="events" 
     :loading="loading_all_events"
