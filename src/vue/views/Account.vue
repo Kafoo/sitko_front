@@ -3,7 +3,7 @@
     <div>
       
       <v-row justify="center">
-        <page-title :title="$t('my account')" />
+        <page-title :title="$t('my account') | capitalize" />
       </v-row>
       <v-form v-model="form">
         <v-row justify="center" class="my-4">

@@ -1,5 +1,6 @@
 import PlaceModel from "@/ts/models/placeClass";
 import ProjectModel from "@/ts/models/projectClass";
+import EventModel from "@/ts/models/eventClass";
 
 export default class Caldate {
   id: number;
@@ -41,6 +42,7 @@ export default class Caldate {
 
     const classes:any = { 
       'project' : ProjectModel, 
+      'event' : EventModel, 
       'place' : PlaceModel 
     };
 
@@ -66,8 +68,11 @@ export default class Caldate {
       case "project":
         return "yellow darken-3";
 
-      default:
+      case "event":
         return "blue darken-3";
+
+      default:
+        return "grey";
     }
   }
 

@@ -18,6 +18,7 @@ export const mutations: MutationTree<AppState> = {
     state.app_alert = undefined;
   },
   setLocale(state, locale: string) {
-    localStorage.setItem("Locale", locale);
+    state.locale = locale;
+    localStorage.setItem("locale", locale);
   }
 };

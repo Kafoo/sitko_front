@@ -20,7 +20,7 @@ function loadLocaleMessages() {
   return messages;
 }
 
-const stored_locale = localStorage.getItem("Locale");
+const stored_locale = localStorage.getItem("locale");
 var locale
 if (stored_locale) {
   locale = stored_locale

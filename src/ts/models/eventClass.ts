@@ -19,7 +19,13 @@ export default class Event {
   constructor(rawData: any = {}) {
     this.id = rawData.id;
     this.place_id = rawData.place_id;
-    this.author = rawData.author;
+
+    if (rawData.author) {      
+      this.author = rawData.author;
+    }else{
+      this.author = new UserModel()
+    }
+
     this.title = rawData.title;
     this.description = rawData.description;
 

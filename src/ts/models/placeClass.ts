@@ -16,7 +16,12 @@ export default class PlaceModel {
     this.id = rawData.id;
     this.name = rawData.name;
     this.description = rawData.description;
-    this.author = rawData.author;
+
+    if (rawData.author) {      
+      this.author = rawData.author;
+    }else{
+      this.author = new UserModel()
+    }
 
     if (rawData.image) {
       this.image = new ImageModel(rawData.image);
