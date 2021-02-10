@@ -1,6 +1,9 @@
 <template>
   <div class="text-center">
-    <h1 class="mb-6">Contact</h1>
+    <page-title 
+    class="my-5" 
+    :title="$t('contact') | capitalize"
+    />
 
     <h5>Facebook</h5>
     <h5>Instagram</h5>
@@ -12,10 +15,15 @@
 <script lang="ts">
 
 import { defineComponent } from "@vue/composition-api"
+import PageTitle from "@c/atoms/app/PageTitle.vue";
 
 export default defineComponent({
 
-  name : "",
+  name : "Contact",
+
+  components:{
+    PageTitle
+  },
 
   setup() {
 

@@ -1,5 +1,7 @@
 <template>
-  <h1>{{ title | capitalize }}</h1>
+  <h1 class="text-center">
+    {{ title }}
+  </h1>
 </template>
 
 <script lang="ts">
@@ -11,5 +13,6 @@ export default defineComponent({
   props: {
     title: String
   }
+
 });
 </script>

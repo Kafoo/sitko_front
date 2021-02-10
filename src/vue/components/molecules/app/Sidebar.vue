@@ -20,7 +20,13 @@
   
           </v-card-title>
 
-          <v-btn icon fab small class="ml-1 mb-2" :to="`/place/edit/${place.id}`">
+          <v-btn 
+          v-if="user.id == place.author.id"
+          icon 
+          fab 
+          small 
+          class="ml-1 mb-2" 
+          :to="`/place/edit/${place.id}`">
             <v-icon>edit</v-icon>
           </v-btn>
         </div>
@@ -62,6 +68,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters("auth", ["user"]),
     placeNavItems() {
       return [
         {

@@ -47,6 +47,8 @@
   "project tags": "tags du projet",
   "event tags": "tags de l'événement",
   "place tags": "tags du lieu",
+  "place projects": "projets du lieu",
+  "place events": "événements du lieu",
 
   "every projects": "tous les projets",
   "every events": "tous les événements",

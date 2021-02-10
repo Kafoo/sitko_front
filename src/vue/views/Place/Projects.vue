@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="text-center mt-5">
+    <page-title 
+    class="my-5" 
+    :title="$t('place projects') | capitalize"
+    />
+    <div 
+    v-if="user.place && user.place.id === place_id"
+    class="text-center">
       <create-button :item="$t('project')" @action="$router.push('/project/create/' + place_id)" />
     </div>
 
@@ -49,6 +55,7 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import ProjectCard from "@c/molecules/project/ProjectCard.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
 import SkeletonIndex from "@c/molecules/project/SkeletonIndex.vue";
+import PageTitle from "@c/atoms/app/PageTitle.vue";
 
 export default {
   name: "Projects",
@@ -56,13 +63,14 @@ export default {
   components: {
     ProjectCard,
     CreateButton,
-    SkeletonIndex
+    SkeletonIndex,
+    PageTitle
   },
 
   data() {
     return {
       hash: null,
-      place_id: this.$route.params.id,
+      place_id: parseInt(this.$route.params.id),
       editing: false,
       creating: false,
       editionProject: undefined,
@@ -79,6 +87,7 @@ export default {
 
   computed: {
     ...mapGetters("project", ["projects"]),
+    ...mapGetters("auth", ["user"]),
 
     activeProjects() {
       return this.projects.filter(x => x.place_id == this.place_id);

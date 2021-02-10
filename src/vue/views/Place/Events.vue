@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="text-center mt-5">
+    <page-title 
+    class="my-5" 
+    :title="$t('place events') | capitalize"
+    />
+    <div 
+    v-if="user.place && user.place.id === place_id"
+    class="text-center">
       <create-button :item="$t('event')" @action="$router.push('/event/create/' + place_id)" />
     </div>
 
@@ -49,6 +55,7 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import EventCard from "@c/molecules/event/EventCard.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
 import SkeletonIndex from "@c/molecules/event/SkeletonIndex.vue";
+import PageTitle from "@c/atoms/app/PageTitle.vue";
 
 export default {
   name: "Events",
@@ -56,13 +63,14 @@ export default {
   components: {
     EventCard,
     CreateButton,
-    SkeletonIndex
+    SkeletonIndex,
+    PageTitle
   },
 
   data() {
     return {
       hash: null,
-      place_id: this.$route.params.id,
+      place_id: parseInt(this.$route.params.id),
       editing: false,
       creating: false,
       editionEvent: undefined,
@@ -79,6 +87,7 @@ export default {
 
   computed: {
     ...mapGetters("event", ["events"]),
+    ...mapGetters("auth", ["user"]),
 
     activeEvents() {
       return this.events.filter(x => x.place_id == this.place_id);
