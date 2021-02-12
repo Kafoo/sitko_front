@@ -9,7 +9,7 @@ import Autocomplete from "@trevoreyre/autocomplete-vue";
 import "@trevoreyre/autocomplete-vue/dist/style.css";
 
 import VueAnalytics from 'vue-analytics';
-Vue.use(VueAnalytics, {id: 'G-SJ8VE2VLMM', router})
+Vue.use(VueAnalytics, {id: 'UA-182613407-1', router})
 
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "./assets/css/main.css";
