@@ -8,6 +8,9 @@ import VueComp from "@vue/composition-api";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
 import "@trevoreyre/autocomplete-vue/dist/style.css";
 
+import VueAnalytics from 'vue-analytics';
+Vue.use(VueAnalytics, {id: 'G-SJ8VE2VLMM', router})
+
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "./assets/css/main.css";
 import "@/ts/functions/interceptors";
@@ -15,6 +18,7 @@ import "@/ts/functions/vueFilters";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 import LoadingCircle from "@c/atoms/app/LoadingCircle.vue"
 import VClamp from "vue-clamp";
+
 
 Vue.config.productionTip = false;
 Vue.extend(vuetify);
