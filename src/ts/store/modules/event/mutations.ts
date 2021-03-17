@@ -11,8 +11,8 @@ export const mutations: MutationTree<EventState> = {
     var exists = state.events.find((x: EventModel) => x.id === event.id);
     if (exists) {
       //refresh
-      const index = state.events.indexOf(exists)
-      state.events.splice(index, 1, event)
+      const index = state.events.indexOf(exists);
+      state.events.splice(index, 1, event);
     } else {
       //or push
       state.events.push(event);
@@ -22,8 +22,8 @@ export const mutations: MutationTree<EventState> = {
   removeEvent(state, place_id: number) {
     var exists = state.events.find((x: EventModel) => x.id === place_id);
     if (exists) {
-      const index = state.events.indexOf(exists)
-      state.events.splice(index, 1)
+      const index = state.events.indexOf(exists);
+      state.events.splice(index, 1);
     }
   }
 };

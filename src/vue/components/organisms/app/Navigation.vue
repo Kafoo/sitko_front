@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Top bar -->
-    <v-app-bar height="60px">
+    <v-app-bar height="60px" app absolute>
       <v-toolbar-title>
         <v-app-bar-nav-icon @click="$router.push('/').catch(() => {})">
           <v-img
@@ -13,12 +13,11 @@
           />
         </v-app-bar-nav-icon>
         <span
-        @click="$router.push('/').catch(() => {})"
-        class="font-weight-bold c-pointer"
+          @click="$router.push('/').catch(() => {})"
+          class="font-weight-bold c-pointer"
         >
           {{ appTitle }}
         </span>
-          
       </v-toolbar-title>
 
       <!-- Locale Change -->
@@ -52,12 +51,7 @@
         </v-icon>
       </v-btn> -->
 
-      <v-menu 
-      class="acccount-drawer" 
-      v-if="!loading" 
-      rounded="xl"
-      bottom 
-      left>
+      <v-menu class="acccount-drawer" v-if="!loading" rounded="xl" bottom left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             height="40px"
@@ -81,7 +75,7 @@
             :to="item.path"
           >
             <v-list-item-title>
-              <v-icon v-if="item.icon">{{item.icon}}</v-icon>
+              <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
               {{ item.title }}
             </v-list-item-title>
           </v-list-item>
@@ -94,7 +88,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import TinyAvatar from "@c/atoms/user/TinyAvatar.vue";
-import i18n from '@/ts/plugins/i18n.js';
+import i18n from "@/ts/plugins/i18n.js";
 
 export default {
   data: () => {
@@ -136,20 +130,21 @@ export default {
     },
 
     accountItems() {
-
-      var first = {}
+      var first = {};
       if (this.user.place) {
         first = {
           title: this.user.place.name,
           path: "/place/" + this.user.place.id,
           icon: "home"
-        }
+        };
       } else {
         first = {
-          title: this.$options.filters.capitalize(this.$t("actions.create", { item: this.$t("place") })),
+          title: this.$options.filters.capitalize(
+            this.$t("actions.create", { item: this.$t("place") })
+          ),
           path: "/place/create",
           icon: "home"
-        }
+        };
       }
 
       return [
@@ -172,7 +167,7 @@ export default {
     ...mapMutations("app", ["setLocale"]),
     changeLocale() {
       this.setLocale(this.selected_locale);
-      this.$router.go()
+      this.$router.go();
     },
 
     search() {

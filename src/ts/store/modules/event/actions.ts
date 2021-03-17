@@ -7,22 +7,27 @@ import axios from "axios";
 export const actions: ActionTree<EventState, RootState> = {
 
   GET_EVENT({ commit, state }, event_id) {
-    if (state.events.find((x: EventModel) => x.id === event_id)) {
-      return true;
+
+    var event = state.events.find((x: EventModel) => x.id === event_id)
+
+    if (event) {
+      return event;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "event/" + event_id)
         .then(response => {
-          //(Le projet aura été push dans le store)
-          commit("pushEvent", new EventModel(response.data));
+          event = new EventModel(response.data)
+          commit("pushEvent", event);
+          return event
         })
         .catch(() => {});
     }
   },
 
   GET_ALL_EVENTS({ state, commit }) {
+
     if (state.fetched.all_events) {
-      return true;
+      return state.events;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "event")
@@ -31,22 +36,42 @@ export const actions: ActionTree<EventState, RootState> = {
           for (const event of response.data) {
             commit("pushEvent", new EventModel(event));
           }
+          return state.events;
+        })
+        .catch(() => {});
+    }
+  },
+
+  GET_INC_EVENTS({ state, getters, commit }) {
+    if (state.fetched.inc_events) {
+      return getters.inc_events;
+    } else {
+      return axios
+        .get(process.env.VUE_APP_API_URL + "event?filter=incoming")
+        .then(response => {
+          state.fetched.inc_events = Date.now();
+          for (const event of response.data) {
+            commit("pushEvent", new EventModel(event));
+          }
+          return getters.inc_events;
         })
         .catch(() => {});
     }
   },
 
   GET_EVENTS_BY_PLACE({ state, commit }, place_id) {
+
     if (state.fetched.place_events[place_id]) {
-      return true;
+      return state.events.filter((x:EventModel) => x.place_id == place_id);
     } else {
-      state.fetched.place_events[place_id] = Date.now();
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/event")
         .then(response => {
+          state.fetched.place_events[place_id] = Date.now();
           for (const event of response.data) {
             commit("pushEvent", new EventModel(event));
           }
+          return state.events.filter((x:EventModel) => x.place_id == place_id);
         })
         .catch(() => {});
     }
@@ -71,10 +96,10 @@ export const actions: ActionTree<EventState, RootState> = {
 
   SEND_EVENT_DELETION({ commit }, event_id) {
     //Delete call to API
-    return axios.delete(process.env.VUE_APP_API_URL + "event/" + event_id)
+    return axios
+      .delete(process.env.VUE_APP_API_URL + "event/" + event_id)
       .then(response => {
         commit("removeEvent", event_id);
       });
   }
-
 };

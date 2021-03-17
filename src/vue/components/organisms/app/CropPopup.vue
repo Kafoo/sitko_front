@@ -6,7 +6,7 @@
       fab
       small
       dark
-      @click="$emit('toogle')"
+      @click="$emit('close')"
     >
       <v-icon>arrow_back</v-icon>
     </v-btn>
@@ -51,7 +51,7 @@ export default defineComponent({
 
     const validate = () => {
       emit("confirm", croppedImage.value);
-      emit("toogle");
+      emit("close");
     };
 
     var crop = (e: any) => {

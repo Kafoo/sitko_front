@@ -4,29 +4,32 @@
       class="d-flex flex-column align-center mt-5 flex-shrink-0"
       style="width:300px;height:400px"
     >
-
-      <v-img height="200px" width="80%" class="rounded-lg" :src="place.image.medium"></v-img>
+      <v-img
+        height="200px"
+        width="80%"
+        class="rounded-lg"
+        :src="place.image.medium"
+      ></v-img>
 
       <v-hover v-slot="{ hover }">
         <div>
           <v-card-title
-          style="line-height:22px"
-          class="px-3 pt-2 pb-1 my-2 c-pointer d-inline-block"
-          :class="hover ? 'text-decoration-underline' : ''"
-          @click="$router.push('/place/' + place.id).catch(()=>{})"
+            style="line-height:22px"
+            class="px-3 pt-2 pb-1 my-2 c-pointer d-inline-block"
+            :class="hover ? 'text-decoration-underline' : ''"
+            @click="$router.push('/place/' + place.id).catch(() => {})"
           >
-
             {{ place.name }}
-  
           </v-card-title>
 
-          <v-btn 
-          v-if="user.id == place.author.id"
-          icon 
-          fab 
-          small 
-          class="ml-1 mb-2" 
-          :to="`/place/edit/${place.id}`">
+          <v-btn
+            v-if="user.id == place.author.id"
+            icon
+            fab
+            small
+            class="ml-1 mb-2"
+            :to="`/place/edit/${place.id}`"
+          >
             <v-icon>edit</v-icon>
           </v-btn>
         </div>
@@ -75,6 +78,11 @@ export default {
           title: this.$options.filters.capitalize(this.$t("calendar")),
           path: "/place/" + this.$route.params.id + "/calendar",
           icon: "event"
+        },
+        {
+          title: this.$options.filters.capitalize(this.$t("notes")),
+          path: "/place/" + this.$route.params.id + "/notes",
+          icon: "description"
         },
         {
           title: this.$options.filters.capitalize(this.$t("projects")),

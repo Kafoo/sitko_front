@@ -1,0 +1,74 @@
+<template>
+
+  <v-container>
+  
+    <v-row justify="center">
+      <v-col cols="auto my-2">
+        <label
+          for="name"
+          class="name text-h4 font-weight-bold black--text"
+        >
+          <slot name="header-title"></slot>
+        </label>
+      </v-col>
+    </v-row>
+
+    <div class="d-flex flex-column flex-sm-row my-4 mx-sm-4">
+
+      <div class="d-flex justify-center mb-4 mr-sm-5">
+        <slot name="image"></slot>
+      </div>
+
+      <div class="d-flex flex-column flex-grow-1">
+        <v-row justify="center" dense>
+          <v-col class="mt-2">
+            <slot name="title"></slot>
+          </v-col>
+        </v-row>
+
+        <div class="d-flex">
+          <slot name="visibility"></slot>
+        </div>
+      </div>
+
+    </div>
+
+    <v-row justify="center" dense>
+      <v-col>
+        <slot name="description"></slot>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center" class="mt-n1">
+      <v-col class="mb-4">
+        <slot name="tags"></slot>
+      </v-col>
+
+      <v-col v-if="$slots.caldates" class="mb-4" cols="12" sm="6">
+        <slot name="caldates"></slot>
+      </v-col>
+    </v-row>
+
+    <v-card-actions class="mt-4">
+      <v-spacer></v-spacer>
+
+      <slot name="actions"></slot>
+    </v-card-actions>
+
+  </v-container>
+
+</template>
+
+<script lang="ts">
+import { defineComponent } from "@vue/composition-api";
+
+export default defineComponent({
+  name: "CudLayout",
+
+  setup() {
+
+  }
+});
+</script>
+
+<style scoped></style>

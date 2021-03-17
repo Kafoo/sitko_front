@@ -18,7 +18,7 @@
               circle ? 'edit-icon-circle' : '',
               ` elevation-${hover ? 5 : 2}`
             ]"
-            @click="pickingImage = true"
+            @click="$refs.file.click()"
             >edit</v-icon
           >
         </v-hover>
@@ -37,9 +37,24 @@
       </div>
     </div>
 
-    <v-dialog v-model="pickingImage" width="unset">
-      <choose-image @change="update" @close="pickingImage = false" />
+    <input
+      type="file"
+      ref="file"
+      accept=".jpg, .png"
+      style="display:none"
+      @change="confirmInput"
+    />
+
+    <v-dialog v-model="cropping" width="unset">
+
+      <crop-popup
+        @close="cropping = false"
+        :image="customImage"
+        @confirm="update"
+      />
+
     </v-dialog>
+
   </div>
 </template>
 
@@ -52,8 +67,8 @@ import {
   onMounted
 } from "@vue/composition-api";
 import { useInputRules } from "@/ts/functions/composition/inputRules";
-import ChooseImage from "@c/organisms/media/ChooseImage.vue";
 import ImageModel from "@/ts/models/imageClass";
+import CropPopup from "@c/organisms/app/CropPopup.vue";
 
 export default defineComponent({
   name: "ImageInput",
@@ -65,7 +80,7 @@ export default defineComponent({
     },
     size: {
       type: String,
-      default: "150px"
+      default: "170px"
     },
     default_image: {
       type: String,
@@ -77,20 +92,40 @@ export default defineComponent({
     },
     nullable: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
 
   components: {
-    ChooseImage
+    CropPopup
   },
 
   setup(props, { emit }) {
-    var pickingImage = ref(false);
 
-    const update = (img: string) => {
-      emit("update", img);
+    var cropping = ref(false);
+
+    var customImage = ref("");
+
+    const confirmInput = (e: any) => {
+
+      var file = e.target.files[0];
+
+      if (file.size < 4000000) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = e => {
+          customImage.value = e.target!.result as string;
+          cropping.value = true;
+        };
+      } else {
+        console.log('nope')
+      }
+
     };
+
+    const update = () => {
+      emit('update', customImage.value)
+    }
 
     const imageSrc = computed(() => {
       if (typeof props.image === "string") {
@@ -109,9 +144,11 @@ export default defineComponent({
 
     return {
       rules,
-      pickingImage,
-      update,
-      imageSrc
+      confirmInput,
+      imageSrc,
+      cropping,
+      customImage,
+      update
     };
   }
 });

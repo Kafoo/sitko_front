@@ -9,4 +9,5 @@ export interface AppState {
   errors?: Array;
   windowWidth: number;
   locale: String;
+  routes: Array;
 }

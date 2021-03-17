@@ -1,8 +1,8 @@
 <template>
-  
   <v-btn
+  outlined=""
     :to="'/place/' + place.id"
-    height="40px"
+    height="32px"
     rounded
     text
     color="grey darken-2"
@@ -10,47 +10,35 @@
     class="pl-0 pr-3"
   >
     <tiny-avatar 
-    class="d-inline mr-2" 
-    :image="place.image.thumb" 
-    /> 
-    <span>{{place.name}}</span>
-    
+    class="d-inline mr-2"
+    size="28"
+    :image="place.image.thumb" />
+    <span>{{ place.name }}</span>
   </v-btn>
-
 </template>
 
 <script lang="ts">
-
-import { defineComponent } from "@vue/composition-api"
-import PlaceModel from "@/ts/models/placeClass"
-import TinyAvatar from "@c/atoms/user/TinyAvatar.vue"
+import { defineComponent } from "@vue/composition-api";
+import PlaceModel from "@/ts/models/placeClass";
+import TinyAvatar from "@c/atoms/user/TinyAvatar.vue";
 
 export default defineComponent({
+  name: "PlaceChip",
 
-  name : "PlaceChip",
-
-  components:{
+  components: {
     TinyAvatar
   },
 
-  props:{
-    place:{
-      type:Object as () => PlaceModel
+  props: {
+    place: {
+      type: Object as () => PlaceModel
     }
   },
 
   setup() {
-
-    return{
- 
-    }
-
+    return {};
   }
 });
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 <template>
-  <v-avatar :size="35">
-    <img :src="image" />
+  <v-avatar :size="size">
+    <v-img :src="image" />
   </v-avatar>
 </template>
 
@@ -8,11 +8,15 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-  name: "",
+  name: "TinyAvatar",
 
   props: {
     image: {
       type: String
+    },
+    size:{
+      type:String,
+      default:"35"
     }
   },
 

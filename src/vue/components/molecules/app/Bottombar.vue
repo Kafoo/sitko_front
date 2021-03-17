@@ -111,7 +111,7 @@ export default defineComponent({
         path: "/place/" + root.$route.params.id + "/contact",
         icon: "contact_support"
       }
-    ]
+    ];
 
     var showPlaceTitle = ref(true);
     var lastScrollPosition = ref(0);

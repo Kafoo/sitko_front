@@ -37,7 +37,7 @@
             cloud_upload
           </v-icon>
           <span>
-            {{$t('upload')}}
+            {{ $t("upload") }}
           </span>
         </v-btn>
 
@@ -49,7 +49,7 @@
 
     <crop-popup
       v-else
-      @toogle="cropping = false"
+      @close="cropping = false"
       :image="customImage"
       @confirm="valideCustomImage"
     />
@@ -70,9 +70,8 @@ export default defineComponent({
   components: { CropPopup, CloseDialog },
 
   setup(props, { root, emit }) {
-
-    const capitalize = root.$options.filters!.capitalize
-    const t = root.$t
+    const capitalize = root.$options.filters!.capitalize;
+    const t = root.$t;
 
     var cropping = ref(false);
 
@@ -102,7 +101,7 @@ export default defineComponent({
           cropping.value = true;
         };
       } else {
-        error.value = capitalize(t("media.max_size", { max: "4 MB" }))
+        error.value = capitalize(t("media.max_size", { max: "4 MB" }));
       }
     };
 

@@ -11,11 +11,10 @@
       </v-skeleton-loader>
 
       <sidebar v-else :place="place" />
-
     </div>
 
-    <v-divider 
-      v-if="$route.name != 'PlaceOverview'" 
+    <v-divider
+      v-if="$route.name != 'PlaceOverview'"
       class="hidden-sm-and-down"
       vertical
     ></v-divider>
@@ -26,63 +25,42 @@
       min-width="0"
       min-height="500px"
     >
-      <router-view :loading_place="loading"></router-view>
+      <router-view :place="place"></router-view>
     </v-card>
 
-    <float-menu v-if="place" :place="place"/>
-
-
+    <float-menu v-if="place" :place="place" />
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { mapGetters, mapActions } from "vuex";
+import {defineComponent} from "@vue/composition-api"
 import Sidebar from "@c/molecules/app/Sidebar.vue";
-import FloatMenu from "@c/molecules/place/FloatMenu.vue"
+import FloatMenu from "@c/molecules/place/FloatMenu.vue";
+import useFetcher from "@use/useFetcher";
 
-export default {
+export default defineComponent({
+
   name: "Place",
+  
   components: {
     Sidebar,
     FloatMenu
   },
-  data() {
+
+  setup(props, {root}) {
+
+    const place_id = parseInt(root.$route.params.id)
+
+    var { entity:place, loading } = useFetcher("place/GET_PLACE", place_id);
+
     return {
-      place_id: parseInt(this.$route.params.id),
-      loading: false
-    };
-    
-  },
-
-  computed: {
-    ...mapGetters("place", ["places"]),
-
-    place() {
-      return this.places.find(x => x.id === this.place_id);
-    },
-
-    elevation() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return 0;
-      }
-      return 3;
+      place,
+      loading
     }
-  },
-
-  created() {
-    this.loading = true;
-    this.GET_PLACE(this.place_id).then(() => {
-      this.loading = false;
-    });
-  },
-
-  methods: {
-    ...mapActions("place", ["GET_PLACE"])
   }
-};
+
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

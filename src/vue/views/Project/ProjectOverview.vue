@@ -1,66 +1,69 @@
 <template>
+  <loading-circle v-if="loading" small />
 
-  <loading-circle v-if="loading" small/>  
-
-  <div 
-  v-else-if="project"
-  class="pt-sm-5"
-  style="max-width:800px; margin:auto">
-
-    <div class="mb-9 d-flex flex-column flex-sm-row justify-center align-center mb-5">
-
-        <medium-image 
-        class="image mr-sm-5 flex-grow-0"
-        :image="project.image"/>
-
-      <div class="d-flex flex-column flex-wrap align-center text-center align-sm-start">
-        <h1 class="mt-2">
+  <div v-else-if="project" style="max-width:1000px; margin:auto">
+    
+    <div class="d-flex justify-center">
+      <medium-image class="image mr-sm-5 flex-grow-0" :image="project.image" />
+    </div>
+    
+    <div
+      class="mx-5 mb-5 mt-2 d-flex flex-column flex-sm-row align-stretch justify-space-around"
+    >
+      <div
+        class="mt-2 mb-5 d-flex flex-column align-center text-center text-sm-start align-sm-start"
+      >
+        <h1>
           {{ project.title }}
-          <v-btn
-          v-if="user.id == project.author.id"
-          icon 
-          fab 
-          small 
-          class="ml-1" 
-          :to="`/project/${project.id}/edit`">
-            <v-icon>edit</v-icon>
-          </v-btn>
         </h1>
 
-        <place-chip :place="project.place"/>
 
         <span class="ml-1 text-caption grey--text text--darken-1">
-          {{$t('created_by.project', {user:project.author.name}) | capitalize}}
+          {{ $t("created_by.project.public", { user: project.author.name }) | capitalize }}
         </span>
 
-        <current-caldates
-        class="ml-1"
-        :caldates="project.caldates"
-        title="Dates du projet"
-        more
-        />
+        <v-btn
+          x-small
+          text
+          plain
+          v-if="user.id == project.author.id"
+          class="mb-2 pa-0"
+          :to="`/project/${project.id}/edit`"
+        >
+          <v-icon small class="mr-1">edit</v-icon>
+          {{$t('options.edit')}}
+        </v-btn>
+        <place-chip :place="project.place" />
+      </div>
 
+      <div 
+      class="mt-4"
+      >
+        <current-caldates
+          class="ml-1 mb-5"
+          clickable
+          :caldates="project.caldates"
+          :label="$t('project dates') | capitalize"
+          more
+        />
       </div>
     </div>
 
-    <div class="mx-2">
-    
-      <current-tags 
-      :tags="project.tags" 
-      :label="$t('project tags') | capitalize" 
-      />
 
+    <div class="mx-5">
+      <current-tags
+        :tags="project.tags"
+        :label="$t('project tags') | capitalize"
+      />
     </div>
 
-
-    <div 
-    class="description grey lighten-3 font-italic mx-0 mb-3 mt-5 ma-sm-5 pa-5 breakwrap"
-    :class="$vuetify.breakpoint.name !== 'xs'?'rounded-xl':''">
+    <div
+      class="description grey lighten-3 font-italic mx-0 mb-3 mt-5 ma-sm-5 pa-5 breakwrap"
+      :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
+    >
       {{ project.description }}
     </div>
-
   </div>
-
 </template>
 
 <script lang="ts">
@@ -72,11 +75,11 @@ import {
 } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
 import ProjectModel from "@/ts/models/projectClass";
-import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
-import useProjectGetter from "@use/useProjectGetter";
-import MediumImage from "@c/molecules/media/MediumImage.vue"
-import CurrentCaldates from "@c/molecules/caldate/CurrentCaldates.vue"
-import PlaceChip from "@c/atoms/place/PlaceChip.vue"
+import CurrentTags from "@c/molecules/current/CurrentTags.vue";
+import useFetcher from "@use/useFetcher";
+import MediumImage from "@c/molecules/media/MediumImage.vue";
+import CurrentCaldates from "@c/molecules/current/CurrentCaldates.vue";
+import PlaceChip from "@c/atoms/place/PlaceChip.vue";
 
 export default defineComponent({
   name: "ProjectOverview",
@@ -88,12 +91,11 @@ export default defineComponent({
     PlaceChip
   },
 
-  setup(props, {root}) {
-  
+  setup(props, { root }) {
     const { user } = useGetters({ user: "auth/user" } as any);
 
-    const project_id = parseInt(root.$route.params.id)
-    var { project, loading } = useProjectGetter(project_id);
+    const project_id = parseInt(root.$route.params.id);
+    var { entity:project, loading } = useFetcher("project/GET_PROJECT", project_id);
 
     return {
       project,
@@ -105,21 +107,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
-.image {
-  border-radius: 4px;
-  box-shadow: 0 0 5px black;
-  width: 200px;
-}
-
-@media (max-width: 600px) {
-  .image {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    border-radius: 0px;
-    box-shadow: none;
-  }
-}
 
 </style>

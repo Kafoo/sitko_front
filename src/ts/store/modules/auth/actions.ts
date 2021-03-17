@@ -4,8 +4,8 @@ import { RootState } from "@/ts/store/types";
 import axios from "axios";
 import router from "@/ts/router";
 import UserModel from "@/ts/models/userClass";
-import i18n from '@/ts/plugins/i18n.js' 
-import { capitalize } from "@/ts/functions/vueFilters"
+import i18n from "@/ts/plugins/i18n.js";
+import { capitalize } from "@/ts/functions/vueFilters";
 
 export const actions: ActionTree<AuthState, RootState> = {
   GET_USER_DATA({ commit }) {
@@ -81,11 +81,7 @@ export const actions: ActionTree<AuthState, RootState> = {
   },
 
   SEND_DELETE_USER({ state, commit }, data) {
-    commit(
-      "app/setErrors",
-      {}, 
-      { root: true }
-    );
+    commit("app/setErrors", {}, { root: true });
 
     if (state.userData) {
       return axios
@@ -96,8 +92,8 @@ export const actions: ActionTree<AuthState, RootState> = {
         });
     } else {
       commit(
-        "app/setErrors", 
-        { user: capitalize(i18n.t("user not found")) }, 
+        "app/setErrors",
+        { user: capitalize(i18n.t("user not found")) },
         { root: true }
       );
     }

@@ -1,13 +1,11 @@
 <template>
   <div>
-    <page-title 
-    class="my-5" 
-    :title="$t('place events') | capitalize"
-    />
-    <div 
-    v-if="user.place && user.place.id === place_id"
-    class="text-center">
-      <create-button :item="$t('event')" @action="$router.push('/event/create/' + place_id)" />
+    <page-title class="my-5" :title="$t('place events') | capitalize" />
+    <div v-if="user.place && user.place.id === place_id" class="text-center">
+      <create-button
+        :item="$t('event')"
+        @action="$router.push('/event/create/' + place_id)"
+      />
     </div>
 
     <!-- No Event -->
@@ -21,17 +19,12 @@
     </h4>
 
     <!-- Loadings -->
-    <div 
-    v-if="loading" 
-    class="events d-flex justify-center flex-wrap">
-      <skeleton-index
-      v-for="item in 6"
-      v-bind:key="item"/>
+    <div v-if="loading" class="events d-flex justify-center flex-wrap">
+      <skeleton-index v-for="item in 6" v-bind:key="item" />
     </div>
 
     <!-- Index -->
-    <div 
-    v-else>
+    <div v-else>
       <transition-group
         class="events d-flex justify-center flex-wrap"
         name="list-complete"
@@ -45,7 +38,6 @@
           <event-card class="mb-sm-2 mb-5" :event="event" />
         </div>
       </transition-group>
-
     </div>
   </div>
 </template>
@@ -95,19 +87,16 @@ export default {
   },
 
   methods: {
-    ...mapActions("event", ["GET_EVENTS_BY_PLACE"]),
-
+    ...mapActions("event", ["GET_EVENTS_BY_PLACE"])
   }
 };
 </script>
 
 <style scoped>
-
 .events::after {
   content: "";
   width: 472px;
 }
-
 
 .list-complete-item {
   transition: all 0.2s;

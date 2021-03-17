@@ -10,7 +10,8 @@ export const state: ProjectState = {
   projects: Array<ProjectModel>(),
   fetched: {
     place_projects: [],
-    all_projects:undefined
+    all_projects: undefined,
+    inc_projects: undefined
   }
 };
 

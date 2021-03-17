@@ -1,81 +1,69 @@
 <template>
-  
-  <div
-    style="line-height:15px"
-    class="text-caption grey--text text--darken-1"
-  >
+  <v-card 
+  class="d-flex flex-column text-caption grey--text text--darken-1"
+  elevation="0">
+    <caldate-chip
+    v-for="caldate in caldates.slice(0, 2)"
+    :key="caldate.id"
+    :caldate="caldate"
+    clickable
+    small/> 
+
     <span
-      class="breakwrap"
-      v-if="caldates.length"
-      :key="caldates[0].id"
+      v-if="caldates.length > 2"
+      :class="more ? 'text-decoration-underline c-pointer' : ''"
+      @click="more ? (morePopup = true) : undefined"
       ><!--
-    -->{{ caldates[0].chip }}
+    -->+
+      {{ caldates.length - 2 }}
+      {{ $tc("other caldate", caldates.length - 2 > 1 ? 2 : 1) }}
     </span>
 
-    <span 
-    v-if="caldates.length > 1"
-    :class="more?'text-decoration-underline c-pointer':''"
-    @click="more?morePopup = true:undefined"
-    ><!--
-    -->{{$t('and')}}
-      {{caldates.length - 1 }}
-      {{$tc('other caldate', caldates.length - 1 > 1 ? 2 : 1)}}
-    </span>
-
-    <v-dialog v-model="morePopup" max-width="400px">    
-      <caldates-popup 
-      @close="morePopup = false"
-      :caldates="caldates"
-      :title="title"/>
+    <v-dialog v-model="morePopup" max-width="400px">
+      <caldates-popup
+        @close="morePopup = false"
+        :caldates="caldates"
+        :title="title"
+      />
     </v-dialog>
-
-
-  </div>
-
+  </v-card>
 </template>
 
 <script lang="ts">
-
-import { defineComponent, ref } from "@vue/composition-api"
-import CaldatesPopup from "@c/organisms/caldate/CaldatesPopup.vue"
+import { defineComponent, ref } from "@vue/composition-api";
+import CaldatesPopup from "@c/organisms/caldate/CaldatesPopup.vue";
+import CaldateChip from "@c/atoms/caldate/CaldateChip.vue"
 
 export default defineComponent({
+  name: "CurrentCaldates",
 
-  name : "CurrentCaldates",
-
-  components:{
-    CaldatesPopup
+  components: {
+    CaldatesPopup,
+    CaldateChip
   },
 
-  props:{
-
-    caldates:{
-      type:Array,
-      default:[]
+  props: {
+    caldates: {
+      type: Array,
+      default: []
     },
 
-    more:{
-      type:Boolean,
-      default:false
+    more: {
+      type: Boolean,
+      default: false
     },
 
-    title:String
+    title: String
   },
 
   setup() {
+    var morePopup = ref(false);
 
-    var morePopup = ref(false)
-
-    return{
+    return {
       morePopup
-    }
-
+    };
   }
 });
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>

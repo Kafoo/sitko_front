@@ -1,28 +1,26 @@
 <template>
   <primary-content-body>
-    <div v-if="!loading && place" class="pa-0">
+
+    <loading-circle v-if="loading" small />
+    <div v-else-if="place" class="card-body">
+
       <v-form @submit.prevent="editPlace" v-model="form">
 
-        <v-row justify="center">
-          <label
-            for="name"
-            class="name text-h5 font-weight-bold black--text mb-5"
-          >
-            {{$t('place edition') | capitalize}}
-          </label>
-        </v-row>
+        <cud-layout>
 
-        <v-row justify="center">
-          <image-input
-            :image="place.image"
-            @update="changeImage"
-          />
-        </v-row>
+          <template v-slot:header-title>
+            {{ $t("place edition") | capitalize }}
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" sm="6">
+          <template v-slot:image>
+            <image-input 
+            :image="place.image" 
+            @update="changeImage" 
+            />
+          </template>
+
+          <template v-slot:title>
             <v-text-field
-              class="mt-5"
               :label="$t('name') | capitalize"
               outlined
               maxlength="40"
@@ -30,11 +28,23 @@
               v-model="place.name"
               :disabled="loading_edit"
             ></v-text-field>
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" sm="10">
+          <template v-slot:visibility>
+            <v-select
+              disabled :items="['Public', 'Restreint', 'Privé']"
+              label="Visibilité"
+              outlined
+              class="rounded-lg"
+            ></v-select>
+
+            <help
+            class="mt-2 mx-2"
+            :text="$t('help.visibility')"
+            />
+          </template>
+
+          <template v-slot:description>
             <v-textarea
               :label="$t('description') | capitalize"
               outlined
@@ -43,11 +53,9 @@
               v-model="place.description"
               :disabled="loading_edit"
             ></v-textarea>
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" class="mb-4">
+          <template v-slot:tags>
             <tags-input
               :tags="place.tags"
               @update="
@@ -57,31 +65,29 @@
               "
               :label="$t('place tags') | capitalize"
             />
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+          <template v-slot:actions>
+            <delete-button
+              :disabled="loading_edit"
+              :loading="loading_deletion"
+              :text="$t('delete place')"
+              :confirmation_text="$t('Place deletion is definitive.')"
+              @confirm-action="deletePlace"
+            />
 
-          <delete-button
-            :disabled="loading_edit"
-            :loading="loading_deletion"
-            :text="$t('delete place')"
-            :confirmation_text="$t('Place deletion is definitive.')"
-            @confirm-action="deletePlace"
-          />
+            <v-btn
+              type="submit"
+              color="success"
+              :loading="loading_edit"
+              :disabled="loading_edit || !form"
+            >
+              {{ $t("confirm.edit") }}
+            </v-btn>
+          </template>
 
-          <v-btn 
-          type="submit" 
-          color="success" 
-          :loading="loading_edit" 
-          :disabled="loading_edit || !form"
-          >
-            {{$t('confirm.edit')}}
-          </v-btn>
-        </v-card-actions>
+        </cud-layout>
       </v-form>
-
     </div>
   </primary-content-body>
 </template>
@@ -95,33 +101,32 @@ import {
   computed
 } from "@vue/composition-api";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
-import DeleteButton from "@c/atoms/app/DeleteButton.vue"
+import DeleteButton from "@c/atoms/app/DeleteButton.vue";
 import { useGetters, useActions } from "vuex-composition-helpers";
 import { useInputRules } from "@/ts/functions/composition/inputRules";
-import usePlaceGetter from "@use/usePlaceGetter";
-import LoadingBar from "@c/atoms/app/LoadingBar.vue";
+import useFetcher from "@use/useFetcher";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
 import Image from "@/ts/models/imageClass";
 import PlaceModel from "@/ts/models/placeClass";
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   components: {
     PrimaryContentBody,
-    LoadingBar,
     ImageInput,
     ConfirmDialog,
     TagsInput,
-    DeleteButton
+    DeleteButton,
+    CudLayout
   },
 
   name: "PlaceEdition",
 
-  setup(props, {root}) {
-
+  setup(props, { root }) {
     var loading_deletion = ref(false);
-    var loading_edit = ref(false)
+    var loading_edit = ref(false);
 
     var form = ref(false);
     const rules = useInputRules();
@@ -133,15 +138,16 @@ export default defineComponent({
       SEND_PLACE_DELETION: "place/SEND_PLACE_DELETION"
     } as any);
 
-    const place_id = parseInt(root.$route.params.id)
-    var { place, loading } = usePlaceGetter(place_id, true);
+    const place_id = parseInt(root.$route.params.id);
+
+    var { entity:place, loading } = useFetcher("place/GET_PLACE", place_id, true)
 
     const editPlace = () => {
       loading_edit.value = true;
       SEND_PLACE_EDITION(place.value)
         .then(() => {
           loading_edit.value = false;
-          root.$router.push("/place/" + place.value.id);
+          root.$router.push("/place/" + place_id);
         })
         .catch(() => {
           loading_edit.value = false;
@@ -150,7 +156,7 @@ export default defineComponent({
 
     const deletePlace = () => {
       loading_deletion.value = true;
-      SEND_PLACE_DELETION(place.value.id)
+      SEND_PLACE_DELETION(place_id)
         .then(() => {
           loading_deletion.value = false;
           root.$router.push("/places/myplaces");
@@ -161,7 +167,9 @@ export default defineComponent({
     };
 
     const changeImage = (data: string | Image) => {
-      place.value.image = data;
+
+      place.value!.image = data;
+
     };
 
     return {

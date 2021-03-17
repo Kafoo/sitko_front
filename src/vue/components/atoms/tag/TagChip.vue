@@ -1,27 +1,27 @@
 <template>
 
-    <v-tooltip bottom>
-      <template v-slot:activator="{ on }">
-        <v-chip
-          v-on="text?null:on"
-          small
-          class="tag-chip px-2 white--text"
-          :class="[noselect ? 'noselect' : '', tiny ? 'tiny' : '']"
-          :close="close"
-          @click:close="$emit('close')"
-          @click="$emit('click')"
-          :color="tag.color"
-        >
-          <v-icon v-if="tag.category" small>
-            {{ tag.category.icon }}
-          </v-icon>
-          <span v-if="text" class="ml-1">
-            {{ tag.title }}
-          </span>
-        </v-chip>
-      </template>
-      <span>{{tag.title}}</span>
-    </v-tooltip>
+  <v-chip
+    small
+    class="tag-chip px-2 white--text"
+    :class="[noselect ? 'noselect' : '', tiny ? 'tiny' : '', selected ? 'selected' : '']"
+    :close="closable"
+    @click:close="$emit('close')"
+    @click="$emit('click')"
+    :color="tag.color"
+  >
+    <v-icon v-if="selected" small>
+      done
+    </v-icon>    
+    <v-icon v-else-if="tag.category" small>
+      {{ tag.category.icon }}
+    </v-icon>
+    <v-icon v-else-if="!text" small>
+      fiber_manual_record
+    </v-icon>
+    <span v-if="text" class="ml-1 chip-text">
+      {{ tag.title }} 
+    </span>
+  </v-chip>
 
 </template>
 
@@ -29,7 +29,7 @@
 import TagModel from "@/ts/models/tagClass";
 import { defineComponent } from "@vue/composition-api";
 
-    export default defineComponent({
+export default defineComponent({
   name: "TagChip",
 
   props: {
@@ -37,11 +37,15 @@ import { defineComponent } from "@vue/composition-api";
       type: Object as () => TagModel,
       default: undefined
     },
-    close: {
+    closable: {
       type: Boolean,
       default: false
     },
     noselect: {
+      type: Boolean,
+      default: false
+    },
+    selected: {
       type: Boolean,
       default: false
     },
@@ -75,7 +79,7 @@ import { defineComponent } from "@vue/composition-api";
   cursor: unset;
 }
 
-.tag-chip{
+.tag-chip {
   margin: 3px;
   width: max-content;
 }
@@ -87,5 +91,10 @@ import { defineComponent } from "@vue/composition-api";
   padding-right: 5px !important;
   margin: 2px;
   margin-left: 0;
+}
+
+.tag-chip.selected {
+    box-shadow: inset 0px 0px 20px 7px #ffffffd1;
+    color: #353535 !important;
 }
 </style>

@@ -7,7 +7,7 @@ export default class TagsCategoryModel {
     this.id = rawData.id;
     if (rawData.translated_name) {
       this.name = rawData.translated_name;
-    }else{
+    } else {
       this.name = rawData.name;
     }
     this.icon = rawData.icon;

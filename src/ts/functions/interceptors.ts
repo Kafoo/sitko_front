@@ -1,8 +1,8 @@
 import router from "@/ts/router";
 import store from "@/ts/store";
 import axios from "axios";
-import i18n from '@/ts/plugins/i18n.js' 
-import { capitalize } from "@/ts/functions/vueFilters"
+import i18n from "@/ts/plugins/i18n.js";
+import { capitalize } from "@/ts/functions/vueFilters";
 
 axios.interceptors.response.use(
   response => {

@@ -1,8 +1,7 @@
 <template>
   <div>
-
     <div class="text-center">
-      <create-place-button class="mb-8"/>
+      <create-place-button class="mb-8" />
     </div>
 
     <div v-if="loading" class="d-flex flex-wrap justify-center">
@@ -17,7 +16,12 @@
     </div>
 
     <div v-else class="d-flex flex-wrap justify-center">
-      <place-card class="ma-2" v-for="place in places" :key="place.id" :place="place" />
+      <place-card
+        class="ma-2"
+        v-for="place in places"
+        :key="place.id"
+        :place="place"
+      />
     </div>
   </div>
 </template>
@@ -29,7 +33,7 @@ import { Component } from "vue-property-decorator";
 import PlaceModel from "@/ts/models/placeClass";
 import PlaceCard from "@c/molecules/place/PlaceCard.vue";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
-import CreatePlaceButton from "@c/atoms/button/CreatePlaceButton.vue"
+import CreatePlaceButton from "@c/atoms/button/CreatePlaceButton.vue";
 
 const namespace: string = "place";
 

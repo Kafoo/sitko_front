@@ -10,9 +10,8 @@
         @click="$router.push('/place/' + place.id)"
       >
         <v-img
-          v-if="place.image"
-          :lazy-src="place.image.low_medium"
-          :src="place.image.medium"
+          :lazy-src="image.low_medium"
+          :src="image.medium"
           height="130px"
         >
           <template v-slot:placeholder>
@@ -54,24 +53,23 @@
           </div>
         </v-card-text>
 
-        <tags-in-card :tags="place.tags"/>
-
+        <tags-in-card :tags="place.tags" />
       </v-card>
     </v-hover>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from "@vue/composition-api";
+import { ref, defineComponent, computed } from "@vue/composition-api";
 import {
   isMobile,
   windowWidth
 } from "@/ts/functions/composition/displayHelpers";
 import PlaceModel from "@/ts/models/placeClass";
-import TagsInCard from "@c/molecules/card/TagsInCard.vue"
+import ImageModel from "@/ts/models/imageClass";
+import TagsInCard from "@c/molecules/card/TagsInCard.vue";
 
 export default defineComponent({
-
   name: "PlaceCard",
 
   components: {
@@ -90,7 +88,19 @@ export default defineComponent({
 
     const mobile = isMobile(root);
 
-    return { winWidth, mobile };
+    var image: any = computed(() => {
+      if (props.place && props.place.image) {
+        return props.place.image;
+      } else {
+        return new ImageModel();
+      }
+    });
+
+    return { 
+      winWidth, 
+      mobile, 
+      image 
+    };
   }
 });
 </script>

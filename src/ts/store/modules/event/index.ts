@@ -10,7 +10,8 @@ export const state: EventState = {
   events: Array<EventModel>(),
   fetched: {
     place_events: [],
-    all_events:undefined
+    all_events: undefined,
+    inc_events: undefined
   }
 };
 

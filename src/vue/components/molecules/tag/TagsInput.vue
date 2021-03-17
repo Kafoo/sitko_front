@@ -4,11 +4,16 @@
       :tags="compTags"
       :label="label"
       editable
+      @removeTag="removeTag"
+      @update="changeTags"
+      draggable
+      closable
       @edit="pickingTags = true"
     />
 
     <v-dialog v-model="pickingTags" width="90%" max-width="800px">
       <choose-tags
+        v-if="pickingTags"
         :tags="compTags"
         @change="changeTags"
         :label="label"
@@ -25,7 +30,7 @@ import { useGetters, useActions } from "vuex-composition-helpers";
 import TagModel from "@/ts/models/tagClass";
 import ChooseTags from "@c/organisms/tag/ChooseTags.vue";
 import TagChip from "@c/atoms/tag/TagChip.vue";
-import CurrentTags from "@c/molecules/tag/CurrentTags.vue";
+import CurrentTags from "@c/molecules/current/CurrentTags.vue";
 
 export default defineComponent({
   name: "TagsInput",
@@ -48,7 +53,6 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-
     var pickingTags = ref(false);
 
     var compTags = ref<Array<TagModel>>([]);

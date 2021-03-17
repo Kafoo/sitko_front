@@ -1,44 +1,44 @@
 <template>
   <v-card>
-  <div class="d-flex align-center flex-column">
-    <div class="d-flex justify-space-around">
-      <v-switch
-        class="mx-6"
-        v-model="uniqueDate"
-        :label="$t('time.unique_date') | capitalize"
-      >
-      </v-switch>
-      <v-switch
-        class="mx-6"
-        v-model="timed"
-        :label="$t('time.timed') | capitalize"
-      >
-      </v-switch>
+    <div class="d-flex align-center flex-column">
+      <div class="d-flex justify-space-around">
+        <v-switch
+          class="mx-6"
+          v-model="uniqueDate"
+          :label="$t('time.unique_date') | capitalize"
+        >
+        </v-switch>
+        <v-switch
+          class="mx-6"
+          v-model="timed"
+          :label="$t('time.timed') | capitalize"
+        >
+        </v-switch>
+      </div>
+
+      <v-date-picker
+        v-show="uniqueDate"
+        v-model="caldate.date"
+        mode="datetime"
+        is24hr
+      />
+      <v-date-picker
+        v-show="!uniqueDate"
+        v-model="caldate.range"
+        is-range
+        mode="datetime"
+        is24hr
+      />
+
+      <v-card-actions class="mt-3">
+        <v-btn @click="$emit('close')">
+          {{ $t("confirm.cancel") }}
+        </v-btn>
+        <v-btn @click="confirm">
+          {{ $t("confirm.confirm") }}
+        </v-btn>
+      </v-card-actions>
     </div>
-
-    <v-date-picker
-      v-show="uniqueDate"
-      v-model="caldate.date"
-      mode="datetime"
-      is24hr
-    />
-    <v-date-picker
-      v-show="!uniqueDate"
-      v-model="caldate.range"
-      is-range
-      mode="datetime"
-      is24hr
-    />
-
-    <v-card-actions class="mt-3">
-      <v-btn @click="$emit('close')">
-        {{ $t("confirm.cancel") }}
-      </v-btn>
-      <v-btn @click="confirm">
-        {{ $t("confirm.confirm") }}
-      </v-btn>
-    </v-card-actions>
-  </div>
   </v-card>
 </template>
 
@@ -107,7 +107,7 @@ export default {
     confirm() {
       var newCaldate = {};
       newCaldate.timed = this.timed;
-      
+
       if (this.uniqueDate) {
         newCaldate.start = this.formatDT(this.caldate.date);
         newCaldate.end = this.formatDT(this.caldate.date);

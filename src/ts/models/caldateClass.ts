@@ -12,10 +12,11 @@ export default class Caldate {
   end: string;
   child_id?: number;
   child_type: string;
-  icon:string;
+  icon: string;
   name: string;
   chip: string;
   singleDate: boolean;
+  isPast: boolean;
   child?: any;
 
   constructor(rawData: any = {}) {
@@ -26,7 +27,7 @@ export default class Caldate {
     this.rawEnd = this.timeFormat(rawData.end);
     this.start = this.timeFormat(rawData.start, false);
     this.end = this.timeFormat(rawData.end, false);
-    this.child_type = rawData.child_type
+    this.child_type = rawData.child_type;
 
     if (this.start === this.end) {
       this.singleDate = true;
@@ -35,27 +36,22 @@ export default class Caldate {
     }
 
     if (this.singleDate) {
-      this.icon = 'today'
-    }else{
-      this.icon = 'date_range'
+      this.icon = "today";
+    } else {
+      this.icon = "date_range";
     }
 
-    const classes:any = { 
-      'project' : ProjectModel, 
-      'event' : EventModel, 
-      'place' : PlaceModel 
-    };
+    const beginning = new Date (this.start)
 
-      function dynamicClass (name:string) {
-      return classes[name];
+    if (beginning.getTime() < Date.now()) {
+      this.isPast = true
+    }else{
+      this.isPast = false
     }
 
     if (rawData.child) {
-
       this.name = rawData.child.title;
-      const entity_model = dynamicClass(this.child_type)
-      this.child = new entity_model(rawData.child)
-
+      this.child = rawData.child
     } else {
       this.name = "Evénement sans child";
     }

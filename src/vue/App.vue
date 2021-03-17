@@ -6,7 +6,7 @@
     <navigation />
 
     <!-- Content -->
-    <v-main style="margin-top:5px">
+    <v-main>
       <div v-if="loading" class="mt-5 d-flex justify-center">
         <loading-circle app />
       </div>

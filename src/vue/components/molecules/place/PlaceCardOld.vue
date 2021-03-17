@@ -63,12 +63,7 @@
             class="d-flex justify-end pa-2"
             style="position: absolute;bottom: 0;left: 0; width: 100%;"
           >
-            <v-btn
-              small
-              text
-              color="primary"
-              :to="'/place/' + place.id "
-            >
+            <v-btn small text color="primary" :to="'/place/' + place.id">
               {{ $t("enter") }}
             </v-btn>
             <v-btn small @click.prevent="true" icon class="mr-2">
@@ -94,7 +89,6 @@ import TinyTagChip from "@c/atoms/tag/TinyTagChip.vue";
 import PlaceModel from "@/ts/models/placeClass";
 
 export default defineComponent({
-
   name: "PlaceCard",
 
   components: {

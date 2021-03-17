@@ -21,13 +21,12 @@ function loadLocaleMessages() {
 }
 
 const stored_locale = localStorage.getItem("locale");
-var locale
+var locale;
 if (stored_locale) {
-  locale = stored_locale
-}else{
-  locale = navigator.language.split('-')[0]
+  locale = stored_locale;
+} else {
+  locale = navigator.language.split("-")[0];
 }
-
 
 export default new VueI18n({
   locale: locale,

@@ -6,16 +6,24 @@
   "and": "et",
   "none": "aucune",
   "delete": "supprimer",
+  "edit": "éditer",
   "upload": "télécharger",
   "download": "télécharger",
   "search": "chercher",
   "create": "créer",
   "enter": "entrer",
+  "join": "rejoindre",
+  "leave": "quitter",
+  "back": "retour",
+  "see all": "voir tout",
+
 
   "404": "page introuvable",
   "user not found" : "utilisateur inconnu",
   "internal server issue" : "petit problème de serveur",
   "no tag yet" : "pas encore de tag",
+  "no note yet" : "pas encore de note",
+  "no date yet" : "pas encore de date",
   "an old user" : "un ancien utilisateur",
 
   "home": "accueil",
@@ -28,6 +36,7 @@
   "my place": "mon lieu",
   "calendar": "calendrier",
   "projects": "projets",
+  "notes": "notes",
   "events": "événements",
   "caldate": "date",
   "contact": "contact",
@@ -46,17 +55,25 @@
 
   "my tags": "mes tags",
   "project tags": "tags du projet",
+  "project dates": "dates du projet",
   "event tags": "tags de l'événement",
   "place tags": "tags du lieu",
   "place projects": "projets du lieu",
   "place events": "événements du lieu",
+  "place notes": "notes du lieu",
 
   "every projects": "tous les projets",
   "every events": "tous les événements",
   "every places": "tous les lieux",
   "no project": "aucun projet",
   "no event": "aucun événement",
+  "no note": "aucune note",
   "no place": "aucun lieu",
+
+  "current projects": "projets en cours",
+  "incoming events": "événements à venir",
+  "past projects": "projets passés",
+  "past events": "événements passés",
 
 	"day": "jour",
 	"week": "semaine",
@@ -85,16 +102,23 @@
 
   "project edition": "edition du projet",
   "event edition": "edition de l'événement",
+  "note edition": "edition de la note",
   "place edition": "edition du lieu",
+
+  "back to project": "retour au projet",
 
   "Deletion is definitive": "La suppression est définitive",
   "Project deletion is definitive.": "La suppression du projet est définitive.",
   "Account deletion is definitive.": "La suppression du compte est définitive.",
   "Place deletion is definitive.": "La suppression du lieu est définitive.",
   "Event deletion is definitive.": "La suppression de l'événement est définitive.",
+  "Note deletion is definitive.": "La suppression de la note est définitive.",
   "A fresh verification link has been sent to your email address.": "Un nouveau mail de confirmation a été envoyé.",
   "Error sending verification link.":"Erreur lors de l'envoie de l'email de vérification.",
   "This project will be removed definitely": "Ce projet sera définitivement supprimé",
+
+  "You joined this place":"Vous avez rejoint ce lieu",
+  "You left this place":"Vous avez quitté ce lieu",
 
   "home_page":{
   	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il commence à se passer des choses.",
@@ -104,9 +128,14 @@
     "discord": "Rejoins-nous sur Discord"
   },
 
+  "help": {
+    "visibility": "<i><b>[ Fonctionnalité bientôt disponible ! ]</i></b><br><b>Public</b> : Tout le monde<br> <b>Restreint</b> : Amis et membres du lieu<br><b>Privé</b> : Membres du lieu uniquement"
+  },
+
   "confirm":{
   	"cancel": "annuler",
     "confirm": "confirmer",
+    "save" : "enregister",
     "edit": "éditer",
     "close": "fermer",
     "sure": "sûr.e ?"
@@ -123,13 +152,27 @@
 	"confirmation": "confirmation",
 
   "options":{
-    "edit":"modifier"
+    "edit":"modifier",
+    "add":"ajouter"
   },
 
   "created_by":{
-    "project":"projet créé par {user}",
-    "event":"événement créé par {user}",
-    "place":"lieu créé par {user}"
+    "project": {
+      "private" : "projet public créé par {user}",
+      "public" : "projet public créé par {user}"
+    },
+    "event":{
+      "private" : "événement public créé par {user}",
+      "public" : "événement public créé par {user}"
+    },
+    "note":{
+      "private" : "note publique créée par {user}",
+      "public" : "note publique créée par {user}"
+    },
+    "place":{
+      "private" : "lieu public créé par {user}",
+      "public" : "lieu public créé par {user}"
+    }
   },
 
   "actions":{

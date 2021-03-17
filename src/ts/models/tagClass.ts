@@ -6,18 +6,26 @@ export default class TagModel {
   custom: boolean;
   category?: TagsCategoryModel;
   color?: string;
+  selected?: Boolean;
+  order?: Number;
 
   constructor(rawData: any = {}) {
     this.id = rawData.id;
     if (rawData.translated_title) {
       this.title = rawData.translated_title;
-    }else{    
+    } else {
       this.title = rawData.title;
     }
     this.custom = rawData.custom;
-    this.category = new TagsCategoryModel(rawData.category);
 
-    if (this.category) {
+    if (rawData.pivot) {    
+      this.order = rawData.pivot.order;
+    }
+
+    if (rawData.category) {
+
+      this.category = new TagsCategoryModel(rawData.category);
+
       switch (this.category.id) {
         case 1:
           this.color = "grey darken-3";

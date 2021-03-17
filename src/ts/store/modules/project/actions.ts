@@ -7,14 +7,18 @@ import axios from "axios";
 export const actions: ActionTree<ProjectState, RootState> = {
 
   GET_PROJECT({ commit, state }, project_id) {
-    if (state.projects.find((x: ProjectModel) => x.id === project_id)) {
-      return true;
+
+    var project = state.projects.find((x: ProjectModel) => x.id === project_id)
+    
+    if (project) {
+      return project;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "project/" + project_id)
         .then(response => {
-          //(Le projet aura été push dans le store)
-          commit("pushProject", new ProjectModel(response.data));
+          project = new ProjectModel(response.data)
+          commit("pushProject", project);
+          return project
         })
         .catch(() => {});
     }
@@ -22,7 +26,7 @@ export const actions: ActionTree<ProjectState, RootState> = {
 
   GET_ALL_PROJECTS({ state, commit }) {
     if (state.fetched.all_projects) {
-      return true;
+      return state.projects;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "project")
@@ -31,22 +35,42 @@ export const actions: ActionTree<ProjectState, RootState> = {
           for (const project of response.data) {
             commit("pushProject", new ProjectModel(project));
           }
+          return state.projects
+        })
+        .catch(() => {});
+    }
+  },
+
+  GET_INC_PROJECTS({ state, getters, commit }) {
+    if (state.fetched.inc_projects) {
+      return getters.inc_projects;
+    } else {
+      return axios
+        .get(process.env.VUE_APP_API_URL + "project?filter=incoming")
+        .then(response => {
+          state.fetched.inc_projects = Date.now();
+          for (const project of response.data) {
+            commit("pushProject", new ProjectModel(project));
+          }
+          return getters.inc_projects;
         })
         .catch(() => {});
     }
   },
 
   GET_PROJECTS_BY_PLACE({ state, commit }, place_id) {
+
     if (state.fetched.place_projects[place_id]) {
-      return true;
+      return state.projects.filter((x:ProjectModel) => x.place_id == place_id);
     } else {
-      state.fetched.place_projects[place_id] = Date.now();
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
         .then(response => {
+          state.fetched.place_projects[place_id] = Date.now();
           for (const project of response.data) {
             commit("pushProject", new ProjectModel(project));
           }
+          return state.projects.filter((x:ProjectModel) => x.place_id == place_id);
         })
         .catch(() => {});
     }
@@ -71,10 +95,10 @@ export const actions: ActionTree<ProjectState, RootState> = {
 
   SEND_PROJECT_DELETION({ commit }, project_id) {
     //Delete call to API
-    return axios.delete(process.env.VUE_APP_API_URL + "project/" + project_id)
+    return axios
+      .delete(process.env.VUE_APP_API_URL + "project/" + project_id)
       .then(response => {
         commit("removeProject", project_id);
       });
   }
-
 };

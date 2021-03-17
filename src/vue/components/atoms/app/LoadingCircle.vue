@@ -1,7 +1,7 @@
 <template>
   <v-progress-circular
     indeterminate
-    :color="app?'green lighten-2':'grey'"
+    :color="app ? 'green lighten-2' : 'grey'"
     class="loading"
     :size="small ? 50 : 100"
     :width="small ? 6 : 10"
@@ -22,7 +22,7 @@ export default defineComponent({
     app: {
       type: Boolean,
       default: false
-    },
+    }
   },
 
   setup() {

@@ -7,6 +7,7 @@ import { caldate } from "./modules/caldate";
 import { place } from "./modules/place";
 import { app } from "./modules/app";
 import { tag } from "./modules/tag";
+import { note } from "./modules/note";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     event,
     caldate,
     place,
-    tag
+    tag,
+    note
   }
 });

@@ -1,19 +1,26 @@
 <template>
   <primary-content-body>
-    <loading-circle v-if="loading" small/>
-    <div v-else-if="project" class="card-body py-0">
+    <loading-circle v-if="loading" small />
+    <div v-else-if="project" class="card-body">
+
+      <v-row class="mx-sm-2 mt-2 mb-4">
+        <back-button 
+        :text="project.title"
+        :path="project.path"/>
+      <v-row>
+      </v-row>
+        <place-chip :place="project.place"/>
+      </v-row>
+
       <v-form @submit.prevent="editProject" v-model="form">
 
-        <v-row justify="center">
-          <label
-            for="name"
-            class="name text-h5 font-weight-bold black--text mb-3"
-          >
-            {{$t('project edition') | capitalize}}
-          </label>
-        </v-row>
+        <cud-layout>
 
-        <v-row justify="center">
+          <template v-slot:header-title>
+            {{ $t("project edition") | capitalize }}
+          </template>
+
+          <template v-slot:image>
             <image-input
               nullable
               :image="project.image"
@@ -23,33 +30,44 @@
                 }
               "
             />
-        </v-row>
+          </template>
 
-        <v-row justify="center">
-          <v-col cols="12" sm="6">
+          <template v-slot:title>
             <v-text-field
               outlined
+              class="rounded-lg"
               :label="$t('title') | capitalize"
               v-model="project.title"
               :rules="[rules.required[0]]"
             ></v-text-field>
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" sm="10">
+          <template v-slot:visibility>
+            <v-select
+              disabled :items="['Public', 'Restreint', 'Privé']"
+              label="Visibilité"
+              outlined
+              class="rounded-lg"
+            ></v-select>
+
+            <help
+            class="mt-2 mx-2"
+            :text="$t('help.visibility')"
+            />
+          </template>
+
+          <template v-slot:description>
             <v-textarea
               outlined
+              class="rounded-lg"
               :label="$t('description') | capitalize"
               name="input-7-4"
               v-model="project.description"
               :rules="[rules.required[0]]"
             ></v-textarea>
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12">
+          <template v-slot:tags>
             <tags-input
               :tags="project.tags"
               @update="
@@ -59,40 +77,40 @@
               "
               :label="$t('project tags') | capitalize"
             />
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" class="mb-3">
-          <caldate-input
-            :caldates="project.caldates"
-            @update="
-              caldates => {
-                project.caldates = caldates;
-              }
-            "
-          />
-        </v-row>
+          <template v-slot:caldates>
+            <caldate-input
+              :caldates="project.caldates"
+              @update="
+                caldates => {
+                  project.caldates = caldates;
+                }
+              "
+              :label="$t('project dates') | capitalize"
+            />
+          </template>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+          <template v-slot:actions>
+            <delete-button
+              :disabled="loading_edit"
+              :loading="loading_deletion"
+              :text="$t('delete project')"
+              :confirmation_text="$t('Project deletion is definitive.')"
+              @confirm-action="deleteProject"
+            />
 
-          <delete-button
-            :disabled="loading_edit"
-            :loading="loading_deletion"
-            :text="$t('delete project')"
-            :confirmation_text="$t('Project deletion is definitive.')"
-            @confirm-action="deleteProject"
-          />
+            <v-btn
+              type="submit"
+              color="success"
+              :loading="loading_edit"
+              :disabled="loading_edit || !form"
+            >
+              {{ $t("confirm.save") }}
+            </v-btn>
+          </template>
 
-          <v-btn 
-          type="submit" 
-          color="success" 
-          :loading="loading_edit" 
-          :disabled="loading_edit || !form"
-          >
-            {{$t('confirm.edit')}}
-          </v-btn>
-        </v-card-actions>
+        </cud-layout>
 
       </v-form>
     </div>
@@ -100,15 +118,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, watch } from "@vue/composition-api";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watch
+} from "@vue/composition-api";
 import { useActions } from "vuex-composition-helpers";
-import useProjectGetter from "@use/useProjectGetter";
+import useFetcher from "@use/useFetcher";
 import { useInputRules } from "@/ts/functions/composition/inputRules";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import ProjectModel from "@/ts/models/projectClass";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
-import DeleteButton from "@c/atoms/app/DeleteButton.vue"
+import DeleteButton from "@c/atoms/app/DeleteButton.vue";
+import PlaceChip from "@c/atoms/place/PlaceChip.vue"
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
 
 export default defineComponent({
   name: "ProjectEdition",
@@ -117,19 +143,22 @@ export default defineComponent({
     TagsInput,
     ImageInput,
     CaldateInput,
-    DeleteButton
+    DeleteButton,
+    PlaceChip,
+    CudLayout
   },
 
-  setup(props, {root} ) {
-
+  setup(props, { root }) {
+  
     var form = ref(false);
     var loading_deletion = ref(false);
     var loading_edit = ref(false);
 
     const rules = useInputRules();
 
-    const project_id = parseInt(root.$route.params.id)
-    var { project, loading } = useProjectGetter(project_id, true);
+    const project_id = parseInt(root.$route.params.id);
+
+    var { entity:project, loading } = useFetcher("project/GET_PROJECT", project_id, true);
 
     const { SEND_PROJECT_EDITION } = useActions({
       SEND_PROJECT_EDITION: "project/SEND_PROJECT_EDITION"

@@ -8,7 +8,7 @@
       ></v-progress-circular>
     </div>
 
-    <v-row class="fill-height">
+    <v-row class="fill-height mt-2">
       <v-col>
         <v-sheet class="d-flex ma-4 mt-0">
           <div
@@ -90,6 +90,7 @@
             :events="caldates"
             :event-color="getCaldateColor"
             :type="type"
+            :start="$route.hash.split('#')[1]"
             @click:event="showCaldate"
             @click:more="viewDay"
             @click:date="viewDay"
@@ -101,9 +102,7 @@
             offset-x
             min-width="0"
           >
-
-            <project-card :project="selectedCaldate.child" />
-
+            <projent-card v-if="selectedChild !== {}" :projent="selectedChild" />
           </v-menu>
         </v-sheet>
       </v-col>
@@ -112,29 +111,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "@vue/composition-api";
+import { defineComponent, ref, Ref, onMounted } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
+import ProjectModel from "@/ts/models/projectClass";
+import EventModel from "@/ts/models/eventClass";
 import CaldateModel from "@/ts/models/caldateClass";
-import ProjectCard from "@c/molecules/project/ProjectCard.vue";
+import ProjentCard from "@c/molecules/card/ProjentCard.vue";
 
 export default defineComponent({
   name: "Calendar",
 
   components: {
-    ProjectCard
+    ProjentCard
   },
 
   setup(props, { root, refs }) {
-
     var calendar = ref({
       move: (arg: any) => {},
       prev: () => {},
-      next: () => {}
+      next: () => {},
+      parsedValue: {month:0}
     });
 
     var focus = ref("");
     var type = ref("month");
-    var selectedCaldate = ref({});
+    var selectedCaldate = ref({}) as Ref<CaldateModel>;
+    var selectedChild = ref({});
     var selectedElement = ref(null);
     var selectedOpen = ref(false);
 
@@ -147,8 +149,9 @@ export default defineComponent({
     var loading = ref(false);
 
     onMounted(() => {
-      //Force calendar to show month/year
+
       calendar.value.move(0);
+
       //Get caldates
       loading.value = true;
       GET_CALDATES_BY_PLACE(place_id).then(() => {
@@ -185,8 +188,21 @@ export default defineComponent({
 
     const showCaldate = ({ nativeEvent, event }: any) => {
       const open = () => {
+        const classes: any = {
+          project: ProjectModel,
+          event: EventModel
+        };
+
+        function dynamicClass(name: string) {
+          return classes[name];
+        }
+
         selectedCaldate.value = event;
         selectedElement.value = nativeEvent.target;
+
+        const entity_model = dynamicClass(selectedCaldate.value.child_type);
+        selectedChild.value = new entity_model(selectedCaldate.value.child);
+
         setTimeout(() => {
           selectedOpen.value = true;
         }, 10);
@@ -208,6 +224,7 @@ export default defineComponent({
       type,
       selectedCaldate,
       selectedElement,
+      selectedChild,
       selectedOpen,
       caldates,
       loading,

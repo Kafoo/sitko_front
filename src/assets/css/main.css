@@ -116,10 +116,42 @@ user-select: none; /* Standard */
 }
 
 .v-slide-group__wrapper {
-  touch-action: pan-y !important 
+  touch-action: pan-y !important
 }
 
 .end{
   position: absolute;
   bottom: 0;
+}
+
+.mobile{
+  display: none;
+}
+.desktop{
+  display: initial;
+}
+
+@media (max-width: 600px) {
+  .mobile{
+    display: initial;
+  }
+  .desktop{
+    display: none;
+  }
+}
+
+.labelized {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  white-space: nowrap;
+  top: -10px;
+  padding: 0 7px;
+  background-color: white;
+}
+
+.chip-text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

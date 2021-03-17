@@ -1,25 +1,28 @@
 <template>
   <primary-content-body>
-    <v-card-text class="pa-0">
+    <div class="card-body">
+      <v-row 
+      v-if="lastRoute"
+      class="mx-sm-2 mt-2 mb-4">
+        <back-button 
+        :path="lastRoute.path"/>
+      </v-row>
       <v-form @submit.prevent="createPlace" v-model="form">
-      
-        <v-row justify="center">
-          <label
-            for="name"
-            class="name text-h5 font-weight-bold black--text mb-5"
-          >
+
+        <cud-layout>
+
+          <template v-slot:header-title>
             {{ $t("actions.new", { item: $t("place") }) | camelize }}
-          </label>
-        </v-row>
+          </template>
 
-        <v-row justify="center">
-          <image-input :image="newPlace.image" @update="changeImage" />
-        </v-row>
+          <template v-slot:image>
+            <image-input 
+            :image="newPlace.image" 
+            @update="changeImage" />
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" sm="6">
+          <template v-slot:title>
             <v-text-field
-              class="mt-5"
               :label="$t('name') | capitalize"
               outlined
               maxlength="40"
@@ -27,11 +30,23 @@
               v-model="newPlace.name"
               :disabled="loading"
             ></v-text-field>
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" sm="10">
+          <template v-slot:visibility>
+            <v-select
+              disabled :items="['Public', 'Restreint', 'Privé']"
+              label="Visibilité"
+              outlined
+              class="rounded-lg"
+            ></v-select>
+
+            <help
+            class="mt-2 mx-2"
+            :text="$t('help.visibility')"
+            />
+          </template>
+
+          <template v-slot:description>
             <v-textarea
               :label="$t('description') | capitalize"
               outlined
@@ -40,29 +55,29 @@
               v-model="newPlace.description"
               :disabled="loading"
             ></v-textarea>
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-row justify="center" dense>
-          <v-col cols="12" sm="10">
+          <template v-slot:tags>
             <tags-input
               :tags="newPlace.tags"
               @update="updateTags"
               :label="$t('place tags') | capitalize"
             />
-          </v-col>
-        </v-row>
+          </template>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn type="submit" color="success" :disabled="loading || !form">
-            {{ $t("confirm.confirm") }}
-          </v-btn>
-        </v-card-actions>
+          <template v-slot:actions>
+            <v-btn 
+            type="submit" 
+            color="success" 
+            :disabled="loading || !form"
+            :loading="loading">
+              {{ $t("confirm.confirm") }}
+            </v-btn>
+          </template>
+
+        </cud-layout>
       </v-form>
-
-      <loading-bar :loading="loading" />
-    </v-card-text>
+    </div>
   </primary-content-body>
 </template>
 
@@ -74,7 +89,7 @@ import {
   computed,
   Ref
 } from "@vue/composition-api";
-import { useActions } from "vuex-composition-helpers";
+import { useActions, useGetters } from "vuex-composition-helpers";
 import { useInputRules } from "@/ts/functions/composition/inputRules";
 import LoadingBar from "@c/atoms/app/LoadingBar.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
@@ -82,6 +97,7 @@ import ImageModel from "@/ts/models/imageClass";
 import PlaceModel from "@/ts/models/placeClass";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import TagModel from "@/ts/models/tagClass";
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
 
 export default defineComponent({
   name: "PlaceCreation",
@@ -89,19 +105,16 @@ export default defineComponent({
   components: {
     LoadingBar,
     ImageInput,
-    TagsInput
+    TagsInput,
+    CudLayout
   },
 
   setup(props, { root }) {
+
+    const { lastRoute } = useGetters({lastRoute: 'app/lastRoute'} as any)
+
     // PLACE //
-    var newPlace: Ref<PlaceModel> = ref({
-      name: "",
-      description: "",
-      image: new ImageModel(0),
-      tags: [],
-      projects_count: 0,
-      author:{id:0,name:'',email:'',tags:[]}
-    });
+    var newPlace: Ref<PlaceModel> = ref(new PlaceModel());
 
     var form = ref(false);
     var loading = ref(false);
@@ -119,13 +132,13 @@ export default defineComponent({
       loading.value = true;
       SEND_PLACE_CREATION(newPlace.value)
         .then(() => {
-          console.log('compo then')
+          console.log("compo then");
           loading.value = false;
           root.$router.push("/places/myplaces");
         })
-        .catch((error:any) => {
-        console.log(error)
-          console.log('compo catch')
+        .catch((error: any) => {
+          console.log(error);
+          console.log("compo catch");
           loading.value = false;
         });
     };
@@ -144,7 +157,8 @@ export default defineComponent({
       newPlace,
       showCrop,
       changeImage,
-      updateTags
+      updateTags,
+      lastRoute
     };
   }
 });

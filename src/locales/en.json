@@ -16,9 +16,14 @@
     "discord": "Join us on Discord"
   },
 
+  "help": {
+    "visibility": "<i><b>[ Soon ! ]</i></b><br><b>Public</b> : Everybody<br> <b>Restreint</b> : Friends and place members<br><b>Privé</b> : Place members only"
+  },
+
   "confirm":{
   	"cancel": "cancel",
     "confirm": "confirm",
+    "save" : "save",
     "edit": "edit",
     "close": "close",
     "sure": "are you sure ?"
@@ -33,13 +38,27 @@
   },
 
   "options":{
-    "edit":"edit"
+    "edit":"edit",
+    "add":"add"
   },
 
   "created_by":{
-    "project":"project created by {user}",
-    "event":"event created by {user}",
-    "place":"place created by {user}"
+    "project": {
+      "private" : "public project created by {user}",
+      "public" : " private project created by {user}"
+    },
+    "event":{
+      "private" : "public event created by {user}",
+      "public" : " private event created by {user}"
+    },
+    "note":{
+      "private" : "public note created by {user}",
+      "public" : " private note created by {user}"
+    },
+    "place":{
+      "private" : "public place created by {user}",
+      "public" : " private place created by {user}"
+    }
   },
 
   "actions":{

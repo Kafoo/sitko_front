@@ -1,7 +1,6 @@
 <template>
   <primary-content-body>
     <div>
-      
       <v-row justify="center">
         <page-title :title="$t('my account') | capitalize" />
       </v-row>
@@ -85,7 +84,7 @@
               @update="
                 tags => {
                   editedUser.tags = tags;
-                  modified = true
+                  modified = true;
                 }
               "
             />
@@ -136,8 +135,8 @@
           </v-col>
         </v-row>
 
-        <v-row justify="center">
-          <v-col class="d-flex flex-column" cols="12" sm="auto" xsm="12">
+        <v-row justify="end">
+          <v-col class="d-flex flex-column" cols="12" sm="auto">
             <v-btn
               class="d-block mb-4"
               color="success"
@@ -220,7 +219,7 @@ export default defineComponent({
   setup(props, { root }) {
     const rules = useInputRules();
 
-    var modified = ref(false)
+    var modified = ref(false);
     var form = ref(false);
     var show_password = ref(false);
     var dialog = ref(false);
@@ -228,7 +227,7 @@ export default defineComponent({
     var error = ref(null);
     var loading = ref(false);
     var loading_deletion = ref(false);
-    var editedUser = ref(new UserModel());
+ 
 
     const { SEND_USER_EDITION } = useActions({
       SEND_USER_EDITION: "auth/SEND_USER_EDITION"
@@ -242,9 +241,7 @@ export default defineComponent({
     const { user } = useGetters({ user: "auth/user" } as any);
     var { errors } = useGetters({ errors: "app/errors" } as any);
 
-    onMounted(() => {
-      editedUser.value = new UserModel(user.value);
-    });
+   var editedUser = ref<UserModel>(JSON.parse(JSON.stringify(user.value)));
 
     const firstNameLabel = computed(
       () =>
@@ -275,7 +272,7 @@ export default defineComponent({
       SEND_USER_EDITION(editedUser.value)
         .then(() => {
           loading.value = false;
-          modified.value = false
+          modified.value = false;
         })
         .catch(() => {
           loading.value = false;
@@ -284,7 +281,7 @@ export default defineComponent({
 
     const changeImage = (data: string | ImageModel) => {
       editedUser.value.image = data;
-      modified.value = true
+      modified.value = true;
     };
 
     const logout = () => {

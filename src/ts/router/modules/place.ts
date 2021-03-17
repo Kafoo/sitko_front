@@ -1,7 +1,6 @@
 import { auth, guest } from "@/ts/router/middlewares";
 
 export default [
-
   {
     path: "/place/create",
     name: "PlaceCreation",
@@ -44,7 +43,7 @@ export default [
         path: "",
         name: "PlaceOverview",
         beforeEnter: auth,
-        component: () => import("@/vue/views/Place/Overview.vue"),
+        component: () => import("@/vue/views/Place/PlaceOverview.vue"),
         meta: {
           title: "Sitko - Lieu"
         }
@@ -68,6 +67,15 @@ export default [
         }
       },
       {
+        path: "notes",
+        name: "Notes",
+        beforeEnter: auth,
+        component: () => import("@/vue/views/Place/Notes.vue"),
+        meta: {
+          title: "Sitko - Notes"
+        }
+      },
+      {
         path: "events",
         name: "Events",
         beforeEnter: auth,
@@ -88,7 +96,7 @@ export default [
     ]
   },
   {
-    path: "/place/edit/:id",
+    path: "/place/:id/edit",
     name: "PlaceEdition",
     beforeEnter: auth,
     component: () => import("@/vue/views/Place/PlaceEdition.vue"),

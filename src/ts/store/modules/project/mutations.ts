@@ -12,8 +12,8 @@ export const mutations: MutationTree<ProjectState> = {
     var exists = state.projects.find((x: ProjectModel) => x.id === project.id);
     if (exists) {
       //refresh
-      const index = state.projects.indexOf(exists)
-      state.projects.splice(index, 1, project)
+      const index = state.projects.indexOf(exists);
+      state.projects.splice(index, 1, project);
     } else {
       //or push
       state.projects.push(project);
@@ -23,8 +23,8 @@ export const mutations: MutationTree<ProjectState> = {
   removeProject(state, place_id: number) {
     var exists = state.projects.find((x: ProjectModel) => x.id === place_id);
     if (exists) {
-      const index = state.projects.indexOf(exists)
-      state.projects.splice(index, 1)
+      const index = state.projects.indexOf(exists);
+      state.projects.splice(index, 1);
     }
   }
 };

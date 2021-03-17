@@ -1,5 +1,4 @@
 <template>
-  
   <v-btn
     large
     to="/place/create"
@@ -9,30 +8,18 @@
   >
     {{ $t("actions.create", { item: $t("place") }) }}
   </v-btn>
-
 </template>
 
 <script lang="ts">
-
-import { defineComponent } from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-
-  name : "CreatePlaceButton",
+  name: "CreatePlaceButton",
 
   setup() {
-
-
-    return{
- 
-    }
-
+    return {};
   }
 });
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>
