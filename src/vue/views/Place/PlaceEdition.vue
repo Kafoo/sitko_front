@@ -4,6 +4,12 @@
     <loading-circle v-if="loading" small />
     <div v-else-if="place" class="card-body">
 
+      <v-row class="mx-sm-2 mt-2 mb-4">
+        <back-button 
+        :text="place.name"
+        :path="place.path"/>
+      </v-row>
+
       <v-form @submit.prevent="editPlace" v-model="form">
 
         <cud-layout>

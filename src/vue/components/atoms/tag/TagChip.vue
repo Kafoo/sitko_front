@@ -94,7 +94,8 @@ export default defineComponent({
 }
 
 .tag-chip.selected {
-    box-shadow: inset 0px 0px 20px 7px #ffffffd1;
-    color: #353535 !important;
+    box-shadow: inset 0 0 20px 20px hsl(0deg 0% 100%);
+    color: #353535!important;
+    border: 1px solid;
 }
 </style>

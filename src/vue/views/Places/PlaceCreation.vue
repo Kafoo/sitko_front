@@ -12,7 +12,7 @@
         <cud-layout>
 
           <template v-slot:header-title>
-            {{ $t("actions.new", { item: $t("place") }) | camelize }}
+            {{ $t("actions.new.place") | camelize }}
           </template>
 
           <template v-slot:image>

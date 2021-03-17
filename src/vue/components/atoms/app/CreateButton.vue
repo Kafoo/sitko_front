@@ -6,7 +6,7 @@
     justify="center"
     align="center"
   >
-    {{ $t("actions.create", { item: item }) }}
+    {{ text }}
   </v-btn>
 </template>
 
@@ -17,7 +17,7 @@ export default defineComponent({
   name: "CreateButton",
 
   props: {
-    item: String
+    text: String
   }
 });
 </script>

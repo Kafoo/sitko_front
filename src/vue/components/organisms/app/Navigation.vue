@@ -74,9 +74,11 @@
             :key="item.title"
             :to="item.path"
           >
-            <v-list-item-title>
+            <v-list-item-title style="max-width:247px">
               <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
-              {{ item.title }}
+              <span class="text-truncate">
+                {{ item.title }} de ouf de ta race
+              </span>
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -140,7 +142,7 @@ export default {
       } else {
         first = {
           title: this.$options.filters.capitalize(
-            this.$t("actions.create", { item: this.$t("place") })
+            this.$t("actions.create.place")
           ),
           path: "/place/create",
           icon: "home"

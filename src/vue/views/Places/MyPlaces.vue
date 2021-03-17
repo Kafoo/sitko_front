@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="text-center">
-      <create-place-button class="mb-8" />
+      <create-button 
+      class="mb-8" 
+      :text="$t('actions.create.place')"
+      @action="$router.push('/place/create/')"
+      />
     </div>
 
     <div v-if="loading" class="d-flex flex-wrap justify-center">
@@ -33,7 +37,7 @@ import { Component } from "vue-property-decorator";
 import PlaceModel from "@/ts/models/placeClass";
 import PlaceCard from "@c/molecules/place/PlaceCard.vue";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
-import CreatePlaceButton from "@c/atoms/button/CreatePlaceButton.vue";
+import CreateButton from "@c/atoms/app/CreateButton.vue";
 
 const namespace: string = "place";
 
@@ -43,7 +47,7 @@ const namespace: string = "place";
   components: {
     PlaceCard,
     PrimaryContentBody,
-    CreatePlaceButton
+    CreateButton
   }
 })
 export default class Places extends Vue {

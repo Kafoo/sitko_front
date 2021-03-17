@@ -176,12 +176,18 @@
   },
 
   "actions":{
-  	"create": "créer un {item}",
-  	"create_f": "créer une {item}",
-    "new": "nouveau {item}",
-    "new_f": "nouvelle {item}",
-    "add": "ajouter un {item}",
-    "add_f": "ajouter une {item}"
+  	"create": {
+      "project" : "créer un projet",
+      "event" : "créer un événement",
+      "note" : "créer une note",
+      "place" : "créer un lieu"
+    },
+    "new": {
+      "project" : "nouveau projet",
+      "event" : "nouvel événement",
+      "note" : "nouvelle note",
+      "place" : "nouveau lieu"
+    }
   },
 
   "data":{

@@ -21,7 +21,9 @@
         </div>
 
         <div class="placeAction-container mb-5 d-flex flex-column flex-sm-row justify-end">
-          <join-button :place="place"/>
+          <join-button 
+          v-if="place.author.id !== user.id"
+          :place="place"/>
           <v-btn
             :to="'/place/' + $route.params.id + '/contact'"
             class="placeAction rounded-lg mb-4 ml-sm-4"
@@ -74,7 +76,7 @@ import { defineComponent, ref, computed, watch } from "@vue/composition-api"
 import Vue from 'Vue'
 import PlaceModel from "@/ts/models/placeClass"
 import HeaderImage from "@c/molecules/media/HeaderImage.vue";
-import { useActions } from 'vuex-composition-helpers';
+import { useActions, useGetters } from 'vuex-composition-helpers';
 import JoinButton from '@c/atoms/place/JoinButton.vue';
 
 export default defineComponent({
@@ -94,7 +96,7 @@ export default defineComponent({
 
   setup(props, {root}) {
 
-    const morePlaceActions = ref([
+    var morePlaceActions = ref([
       {
         title: root.$options.filters!.capitalize(root.$t("calendar")),
         action: ()=>{root.$router.push('/place/' + root.$route.params.id + '/calendar')},
@@ -114,16 +116,24 @@ export default defineComponent({
         title: root.$options.filters!.capitalize(root.$t("events")),
         action: ()=>{root.$router.push('/place/' + root.$route.params.id + '/events')},
         icon: "star"
-      },
-      {
-        title: root.$options.filters!.capitalize(root.$t("edit")),
-        action: ()=>{root.$router.push('/place/' + root.$route.params.id + '/edit')},
-      icon: "edit"
       }
     ]);
 
+    const { user } = useGetters({user: 'auth/user'} as any)
+
+    if (props.place && user.value.id == props.place.author.id) {
+      morePlaceActions.value.push(
+        {
+          title: root.$options.filters!.capitalize(root.$t("edit")),
+          action: ()=>{root.$router.push('/place/' + root.$route.params.id + '/edit')},
+        icon: "edit"
+        }
+      )
+    }
+
     return{
-      morePlaceActions
+      morePlaceActions,
+      user
     }
 
   }

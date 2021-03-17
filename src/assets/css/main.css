@@ -155,3 +155,9 @@ user-select: none; /* Standard */
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.centering{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

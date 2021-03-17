@@ -13,14 +13,17 @@ export default class PlaceModel extends TaggableModel {
   author: UserModel;
   joined: Boolean;
   notes: Array<NoteModel>
+  path: String;
 
   constructor(rawData: any = {}) {
     super(rawData)
     this.id = rawData.id;
-    this.name = rawData.name;
-    this.description = rawData.description;
+    this.name = rawData.name || '';
+    this.description = rawData.description || '';
 
     this.joined = rawData.joined
+
+    this.path = '/place/'+this.id
 
     if (rawData.author) {
       this.author = rawData.author;

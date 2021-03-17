@@ -62,12 +62,18 @@
   },
 
   "actions":{
-  	"create": "new {item}",
-  	"create_f": "new {item}",
-    "new": "new {item}",
-    "new_f": "new {item}",
-    "add": "add {item}",
-    "add_f": "add {item}"
+  	"create": {
+      "project" : "new project",
+      "event" : "new event",
+      "note" : "new note",
+      "place" : "new place"
+    },
+    "new": {
+      "project" : "new project",
+      "event" : "new event",
+      "note" : "new note",
+      "place" : "new place"
+    }
   },
 
   "data":{

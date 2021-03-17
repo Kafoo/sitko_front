@@ -25,6 +25,13 @@
       :label="$t('notes') | capitalize"
     />
 
+    <div class="centering">
+      <create-button
+        :text="$t('actions.create.note')"
+        @action="$router.push('/note/create/' + place_id)"
+      />
+    </div>
+
     <net-slide
       :title="$t('current projects') | capitalize"
       :all="`/place/`+place.id+`/projects`"
@@ -86,6 +93,8 @@ import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
 import NetSlide from "@c/organisms/app/NetSlide.vue";
 import PlaceHeader from "@c/organisms/place/PlaceHeader.vue"
+import CreateButton from "@c/atoms/app/CreateButton.vue";
+
 
 export default defineComponent({
   name: "PlaceOverview",
@@ -98,7 +107,8 @@ export default defineComponent({
     CurrentTags,
     CurrentNotes,
     NetSlide,
-    PlaceHeader
+    PlaceHeader,
+    CreateButton
   },
 
   setup(props, { root }) {

@@ -3,7 +3,7 @@
     <page-title class="my-5" :title="$t('place notes') | capitalize" />
     <div v-if="user.place && user.place.id === place_id" class="text-center">
       <create-button
-        :item="$t('note')"
+        :text="$t('actions.create.note')"
         @action="$router.push('/note/create/' + place_id)"
       />
     </div>
