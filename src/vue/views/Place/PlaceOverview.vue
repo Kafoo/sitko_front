@@ -28,7 +28,7 @@
     <div class="centering">
       <create-button
         :text="$t('actions.create.note')"
-        @action="$router.push('/note/create/' + place_id)"
+        @action="$router.push('/note/create/' + place.id)"
       />
     </div>
 

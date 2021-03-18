@@ -5,6 +5,7 @@
       style="width:300px;height:400px"
     >
       <v-img
+        v-if="place.image"
         height="200px"
         width="80%"
         class="rounded-lg"
@@ -47,13 +48,6 @@
       </v-btn>
     </div>
 
-    <!-- <v-card
-    class="d-flex flex-column align-center ma-5 elevation-3 flex-shrink-0"
-    >
-      <v-btn class="mt-3 white--text" color="green">Rejoindre</v-btn>
-      <v-btn class="mt-3 white--text" color="red">Quitter</v-btn>
-      <v-btn class="mt-3 mb-3 white--text" color="grey">Contacter</v-btn>
-    </v-card> -->
   </div>
 </template>
 

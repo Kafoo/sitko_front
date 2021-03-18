@@ -77,7 +77,7 @@
             <v-list-item-title style="max-width:247px">
               <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
               <span class="text-truncate">
-                {{ item.title }} de ouf de ta race
+                {{ item.title }}
               </span>
             </v-list-item-title>
           </v-list-item>

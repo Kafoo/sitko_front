@@ -113,6 +113,7 @@
 <script lang="ts">
 import { defineComponent, ref, Ref, onMounted } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
+import useFetcher from "@use/useFetcher";
 import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
 import CaldateModel from "@/ts/models/caldateClass";
@@ -140,23 +141,14 @@ export default defineComponent({
     var selectedElement = ref(null);
     var selectedOpen = ref(false);
 
-    const { GET_CALDATES_BY_PLACE } = useActions({
-      GET_CALDATES_BY_PLACE: "caldate/GET_CALDATES_BY_PLACE"
-    } as any);
-    const { caldates } = useGetters({ caldates: "caldate/caldates" } as any);
     const place_id = parseInt(root.$route.params.id);
 
-    var loading = ref(false);
+    var { entity:caldates, loading } = useFetcher("caldate/GET_CALDATES_BY_PLACE", place_id);
 
     onMounted(() => {
 
       calendar.value.move(0);
 
-      //Get caldates
-      loading.value = true;
-      GET_CALDATES_BY_PLACE(place_id).then(() => {
-        loading.value = false;
-      });
     });
 
     const typeToLabel = {

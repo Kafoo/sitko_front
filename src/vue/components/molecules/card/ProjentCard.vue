@@ -24,7 +24,7 @@
               >
                 <tiny-avatar
                   class="place-image elevation-5"
-                  :image="projent.place.image.thumb"
+                  :image="place_image.thumb"
                 />
               </v-btn>
             </template>
@@ -105,13 +105,22 @@ export default defineComponent({
       }
     });
 
+    var place_image
+
+    if (props.projent && props.projent.place && props.projent.place.image) {
+      place_image = props.projent.place.image
+    }else{
+      place_image = new ImageModel()
+    }
+
     const addFavorite = () => {
       //
     };
 
     return {
       addFavorite,
-      image
+      image,
+      place_image
     };
   }
 });

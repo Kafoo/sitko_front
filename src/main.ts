@@ -20,6 +20,8 @@ import LoadingCircle from "@c/atoms/app/LoadingCircle.vue";
 import Help from "@c/molecules/app/Help.vue";
 import BackButton from "@c/atoms/app/BackButton.vue"
 import VClamp from "vue-clamp";
+import PageTitle from "@c/atoms/app/PageTitle.vue";
+
 
 Vue.config.productionTip = false;
 Vue.extend(vuetify);
@@ -31,6 +33,8 @@ Vue.component("loading-circle", LoadingCircle);
 Vue.component("v-clamp", VClamp);
 Vue.component("help", Help);
 Vue.component("back-button", BackButton);
+Vue.component("page-title", PageTitle);
+
 
 new Vue({
   router,

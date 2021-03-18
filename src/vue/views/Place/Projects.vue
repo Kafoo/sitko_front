@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title class="my-5" :title="$t('place projects') | capitalize" />
-    <div v-if="user.place && user.place.id === place_id" class="text-center">
+    <div v-if="user.place && place.author.id === user.id" class="text-center">
       <create-button
         :text="$t('actions.create.project')"
         @action="$router.push('/project/create/' + place_id)"

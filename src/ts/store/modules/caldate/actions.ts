@@ -7,15 +7,16 @@ import axios from "axios";
 export const actions: ActionTree<CaldateState, RootState> = {
   GET_CALDATES_BY_PLACE({ state, commit }, place_id) {
     if (state.fetched.place_caldates[place_id]) {
-      return true;
+      return state.caldates.filter((x:CaldateModel) => x.place_id == place_id);
     } else {
-      state.fetched.place_caldates[place_id] = Date.now();
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/caldate")
         .then(response => {
+          state.fetched.place_caldates[place_id] = Date.now();
           for (const caldate of response.data) {
             commit("pushCaldate", new CaldateModel(caldate));
           }
+          return state.caldates.filter((x:CaldateModel) => x.place_id == place_id);
         })
         .catch(() => {});
     }

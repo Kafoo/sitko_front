@@ -17,7 +17,8 @@
         class="float-button hidden-md-and-up"
       >
         <v-avatar :size="70">
-          <img :src="place.image.thumb" />
+          <img v-if="place.image" :src="place.image.thumb" />
+          <v-icon v-else>menu</v-icon>
         </v-avatar>
       </v-btn>
     </template>
@@ -27,7 +28,11 @@
         class="d-flex justify-center align-center grey lighten-2 c-pointer px-4 py-3"
         @click="$router.push('/place/' + place.id)"
       >
-        <v-img width="40px" class="rounded-lg" :src="place.image.thumb">
+        <v-img 
+        v-if="place.image"
+        width="40px" 
+        class="rounded-lg" 
+        :src="place.image.thumb">
         </v-img>
         <v-card-title class="px-2 py-1">
           {{ place.name }}
@@ -48,6 +53,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import PlaceModel from "@/ts/models/placeClass";
+import ImageModel from "@/ts/models/imageClass";
 
 export default defineComponent({
   name: "",
@@ -89,7 +95,7 @@ export default defineComponent({
     ]);
 
     return {
-      placeNavItems
+      placeNavItems    
     };
   }
 });

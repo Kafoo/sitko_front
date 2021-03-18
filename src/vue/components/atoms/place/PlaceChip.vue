@@ -12,7 +12,7 @@
     <tiny-avatar 
     class="d-inline mr-2"
     size="28"
-    :image="place.image.thumb" />
+    :image="image.thumb" />
     <span>{{ place.name }}</span>
   </v-btn>
 </template>
@@ -20,6 +20,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import PlaceModel from "@/ts/models/placeClass";
+import ImageModel from "@/ts/models/imageClass";
 import TinyAvatar from "@c/atoms/user/TinyAvatar.vue";
 
 export default defineComponent({
@@ -35,8 +36,17 @@ export default defineComponent({
     }
   },
 
-  setup() {
-    return {};
+  setup(props) {
+
+    var image
+
+    if (props.place && props.place.image) {
+      image = props.place.image
+    }else{
+      image = new ImageModel()
+    }
+
+    return {image};
   }
 });
 </script>

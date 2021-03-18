@@ -1,25 +1,25 @@
 <template>
-  <div>
+  <div v-if="place">
     <page-title class="my-5" :title="$t('place events') | capitalize" />
-    <div v-if="user.place && user.place.id === place_id" class="text-center">
+    <div v-if="user.place && place.author.id === user.id" class="text-center">
       <create-button
         :text="$t('actions.create.event')"
-        @action="$router.push('/event/create/' + place_id)"
+        @action="$router.push('/event/create/' + place.id)"
       />
     </div>
 
     <!-- No Event -->
-    <h4 v-if="!loading && !events.length" class="text-center">
+    <h4 v-if="!loading_events && !events.length" class="text-center">
       -- {{ $t("data.empty", { item: $t("event") }) }} --
     </h4>
 
     <!-- No Active Event -->
-    <h4 v-else-if="!loading && !activeEvents.length" class="text-center">
+    <h4 v-else-if="!loading_events && !events.length" class="text-center">
       -- {{ $t("data.empty_typed", { item: $t("event") }) }} --
     </h4>
 
     <!-- Loadings -->
-    <div v-if="loading" class="events d-flex justify-center flex-wrap">
+    <div v-if="loading_events" class="events d-flex justify-center flex-wrap">
       <skeleton-index v-for="item in 6" v-bind:key="item" />
     </div>
 
@@ -31,7 +31,7 @@
         tag="p"
       >
         <div
-          v-for="event in activeEvents"
+          v-for="event in events"
           :key="event.id"
           class="list-complete-item ma-2"
         >
@@ -42,55 +42,50 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+<script lang="ts">
+
+import { defineComponent, ref } from "@vue/composition-api"
+import { useGetters } from 'vuex-composition-helpers';
+import useFetcher from "@use/useFetcher";
 import EventCard from "@c/molecules/event/EventCard.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
 import SkeletonIndex from "@c/molecules/event/SkeletonIndex.vue";
-import PageTitle from "@c/atoms/app/PageTitle.vue";
+import PlaceModel from "@/ts/models/placeClass"
 
-export default {
-  name: "Events",
+
+export default defineComponent({
+
+  name : "Events",
 
   components: {
     EventCard,
     CreateButton,
     SkeletonIndex,
-    PageTitle
   },
 
-  data() {
-    return {
-      hash: null,
-      place_id: parseInt(this.$route.params.id),
-      editing: false,
-      creating: false,
-      editionEvent: undefined,
-      loading: false
-    };
+  props:{
+    place : Object as ()=>PlaceModel
   },
 
-  mounted() {
-    this.loading = true;
-    this.GET_EVENTS_BY_PLACE(this.place_id).then(() => {
-      this.loading = false;
-    });
-  },
+  setup(props, {root}) {
 
-  computed: {
-    ...mapGetters("event", ["events"]),
-    ...mapGetters("auth", ["user"]),
+    const { user } = useGetters({ user: "auth/user" } as any);
 
-    activeEvents() {
-      return this.events.filter(x => x.place_id == this.place_id);
+    var hash = ref(null)
+    const place_id = parseInt(root.$route.params.id)
+
+    var { entity:events, loading:loading_events } = useFetcher("event/GET_EVENTS_BY_PLACE", place_id);
+
+    return{
+      events,
+      loading_events,
+      user
     }
-  },
 
-  methods: {
-    ...mapActions("event", ["GET_EVENTS_BY_PLACE"])
   }
-};
+});
 </script>
+
 
 <style scoped>
 .events::after {
