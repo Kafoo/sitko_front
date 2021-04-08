@@ -8,6 +8,23 @@
 
   "404": "page not found",
 
+  "notification":{
+    "link":{
+      "user":{
+        "toUser" : "{requesting} would like to connect",
+        "toPlace" : "{requesting} would like to connect to {requesting}"
+      },
+      "place":{
+        "toUser" : "{requesting} would like to connect",
+        "toPlace" : "{requesting} would like to connect to {requesting}"
+      },
+      "state":{
+        "confirmed" : "link confirmed",
+        "declined" : "link declined"
+      }
+    }
+  },
+
   "home_page":{
   	"unauthenticated": "Hello, login or register to enjoy this wonderful website where you can't do much.",
   	"authenticated": "Thank you for testing Sitko, enjoy =)",
@@ -44,20 +61,20 @@
 
   "created_by":{
     "project": {
-      "private" : "public project created by {user}",
-      "public" : " private project created by {user}"
+      "private" : "public project created by",
+      "public" : " private project created by"
     },
     "event":{
-      "private" : "public event created by {user}",
-      "public" : " private event created by {user}"
+      "private" : "public event created by",
+      "public" : " private event created by"
     },
     "note":{
-      "private" : "public note created by {user}",
-      "public" : " private note created by {user}"
+      "private" : "public note created by",
+      "public" : " private note created by"
     },
     "place":{
-      "private" : "public place created by {user}",
-      "public" : " private place created by {user}"
+      "private" : "public place created by",
+      "public" : " private place created by"
     }
   },
 

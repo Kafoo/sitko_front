@@ -2,12 +2,11 @@
   <loading-circle v-if="!place" small />
 
   <div v-else-if="place" style="max-width:1000px; margin:auto">
+    <place-header :place="place" />
 
-    <place-header :place="place"/>
-
-    <current-tags 
+    <current-tags
       class="mx-5 mb-5"
-      :tags="place.tags" 
+      :tags="place.tags"
       :label="$t('place tags') | capitalize"
     />
 
@@ -34,8 +33,8 @@
 
     <net-slide
       :title="$t('current projects') | capitalize"
-      :all="`/place/`+place.id+`/projects`"
-      :empty="$t('no project') | capitalize"
+      :all="`/place/` + place.id + `/projects`"
+      :empty="$t('no current project') | capitalize"
       type="project"
       :items="projects | incoming"
       :loading="loading_projects"
@@ -44,8 +43,8 @@
 
     <net-slide
       :title="$t('incoming events') | capitalize"
-      :all="`/place/`+place.id+`/events`"
-      :empty="$t('no event') | capitalize"
+      :all="`/place/` + place.id + `/events`"
+      :empty="$t('no incoming event') | capitalize"
       type="event"
       :items="events | incoming"
       :loading="loading_events"
@@ -54,7 +53,7 @@
 
     <net-slide
       :title="$t('past projects') | capitalize"
-      :all="`/place/`+place.id+`/projects`"
+      :all="`/place/` + place.id + `/projects`"
       :empty="$t('no project') | capitalize"
       type="project"
       :items="projects | past"
@@ -64,14 +63,13 @@
 
     <net-slide
       :title="$t('past events') | capitalize"
-      :all="`/place/`+place.id+`/events`"
+      :all="`/place/` + place.id + `/events`"
       :empty="$t('no event') | capitalize"
       type="event"
       :items="events | past"
       :loading="loading_events"
       class="mb-7"
     />
-
   </div>
 </template>
 
@@ -92,9 +90,8 @@ import PlaceModel from "@/ts/models/placeClass";
 import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
 import NetSlide from "@c/organisms/app/NetSlide.vue";
-import PlaceHeader from "@c/organisms/place/PlaceHeader.vue"
+import PlaceHeader from "@c/organisms/place/PlaceHeader.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
-
 
 export default defineComponent({
   name: "PlaceOverview",
@@ -112,7 +109,6 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-
     const { user } = useGetters({ user: "auth/user" } as any);
     const place_id = parseInt(root.$route.params.id);
 
@@ -120,9 +116,18 @@ export default defineComponent({
       window.scrollTo(0, 0);
     });
 
-    var { entity:projects, loading:loading_projects } = useFetcher("project/GET_PROJECTS_BY_PLACE", place_id);
-    var { entity:events, loading:loading_events } = useFetcher("event/GET_EVENTS_BY_PLACE", place_id);
-    var { entity:notes, loading:loading_notes } = useFetcher("note/GET_NOTES_BY_PLACE", place_id);
+    var { entity: projects, loading: loading_projects } = useFetcher(
+      "project/GET_PROJECTS_BY_PLACE",
+      place_id
+    );
+    var { entity: events, loading: loading_events } = useFetcher(
+      "event/GET_EVENTS_BY_PLACE",
+      place_id
+    );
+    var { entity: notes, loading: loading_notes } = useFetcher(
+      "note/GET_NOTES_BY_PLACE",
+      place_id
+    );
 
     return {
       user,
@@ -137,6 +142,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

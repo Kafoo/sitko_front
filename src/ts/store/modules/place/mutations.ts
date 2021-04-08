@@ -11,8 +11,9 @@ export const mutations: MutationTree<PlaceState> = {
     var exists = state.places.find((x: PlaceModel) => x.id === place.id);
     if (exists) {
       //refresh
-      const index = state.places.indexOf(exists);
-      state.places.splice(index, 1, place);
+      Object.assign(exists, place);
+      // const index = state.places.indexOf(exists);
+      // state.places.splice(index, 1, place);
     } else {
       //or push
       state.places.push(place);
@@ -26,5 +27,4 @@ export const mutations: MutationTree<PlaceState> = {
       state.places.splice(index, 1);
     }
   }
-
 };

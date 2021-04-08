@@ -28,11 +28,12 @@
         class="d-flex justify-center align-center grey lighten-2 c-pointer px-4 py-3"
         @click="$router.push('/place/' + place.id)"
       >
-        <v-img 
-        v-if="place.image"
-        width="40px" 
-        class="rounded-lg" 
-        :src="place.image.thumb">
+        <v-img
+          v-if="place.image"
+          width="40px"
+          class="rounded-lg"
+          :src="place.image.thumb"
+        >
         </v-img>
         <v-card-title class="px-2 py-1">
           {{ place.name }}
@@ -95,7 +96,7 @@ export default defineComponent({
     ]);
 
     return {
-      placeNavItems    
+      placeNavItems
     };
   }
 });

@@ -2,11 +2,10 @@ import { MutationTree } from "vuex";
 import { AppState, AppAlert } from "./types";
 
 export const mutations: MutationTree<AppState> = {
-
   setWindowWidth(state) {
     state.windowWidth = window.innerWidth;
   },
-  
+
   setErrors(state, errors) {
     state.errors = errors;
   },
@@ -28,6 +27,6 @@ export const mutations: MutationTree<AppState> = {
   },
 
   pushRoute(state, route) {
-    state.routes.push(route)
+    state.routes.push(route);
   }
 };

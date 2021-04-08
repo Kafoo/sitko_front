@@ -1,13 +1,11 @@
 <template>
-
   <projent-card :projent="project" type="project" :withPlace="withPlace" />
-
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "@vue/composition-api";
 import ProjectModel from "@/ts/models/projectClass";
-import ProjentCard from "@c/molecules/card/ProjentCard.vue"
+import ProjentCard from "@c/molecules/card/ProjentCard.vue";
 
 export default defineComponent({
   name: "ProjectCard",
@@ -25,15 +23,9 @@ export default defineComponent({
   },
 
   setup() {
-
-
-    return {
-
-    };
+    return {};
   }
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

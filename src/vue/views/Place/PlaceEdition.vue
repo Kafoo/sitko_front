@@ -1,28 +1,19 @@
 <template>
   <primary-content-body>
-
     <loading-circle v-if="loading" small />
     <div v-else-if="place" class="card-body">
-
-      <v-row class="mx-sm-2 mt-2 mb-4">
-        <back-button 
-        :text="place.name"
-        :path="place.path"/>
-      </v-row>
+      <ariane>
+        <back-button :text="place.name" :path="place.path" />
+      </ariane>
 
       <v-form @submit.prevent="editPlace" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("place edition") | capitalize }}
           </template>
 
           <template v-slot:image>
-            <image-input 
-            :image="place.image" 
-            @update="changeImage" 
-            />
+            <image-input :image="place.image" @update="changeImage" />
           </template>
 
           <template v-slot:title>
@@ -38,16 +29,14 @@
 
           <template v-slot:visibility>
             <v-select
-              disabled :items="['Public', 'Restreint', 'Privé']"
+              disabled
+              :items="['Public', 'Restreint', 'Privé']"
               label="Visibilité"
               outlined
               class="rounded-lg"
             ></v-select>
 
-            <help
-            class="mt-2 mx-2"
-            :text="$t('help.visibility')"
-            />
+            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
           </template>
 
           <template v-slot:description>
@@ -91,7 +80,6 @@
               {{ $t("confirm.edit") }}
             </v-btn>
           </template>
-
         </cud-layout>
       </v-form>
     </div>
@@ -146,7 +134,11 @@ export default defineComponent({
 
     const place_id = parseInt(root.$route.params.id);
 
-    var { entity:place, loading } = useFetcher("place/GET_PLACE", place_id, true)
+    var { entity: place, loading } = useFetcher(
+      "place/GET_PLACE",
+      place_id,
+      true
+    );
 
     const editPlace = () => {
       loading_edit.value = true;
@@ -173,9 +165,7 @@ export default defineComponent({
     };
 
     const changeImage = (data: string | Image) => {
-
       place.value!.image = data;
-
     };
 
     return {

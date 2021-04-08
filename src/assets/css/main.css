@@ -10,6 +10,10 @@
 	cursor: pointer;
 }
 
+.p-relative{
+  position: relative;
+}
+
 .progress {
   position: absolute;
   bottom: 0;

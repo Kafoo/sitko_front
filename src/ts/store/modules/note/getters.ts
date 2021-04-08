@@ -7,5 +7,4 @@ export const getters: GetterTree<NoteState, RootState> = {
   notes(state): Array<NoteModel> {
     return state.notes;
   }
-
 };

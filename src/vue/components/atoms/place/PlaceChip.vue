@@ -1,6 +1,6 @@
 <template>
   <v-btn
-  outlined=""
+    outlined=""
     :to="'/place/' + place.id"
     height="32px"
     rounded
@@ -9,10 +9,7 @@
     small
     class="pl-0 pr-3"
   >
-    <tiny-avatar 
-    class="d-inline mr-2"
-    size="28"
-    :image="image.thumb" />
+    <tiny-avatar class="d-inline mr-2" size="28" :image="image" />
     <span>{{ place.name }}</span>
   </v-btn>
 </template>
@@ -37,16 +34,15 @@ export default defineComponent({
   },
 
   setup(props) {
-
-    var image
+    var image;
 
     if (props.place && props.place.image) {
-      image = props.place.image
-    }else{
-      image = new ImageModel()
+      image = props.place.image;
+    } else {
+      image = new ImageModel();
     }
 
-    return {image};
+    return { image };
   }
 });
 </script>

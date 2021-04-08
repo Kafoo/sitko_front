@@ -1,6 +1,5 @@
 <template>
   <v-card class="pa-5">
-
     <v-row justify="center" dense>
       <v-card class="pa-3 mb-5 mt-1 rounded-lg" elevation="0" width="100%">
         <v-row dense class="mb-2">
@@ -58,8 +57,6 @@
         </div>
       </v-card>
     </v-row>
-
-
 
     <v-card-actions>
       <v-spacer />
@@ -120,16 +117,15 @@ export default defineComponent({
 
     var loading_allTags = ref(false);
 
-    var allTags = ref([])
+    var allTags = ref([]);
 
     onMounted(() => {
       loading_allTags.value = true;
       GET_TAGS().then(() => {
-        allTags.value = JSON.parse(JSON.stringify(tags.value))
+        allTags.value = JSON.parse(JSON.stringify(tags.value));
         loading_allTags.value = false;
       });
     });
-
 
     var categories: any = computed(() => {
       var collection = [
@@ -153,12 +149,11 @@ export default defineComponent({
       allTags.value.forEach((tag: TagModel) => {
         compTags.value.forEach((compTag: TagModel) => {
           if (tag.id === compTag.id) {
-            tag.selected = true
+            tag.selected = true;
           }
         });
-
       });
-      return allTags.value
+      return allTags.value;
     });
 
     var categorizedTags: any = computed(() => {
@@ -189,10 +184,10 @@ export default defineComponent({
 
     const addTag = (tag: TagModel) => {
       if (tag.selected) {
-        tag.selected = false
-        removeTag(tag)
-      }else{
-        tag.selected = true
+        tag.selected = false;
+        removeTag(tag);
+      } else {
+        tag.selected = true;
         compTags.value.push(tag);
       }
     };
@@ -229,10 +224,9 @@ export default defineComponent({
     };
 
     const removeTag = (tag: TagModel) => {
-
-      var exists = compTags.value.find((x: TagModel) => x.id === tag.id)
+      var exists = compTags.value.find((x: TagModel) => x.id === tag.id);
       if (exists) {
-        var index = compTags.value.indexOf(exists)
+        var index = compTags.value.indexOf(exists);
         compTags.value.splice(index, 1);
       }
     };
@@ -243,8 +237,8 @@ export default defineComponent({
     };
 
     const cancel = () => {
-      emit('close')
-    }
+      emit("close");
+    };
 
     return {
       allTags,

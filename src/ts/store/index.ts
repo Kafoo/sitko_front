@@ -8,6 +8,8 @@ import { place } from "./modules/place";
 import { app } from "./modules/app";
 import { tag } from "./modules/tag";
 import { note } from "./modules/note";
+import { notification } from "./modules/notification";
+import { user } from "./modules/user";
 
 Vue.use(Vuex);
 
@@ -20,6 +22,8 @@ export default new Vuex.Store({
     caldate,
     place,
     tag,
-    note
+    note,
+    notification,
+    user
   }
 });

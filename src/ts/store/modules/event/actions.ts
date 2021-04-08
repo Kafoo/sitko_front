@@ -5,10 +5,8 @@ import EventModel from "@/ts/models/eventClass";
 import axios from "axios";
 
 export const actions: ActionTree<EventState, RootState> = {
-
   GET_EVENT({ commit, state }, event_id) {
-
-    var event = state.events.find((x: EventModel) => x.id === event_id)
+    var event = state.events.find((x: EventModel) => x.id === event_id);
 
     if (event) {
       return event;
@@ -16,16 +14,15 @@ export const actions: ActionTree<EventState, RootState> = {
       return axios
         .get(process.env.VUE_APP_API_URL + "event/" + event_id)
         .then(response => {
-          event = new EventModel(response.data)
+          event = new EventModel(response.data);
           commit("pushEvent", event);
-          return event
+          return event;
         })
         .catch(() => {});
     }
   },
 
   GET_ALL_EVENTS({ state, commit }) {
-
     if (state.fetched.all_events) {
       return state.events;
     } else {
@@ -60,9 +57,8 @@ export const actions: ActionTree<EventState, RootState> = {
   },
 
   GET_EVENTS_BY_PLACE({ state, commit }, place_id) {
-
     if (state.fetched.place_events[place_id]) {
-      return state.events.filter((x:EventModel) => x.place_id == place_id);
+      return state.events.filter((x: EventModel) => x.place_id == place_id);
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/event")
@@ -71,7 +67,7 @@ export const actions: ActionTree<EventState, RootState> = {
           for (const event of response.data) {
             commit("pushEvent", new EventModel(event));
           }
-          return state.events.filter((x:EventModel) => x.place_id == place_id);
+          return state.events.filter((x: EventModel) => x.place_id == place_id);
         })
         .catch(() => {});
     }

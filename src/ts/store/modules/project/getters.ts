@@ -9,9 +9,8 @@ export const getters: GetterTree<ProjectState, RootState> = {
   },
 
   inc_projects(state): Array<ProjectModel> {
-    return state.projects.filter((project:ProjectModel)=>{
-      return project.inc_caldates.length > 0
+    return state.projects.filter((project: ProjectModel) => {
+      return project.inc_caldates.length > 0;
     });
   }
-
 };

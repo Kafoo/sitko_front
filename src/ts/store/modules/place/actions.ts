@@ -3,21 +3,25 @@ import { PlaceState } from "./types";
 import { RootState } from "@/ts/store/types";
 import PlaceModel from "@/ts/models/placeClass";
 import axios from "axios";
-import i18n from "@/ts/plugins/i18n.js";
+import {
+  _SEND_UNLINK_REQUEST,
+  _SEND_LINK_REQUEST,
+  _SEND_CANCEL_LINK_REQUEST,
+  _SEND_CONFIRM_LINK,
+  _SEND_DECLINE_LINK
+} from "@/ts/functions/actions/linkActions";
 
 export const actions: ActionTree<PlaceState, RootState> = {
-
   GET_PLACE({ commit, state }, place_id) {
-    
-    var place = state.places.find((x: PlaceModel) => x.id === place_id)
-    
+    var place = state.places.find((x: PlaceModel) => x.id === place_id);
+
     if (place) {
       return place;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id)
         .then(response => {
-          place = new PlaceModel(response.data)
+          place = new PlaceModel(response.data);
           commit("pushPlace", place);
           return place;
         });
@@ -33,7 +37,7 @@ export const actions: ActionTree<PlaceState, RootState> = {
         for (const place of response.data) {
           commit("pushPlace", new PlaceModel(place));
         }
-        return state.places
+        return state.places;
       });
     }
   },
@@ -63,34 +67,23 @@ export const actions: ActionTree<PlaceState, RootState> = {
       });
   },
 
-  SEND_JOIN_REQUEST({ commit, rootGetters }, place) {
-
-    return axios
-      .put(process.env.VUE_APP_API_URL + "join/" + place.id)
-      .then(response => {
-        place.joined = true
-        commit("pushPlace", place);
-        commit(
-          "app/setAlert",
-          { type: "success", msg: i18n.t('You joined this place') },
-          { root: true }
-        );
-      });
+  SEND_LINK_REQUEST({ commit }, place) {
+    return _SEND_LINK_REQUEST({ commit }, place, "place");
   },
 
-  SEND_LEAVE_REQUEST({ commit }, place) {
+  SEND_CANCEL_LINK_REQUEST({ commit }, place) {
+    return _SEND_CANCEL_LINK_REQUEST({ commit }, place, "place");
+  },
 
-    return axios
-      .put(process.env.VUE_APP_API_URL + "leave/" + place.id)
-      .then(response => {
-        place.joined = false
-        commit("pushPlace", place);
-        commit(
-          "app/setAlert",
-          { type: "success", msg: i18n.t('You left this place') },
-          { root: true }
-        );
-      });
+  SEND_UNLINK_REQUEST({ commit }, place) {
+    return _SEND_UNLINK_REQUEST({ commit }, place, "place");
+  },
+
+  SEND_CONFIRM_LINK({ commit }, place) {
+    return _SEND_CONFIRM_LINK({ commit }, place, "place");
+  },
+
+  SEND_DECLINE_LINK({ commit }, place) {
+    return _SEND_DECLINE_LINK({ commit }, place, "place");
   }
-
 };

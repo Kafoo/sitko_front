@@ -1,6 +1,5 @@
 <template>
   <div style="position:relative">
-
     <current-outlined
       :label="label"
       :items="caldates"
@@ -18,9 +17,7 @@
           @close="$emit('removeCaldate', index)"
         />
       </div>
-
     </current-outlined>
-
   </div>
 </template>
 
@@ -28,7 +25,7 @@
 import CaldateModel from "@/ts/models/caldateClass";
 import { defineComponent } from "@vue/composition-api";
 import CaldateChip from "../../atoms/caldate/CaldateChip.vue";
-import CurrentOutlined from "@c/molecules/current/CurrentOutlined.vue"
+import CurrentOutlined from "@c/molecules/current/CurrentOutlined.vue";
 
 export default defineComponent({
   components: {
@@ -67,6 +64,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

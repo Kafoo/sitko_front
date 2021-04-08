@@ -8,6 +8,7 @@ import project from "./modules/project";
 import event from "./modules/event";
 import note from "./modules/note";
 import user from "./modules/user";
+import notification from "./modules/notification";
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,7 @@ const routes = [
   ...event,
   ...note,
   ...user,
+  ...notification,
 
   {
     path: "*",
@@ -45,8 +47,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  store.commit("app/pushRoute", from)
-  next()
-})
+  store.commit("app/pushRoute", from);
+  next();
+});
 
 export default router;

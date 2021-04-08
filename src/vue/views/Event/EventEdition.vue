@@ -2,20 +2,13 @@
   <primary-content-body>
     <loading-circle v-if="loading" small />
     <div v-else-if="event" class="card-body">
-
-      <v-row class="mx-sm-2 mt-2 mb-4">
-        <back-button 
-        :text="event.title"
-        :path="event.path"/>
-      <v-row>
-      </v-row>
-        <place-chip :place="event.place"/>
-      </v-row>
+      <ariane>
+        <back-button :text="event.title" :path="event.path" />
+        <place-chip :place="event.place" />
+      </ariane>
 
       <v-form @submit.prevent="editEvent" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("event edition") | capitalize }}
           </template>
@@ -44,16 +37,14 @@
 
           <template v-slot:visibility>
             <v-select
-              disabled :items="['Public', 'Restreint', 'Privé']"
+              disabled
+              :items="['Public', 'Restreint', 'Privé']"
               label="Visibilité"
               outlined
               class="rounded-lg"
             ></v-select>
 
-            <help
-            class="mt-2 mx-2"
-            :text="$t('help.visibility')"
-            />
+            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
           </template>
 
           <template v-slot:description>
@@ -109,9 +100,7 @@
               {{ $t("confirm.save") }}
             </v-btn>
           </template>
-
         </cud-layout>
-
       </v-form>
     </div>
   </primary-content-body>
@@ -133,9 +122,9 @@ import EventModel from "@/ts/models/eventClass";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
 import DeleteButton from "@c/atoms/app/DeleteButton.vue";
-import PlaceChip from "@c/atoms/place/PlaceChip.vue"
-import BackButton from "@c/atoms/app/BackButton.vue"
-import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
+import PlaceChip from "@c/atoms/place/PlaceChip.vue";
+import BackButton from "@c/atoms/app/BackButton.vue";
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   name: "EventEdition",
@@ -151,7 +140,6 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-  
     var form = ref(false);
     var loading_deletion = ref(false);
     var loading_edit = ref(false);
@@ -160,7 +148,11 @@ export default defineComponent({
 
     const event_id = parseInt(root.$route.params.id);
 
-    var { entity:event, loading } = useFetcher("event/GET_EVENT", event_id, true);
+    var { entity: event, loading } = useFetcher(
+      "event/GET_EVENT",
+      event_id,
+      true
+    );
 
     const { SEND_EVENT_EDITION } = useActions({
       SEND_EVENT_EDITION: "event/SEND_EVENT_EDITION"

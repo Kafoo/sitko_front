@@ -1,24 +1,18 @@
 <template>
   <primary-content-body>
     <div class="card-body">
-      <v-row 
-      v-if="lastRoute"
-      class="mx-sm-2 mt-2 mb-4">
-        <back-button 
-        :path="lastRoute.path"/>
-      </v-row>
+      <ariane>
+        <back-button v-if="lastRoute" :path="lastRoute.path" />
+      </ariane>
+
       <v-form @submit.prevent="createPlace" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("actions.new.place") | camelize }}
           </template>
 
           <template v-slot:image>
-            <image-input 
-            :image="newPlace.image" 
-            @update="changeImage" />
+            <image-input :image="newPlace.image" @update="changeImage" />
           </template>
 
           <template v-slot:title>
@@ -34,16 +28,14 @@
 
           <template v-slot:visibility>
             <v-select
-              disabled :items="['Public', 'Restreint', 'Privé']"
+              disabled
+              :items="['Public', 'Restreint', 'Privé']"
               label="Visibilité"
               outlined
               class="rounded-lg"
             ></v-select>
 
-            <help
-            class="mt-2 mx-2"
-            :text="$t('help.visibility')"
-            />
+            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
           </template>
 
           <template v-slot:description>
@@ -66,15 +58,15 @@
           </template>
 
           <template v-slot:actions>
-            <v-btn 
-            type="submit" 
-            color="success" 
-            :disabled="loading || !form"
-            :loading="loading">
+            <v-btn
+              type="submit"
+              color="success"
+              :disabled="loading || !form"
+              :loading="loading"
+            >
               {{ $t("confirm.confirm") }}
             </v-btn>
           </template>
-
         </cud-layout>
       </v-form>
     </div>
@@ -97,7 +89,7 @@ import ImageModel from "@/ts/models/imageClass";
 import PlaceModel from "@/ts/models/placeClass";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import TagModel from "@/ts/models/tagClass";
-import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   name: "PlaceCreation",
@@ -110,8 +102,7 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-
-    const { lastRoute } = useGetters({lastRoute: 'app/lastRoute'} as any)
+    const { lastRoute } = useGetters({ lastRoute: "app/lastRoute" } as any);
 
     // PLACE //
     var newPlace: Ref<PlaceModel> = ref(new PlaceModel());

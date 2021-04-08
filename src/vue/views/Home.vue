@@ -4,10 +4,10 @@
 
     <div v-if="user">
       <div v-if="!user.place" class="text-center">
-        <create-button 
-        class="mb-8" 
-        :text="$t('actions.create.place')"
-        @action="$router.push('/place/create/')"
+        <create-button
+          class="mb-8"
+          :text="$t('actions.create.place')"
+          @action="$router.push('/place/create/')"
         />
       </div>
 

@@ -1,27 +1,39 @@
 <template>
   <v-avatar :size="size">
-    <v-img :src="image" />
+    <v-img :src="imageSrc" />
   </v-avatar>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, computed } from "@vue/composition-api";
+import ImageModel from "@/ts/models/imageClass";
 
 export default defineComponent({
   name: "TinyAvatar",
 
   props: {
     image: {
-      type: String
+      type: Object as () => ImageModel
     },
-    size:{
-      type:String,
-      default:"35"
+    size: {
+      type: String,
+      default: "35"
     }
   },
 
-  setup() {
-    return {};
+  setup(props) {
+    var imageSrc: any = computed(() => {
+      if (props.image) {
+        return props.image.thumb;
+      } else {
+        var image = new ImageModel();
+        return image.thumb;
+      }
+    });
+
+    return {
+      imageSrc
+    };
   }
 });
 </script>

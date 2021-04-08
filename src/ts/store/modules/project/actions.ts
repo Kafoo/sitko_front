@@ -5,20 +5,18 @@ import ProjectModel from "@/ts/models/projectClass";
 import axios from "axios";
 
 export const actions: ActionTree<ProjectState, RootState> = {
-
   GET_PROJECT({ commit, state }, project_id) {
+    var project = state.projects.find((x: ProjectModel) => x.id === project_id);
 
-    var project = state.projects.find((x: ProjectModel) => x.id === project_id)
-    
     if (project) {
       return project;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "project/" + project_id)
         .then(response => {
-          project = new ProjectModel(response.data)
+          project = new ProjectModel(response.data);
           commit("pushProject", project);
-          return project
+          return project;
         })
         .catch(() => {});
     }
@@ -35,7 +33,7 @@ export const actions: ActionTree<ProjectState, RootState> = {
           for (const project of response.data) {
             commit("pushProject", new ProjectModel(project));
           }
-          return state.projects
+          return state.projects;
         })
         .catch(() => {});
     }
@@ -59,9 +57,8 @@ export const actions: ActionTree<ProjectState, RootState> = {
   },
 
   GET_PROJECTS_BY_PLACE({ state, commit }, place_id) {
-
     if (state.fetched.place_projects[place_id]) {
-      return state.projects.filter((x:ProjectModel) => x.place_id == place_id);
+      return state.projects.filter((x: ProjectModel) => x.place_id == place_id);
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
@@ -70,7 +67,9 @@ export const actions: ActionTree<ProjectState, RootState> = {
           for (const project of response.data) {
             commit("pushProject", new ProjectModel(project));
           }
-          return state.projects.filter((x:ProjectModel) => x.place_id == place_id);
+          return state.projects.filter(
+            (x: ProjectModel) => x.place_id == place_id
+          );
         })
         .catch(() => {});
     }

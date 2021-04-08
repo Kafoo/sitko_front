@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <v-hover v-if="note" v-slot="{ hover }">
       <v-card
@@ -12,23 +11,18 @@
         color="#fff5b8"
         @click="$router.push(note.path)"
       >
-
         <span class="text-truncate font-weight-bold" style="max-width: 150px;">
           {{ note.title }}
         </span>
-
       </v-card>
     </v-hover>
-
-
   </div>
-
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "@vue/composition-api";
 import NoteModel from "@/ts/models/noteClass";
-import NotePopup from "@c/molecules/note/NotePopup.vue"
+import NotePopup from "@c/molecules/note/NotePopup.vue";
 export default defineComponent({
   name: "NoteCard",
 
@@ -45,8 +39,7 @@ export default defineComponent({
   },
 
   setup() {
-
-    var show = ref(false)
+    var show = ref(false);
 
     return {
       show
@@ -55,6 +48,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

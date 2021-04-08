@@ -2,11 +2,10 @@
   <loading-circle v-if="loading" small />
 
   <div v-else-if="project" style="max-width:1000px; margin:auto">
-    
     <div class="d-flex justify-center">
       <medium-image class="image mr-sm-5 flex-grow-0" :image="project.image" />
     </div>
-    
+
     <div
       class="mx-5 mb-5 mt-2 d-flex flex-column flex-sm-row align-stretch justify-space-around"
     >
@@ -17,28 +16,23 @@
           {{ project.title }}
         </h1>
 
-
-        <span class="ml-1 text-caption grey--text text--darken-1">
-          {{ $t("created_by.project.public", { user: project.author.name }) | capitalize }}
-        </span>
+        <created-by :item="project" />
 
         <v-btn
           x-small
           text
           plain
-          v-if="user.id == project.author.id"
+          v-if="project.can.update"
           class="mb-2 pa-0"
           :to="`/project/${project.id}/edit`"
         >
           <v-icon small class="mr-1">edit</v-icon>
-          {{$t('options.edit')}}
+          {{ $t("options.edit") }}
         </v-btn>
         <place-chip :place="project.place" />
       </div>
 
-      <div 
-      class="mt-4"
-      >
+      <div class="mt-4">
         <current-caldates
           class="ml-1 mb-5"
           clickable
@@ -48,7 +42,6 @@
         />
       </div>
     </div>
-
 
     <div class="mx-5">
       <current-tags
@@ -80,6 +73,7 @@ import useFetcher from "@use/useFetcher";
 import MediumImage from "@c/molecules/media/MediumImage.vue";
 import CurrentCaldates from "@c/molecules/current/CurrentCaldates.vue";
 import PlaceChip from "@c/atoms/place/PlaceChip.vue";
+import CreatedBy from "@c/atoms/app/CreatedBy.vue";
 
 export default defineComponent({
   name: "ProjectOverview",
@@ -88,14 +82,18 @@ export default defineComponent({
     CurrentTags,
     MediumImage,
     CurrentCaldates,
-    PlaceChip
+    PlaceChip,
+    CreatedBy
   },
 
   setup(props, { root }) {
     const { user } = useGetters({ user: "auth/user" } as any);
 
     const project_id = parseInt(root.$route.params.id);
-    var { entity:project, loading } = useFetcher("project/GET_PROJECT", project_id);
+    var { entity: project, loading } = useFetcher(
+      "project/GET_PROJECT",
+      project_id
+    );
 
     return {
       project,
@@ -106,6 +104,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

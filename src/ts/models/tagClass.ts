@@ -18,12 +18,11 @@ export default class TagModel {
     }
     this.custom = rawData.custom;
 
-    if (rawData.pivot) {    
+    if (rawData.pivot) {
       this.order = rawData.pivot.order;
     }
 
     if (rawData.category) {
-
       this.category = new TagsCategoryModel(rawData.category);
 
       switch (this.category.id) {

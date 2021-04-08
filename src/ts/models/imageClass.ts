@@ -1,9 +1,9 @@
 export default class ImageModel {
-  full: String;
-  medium: String;
-  low_medium: String;
-  thumb: String;
-  public_id?: String;
+  full: string;
+  medium: string;
+  low_medium: string;
+  thumb: string;
+  public_id?: string;
 
   constructor(data?: any) {
     if (data === "avatar") {

@@ -2,18 +2,12 @@
   <primary-content-body>
     <loading-circle v-if="loading" small />
     <div v-else-if="note" class="card-body">
-
-      <v-row 
-      v-if="lastRoute"
-      class="mx-sm-2 mt-2 mb-4">
-        <back-button 
-        :path="lastRoute.path"/>
-      </v-row>
+      <ariane>
+        <back-button v-if="lastRoute" :path="lastRoute.path" />
+      </ariane>
 
       <v-form @submit.prevent="editNote" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("note edition") | capitalize }}
           </template>
@@ -57,9 +51,7 @@
               {{ $t("confirm.save") }}
             </v-btn>
           </template>
-
         </cud-layout>
-
       </v-form>
     </div>
   </primary-content-body>
@@ -81,8 +73,8 @@ import NoteModel from "@/ts/models/noteClass";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
 import DeleteButton from "@c/atoms/app/DeleteButton.vue";
-import PlaceChip from "@c/atoms/place/PlaceChip.vue"
-import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
+import PlaceChip from "@c/atoms/place/PlaceChip.vue";
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   name: "NoteEdition",
@@ -97,8 +89,7 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-  
-    const { lastRoute } = useGetters({lastRoute: 'app/lastRoute'} as any)
+    const { lastRoute } = useGetters({ lastRoute: "app/lastRoute" } as any);
 
     var form = ref(false);
     var loading_deletion = ref(false);
@@ -108,7 +99,7 @@ export default defineComponent({
 
     const note_id = parseInt(root.$route.params.id);
 
-    var { entity:note, loading } = useFetcher("note/GET_NOTE", note_id, true);
+    var { entity: note, loading } = useFetcher("note/GET_NOTE", note_id, true);
 
     const { SEND_NOTE_EDITION } = useActions({
       SEND_NOTE_EDITION: "note/SEND_NOTE_EDITION"

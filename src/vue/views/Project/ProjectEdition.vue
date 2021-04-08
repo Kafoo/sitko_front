@@ -2,20 +2,13 @@
   <primary-content-body>
     <loading-circle v-if="loading" small />
     <div v-else-if="project" class="card-body">
-
-      <v-row class="mx-sm-2 mt-2 mb-4">
-        <back-button 
-        :text="project.title"
-        :path="project.path"/>
-      <v-row>
-      </v-row>
-        <place-chip :place="project.place"/>
-      </v-row>
+      <ariane>
+        <back-button :text="project.title" :path="project.path" />
+        <place-chip :place="project.place" />
+      </ariane>
 
       <v-form @submit.prevent="editProject" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("project edition") | capitalize }}
           </template>
@@ -44,16 +37,14 @@
 
           <template v-slot:visibility>
             <v-select
-              disabled :items="['Public', 'Restreint', 'Privé']"
+              disabled
+              :items="['Public', 'Restreint', 'Privé']"
               label="Visibilité"
               outlined
               class="rounded-lg"
             ></v-select>
 
-            <help
-            class="mt-2 mx-2"
-            :text="$t('help.visibility')"
-            />
+            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
           </template>
 
           <template v-slot:description>
@@ -93,6 +84,7 @@
 
           <template v-slot:actions>
             <delete-button
+              class="ma-1"
               :disabled="loading_edit"
               :loading="loading_deletion"
               :text="$t('delete project')"
@@ -101,6 +93,7 @@
             />
 
             <v-btn
+              class="ma-1"
               type="submit"
               color="success"
               :loading="loading_edit"
@@ -109,9 +102,7 @@
               {{ $t("confirm.save") }}
             </v-btn>
           </template>
-
         </cud-layout>
-
       </v-form>
     </div>
   </primary-content-body>
@@ -133,8 +124,8 @@ import ProjectModel from "@/ts/models/projectClass";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
 import DeleteButton from "@c/atoms/app/DeleteButton.vue";
-import PlaceChip from "@c/atoms/place/PlaceChip.vue"
-import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
+import PlaceChip from "@c/atoms/place/PlaceChip.vue";
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   name: "ProjectEdition",
@@ -149,7 +140,6 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-  
     var form = ref(false);
     var loading_deletion = ref(false);
     var loading_edit = ref(false);
@@ -158,7 +148,11 @@ export default defineComponent({
 
     const project_id = parseInt(root.$route.params.id);
 
-    var { entity:project, loading } = useFetcher("project/GET_PROJECT", project_id, true);
+    var { entity: project, loading } = useFetcher(
+      "project/GET_PROJECT",
+      project_id,
+      true
+    );
 
     const { SEND_PROJECT_EDITION } = useActions({
       SEND_PROJECT_EDITION: "project/SEND_PROJECT_EDITION"

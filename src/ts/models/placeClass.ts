@@ -1,46 +1,44 @@
-import ImageModel from "@/ts/models/imageClass";
-import TagModel from "@/ts/models/tagClass";
-import TaggableModel from "@/ts/models/taggableClass";
-import UserModel from "@/ts/models/userClass";
-import NoteModel from "@/ts/models/noteClass"
+import AuthorModel from "@/ts/models/authorClass";
+import NoteModel from "@/ts/models/noteClass";
+import imageable from "../mixins/imageable";
+import taggable from "../mixins/taggable";
+import linkable from "../mixins/linkable";
+import mix from "@/ts/mixins/_mix";
+import globalModel from "./globalClass";
 
-export default class PlaceModel extends TaggableModel {
+export default class PlaceModel extends mix(globalModel).with(
+  imageable,
+  taggable,
+  linkable
+) {
   id?: number;
+  essence: string;
   name: string;
   description: string;
-  image?: ImageModel | String;
   projects_count: number;
-  author: UserModel;
-  joined: Boolean;
-  notes: Array<NoteModel>
-  path: String;
+  author: AuthorModel;
+  notes: Array<NoteModel>;
+  path: string;
 
   constructor(rawData: any = {}) {
-    super(rawData)
+    super(rawData);
     this.id = rawData.id;
-    this.name = rawData.name || '';
-    this.description = rawData.description || '';
+    this.essence = "place";
+    this.name = rawData.name || "";
+    this.description = rawData.description || "";
 
-    this.joined = rawData.joined
-
-    this.path = '/place/'+this.id
+    this.path = "/place/" + this.id;
 
     if (rawData.author) {
-      this.author = rawData.author;
+      this.author = new AuthorModel(rawData.author);
     } else {
-      this.author = new UserModel();
+      this.author = new AuthorModel();
     }
 
-    if (rawData.image) {
-      this.image = new ImageModel(rawData.image);
-    } else {
-      this.image = undefined;
-    }
-
-    this.notes = []
+    this.notes = [];
     if (rawData.notes) {
-      rawData.notes.forEach((note:NoteModel) => {
-        this.notes.push(new NoteModel(note))
+      rawData.notes.forEach((note: NoteModel) => {
+        this.notes.push(new NoteModel(note));
       });
     }
 

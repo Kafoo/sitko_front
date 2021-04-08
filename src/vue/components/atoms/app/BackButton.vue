@@ -1,49 +1,30 @@
 <template>
-  
-  <v-btn 
-  plain 
-  color="grey" 
-  :to='path' 
-  small
-  class="pl-0"
-  > 
+  <v-btn plain color="grey" :to="path" small class="pl-0">
     <v-icon>arrow_left</v-icon>
     <span class="text-truncate" style="max-width: 150px;">
-      {{$t(text)}}
+      {{ $t(text) }}
     </span>
   </v-btn>
-
 </template>
 
 <script lang="ts">
-
-import { defineComponent } from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
+  name: "BackButton",
 
-  name : "BackButton",
-
-  props:{
-    text:{
-      type:String,
+  props: {
+    text: {
+      type: String,
       default: "back"
     },
-    path:String
+    path: String
   },
 
   setup() {
-
-
-    return{
- 
-    }
-
+    return {};
   }
 });
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>

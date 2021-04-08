@@ -1,18 +1,12 @@
 <template>
   <primary-content-body>
     <div class="card-body">
+      <ariane>
+        <back-button v-if="lastRoute" :path="lastRoute.path" />
+      </ariane>
 
-      <v-row 
-      v-if="lastRoute"
-      class="mx-sm-2 mt-2 mb-4">
-        <back-button 
-        :path="lastRoute.path"/>
-      </v-row>
-    
       <v-form @submit.prevent="createNote" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("actions.new.note") | camelize }}
           </template>
@@ -37,10 +31,7 @@
               class="rounded-lg"
             ></v-select>
 
-            <help
-            class="mt-2 mx-2"
-            :text="$t('help.visibility')"
-            />
+            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
           </template>
 
           <template v-slot:description>
@@ -55,16 +46,15 @@
           </template>
 
           <template v-slot:actions>
-            <v-btn 
-            type="submit" 
-            :disabled="loading || !form"
-            :loading="loading">
+            <v-btn
+              type="submit"
+              :disabled="loading || !form"
+              :loading="loading"
+            >
               {{ $t("confirm.confirm") }}
             </v-btn>
           </template>
-
         </cud-layout>
-
       </v-form>
     </div>
   </primary-content-body>
@@ -85,7 +75,7 @@ import ImageInput from "@c/molecules/media/ImageInput.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
-import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   name: "NoteCreation",
@@ -100,8 +90,7 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-
-    const { lastRoute } = useGetters({lastRoute: 'app/lastRoute'} as any)
+    const { lastRoute } = useGetters({ lastRoute: "app/lastRoute" } as any);
 
     const rules = useInputRules();
 
@@ -124,9 +113,7 @@ export default defineComponent({
       SEND_NOTE_CREATION(newNote.value)
         .then(() => {
           loading.value = false;
-          root.$router.push(
-            "/place/" + newNote.value.place_id + "/notes"
-          );
+          root.$router.push("/place/" + newNote.value.place_id + "/notes");
         })
         .catch(() => {
           loading.value = false;

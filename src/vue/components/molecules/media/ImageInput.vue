@@ -2,14 +2,12 @@
   <div>
     <div class="input-container">
       <div>
-        <v-img
-          class="choose-img rounded-lg elevation-3"
-          :class="circle ? 'rounded-circle' : 'rounded-lg'"
-          :width="size"
-          :height="size"
-          :src="imageSrc"
-        >
-        </v-img>
+        <big-avatar
+          :circle="circle"
+          :size="size"
+          :image="imageSrc"
+          :default="default_image"
+        />
         <v-hover v-slot="{ hover }">
           <v-icon
             small
@@ -22,7 +20,7 @@
             >edit</v-icon
           >
         </v-hover>
-        <v-hover v-if="nullable && image !== undefined" v-slot="{ hover }">
+        <v-hover v-if="nullable && image" v-slot="{ hover }">
           <v-icon
             small
             class="delete-icon"
@@ -30,7 +28,7 @@
               circle ? 'delete-icon-circle' : '',
               ` elevation-${hover ? 5 : 2}`
             ]"
-            @click="$emit('update', undefined)"
+            @click="$emit('update', null)"
             >close</v-icon
           >
         </v-hover>
@@ -46,15 +44,12 @@
     />
 
     <v-dialog v-model="cropping" width="unset">
-
       <crop-popup
         @close="cropping = false"
         :image="customImage"
         @confirm="update"
       />
-
     </v-dialog>
-
   </div>
 </template>
 
@@ -69,14 +64,14 @@ import {
 import { useInputRules } from "@/ts/functions/composition/inputRules";
 import ImageModel from "@/ts/models/imageClass";
 import CropPopup from "@c/organisms/app/CropPopup.vue";
+import BigAvatar from "../../atoms/media/BigAvatar.vue";
 
 export default defineComponent({
   name: "ImageInput",
 
   props: {
     image: {
-      type: [Object as () => ImageModel, String],
-      default: undefined
+      type: [Object as () => ImageModel, String]
     },
     size: {
       type: String,
@@ -97,17 +92,16 @@ export default defineComponent({
   },
 
   components: {
-    CropPopup
+    CropPopup,
+    BigAvatar
   },
 
   setup(props, { emit }) {
-
     var cropping = ref(false);
 
     var customImage = ref("");
 
     const confirmInput = (e: any) => {
-
       var file = e.target.files[0];
 
       if (file.size < 4000000) {
@@ -118,22 +112,21 @@ export default defineComponent({
           cropping.value = true;
         };
       } else {
-        console.log('nope')
+        console.log("nope");
       }
-
     };
 
     const update = () => {
-      emit('update', customImage.value)
-    }
+      emit("update", customImage.value);
+    };
 
     const imageSrc = computed(() => {
       if (typeof props.image === "string") {
         return props.image;
       } else if (props.image) {
         return props.image.medium;
-      } else {
-        const defaultModel = new ImageModel();
+      } else if (!props.image) {
+        const defaultModel = new ImageModel(props.default_image);
         return defaultModel.medium;
       }
     });

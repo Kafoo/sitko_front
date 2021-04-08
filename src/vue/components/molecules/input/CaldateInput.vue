@@ -1,7 +1,5 @@
 <template>
-
   <div style="position:relative">
-
     <current-caldates
       :caldates="caldates"
       :label="label"
@@ -11,11 +9,12 @@
       @edit="pickingDate = true"
     />
 
-    <v-dialog v-model="pickingDate" width="unset" >
-      <choose-caldate 
-      class="pa-5" 
-      @addCaldate="addCaldate" 
-      @close="pickingDate = false" />
+    <v-dialog v-model="pickingDate" width="unset">
+      <choose-caldate
+        class="pa-5"
+        @addCaldate="addCaldate"
+        @close="pickingDate = false"
+      />
     </v-dialog>
   </div>
 </template>
@@ -37,7 +36,6 @@ export default defineComponent({
   },
 
   props: {
-
     caldates: {
       type: Array as () => Array<CaldateModel>,
       default: () => []

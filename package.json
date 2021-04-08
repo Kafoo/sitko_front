@@ -6,8 +6,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service serve --mode development",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/translations/**/*.json'",
-    "prod": "vue-cli-service serve --mode production"
+    "dev_wamp": "vue-cli-service serve --mode wamp",
+    "prod": "vue-cli-service serve --mode production",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/translations/**/*.json'"
   },
   "dependencies": {
     "@trevoreyre/autocomplete-vue": "^2.2.0",

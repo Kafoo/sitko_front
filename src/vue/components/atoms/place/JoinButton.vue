@@ -1,91 +1,114 @@
 <template>
-  
   <v-btn
     @click="btn.action"
-    class="placeAction rounded-lg mb-4 ml-sm-4"
+    class="placeAction rounded-lg"
     :loading="loading"
     :disabled="loading"
   >
     <v-icon class="mr-2" :color="btn.color">{{ btn.icon }}</v-icon>
     {{ btn.title }}
   </v-btn>
-
 </template>
 
 <script lang="ts">
-
-import { defineComponent, ref } from "@vue/composition-api"
-import PlaceModel from "@/ts/models/placeClass"
-import { useActions } from 'vuex-composition-helpers';
+import { defineComponent, ref, computed } from "@vue/composition-api";
+import PlaceModel from "@/ts/models/placeClass";
+import { useActions } from "vuex-composition-helpers";
+import UserModel from "@/ts/models/userClass";
 
 export default defineComponent({
-
-  name : "JoinButton",
+  name: "JoinButton",
 
   props: {
-    place: Object as () => PlaceModel
+    entity: Object as () => PlaceModel | UserModel,
+    type: String
   },
 
-  setup(props, {root}) {
+  setup(props, { root }) {
+    const { SEND_LINK_REQUEST } = useActions({
+      SEND_LINK_REQUEST: props.type + "/SEND_LINK_REQUEST"
+    } as any);
+    const { SEND_CANCEL_LINK_REQUEST } = useActions({
+      SEND_CANCEL_LINK_REQUEST: props.type + "/SEND_CANCEL_LINK_REQUEST"
+    } as any);
+    const { SEND_UNLINK_REQUEST } = useActions({
+      SEND_UNLINK_REQUEST: props.type + "/SEND_UNLINK_REQUEST"
+    } as any);
 
-    const { SEND_JOIN_REQUEST } = useActions({SEND_JOIN_REQUEST: 'place/SEND_JOIN_REQUEST'} as any)
-    const { SEND_LEAVE_REQUEST } = useActions({SEND_LEAVE_REQUEST: 'place/SEND_LEAVE_REQUEST'} as any)
+    var loading = ref(false);
 
-    var loading = ref(false)
+    const unlink = () => {
+      loading.value = true;
+      SEND_UNLINK_REQUEST(props.entity)
+        .then(() => {
+          loading.value = false;
+        })
+        .catch(() => {
+          loading.value = false;
+        });
+    };
 
-    const leave = ()=>{
-      loading.value = true
-      SEND_LEAVE_REQUEST(props.place)
-      .then(()=>{
-        loading.value = false
-        btn.value = join_btn
-      })
-    }
+    const cancel = () => {
+      loading.value = true;
+      SEND_CANCEL_LINK_REQUEST(props.entity)
+        .then(() => {
+          loading.value = false;
+        })
+        .catch(() => {
+          loading.value = false;
+        });
+    };
 
-    const join = ()=>{
-      loading.value = true
-      SEND_JOIN_REQUEST(props.place)
-      .then(()=>{
-        loading.value = false
-        btn.value = leave_btn
-      })
-    }
+    const link = () => {
+      loading.value = true;
+      SEND_LINK_REQUEST(props.entity)
+        .then(() => {
+          loading.value = false;
+        })
+        .catch(() => {
+          loading.value = false;
+        });
+    };
 
-    const leave_btn = {
-      title: root.$i18n.t('leave'),
-      icon:"remove",
-      color:'red',
-      action: leave
-    }
+    const link_btn = {
+      title: root.$i18n.t("connect"),
+      icon: "link",
+      color: "green",
+      action: link
+    };
 
-    const join_btn = {
-      title: root.$i18n.t('join'),
-      icon:"add",
-      color:'green',
-      action: join
-    }
+    const cancel_btn = {
+      title: root.$i18n.t("cancel"),
+      icon: "link",
+      color: "blue",
+      action: cancel
+    };
 
-    var btn = ref(join_btn)
+    const unlink_btn = {
+      title: root.$i18n.t("disconnect"),
+      icon: "link",
+      color: "red",
+      action: unlink
+    };
 
-    if (props.place) {
-      if (props.place.joined) {
-        btn.value = leave_btn
-      }else{
-        btn.value = join_btn
+    var btn = computed(() => {
+      if (props.entity) {
+        if (props.entity.link === "pending") {
+          return cancel_btn;
+        } else if (props.entity.link === "confirmed") {
+          return unlink_btn;
+        } else {
+          return link_btn;
+        }
       }
-    }
+    });
 
-    return{
+    return {
       loading,
       btn
-    }
-
+    };
   }
 });
 </script>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>

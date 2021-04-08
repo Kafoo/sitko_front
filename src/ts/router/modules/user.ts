@@ -41,5 +41,14 @@ export default [
     meta: {
       title: "Sitko - Account"
     }
+  },
+  {
+    path: "/user/:id",
+    name: "UserOverview",
+    beforeEnter: auth,
+    component: () => import("@/vue/views/User/UserOverview.vue"),
+    meta: {
+      title: "Sitko"
+    }
   }
 ];

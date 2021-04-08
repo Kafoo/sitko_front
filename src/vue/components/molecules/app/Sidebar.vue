@@ -47,7 +47,6 @@
         {{ item.title }}
       </v-btn>
     </div>
-
   </div>
 </template>
 

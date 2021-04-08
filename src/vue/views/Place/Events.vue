@@ -1,5 +1,6 @@
 <template>
-  <div v-if="place">
+  <loading-circle v-if="!place" small />
+  <div v-else>
     <page-title class="my-5" :title="$t('place events') | capitalize" />
     <div v-if="user.place && place.author.id === user.id" class="text-center">
       <create-button
@@ -43,49 +44,46 @@
 </template>
 
 <script lang="ts">
-
-import { defineComponent, ref } from "@vue/composition-api"
-import { useGetters } from 'vuex-composition-helpers';
+import { defineComponent, ref } from "@vue/composition-api";
+import { useGetters } from "vuex-composition-helpers";
 import useFetcher from "@use/useFetcher";
 import EventCard from "@c/molecules/event/EventCard.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
 import SkeletonIndex from "@c/molecules/event/SkeletonIndex.vue";
-import PlaceModel from "@/ts/models/placeClass"
-
+import PlaceModel from "@/ts/models/placeClass";
 
 export default defineComponent({
-
-  name : "Events",
+  name: "Events",
 
   components: {
     EventCard,
     CreateButton,
-    SkeletonIndex,
+    SkeletonIndex
   },
 
-  props:{
-    place : Object as ()=>PlaceModel
+  props: {
+    place: Object as () => PlaceModel
   },
 
-  setup(props, {root}) {
-
+  setup(props, { root }) {
     const { user } = useGetters({ user: "auth/user" } as any);
 
-    var hash = ref(null)
-    const place_id = parseInt(root.$route.params.id)
+    var hash = ref(null);
+    const place_id = parseInt(root.$route.params.id);
 
-    var { entity:events, loading:loading_events } = useFetcher("event/GET_EVENTS_BY_PLACE", place_id);
+    var { entity: events, loading: loading_events } = useFetcher(
+      "event/GET_EVENTS_BY_PLACE",
+      place_id
+    );
 
-    return{
+    return {
       events,
       loading_events,
       user
-    }
-
+    };
   }
 });
 </script>
-
 
 <style scoped>
 .events::after {

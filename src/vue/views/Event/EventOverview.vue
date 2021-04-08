@@ -2,43 +2,35 @@
   <loading-circle v-if="loading" small />
 
   <div v-else-if="event" style="max-width:1000px; margin:auto">
-    
     <div class="d-flex justify-center">
       <medium-image class="image mr-sm-5 flex-grow-0" :image="event.image" />
     </div>
-    
+
     <div
       class="mx-sm-4 mb-5 mt-2 d-flex flex-column flex-sm-row align-stretch justify-space-around"
     >
-      <div
-        class="mt-2 mb-5 d-flex flex-column align-center align-sm-start"
-      >
+      <div class="mt-2 mb-5 d-flex flex-column align-center align-sm-start">
         <h1>
           {{ event.title }}
         </h1>
 
-
-        <span class="ml-1 text-caption grey--text text--darken-1">
-          {{ $t("created_by.event.public", { user: event.author.name }) | capitalize }}
-        </span>
+        <created-by :item="event" />
 
         <v-btn
           x-small
           text
           plain
-          v-if="user.id == event.author.id"
+          v-if="event.can.update"
           class="mb-2 pa-0"
           :to="`/event/${event.id}/edit`"
         >
           <v-icon small class="mr-1">edit</v-icon>
-          {{$t('options.edit')}}
+          {{ $t("options.edit") }}
         </v-btn>
         <place-chip :place="event.place" />
       </div>
 
-      <div 
-      class="mt-4 mx-5"
-      >
+      <div class="mt-4 mx-5">
         <current-caldates
           class="ml-1 mb-5"
           clickable
@@ -49,12 +41,8 @@
       </div>
     </div>
 
-
     <div class="mx-5">
-      <current-tags
-        :tags="event.tags"
-        :label="$t('event tags') | capitalize"
-      />
+      <current-tags :tags="event.tags" :label="$t('event tags') | capitalize" />
     </div>
 
     <div
@@ -80,6 +68,7 @@ import useFetcher from "@use/useFetcher";
 import MediumImage from "@c/molecules/media/MediumImage.vue";
 import CurrentCaldates from "@c/molecules/current/CurrentCaldates.vue";
 import PlaceChip from "@c/atoms/place/PlaceChip.vue";
+import CreatedBy from "@c/atoms/app/CreatedBy.vue";
 
 export default defineComponent({
   name: "EventOverview",
@@ -88,14 +77,15 @@ export default defineComponent({
     CurrentTags,
     MediumImage,
     CurrentCaldates,
-    PlaceChip
+    PlaceChip,
+    CreatedBy
   },
 
   setup(props, { root }) {
     const { user } = useGetters({ user: "auth/user" } as any);
 
     const event_id = parseInt(root.$route.params.id);
-    var { entity:event, loading } = useFetcher("event/GET_EVENT", event_id);
+    var { entity: event, loading } = useFetcher("event/GET_EVENT", event_id);
 
     return {
       event,
@@ -106,6 +96,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

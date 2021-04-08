@@ -51,18 +51,14 @@
         </v-icon>
       </v-btn> -->
 
+      <notifications v-if="!loading && user" />
+
       <v-menu class="acccount-drawer" v-if="!loading" rounded="xl" bottom left>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            height="40px"
-            rounded
-            class="mr-sm-3 px-2"
-            v-bind="attrs"
-            v-on="on"
-          >
+          <v-btn rounded class="mr-sm-3 pl-2 pr-0" v-bind="attrs" v-on="on">
             <v-icon class="mr-1">menu</v-icon>
 
-            <tiny-avatar v-if="user && user.image" :image="user.image.thumb" />
+            <tiny-avatar v-if="user && user.image" :image="user.image" />
 
             <v-icon v-else large>face</v-icon>
           </v-btn>
@@ -89,8 +85,8 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import TinyAvatar from "@c/atoms/user/TinyAvatar.vue";
 import i18n from "@/ts/plugins/i18n.js";
+import Notifications from "@c/molecules/notification/Notifications.vue";
 
 export default {
   data: () => {
@@ -102,7 +98,7 @@ export default {
   },
 
   components: {
-    TinyAvatar
+    Notifications
   },
 
   computed: {
@@ -213,5 +209,7 @@ export default {
 
 .v-menu__content {
   top: 55px !important;
+  left: auto !important;
+  right: 15px !important;
 }
 </style>

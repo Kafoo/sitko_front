@@ -1,13 +1,11 @@
 <template>
-
   <projent-card :projent="event" type="event" :withPlace="withPlace" />
-
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from "@vue/composition-api";
 import EventModel from "@/ts/models/eventClass";
-import ProjentCard from "@c/molecules/card/ProjentCard.vue"
+import ProjentCard from "@c/molecules/card/ProjentCard.vue";
 
 export default defineComponent({
   name: "EventCard",
@@ -25,15 +23,9 @@ export default defineComponent({
   },
 
   setup() {
-
-
-    return {
-
-    };
+    return {};
   }
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

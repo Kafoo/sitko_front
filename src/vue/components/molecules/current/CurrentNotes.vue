@@ -1,6 +1,5 @@
 <template>
   <div style="position:relative">
-
     <current-outlined
       :label="label"
       :items="compNotes"
@@ -12,45 +11,48 @@
       :edit_text="$t('options.edit')"
       @edit="$emit('edit')"
     >
-
-      <draggable 
-      :disabled="!draggable"
-      class="list-group"
-      note="ul"
-      v-model="compNotes"
-      v-bind="dragOptions"
-      @start="drag = true"
-      @change="$emit('update', compNotes)"
-      @end="drag = false"
-        >
-          <transition-group 
+      <draggable
+        :disabled="!draggable"
+        class="list-group"
+        note="ul"
+        v-model="compNotes"
+        v-bind="dragOptions"
+        @start="drag = true"
+        @change="$emit('update', compNotes)"
+        @end="drag = false"
+      >
+        <transition-group
           type="transition"
           class="d-flex flex-wrap flex-row justify-center align-center"
-          >
-            <note-card
-              class="mx-2"
-              :class="draggable? 'list-group-item' : ''"
-              v-for="(note, index) in compNotes"
-              :key="note.title"
-              :closable="closable"
-              :noselect="!draggable"
-              :note="note"
-              @close="close(index)"
-            />
+        >
+          <note-card
+            class="mx-2"
+            :class="draggable ? 'list-group-item' : ''"
+            v-for="(note, index) in compNotes"
+            :key="note.title"
+            :closable="closable"
+            :noselect="!draggable"
+            :note="note"
+            @close="close(index)"
+          />
         </transition-group>
       </draggable>
     </current-outlined>
-
-
   </div>
 </template>
 
 <script lang="ts">
 import NoteModel from "@/ts/models/noteClass";
-import { defineComponent, ref, computed, onMounted, watch } from "@vue/composition-api";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watch
+} from "@vue/composition-api";
 import NoteCard from "../../molecules/note/NoteCard.vue";
-import CurrentOutlined from "@c/molecules/current/CurrentOutlined.vue"
-import Draggable from 'vuedraggable'
+import CurrentOutlined from "@c/molecules/current/CurrentOutlined.vue";
+import Draggable from "vuedraggable";
 
 export default defineComponent({
   components: {
@@ -88,17 +90,16 @@ export default defineComponent({
 
   name: "",
 
-  setup(props, {emit}) {
-
+  setup(props, { emit }) {
     var compNotes = ref<Array<NoteModel>>([]);
 
-    const setNotes = (notes:Array<NoteModel>)=>{
-      compNotes.value = JSON.parse(JSON.stringify(notes))
-    }
+    const setNotes = (notes: Array<NoteModel>) => {
+      compNotes.value = JSON.parse(JSON.stringify(notes));
+    };
 
-    onMounted(()=>{
-      setNotes(props.notes)
-    })
+    onMounted(() => {
+      setNotes(props.notes);
+    });
 
     watch(
       () => props.notes,
@@ -107,21 +108,21 @@ export default defineComponent({
       }
     );
 
-    var drag = ref(false)
+    var drag = ref(false);
 
-    var dragOptions:any = computed(() => {
+    var dragOptions: any = computed(() => {
       return {
         animation: 200,
         group: "description",
         disabled: false,
         ghostClass: "ghost"
-      }
-    })
+      };
+    });
 
-    const close = (index:number)=>{
-      const note = compNotes.value[index]
-      emit('removeNote', index)
-    }
+    const close = (index: number) => {
+      const note = compNotes.value[index];
+      emit("removeNote", index);
+    };
 
     return {
       drag,

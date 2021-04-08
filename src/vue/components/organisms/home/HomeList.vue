@@ -43,10 +43,15 @@ export default defineComponent({
   },
 
   setup() {
-  
-    var { entity:projects, loading:loading_all_projects } = useFetcher("project/GET_INC_PROJECTS");
-    var { entity:events, loading:loading_all_events } = useFetcher("event/GET_INC_EVENTS");
-    var { entity:places, loading:loading_all_places } = useFetcher("place/GET_ALL_PLACES");
+    var { entity: projects, loading: loading_all_projects } = useFetcher(
+      "project/GET_INC_PROJECTS"
+    );
+    var { entity: events, loading: loading_all_events } = useFetcher(
+      "event/GET_INC_EVENTS"
+    );
+    var { entity: places, loading: loading_all_places } = useFetcher(
+      "place/GET_ALL_PLACES"
+    );
 
     return {
       loading_all_projects,

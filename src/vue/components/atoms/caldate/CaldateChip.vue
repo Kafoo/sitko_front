@@ -1,6 +1,5 @@
 <template>
   <v-chip
-    
     color="#f3f3f3"
     :small="small"
     @click="click"
@@ -13,7 +12,6 @@
       {{ caldate.chip }}
     </span>
   </v-chip>
-
 </template>
 
 <script lang="ts">
@@ -31,23 +29,27 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-     clickable: {
-      type:Boolean,
+    clickable: {
+      type: Boolean,
       default: false
-     },
-     closable: {
-      type:Boolean,
+    },
+    closable: {
+      type: Boolean,
       default: false
-     }
+    }
   },
 
-  setup(props, {root}) {
-
+  setup(props, { root }) {
     const click = () => {
       if (props.clickable && props.caldate) {
-        root.$router.push('/place/'+props.caldate.place_id+'/calendar#'+props.caldate.start.split(' ')[0])
+        root.$router.push(
+          "/place/" +
+            props.caldate.place_id +
+            "/calendar#" +
+            props.caldate.start.split(" ")[0]
+        );
       }
-    }
+    };
 
     return {
       click
@@ -57,10 +59,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
-.chip{
+.chip {
   line-height: 15px;
   width: max-content;
 }
-
 </style>

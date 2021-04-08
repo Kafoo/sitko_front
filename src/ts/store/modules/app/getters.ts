@@ -11,8 +11,8 @@ export const getters: GetterTree<AppState, RootState> = {
     return state.app_alert;
   },
   lastRoute(state): Route | undefined {
-  if (state.routes.length > 1 ) {  
-    return state.routes[state.routes.length - 1];
-  }
+    if (state.routes.length > 1) {
+      return state.routes[state.routes.length - 1];
+    }
   }
 };

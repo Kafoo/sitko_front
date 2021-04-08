@@ -1,10 +1,16 @@
-import ImageModel from "@/ts/models/imageClass";
-import TagModel from "@/ts/models/tagClass";
 import PlaceModel from "@/ts/models/placeClass";
 import i18n from "@/ts/plugins/i18n.js";
-import TaggableModel from "@/ts/models/taggableClass";
+import imageable from "../mixins/imageable";
+import taggable from "../mixins/taggable";
+import linkable from "../mixins/linkable";
+import mix from "@/ts/mixins/_mix";
+import globalModel from "./globalClass";
 
-export default class UserModel extends TaggableModel {
+export default class UserModel extends mix(globalModel).with(
+  imageable,
+  taggable,
+  linkable
+) {
   id: number;
   name: string;
   last_name?: string;
@@ -12,27 +18,22 @@ export default class UserModel extends TaggableModel {
   email_verified_at?: string;
   password?: string;
   password_confirmation?: string;
-  image?: ImageModel | String;
   place?: PlaceModel;
+  path: string;
 
   constructor(rawData: any = {}) {
-    super(rawData)
+    super(rawData);
     this.id = rawData.id;
     this.name = rawData.name || i18n.t("an old user");
     this.last_name = rawData.last_name || "";
     this.email = rawData.email || "";
     this.email_verified_at = rawData.email_verified_at;
 
-    this.place = rawData.place;
+    this.place = new PlaceModel(rawData.place);
 
     this.password = "";
     this.password_confirmation = "";
 
-    if (rawData.image) {
-      this.image = new ImageModel(rawData.image);
-    } else {
-      this.image = undefined;
-    }
-
+    this.path = "/user/" + this.id;
   }
 }

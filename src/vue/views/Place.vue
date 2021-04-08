@@ -34,32 +34,29 @@
 
 <script lang="ts">
 import { mapGetters, mapActions } from "vuex";
-import {defineComponent} from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 import Sidebar from "@c/molecules/app/Sidebar.vue";
 import FloatMenu from "@c/molecules/place/FloatMenu.vue";
 import useFetcher from "@use/useFetcher";
 
 export default defineComponent({
-
   name: "Place",
-  
+
   components: {
     Sidebar,
     FloatMenu
   },
 
-  setup(props, {root}) {
+  setup(props, { root }) {
+    const place_id = parseInt(root.$route.params.id);
 
-    const place_id = parseInt(root.$route.params.id)
-
-    var { entity:place, loading } = useFetcher("place/GET_PLACE", place_id);
+    var { entity: place, loading } = useFetcher("place/GET_PLACE", place_id);
 
     return {
       place,
       loading
-    }
+    };
   }
-
 });
 </script>
 

@@ -22,18 +22,18 @@ export function camelize(value: string | TranslateResult) {
   return value;
 }
 
-export function incoming(value : Array<ProjentModel> | undefined){
+export function incoming(value: Array<ProjentModel> | undefined) {
   if (value) {
-    return value.filter((project:ProjentModel)=>{
-      return project.inc_caldates.length > 0
+    return value.filter((project: ProjentModel) => {
+      return project.inc_caldates.length > 0;
     });
   }
 }
 
-export function past(value : Array<ProjentModel> | undefined){
+export function past(value: Array<ProjentModel> | undefined) {
   if (value) {
-    return value.filter((project:ProjentModel)=>{
-      return project.inc_caldates.length == 0
+    return value.filter((project: ProjentModel) => {
+      return project.inc_caldates.length == 0;
     });
   }
 }

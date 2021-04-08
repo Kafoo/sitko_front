@@ -5,30 +5,26 @@ import NoteModel from "@/ts/models/noteClass";
 import axios from "axios";
 
 export const actions: ActionTree<NoteState, RootState> = {
-
   GET_NOTE({ commit, state }, note_id) {
+    var note = state.notes.find((x: NoteModel) => x.id === note_id);
 
-    var note = state.notes.find((x: NoteModel) => x.id === note_id)
-    
     if (note) {
       return note;
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "note/" + note_id)
         .then(response => {
-          note = new NoteModel(response.data)
+          note = new NoteModel(response.data);
           commit("pushNote", note);
-          return note
+          return note;
         })
         .catch(() => {});
     }
   },
 
-
   GET_NOTES_BY_PLACE({ state, commit }, place_id) {
-
     if (state.fetched.place_notes[place_id]) {
-      return state.notes.filter((x:NoteModel) => x.place_id == place_id);
+      return state.notes.filter((x: NoteModel) => x.place_id == place_id);
     } else {
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/note")
@@ -37,7 +33,7 @@ export const actions: ActionTree<NoteState, RootState> = {
           for (const note of response.data) {
             commit("pushNote", new NoteModel(note));
           }
-          return state.notes.filter((x:NoteModel) => x.place_id == place_id);
+          return state.notes.filter((x: NoteModel) => x.place_id == place_id);
         })
         .catch(() => {});
     }

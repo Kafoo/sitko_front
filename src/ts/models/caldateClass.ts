@@ -41,17 +41,17 @@ export default class Caldate {
       this.icon = "date_range";
     }
 
-    const beginning = new Date (this.start)
+    const beginning = new Date(this.start);
 
     if (beginning.getTime() < Date.now()) {
-      this.isPast = true
-    }else{
-      this.isPast = false
+      this.isPast = true;
+    } else {
+      this.isPast = false;
     }
 
     if (rawData.child) {
       this.name = rawData.child.title;
-      this.child = rawData.child
+      this.child = rawData.child;
     } else {
       this.name = "Evénement sans child";
     }

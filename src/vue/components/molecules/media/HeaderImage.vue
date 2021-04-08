@@ -2,7 +2,7 @@
   <v-img
     max-height="400px"
     width="100%"
-    :aspect-ratio="16/9"
+    :aspect-ratio="16 / 9"
     v-if="image"
     class="image"
     :class="isDefault ? '' : 'c-pointer'"
@@ -51,9 +51,7 @@ export default defineComponent({
 });
 </script>
 
-
 <style scoped>
-
 .image {
   border-radius: 0 0 4px 4px;
 }
@@ -63,5 +61,4 @@ export default defineComponent({
     border-radius: 0px;
   }
 }
-
 </style>

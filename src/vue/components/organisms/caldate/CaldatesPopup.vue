@@ -5,14 +5,12 @@
       {{ title }}
     </div>
     <div class="d-flex flex-column align-center">
-
-      <caldate-chip 
-      v-for="caldate in caldates"
-      :key="caldate.id"
-      :caldate="caldate"
-      clickable
-      /> 
-
+      <caldate-chip
+        v-for="caldate in caldates"
+        :key="caldate.id"
+        :caldate="caldate"
+        clickable
+      />
     </div>
   </v-card>
 </template>
@@ -20,14 +18,14 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import CloseDialog from "@c/atoms/app/CloseDialog.vue";
-import CaldateChip from "@c/atoms/caldate/CaldateChip.vue"
+import CaldateChip from "@c/atoms/caldate/CaldateChip.vue";
 
 export default defineComponent({
   name: "CaldatesPopup",
 
-  components: { 
+  components: {
     CloseDialog,
-    CaldateChip 
+    CaldateChip
   },
 
   props: {

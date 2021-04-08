@@ -1,25 +1,29 @@
 <template>
-  <div>
+  <loading-circle v-if="!place" small />
+  <div v-else>
     <page-title class="my-5" :title="$t('place notes') | capitalize" />
     <div v-if="user.place && place.author.id === user.id" class="text-center">
       <create-button
         :text="$t('actions.create.note')"
-        @action="$router.push('/note/create/' + place_id)"
+        @action="$router.push('/note/create/' + place.id)"
       />
     </div>
 
     <!-- No Note -->
-    <h4 v-if="!loading && !notes.length" class="text-center">
+    <h4 v-if="!loading_notes && !notes.length" class="text-center">
       -- {{ $t("data.empty", { item: $t("note") }) }} --
     </h4>
 
     <!-- No Active Note -->
-    <h4 v-else-if="!loading && !activeNotes.length" class="text-center">
+    <h4 v-else-if="!loading_notes && !notes.length" class="text-center">
       -- {{ $t("data.empty_typed", { item: $t("note") }) }} --
     </h4>
 
     <!-- Loadings -->
-    <div v-if="loading" class="notes d-flex justify-center flex-wrap">
+    <div
+      v-if="loading_notes"
+      class="notes d-flex justify-center flex-wrap"
+    >
       <skeleton-index v-for="item in 6" v-bind:key="item" />
     </div>
 
@@ -31,7 +35,7 @@
         tag="p"
       >
         <div
-          v-for="note in activeNotes"
+          v-for="note in notes"
           :key="note.id"
           class="list-complete-item ma-2"
         >
@@ -42,54 +46,46 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+<script lang="ts">
+import { defineComponent, ref } from "@vue/composition-api";
+import { useGetters } from "vuex-composition-helpers";
+import useFetcher from "@use/useFetcher";
 import NoteCard from "@c/molecules/note/NoteCard.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
 import SkeletonIndex from "@c/molecules/note/SkeletonIndex.vue";
-import PageTitle from "@c/atoms/app/PageTitle.vue";
+import PlaceModel from "@/ts/models/placeClass";
 
-export default {
+export default defineComponent({
   name: "Notes",
 
   components: {
     NoteCard,
     CreateButton,
-    SkeletonIndex,
-    PageTitle
+    SkeletonIndex
   },
 
-  data() {
+  props: {
+    place: Object as () => PlaceModel
+  },
+
+  setup(props, { root }) {
+    const { user } = useGetters({ user: "auth/user" } as any);
+
+    var hash = ref(null);
+    const place_id = parseInt(root.$route.params.id);
+
+    var { entity: notes, loading: loading_notes } = useFetcher(
+      "note/GET_NOTES_BY_PLACE",
+      place_id
+    );
+
     return {
-      hash: null,
-      place_id: parseInt(this.$route.params.id),
-      editing: false,
-      creating: false,
-      editionNote: undefined,
-      loading: false
+      notes,
+      loading_notes,
+      user
     };
-  },
-
-  mounted() {
-    this.loading = true;
-    this.GET_NOTES_BY_PLACE(this.place_id).then(() => {
-      this.loading = false;
-    });
-  },
-
-  computed: {
-    ...mapGetters("note", ["notes"]),
-    ...mapGetters("auth", ["user"]),
-
-    activeNotes() {
-      return this.notes.filter(x => x.place_id == this.place_id);
-    }
-  },
-
-  methods: {
-    ...mapActions("note", ["GET_NOTES_BY_PLACE"])
   }
-};
+});
 </script>
 
 <style scoped>

@@ -1,9 +1,12 @@
 <template>
-
   <v-chip
     small
     class="tag-chip px-2 white--text"
-    :class="[noselect ? 'noselect' : '', tiny ? 'tiny' : '', selected ? 'selected' : '']"
+    :class="[
+      noselect ? 'noselect' : '',
+      tiny ? 'tiny' : '',
+      selected ? 'selected' : ''
+    ]"
     :close="closable"
     @click:close="$emit('close')"
     @click="$emit('click')"
@@ -11,7 +14,7 @@
   >
     <v-icon v-if="selected" small>
       done
-    </v-icon>    
+    </v-icon>
     <v-icon v-else-if="tag.category" small>
       {{ tag.category.icon }}
     </v-icon>
@@ -19,10 +22,9 @@
       fiber_manual_record
     </v-icon>
     <span v-if="text" class="ml-1 chip-text">
-      {{ tag.title }} 
+      {{ tag.title }}
     </span>
   </v-chip>
-
 </template>
 
 <script lang="ts">
@@ -94,8 +96,8 @@ export default defineComponent({
 }
 
 .tag-chip.selected {
-    box-shadow: inset 0 0 20px 20px hsl(0deg 0% 100%);
-    color: #353535!important;
-    border: 1px solid;
+  box-shadow: inset 0 0 20px 20px hsl(0deg 0% 100%);
+  color: #353535 !important;
+  border: 1px solid;
 }
 </style>

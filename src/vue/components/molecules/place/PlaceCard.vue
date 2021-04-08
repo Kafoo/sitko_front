@@ -9,11 +9,7 @@
         height="252px"
         @click="$router.push('/place/' + place.id)"
       >
-        <v-img
-          :lazy-src="image.low_medium"
-          :src="image.medium"
-          height="130px"
-        >
+        <v-img :lazy-src="image.low_medium" :src="image.medium" height="130px">
           <template v-slot:placeholder>
             <v-row
               class="image_placeholder fill-height ma-0"
@@ -96,10 +92,10 @@ export default defineComponent({
       }
     });
 
-    return { 
-      winWidth, 
-      mobile, 
-      image 
+    return {
+      winWidth,
+      mobile,
+      image
     };
   }
 });

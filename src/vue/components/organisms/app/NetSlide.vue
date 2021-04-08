@@ -2,14 +2,8 @@
   <div>
     <div class="text-h5 font-weight-bold ml-sm-15 ml-2 mb-1">
       {{ title }}
-      <v-btn 
-      small 
-      text
-      class="px-2"
-      color="grey" 
-      v-if="all" 
-      :to="all">
-        {{$t('see all')}}
+      <v-btn small text class="px-2" color="grey" v-if="all" :to="all">
+        {{ $t("see all") }}
       </v-btn>
     </div>
 
@@ -90,7 +84,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    all:String
+    all: String
   },
 
   setup() {

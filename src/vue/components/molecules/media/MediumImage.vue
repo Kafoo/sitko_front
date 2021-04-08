@@ -1,6 +1,6 @@
 <template>
   <v-img
-    :aspect-ratio="16/9"
+    :aspect-ratio="16 / 9"
     v-if="image"
     class="image mt-sm-5"
     :class="isDefault ? '' : 'c-pointer'"
@@ -49,9 +49,7 @@ export default defineComponent({
 });
 </script>
 
-
 <style scoped>
-
 .image {
   border-radius: 0 0 4px 4px;
   width: 60%;
@@ -65,5 +63,4 @@ export default defineComponent({
     box-shadow: none;
   }
 }
-
 </style>

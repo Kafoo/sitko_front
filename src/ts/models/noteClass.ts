@@ -1,9 +1,10 @@
 import PlaceModel from "@/ts/models/placeClass";
 import UserModel from "@/ts/models/userClass";
+import GlobalModel from "./globalClass";
 
-export default class NoteModel {
-
+export default class NoteModel extends GlobalModel {
   id: number;
+  essence: string;
   place_id: number;
   title: string;
   description: string;
@@ -12,8 +13,10 @@ export default class NoteModel {
   author: UserModel;
 
   constructor(rawData: any = {}) {
+    super(rawData)
 
     this.id = rawData.id;
+    this.essence = "note";
     this.place_id = rawData.place_id;
 
     this.title = rawData.title;
@@ -27,9 +30,6 @@ export default class NoteModel {
 
     this.place = rawData.place;
 
-    this.path = '/note/'+this.id
-
+    this.path = "/note/" + this.id;
   }
-
-
 }

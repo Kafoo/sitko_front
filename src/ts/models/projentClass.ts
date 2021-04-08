@@ -1,63 +1,42 @@
-import ImageModel from "@/ts/models/imageClass";
-import CaldateModel from "@/ts/models/caldateClass";
 import PlaceModel from "@/ts/models/placeClass";
-import UserModel from "@/ts/models/userClass";
-import TaggableModel from "@/ts/models/taggableClass";
+import AuthorModel from "@/ts/models/authorClass";
+import imageable from "../mixins/imageable";
+import taggable from "../mixins/taggable";
+import mix from "@/ts/mixins/_mix";
+import caldatable from "../mixins/caldatable";
+import globalModel from "./globalClass";
 
-export default class ProjentModel extends TaggableModel {
-
+export default class ProjentModel extends mix(globalModel).with(
+  imageable,
+  taggable,
+  caldatable
+) {
   id: number;
   place_id: number;
   title: string;
   description: string;
-  image?: ImageModel;
   place?: PlaceModel;
-  caldates: Array<CaldateModel>;
-  inc_caldates: Array<CaldateModel>;
-  author: UserModel;
+  author: AuthorModel;
 
   constructor(rawData: any = {}) {
-
-    super(rawData)
+    super(rawData);
 
     this.id = rawData.id;
     this.place_id = rawData.place_id;
 
     if (rawData.author) {
-      this.author = rawData.author;
+      this.author = new AuthorModel(rawData.author);
     } else {
-      this.author = new UserModel();
+      this.author = new AuthorModel();
     }
 
     this.title = rawData.title;
     this.description = rawData.description;
 
-    if (rawData.image) {
-      this.image = new ImageModel(rawData.image);
-    } else {
-      this.image = undefined;
-    }
-
-    this.place = rawData.place;
-
-    this.caldates = [];
-    this.inc_caldates = [];
-
-    if (rawData.caldates) {
-      rawData.caldates.forEach((caldate: CaldateModel) => {
-        caldate = new CaldateModel(caldate)
-        this.caldates.push(caldate);
-        if (!caldate.isPast) {
-          this.inc_caldates.push(caldate)
-        }
-      });
-    }
-
-
+    this.place = new PlaceModel(rawData.place);
   }
 
   get bigtitle(): string {
     return this.title.toUpperCase();
   }
-
 }

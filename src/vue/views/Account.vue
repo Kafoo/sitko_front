@@ -227,7 +227,6 @@ export default defineComponent({
     var error = ref(null);
     var loading = ref(false);
     var loading_deletion = ref(false);
- 
 
     const { SEND_USER_EDITION } = useActions({
       SEND_USER_EDITION: "auth/SEND_USER_EDITION"
@@ -241,7 +240,7 @@ export default defineComponent({
     const { user } = useGetters({ user: "auth/user" } as any);
     var { errors } = useGetters({ errors: "app/errors" } as any);
 
-   var editedUser = ref<UserModel>(JSON.parse(JSON.stringify(user.value)));
+    var editedUser = ref<UserModel>(JSON.parse(JSON.stringify(user.value)));
 
     const firstNameLabel = computed(
       () =>

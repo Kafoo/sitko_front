@@ -9,8 +9,8 @@ export const getters: GetterTree<EventState, RootState> = {
   },
 
   inc_events(state): Array<EventModel> {
-    return state.events.filter((event:EventModel)=>{
-      return event.inc_caldates.length > 0
+    return state.events.filter((event: EventModel) => {
+      return event.inc_caldates.length > 0;
     });
   }
 };

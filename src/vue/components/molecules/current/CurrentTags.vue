@@ -1,6 +1,5 @@
 <template>
   <div style="position:relative">
-
     <current-outlined
       :label="label"
       :items="compTags"
@@ -11,43 +10,45 @@
       @edit="$emit('edit')"
     >
       <div class="d-flex flex-wrap flex-row justify-center align-center">
-
-        <draggable 
-        :disabled="!draggable"
-        class="list-group"
-        tag="ul"
-        v-model="compTags"
-        v-bind="dragOptions"
-        @start="drag = true"
-        @change="$emit('update', compTags)"
-        @end="drag = false"
-          >
-            <transition-group 
-            type="transition" >
-              <tag-chip
-                :class="draggable? 'list-group-item' : ''"
-                v-for="(tag, index) in compTags"
-                :key="tag.title"
-                :closable="closable"
-                :noselect="!draggable"
-                :tag="tag"
-                @close="close(index)"
-              />
+        <draggable
+          :disabled="!draggable"
+          class="list-group"
+          tag="ul"
+          v-model="compTags"
+          v-bind="dragOptions"
+          @start="drag = true"
+          @change="$emit('update', compTags)"
+          @end="drag = false"
+        >
+          <transition-group type="transition">
+            <tag-chip
+              :class="draggable ? 'list-group-item' : ''"
+              v-for="(tag, index) in compTags"
+              :key="tag.title"
+              :closable="closable"
+              :noselect="!draggable"
+              :tag="tag"
+              @close="close(index)"
+            />
           </transition-group>
         </draggable>
       </div>
     </current-outlined>
-
-
   </div>
 </template>
 
 <script lang="ts">
 import TagModel from "@/ts/models/tagClass";
-import { defineComponent, ref, computed, onMounted, watch } from "@vue/composition-api";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watch
+} from "@vue/composition-api";
 import TagChip from "../../atoms/tag/TagChip.vue";
-import CurrentOutlined from "@c/molecules/current/CurrentOutlined.vue"
-import Draggable from 'vuedraggable'
+import CurrentOutlined from "@c/molecules/current/CurrentOutlined.vue";
+import Draggable from "vuedraggable";
 
 export default defineComponent({
   components: {
@@ -81,17 +82,16 @@ export default defineComponent({
 
   name: "",
 
-  setup(props, {emit}) {
-
+  setup(props, { emit }) {
     var compTags = ref<Array<TagModel>>([]);
 
-    const setTags = (tags:Array<TagModel>)=>{
-      compTags.value = JSON.parse(JSON.stringify(tags))
-    }
+    const setTags = (tags: Array<TagModel>) => {
+      compTags.value = JSON.parse(JSON.stringify(tags));
+    };
 
-    onMounted(()=>{
-      setTags(props.tags)
-    })
+    onMounted(() => {
+      setTags(props.tags);
+    });
 
     watch(
       () => props.tags,
@@ -100,21 +100,21 @@ export default defineComponent({
       }
     );
 
-    var drag = ref(false)
+    var drag = ref(false);
 
-    var dragOptions:any = computed(() => {
+    var dragOptions: any = computed(() => {
       return {
         animation: 200,
         group: "description",
         disabled: false,
         ghostClass: "ghost"
-      }
-    })
+      };
+    });
 
-    const close = (index:number)=>{
-      const tag = compTags.value[index]
-      emit('removeTag', index)
-    }
+    const close = (index: number) => {
+      const tag = compTags.value[index];
+      emit("removeTag", index);
+    };
 
     return {
       drag,

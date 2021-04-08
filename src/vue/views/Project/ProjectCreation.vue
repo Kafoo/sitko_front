@@ -1,20 +1,12 @@
 <template>
   <primary-content-body>
     <div class="card-body">
+      <ariane>
+        <back-button v-if="lastRoute" :path="lastRoute.path" />
+      </ariane>
 
-      <v-row 
-      v-if="lastRoute"
-      no-gutters>
-        <v-col>
-          <back-button 
-          :path="lastRoute.path"/>
-        </v-col>
-      </v-row>
-    
       <v-form @submit.prevent="createProject" v-model="form">
-
         <cud-layout>
-
           <template v-slot:header-title>
             {{ $t("actions.new.project") | camelize }}
           </template>
@@ -43,16 +35,14 @@
 
           <template v-slot:visibility>
             <v-select
-              disabled :items="['Public', 'Restreint', 'Privé']"
+              disabled
+              :items="['Public', 'Restreint', 'Privé']"
               label="Visibilité"
               outlined
               class="rounded-lg"
             ></v-select>
 
-            <help
-            class="mt-2 mx-2"
-            :text="$t('help.visibility')"
-            />
+            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
           </template>
 
           <template v-slot:description>
@@ -79,27 +69,26 @@
           </template>
 
           <template v-slot:caldates>
-          <caldate-input
-            :caldates="newProject.caldates"
-            @update="
-              caldates => {
-                newProject.caldates = caldates;
-              }
-            "
-          />
+            <caldate-input
+              :caldates="newProject.caldates"
+              @update="
+                caldates => {
+                  newProject.caldates = caldates;
+                }
+              "
+            />
           </template>
 
           <template v-slot:actions>
-            <v-btn 
-            type="submit" 
-            :disabled="loading || !form"
-            :loading="loading">
+            <v-btn
+              type="submit"
+              :disabled="loading || !form"
+              :loading="loading"
+            >
               {{ $t("confirm.confirm") }}
             </v-btn>
           </template>
-
         </cud-layout>
-
       </v-form>
     </div>
   </primary-content-body>
@@ -120,7 +109,7 @@ import ImageInput from "@c/molecules/media/ImageInput.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
-import CudLayout from "@/vue/layouts/crud/CudLayout.vue"
+import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 
 export default defineComponent({
   name: "ProjectCreation",
@@ -135,8 +124,7 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-
-    const { lastRoute } = useGetters({lastRoute: 'app/lastRoute'} as any)
+    const { lastRoute } = useGetters({ lastRoute: "app/lastRoute" } as any);
 
     const rules = useInputRules();
 

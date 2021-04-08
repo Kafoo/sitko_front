@@ -102,7 +102,10 @@
             offset-x
             min-width="0"
           >
-            <projent-card v-if="selectedChild !== {}" :projent="selectedChild" />
+            <projent-card
+              v-if="selectedChild !== {}"
+              :projent="selectedChild"
+            />
           </v-menu>
         </v-sheet>
       </v-col>
@@ -131,7 +134,7 @@ export default defineComponent({
       move: (arg: any) => {},
       prev: () => {},
       next: () => {},
-      parsedValue: {month:0}
+      parsedValue: { month: 0 }
     });
 
     var focus = ref("");
@@ -143,12 +146,13 @@ export default defineComponent({
 
     const place_id = parseInt(root.$route.params.id);
 
-    var { entity:caldates, loading } = useFetcher("caldate/GET_CALDATES_BY_PLACE", place_id);
+    var { entity: caldates, loading } = useFetcher(
+      "caldate/GET_CALDATES_BY_PLACE",
+      place_id
+    );
 
     onMounted(() => {
-
       calendar.value.move(0);
-
     });
 
     const typeToLabel = {

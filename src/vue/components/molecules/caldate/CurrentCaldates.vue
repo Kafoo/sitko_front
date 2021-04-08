@@ -1,13 +1,15 @@
 <template>
-  <v-card 
-  class="d-flex flex-column text-caption grey--text text--darken-1"
-  elevation="0">
+  <v-card
+    class="d-flex flex-column text-caption grey--text text--darken-1"
+    elevation="0"
+  >
     <caldate-chip
-    v-for="caldate in caldates.slice(0, 2)"
-    :key="caldate.id"
-    :caldate="caldate"
-    clickable
-    small/> 
+      v-for="caldate in caldates.slice(0, 2)"
+      :key="caldate.id"
+      :caldate="caldate"
+      clickable
+      small
+    />
 
     <span
       v-if="caldates.length > 2"
@@ -32,7 +34,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import CaldatesPopup from "@c/organisms/caldate/CaldatesPopup.vue";
-import CaldateChip from "@c/atoms/caldate/CaldateChip.vue"
+import CaldateChip from "@c/atoms/caldate/CaldateChip.vue";
 
 export default defineComponent({
   name: "CurrentCaldates",
