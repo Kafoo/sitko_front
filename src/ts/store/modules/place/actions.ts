@@ -67,23 +67,23 @@ export const actions: ActionTree<PlaceState, RootState> = {
       });
   },
 
-  SEND_LINK_REQUEST({ commit }, place) {
-    return _SEND_LINK_REQUEST({ commit }, place, "place");
+  SEND_LINK_REQUEST({ commit }, payload) {
+    return _SEND_LINK_REQUEST({ commit }, payload);
   },
 
-  SEND_CANCEL_LINK_REQUEST({ commit }, place) {
-    return _SEND_CANCEL_LINK_REQUEST({ commit }, place, "place");
+  SEND_CANCEL_LINK_REQUEST({ commit }, payload) {
+    return _SEND_CANCEL_LINK_REQUEST({ commit }, payload);
   },
 
-  SEND_UNLINK_REQUEST({ commit }, place) {
-    return _SEND_UNLINK_REQUEST({ commit }, place, "place");
+  SEND_UNLINK_REQUEST({ commit }, payload) {
+    return _SEND_UNLINK_REQUEST({ commit }, payload);
   },
 
-  SEND_CONFIRM_LINK({ commit }, place) {
-    return _SEND_CONFIRM_LINK({ commit }, place, "place");
+  SEND_CONFIRM_LINK({ commit }, payload) {
+    return _SEND_CONFIRM_LINK({ commit }, payload);
   },
 
-  SEND_DECLINE_LINK({ commit }, place) {
-    return _SEND_DECLINE_LINK({ commit }, place, "place");
+  SEND_DECLINE_LINK({ commit }, payload) {
+    return _SEND_DECLINE_LINK({ commit }, payload);
   }
 };

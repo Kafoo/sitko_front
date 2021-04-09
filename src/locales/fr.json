@@ -98,6 +98,7 @@
 
   "accept": "accepter",
   "decline": "refuser",
+  "confirm": "confirmer",
   "logout": "se déconnecter",
   "delete my account": "supprimer mon compte",
   "delete project": "supprimer le projet",

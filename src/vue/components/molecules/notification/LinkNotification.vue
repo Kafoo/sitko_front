@@ -115,11 +115,9 @@ export default defineComponent({
     const confirm = () => {
       read();
       loading_choice.value = true;
-
-      SEND_CONFIRM_LINK(props.notification!.requested)
+      SEND_CONFIRM_LINK({requesting:props.notification!.requesting, requested:props.notification!.requested})
         .then(() => {
           loading_choice.value = false;
-          var newNotification = JSON.parse(JSON.stringify(props.notification));
         })
         .catch(() => {
           loading_choice.value = false;
@@ -129,11 +127,9 @@ export default defineComponent({
     const decline = () => {
       read();
       loading_choice.value = true;
-
-      SEND_DECLINE_LINK(props.notification!.requested)
+      SEND_DECLINE_LINK({requesting:props.notification!.requesting, requested:props.notification!.requested})
         .then(() => {
           loading_choice.value = false;
-          var newNotification = JSON.parse(JSON.stringify(props.notification));
         })
         .catch(() => {
           loading_choice.value = false;

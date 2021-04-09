@@ -5,7 +5,7 @@
     <v-card v-else-if="user" width="400px" class="ma-8 pa-3">
       <v-row justify="center">
         <v-col cols="auto">
-          <big-avatar circle :image="user.image" default="avatar" />
+          <big-avatar circle :image="user.image" default="avatar"/>
         </v-col>
       </v-row>
 

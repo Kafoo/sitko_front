@@ -20,7 +20,6 @@ export default class NotificationModel extends GlobalModel {
   read: boolean;
 
   constructor(rawData: any = {}) {
-
     super(rawData)
     this.id = rawData.id;
     this.type = rawData.type;

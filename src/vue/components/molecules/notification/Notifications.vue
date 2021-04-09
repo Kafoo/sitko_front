@@ -39,18 +39,8 @@
           <loading-circle small app />
         </div>
 
-        <div
-          v-else-if="!displayed_notifications.length"
-          class="font-italic grey--text d-flex justify-center align-center"
-          style="height:180px"
-        >
-          <div>
-            <!-- TOTRANSLATE -->
-            pas de notification
-          </div>
-        </div>
 
-        <div v-else>
+        <div v-else-if="notifications && notifications.length">
           <link-notification
             v-for="notification in displayed_notifications"
             :key="notification.id"
@@ -72,6 +62,17 @@
             </v-icon>
             {{$t('more')}}
           </v-btn>
+        </div>
+
+        <div
+          v-else
+          class="font-italic grey--text d-flex justify-center align-center"
+          style="height:180px"
+        >
+          <div>
+            <!-- TOTRANSLATE -->
+            pas de notification
+          </div>
         </div>
       </div>
     </v-list>
