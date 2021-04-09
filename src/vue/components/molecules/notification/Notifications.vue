@@ -115,7 +115,9 @@ export default defineComponent({
 
     var displayed_notifications: Ref<Array<NotificationModel>> = computed(
       () => {
-        return notifications.value.slice(0, 5)
+        if (notifications.value) {
+          return notifications.value.slice(0, 5)
+        }
       }
     );
 
