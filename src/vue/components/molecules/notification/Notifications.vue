@@ -40,11 +40,12 @@
         </div>
 
         <div
-          v-else-if="notifications && !notifications.length"
+          v-else-if="!displayed_notifications.length"
           class="font-italic grey--text d-flex justify-center align-center"
           style="height:180px"
         >
           <div>
+            <!-- TOTRANSLATE -->
             pas de notification
           </div>
         </div>
@@ -117,6 +118,8 @@ export default defineComponent({
       () => {
         if (notifications.value) {
           return notifications.value.slice(0, 5)
+        } else {
+          return []
         }
       }
     );
