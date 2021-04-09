@@ -2,7 +2,7 @@ export const guest = (to: any, from: any, next: any) => {
   if (!localStorage.getItem("authToken")) {
     return next();
   } else {
-    return next("/");
+    return next();
   }
 };
 

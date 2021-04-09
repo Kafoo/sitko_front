@@ -122,10 +122,14 @@ export default defineComponent({
     );
 
     var MoreNewNotifications: Ref<boolean> = computed(() => {
-      var MoreNews = notifications.value.slice(5).filter(
-        (notification: NotificationModel) => !notification.read
-      );
-      return MoreNews.length?true:false;
+      if (notifications.value) {
+        var MoreNews = notifications.value.slice(5).filter(
+          (notification: NotificationModel) => !notification.read
+        );
+        return MoreNews.length?true:false;
+      } else {
+        return false
+      }
     });
 
 
