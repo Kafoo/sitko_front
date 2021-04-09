@@ -40,7 +40,7 @@
         </div>
 
         <div
-          v-else-if="!notifications.length"
+          v-else-if="notifications && !notifications.length"
           class="font-italic grey--text d-flex justify-center align-center"
           style="height:180px"
         >
