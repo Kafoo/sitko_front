@@ -41,7 +41,6 @@ export default defineComponent({
         })
         .catch((error: any) => {
           error.value = root.$t("Error sending verification link.");
-          console.log(error.response);
         });
     };
 

@@ -12,6 +12,7 @@
     <v-pagination
       v-model="page"
       :length="pagesCount"
+      class="mt-3"
     ></v-pagination>
 
   </primary-content-body>

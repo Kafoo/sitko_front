@@ -12,11 +12,11 @@
     "link":{
       "user":{
         "toUser" : "{requesting} would like to connect",
-        "toPlace" : "{requesting} would like to connect to {requesting}"
+        "toPlace" : "{requesting} would like to connect to {requested}"
       },
       "place":{
         "toUser" : "{requesting} would like to connect",
-        "toPlace" : "{requesting} would like to connect to {requesting}"
+        "toPlace" : "{requesting} would like to connect to {requested}"
       },
       "state":{
         "confirmed" : "link confirmed",

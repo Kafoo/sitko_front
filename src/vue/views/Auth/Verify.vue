@@ -46,7 +46,6 @@ export default class Verify extends Vue {
         this.$router.push("/").catch(() => {});
       })
       .catch((error: any) => {
-        console.log(error.response);
         this.error = "Error verifying email";
       });
   }

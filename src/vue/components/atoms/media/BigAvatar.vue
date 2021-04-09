@@ -16,7 +16,7 @@ export default defineComponent({
   name: "",
 
   props: {
-    image: String,
+    image: (Object as ()=>ImageModel) || String,
 
     size: {
       type: String,
@@ -37,7 +37,11 @@ export default defineComponent({
   setup(props) {
     var imageSrc: Ref<string> = computed(() => {
       if (props.image) {
-        return props.image;
+        if (typeof props.image !== "string") {
+          return props.image.medium;
+        } else  {
+          return props.image
+        }
       } else {
         var image;
 

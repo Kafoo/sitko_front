@@ -19,11 +19,25 @@
         class="placeAction-container mb-5 d-flex flex-column flex-sm-row justify-end"
       >
         <join-button
-
+          v-if="place.can.link"
           :entity="place"
           type="place"
           class="mb-4"
         />
+
+        <v-btn
+          v-else-if="place.can.update"
+          class="mb-4"
+          :to="'/place/' + $route.params.id + '/edit'"
+        >
+          <v-icon
+            left
+          >
+            edit
+          </v-icon>
+          {{$t('edit')}}
+        </v-btn>
+
         <v-btn
           :to="'/place/' + $route.params.id + '/contact'"
           class="placeAction rounded-lg mb-4 ml-sm-4"
@@ -120,21 +134,8 @@ export default defineComponent({
       }
     ]);
 
-    const { user } = useGetters({ user: "auth/user" } as any);
-
-    if (props.place && user.value.id == props.place.author.id) {
-      morePlaceActions.value.push({
-        title: root.$options.filters!.capitalize(root.$t("edit")),
-        action: () => {
-          root.$router.push("/place/" + root.$route.params.id + "/edit");
-        },
-        icon: "edit"
-      });
-    }
-
     return {
-      morePlaceActions,
-      user
+      morePlaceActions
     };
   }
 });

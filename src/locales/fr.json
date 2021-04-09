@@ -96,6 +96,8 @@
   "login": "se connecter",
   "register": "s'inscrire",
 
+  "accept": "accepter",
+  "decline": "refuser",
   "logout": "se déconnecter",
   "delete my account": "supprimer mon compte",
   "delete project": "supprimer le projet",
@@ -125,6 +127,7 @@
   "Link request sent":"Demande de lien envoyé",
   "Request canceled":"Demande annulée",
   "Link confirmed":"Lien confirmé",
+  "Link declined":"Lien refusé",
   "Link canceled":"Lien annulé",
 
   "notification":{

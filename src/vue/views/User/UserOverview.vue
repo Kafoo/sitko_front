@@ -19,7 +19,7 @@
       v-if="user.can.link"
       justify="center">
         <v-col cols="auto">
-          <join-button :entity="user" type="user" />
+          <join-button :entity="user" type="user" class="mb-4" />
         </v-col>
       </v-row>
 

@@ -178,8 +178,6 @@ export default defineComponent({
       match: useInputRules().match
     });
 
-    console.log(rules);
-
     const refForm = computed(
       () => refs.registerForm as Vue & { validate: () => boolean }
     );

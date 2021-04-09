@@ -49,7 +49,7 @@
             :disabled="loading_choice"
           >
             <!-- TOTRANSLATE -->
-            Accepter
+            {{$t('accept')}}
           </v-btn>
           <v-btn
             small
@@ -59,7 +59,7 @@
             :disabled="loading_choice"
           >
             <!-- TOTRANSLATE -->
-            Refuser
+            {{$t('decline')}}
           </v-btn>
         </div>
         <div

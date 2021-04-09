@@ -5,7 +5,7 @@
         <big-avatar
           :circle="circle"
           :size="size"
-          :image="imageSrc"
+          :image="image"
           :default="default_image"
         />
         <v-hover v-slot="{ hover }">
@@ -61,10 +61,12 @@ import {
   PropType,
   onMounted
 } from "@vue/composition-api";
+import store from "@/ts/store";
 import { useInputRules } from "@/ts/functions/composition/inputRules";
 import ImageModel from "@/ts/models/imageClass";
 import CropPopup from "@c/organisms/app/CropPopup.vue";
 import BigAvatar from "../../atoms/media/BigAvatar.vue";
+import i18n from '@/ts/plugins/i18n';
 
 export default defineComponent({
   name: "ImageInput",
@@ -112,12 +114,15 @@ export default defineComponent({
           cropping.value = true;
         };
       } else {
-        console.log("nope");
+        store.commit("app/setAlert", {
+          type: "error",
+          msg: i18n.t('media.max_size', {max:'4Mo'})
+        });
       }
     };
 
-    const update = () => {
-      emit("update", customImage.value);
+    const update = (newImage:string) => {
+      emit("update", newImage);
     };
 
     const imageSrc = computed(() => {

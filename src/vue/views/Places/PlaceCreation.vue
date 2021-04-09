@@ -123,13 +123,10 @@ export default defineComponent({
       loading.value = true;
       SEND_PLACE_CREATION(newPlace.value)
         .then(() => {
-          console.log("compo then");
           loading.value = false;
           root.$router.push("/places/myplaces");
         })
         .catch((error: any) => {
-          console.log(error);
-          console.log("compo catch");
           loading.value = false;
         });
     };
