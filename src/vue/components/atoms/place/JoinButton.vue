@@ -84,7 +84,7 @@ export default defineComponent({
 
     const cancel = () => {
       loading.value = true;
-      SEND_CANCEL_LINK_REQUEST(props.entity)
+      SEND_CANCEL_LINK_REQUEST({requesting:user.value, requested:props.entity})
         .then(() => {
           loading.value = false;
         })

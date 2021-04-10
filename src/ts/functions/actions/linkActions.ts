@@ -28,17 +28,17 @@ export function _SEND_LINK_REQUEST(
 
 export function _SEND_CANCEL_LINK_REQUEST(
   { commit }: any,
-  payload: any,
+  {requesting, requested}:any
 ) {
   return axios
     .put(
       process.env.VUE_APP_API_URL +
         "link/cancel",
-        payload
+        {requesting, requested}
     )
     .then(response => {
-      payload.link = false;
-      commit("push" + capitalize(payload.essence), payload);
+      requested.link = false;
+      commit("push" + capitalize(requested.essence), requested);
       commit(
         "app/setAlert",
         { type: "success", msg: i18n.t("Request canceled") },
