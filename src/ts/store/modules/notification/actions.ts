@@ -5,6 +5,7 @@ import NotificationModel from "@/ts/models/notificationClass";
 import axios from "axios";
 
 export const actions: ActionTree<NotificationState, RootState> = {
+
   GET_NOTIFICATIONS({ state, commit }, { reload = null } = {}) {
     if (!reload && state.fetched.notifications) {
       return state.notifications;

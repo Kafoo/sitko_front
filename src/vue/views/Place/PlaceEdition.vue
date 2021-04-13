@@ -50,6 +50,10 @@
             ></v-textarea>
           </template>
 
+          <template v-slot:localization>
+            <localization-input v-model="place.localization"/>
+          </template>
+
           <template v-slot:tags>
             <tags-input
               :tags="place.tags"
@@ -105,6 +109,8 @@ import PlaceModel from "@/ts/models/placeClass";
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import LocalizationInput from '@/vue/components/molecules/input/LocalizationInput.vue';
+
 
 export default defineComponent({
   components: {
@@ -113,7 +119,8 @@ export default defineComponent({
     ConfirmDialog,
     TagsInput,
     DeleteButton,
-    CudLayout
+    CudLayout,
+    LocalizationInput
   },
 
   name: "PlaceEdition",

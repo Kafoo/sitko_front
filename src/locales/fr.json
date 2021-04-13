@@ -52,6 +52,7 @@
   "description": "description",
   "image": "image",
   "category": "catégorie",
+  "adress":"adress",
 
   "other caldate": "autre date | autres dates",
 

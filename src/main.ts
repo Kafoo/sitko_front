@@ -11,6 +11,7 @@ import "@trevoreyre/autocomplete-vue/dist/style.css";
 import VueAnalytics from "vue-analytics";
 Vue.use(VueAnalytics, { id: process.env.ANALYTICS_ID, router });
 
+import 'leaflet/dist/leaflet.css';
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "./assets/css/main.css";
 import "@/ts/functions/interceptors";
@@ -37,6 +38,19 @@ Vue.component("help", Help);
 Vue.component("back-button", BackButton);
 Vue.component("page-title", PageTitle);
 Vue.component("tiny-avatar", TinyAvatar);
+
+import L from 'leaflet';
+type D = L.Icon.Default & {
+  _getIconUrl?: string;
+};
+// eslint-disable-next-line  
+delete (L.Icon.Default.prototype as D)._getIconUrl
+// eslint-disable-next-line  
+L.Icon.Default.mergeOptions({  
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),  
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),  
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')  
+})
 
 new Vue({
   router,

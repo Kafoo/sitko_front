@@ -9,6 +9,7 @@ import event from "./modules/event";
 import note from "./modules/note";
 import user from "./modules/user";
 import notification from "./modules/notification";
+import map from "./modules/map";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,7 @@ const routes = [
   ...note,
   ...user,
   ...notification,
+  ...map,
 
   {
     path: "*",

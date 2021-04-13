@@ -49,6 +49,10 @@
             ></v-textarea>
           </template>
 
+          <template v-slot:localization>
+            <localization-input v-model="newPlace.localization"/>
+          </template>
+
           <template v-slot:tags>
             <tags-input
               :tags="newPlace.tags"
@@ -90,6 +94,7 @@ import PlaceModel from "@/ts/models/placeClass";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import TagModel from "@/ts/models/tagClass";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import LocalizationInput from '@/vue/components/molecules/input/LocalizationInput.vue';
 
 export default defineComponent({
   name: "PlaceCreation",
@@ -98,7 +103,8 @@ export default defineComponent({
     LoadingBar,
     ImageInput,
     TagsInput,
-    CudLayout
+    CudLayout,
+    LocalizationInput
   },
 
   setup(props, { root }) {

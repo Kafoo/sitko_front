@@ -3,7 +3,7 @@
     <v-card
       :tile="mobile"
       :elevation="mobile ? 0 : 2"
-      class="flex-grow-1 align-center ma-xs-0 ma-sm-5 pa-sm-5 pa-1"
+      class="flex-grow-1 align-center ma-xs-0 ma-sm-5 pa-sm-5"
       max-width="800px"
       min-width="0"
       min-height="500px"

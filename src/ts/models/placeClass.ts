@@ -1,10 +1,10 @@
 import AuthorModel from "@/ts/models/authorClass";
 import NoteModel from "@/ts/models/noteClass";
-import imageable from "../mixins/imageable";
-import taggable from "../mixins/taggable";
-import linkable from "../mixins/linkable";
+import imageable from "@/ts/mixins/imageable";
+import taggable from "@/ts/mixins/taggable";
+import linkable from "@/ts/mixins/linkable";
 import mix from "@/ts/mixins/_mix";
-import globalModel from "./globalClass";
+import globalModel from "@/ts/models/globalClass";
 
 export default class PlaceModel extends mix(globalModel).with(
   imageable,
@@ -19,6 +19,7 @@ export default class PlaceModel extends mix(globalModel).with(
   author: AuthorModel;
   notes: Array<NoteModel>;
   path: string;
+  localization:Object|null;
 
   constructor(rawData: any = {}) {
     super(rawData);
@@ -43,5 +44,11 @@ export default class PlaceModel extends mix(globalModel).with(
     }
 
     this.projects_count = rawData.projects_count;
+    if (rawData.localization) {
+      this.localization = rawData.localization
+    } else{
+      this.localization = null
+    }
+
   }
 }

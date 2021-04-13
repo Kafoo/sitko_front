@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "@vue/composition-api";
+import { defineComponent, ref, onMounted, watch } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 import Welcoming from "@c/organisms/home/Welcoming.vue";
@@ -45,3 +45,7 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+
+</style>

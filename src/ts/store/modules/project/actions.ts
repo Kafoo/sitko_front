@@ -57,9 +57,13 @@ export const actions: ActionTree<ProjectState, RootState> = {
   },
 
   GET_PROJECTS_BY_PLACE({ state, commit }, place_id) {
+
     if (state.fetched.place_projects[place_id]) {
+
       return state.projects.filter((x: ProjectModel) => x.place_id == place_id);
+
     } else {
+    
       return axios
         .get(process.env.VUE_APP_API_URL + "place/" + place_id + "/project")
         .then(response => {

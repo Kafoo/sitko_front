@@ -51,7 +51,11 @@
         </v-icon>
       </v-btn> -->
 
-      <notifications v-if="!loading && user" />
+      <v-btn icon to="/map">
+        <v-icon>map</v-icon>
+      </v-btn>
+
+      <notifications v-if="!loading && user" class="mr-2"/>
 
       <v-menu class="acccount-drawer" v-if="!loading" rounded="xl" bottom left>
         <template v-slot:activator="{ on, attrs }">

@@ -32,6 +32,12 @@
       </v-col>
     </v-row>
 
+    <v-row justify="center" dense>
+      <v-col>
+        <slot name="localization"></slot>
+      </v-col>
+    </v-row>
+
     <v-row justify="center" class="mt-n1">
       <v-col class="mb-4">
         <slot name="tags"></slot>

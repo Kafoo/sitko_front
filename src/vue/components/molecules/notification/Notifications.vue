@@ -1,82 +1,83 @@
 <template>
-  <v-menu rounded="lg" bottom left>
-    <template v-slot:activator="{ on, attrs }">
+  <div>
+    <v-menu rounded="lg" bottom left>
+      <template v-slot:activator="{ on, attrs }">
 
-      <v-btn
-        v-bind="attrs"
-        v-on="on"
-        @click.native="showNotifications = true"
-        fab
-        icon
-        class="mx-2"
-      >
-        <v-icon>notifications_none</v-icon>
-        <v-chip 
-        v-if="!loading && newNotificationsCount !== 0"
-        class="new-icon px-1 c-pointer"
-        x-small
-        color="red"
-        text-color="white">
-            {{newNotificationsCount}}
-        </v-chip>
-      </v-btn>
-    </template>
-
-    <v-list class="pa-0 ma-0">
-      <div>
-        <div
-          class="d-flex justify-space-between pl-4 text-overline pt-1 green lighten-2"
+        <v-btn
+          v-bind="attrs"
+          v-on="on"
+          @click.native="showNotifications = true"
+          fab
+          icon
         >
-          <div>
-            Notifications
-          </div>
-          <v-btn small icon class="mr-2" @click.native.stop="refresh">
-            <v-icon small>autorenew</v-icon>
-          </v-btn>
-        </div>
+          <v-icon>notifications_none</v-icon>
+          <v-chip 
+          v-if="!loading && newNotificationsCount !== 0"
+          class="new-icon px-1 c-pointer"
+          x-small
+          color="red"
+          text-color="white">
+              {{newNotificationsCount}}
+          </v-chip>
+        </v-btn>
+      </template>
 
-        <div v-if="loading" style="height:180px">
-          <loading-circle small app />
-        </div>
-
-
-        <div v-else-if="notifications && notifications.length">
-          <link-notification
-            v-for="notification in displayed_notifications"
-            :key="notification.id"
-            :notification="notification"
-          />
-
-          <v-btn 
-          block 
-          tile 
-          class="grey lighten-2 text-overline"
-          to="/notifications"
+      <v-list class="pa-0 ma-0">
+        <div>
+          <div
+            class="d-flex justify-space-between pl-4 text-overline pt-1 green lighten-2"
           >
-            <v-icon 
-            v-if="MoreNewNotifications" 
-            class="mr-1"
-            size="10px" 
-            color="red darken-2">
-              circle
-            </v-icon>
-            {{$t('more')}}
-          </v-btn>
-        </div>
+            <div>
+              Notifications
+            </div>
+            <v-btn small icon class="mr-2" @click.native.stop="refresh">
+              <v-icon small>autorenew</v-icon>
+            </v-btn>
+          </div>
 
-        <div
-          v-else
-          class="font-italic grey--text d-flex justify-center align-center"
-          style="height:180px"
-        >
-          <div>
-            <!-- TOTRANSLATE -->
-            pas de notification
+          <div v-if="loading" style="height:180px">
+            <loading-circle small app />
+          </div>
+
+
+          <div v-else-if="notifications && notifications.length">
+            <link-notification
+              v-for="notification in displayed_notifications"
+              :key="notification.id"
+              :notification="notification"
+            />
+
+            <v-btn 
+            block 
+            tile 
+            class="grey lighten-2 text-overline"
+            to="/notifications"
+            >
+              <v-icon 
+              v-if="MoreNewNotifications" 
+              class="mr-1"
+              size="10px" 
+              color="red darken-2">
+                circle
+              </v-icon>
+              {{$t('more')}}
+            </v-btn>
+          </div>
+
+          <div
+            v-else
+            class="font-italic grey--text d-flex justify-center align-center"
+            style="height:180px"
+          >
+            <div>
+              <!-- TOTRANSLATE -->
+              pas de notification
+            </div>
           </div>
         </div>
-      </div>
-    </v-list>
-  </v-menu>
+      </v-list>
+    </v-menu>
+  </div>
 </template>
 
 <script lang="ts">
