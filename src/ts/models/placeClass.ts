@@ -45,7 +45,11 @@ export default class PlaceModel extends mix(globalModel).with(
 
     this.projects_count = rawData.projects_count;
     if (rawData.localization) {
-      this.localization = rawData.localization
+      if (typeof rawData.localization == "string") {
+        this.localization = JSON.parse(rawData.localization)
+      } else{
+        this.localization = rawData.localization
+      }
     } else{
       this.localization = null
     }
