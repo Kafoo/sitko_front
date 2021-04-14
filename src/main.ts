@@ -8,8 +8,14 @@ import VueComp from "@vue/composition-api";
 import Autocomplete from "@trevoreyre/autocomplete-vue";
 import "@trevoreyre/autocomplete-vue/dist/style.css";
 
-import VueAnalytics from "vue-analytics";
-Vue.use(VueAnalytics, { id: process.env.ANALYTICS_ID, router });
+import VueGtag from "vue-gtag";
+
+Vue.use(VueGtag, {
+  config: { id: process.env.ANALYTICS_ID }
+  },
+  router
+
+);
 
 import 'leaflet/dist/leaflet.css';
 import "material-design-icons-iconfont/dist/material-design-icons.css";

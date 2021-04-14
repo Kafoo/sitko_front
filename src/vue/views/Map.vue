@@ -14,6 +14,7 @@
         style="height: 60vh; width: 100%"
         :zoom="5"
         :center="[46.70672236934442, 2.254394665360451]"
+        :minZoom="2"
       >
         <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></l-tile-layer>
         <v-marker-cluster>
