@@ -64,20 +64,24 @@
 
   "created_by":{
     "project": {
-      "private" : "public project created by",
-      "public" : " private project created by"
+      "1" : "public project created by",
+      "2": "project created by",
+      "3" : "private project created by"
     },
     "event":{
-      "private" : "public event created by",
-      "public" : " private event created by"
+      "1" : "public event created by",
+      "2": "event created by",
+      "3" : "private event created by"
     },
     "note":{
-      "private" : "public note created by",
-      "public" : " private note created by"
+      "1" : "public note created by",
+      "2": "note created by",
+      "3" : "private note created by"
     },
     "place":{
-      "private" : "public place created by",
-      "public" : " private place created by"
+      "1" : "public place created by",
+      "2": "place created by",
+      "3" : "private place created by"
     }
   },
 

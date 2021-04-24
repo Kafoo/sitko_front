@@ -1,6 +1,6 @@
 <template>
   <span v-if="item" class="text-caption grey--text text--darken-1">
-    {{ $t("created_by." + item.essence + ".public") | capitalize }}
+    {{ $t("created_by." + item.essence + "."+item.visibility) | capitalize }}
     <user-chip :user="item.author" />
   </span>
 </template>

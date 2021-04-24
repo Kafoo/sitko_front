@@ -193,20 +193,24 @@
 
   "created_by":{
     "project": {
-      "private" : "projet public créé par",
-      "public" : "projet public créé par"
+      "1" : "projet public créé par",
+      "2": "projet créé par",
+      "3" : "projet privé créé par"
     },
     "event":{
-      "private" : "événement public créé par",
-      "public" : "événement public créé par"
+      "1" : "événement public créé par",
+      "2": "événement créé par",
+      "3" : "événement privé créé par"
     },
     "note":{
-      "private" : "note publique créée par",
-      "public" : "note publique créée par"
+      "1" : "note publique créée par",
+      "2": "note créée par",
+      "3" : "note privée créée par"
     },
     "place":{
-      "private" : "lieu public créé par",
-      "public" : "lieu public créé par"
+      "1" : "lieu public créé par",
+      "2": "lieu créé par",
+      "3" : "lieu privé créé par"
     }
   },
 

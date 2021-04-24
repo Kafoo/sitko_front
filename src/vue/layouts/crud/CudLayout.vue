@@ -35,7 +35,7 @@
 
     <v-row justify="center" dense>
       <v-col>
-        <slot name="localization"></slot>
+        <slot name="location"></slot>
       </v-col>
     </v-row>
 
