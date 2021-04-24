@@ -23,15 +23,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place_entity" v-model="newNote.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -76,6 +68,7 @@ import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 
 export default defineComponent({
   name: "NoteCreation",
@@ -86,7 +79,8 @@ export default defineComponent({
     TagsInput,
     CaldateInput,
     BackButton,
-    CudLayout
+    CudLayout,
+    VisibilityInput
   },
 
   setup(props, { root }) {

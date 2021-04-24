@@ -51,7 +51,7 @@
         </v-icon>
       </v-btn> -->
 
-      <v-btn icon to="/map">
+      <v-btn v-if="!loading && user" icon to="/map">
         <v-icon>map</v-icon>
       </v-btn>
 

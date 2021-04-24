@@ -5,11 +5,13 @@ import taggable from "../mixins/taggable";
 import mix from "@/ts/mixins/_mix";
 import caldatable from "../mixins/caldatable";
 import globalModel from "./globalClass";
+import visiable from "../mixins/visiable";
 
 export default class ProjentModel extends mix(globalModel).with(
   imageable,
   taggable,
-  caldatable
+  caldatable,
+  visiable
 ) {
   id: number;
   place_id: number;
@@ -35,8 +37,5 @@ export default class ProjentModel extends mix(globalModel).with(
 
     this.place = new PlaceModel(rawData.place);
   }
-
-  get bigtitle(): string {
-    return this.title.toUpperCase();
-  }
+  
 }

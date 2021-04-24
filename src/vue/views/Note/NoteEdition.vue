@@ -22,6 +22,10 @@
             ></v-text-field>
           </template>
 
+          <template v-slot:visibility>
+            <visibility-input type="place_entity" v-model="note.visibility"/>
+          </template>
+
           <template v-slot:description>
             <v-textarea
               outlined
@@ -75,6 +79,7 @@ import ImageInput from "@c/molecules/media/ImageInput.vue";
 import DeleteButton from "@c/atoms/app/DeleteButton.vue";
 import PlaceChip from "@c/atoms/place/PlaceChip.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 
 export default defineComponent({
   name: "NoteEdition",
@@ -85,7 +90,8 @@ export default defineComponent({
     CaldateInput,
     DeleteButton,
     PlaceChip,
-    CudLayout
+    CudLayout,
+    VisibilityInput
   },
 
   setup(props, { root }) {

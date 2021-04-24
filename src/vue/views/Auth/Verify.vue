@@ -1,63 +1,95 @@
 <template>
-  <div class="verify">
-    <div class="alert alert-danger" role="alert" v-if="error">
-      {{ error }}
+  <primary-content-body>
+    <div class="d-flex justify-center align-center fill-height">
+      <div 
+      v-if="loading" 
+      class="d-flex flex-column align-center">
+        <loading-circle relative small/>
+        <div>
+          <!-- TOTRANSLATE -->
+          Verifying e-mail...
+        </div>
+      </div>
+      <div 
+      v-else
+      class="d-flex flex-column align-center">
+        <div class="mb-4" v-if="verified">
+          <!-- TOTRANSLATE -->
+          E-mail vérifié !
+        </div>
+        <div class="mb-4" v-else>
+          <!-- TOTRANSLATE -->
+          E-mail non vérifié
+        </div>
+        <v-spacer></v-spacer>
+        <v-btn to="/">
+          <v-icon left>home</v-icon>
+          <!-- TOTRANSLATE -->
+          accueil
+        </v-btn>
+      </div>
     </div>
-
-    <div v-else>
-      <login v-if="!user" verification="email" v-on:verify="verify" />
-    </div>
-  </div>
+  </primary-content-body>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { State, Getter, Action } from "vuex-class";
-import { Component, Prop, Watch } from "vue-property-decorator";
+import { defineComponent, ref, watch, onMounted } from '@vue/composition-api';
+import { useActions, useGetters, useMutations } from 'vuex-composition-helpers';
 import Login from "@/vue/views/Auth/Login.vue";
 import UserModel from "@/ts/models/userClass";
+import store from '@/ts/store';
 
-const namespace: string = "auth";
 
-@Component({
-  name: "Verify",
+export default defineComponent({
 
-  components: {
+  name : "Verify",
+
+  props:{
+    hash:String
+  },
+
+  components:{
     Login
-  }
-})
-export default class Verify extends Vue {
-  @Prop(String) readonly hash?: string;
-  @Getter("user", { namespace }) user?: UserModel;
-  @Action("SEND_VERIFY_REQUEST", { namespace }) SEND_VERIFY_REQUEST: any;
+  },
 
-  error?: string = undefined;
+  setup(props, context) {
+    const { SEND_VERIFY_REQUEST } = useActions({SEND_VERIFY_REQUEST: 'auth/SEND_VERIFY_REQUEST'} as any)
+    const { SEND_LOGOUT_REQUEST } = useActions({SEND_LOGOUT_REQUEST: "auth/SEND_LOGOUT_REQUEST"} as any);
+    const { user } = useGetters({user: 'auth/user'} as any)
+    var verified = ref(false)
+    var loading = ref(false)
 
-  @Watch("getUser")
-  onGetUserChanged(newUser: UserModel) {
-    if (newUser) {
-      this.verify();
+    onMounted(()=>{
+      verify()
+    })
+
+    const verify = () => {
+      loading.value = true
+      SEND_VERIFY_REQUEST(props.hash)
+        .then(() => {
+          loading.value = false
+          verified.value = true
+        })
+        .catch(() => {
+          if (user.value) {
+            store.commit("app/setAlert", {
+              type: "error",
+              //TOTRANSLATE
+              msg: "Error verifying email, please try to login"
+            });
+            SEND_LOGOUT_REQUEST("/login")
+          }
+        });
     }
-  }
 
-  verify() {
-    this.SEND_VERIFY_REQUEST(this.hash)
-      .then(() => {
-        this.$router.push("/").catch(() => {});
-      })
-      .catch((error: any) => {
-        this.error = "Error verifying email";
-      });
-  }
-
-  mounted() {
-    if (this.user) {
-      this.verify();
+    return{
+      user,
+      verify,
+      loading,
+      verified
     }
-  }
 
-  get getUser() {
-    return this.user;
   }
-}
+});
+
 </script>

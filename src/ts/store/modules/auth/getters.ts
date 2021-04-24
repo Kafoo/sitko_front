@@ -9,5 +9,8 @@ export const getters: GetterTree<AuthState, RootState> = {
   },
   loading(state): Boolean {
     return state.loading;
+  },
+  verifying(state): string | null {
+    return state.verifying
   }
 };

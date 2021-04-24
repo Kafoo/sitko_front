@@ -21,7 +21,7 @@
           <l-marker
           v-for="place in displayed_places"
           :key="place.id"
-          :lat-lng="[ place.localization.position.lat, place.localization.position.lng ]"
+          :lat-lng="[ place.location.position.lat, place.location.position.lng ]"
           >
             <l-popup>
               <place-card :place="place" />
@@ -63,7 +63,7 @@ export default defineComponent({
       var adresses:Array<PlaceModel> = []
       if (places.value) {        
         places.value.forEach((place:PlaceModel) => {
-          if (place.localization){
+          if (place.location){
             adresses.push(place)
           }
         });

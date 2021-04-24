@@ -26,6 +26,11 @@ export const mutations: MutationTree<AppState> = {
     localStorage.setItem("locale", locale);
   },
 
+  setAccessCode(state, code: string) {
+    state.locale = code;
+    localStorage.setItem("AccessCode", code);
+  },
+
   pushRoute(state, route) {
     state.routes.push(route);
   }

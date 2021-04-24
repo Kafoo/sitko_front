@@ -1,8 +1,12 @@
 import PlaceModel from "@/ts/models/placeClass";
 import UserModel from "@/ts/models/userClass";
+import visiable from "../mixins/visiable";
+import mix from "../mixins/_mix";
 import GlobalModel from "./globalClass";
 
-export default class NoteModel extends GlobalModel {
+export default class NoteModel extends mix(GlobalModel).with(
+  visiable
+) {
   id: number;
   essence: string;
   place_id: number;

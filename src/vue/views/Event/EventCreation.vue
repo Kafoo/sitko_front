@@ -2,7 +2,7 @@
   <primary-content-body>
     <div class="card-body">
       <ariane>
-        <back-button :path="lastRoute.path" />
+        <back-button v-if="lastRoute" :path="lastRoute.path" />
       </ariane>
 
       <v-form @submit.prevent="createEvent" v-model="form">
@@ -12,14 +12,7 @@
           </template>
 
           <template v-slot:image>
-            <image-input
-              :image="newEvent.image"
-              @update="
-                image => {
-                  newEvent.image = image;
-                }
-              "
-            />
+            <image-input v-model="newEvent.image" />
           </template>
 
           <template v-slot:title>
@@ -34,15 +27,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place_entity" v-model="newEvent.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -110,6 +95,8 @@ import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
+import EventModel from "@/ts/models/eventClass"
 
 export default defineComponent({
   name: "EventCreation",
@@ -120,7 +107,8 @@ export default defineComponent({
     TagsInput,
     CaldateInput,
     BackButton,
-    CudLayout
+    CudLayout,
+    VisibilityInput
   },
 
   setup(props, { root }) {
@@ -135,19 +123,16 @@ export default defineComponent({
     var place_id = ref(root.$route.params.place_id);
     var form = ref(false);
     var loading = ref(false);
-    var newEvent = ref({
-      place_id: place_id.value,
-      caldates: [],
-      image: undefined,
-      tags: []
-    });
+    var newEvent = ref(new EventModel({place_id: place_id.value}));
 
     const createEvent = () => {
       loading.value = true;
       SEND_EVENT_CREATION(newEvent.value)
         .then(() => {
           loading.value = false;
-          root.$router.push("/place/" + newEvent.value.place_id + "/events");
+          root.$router.push(
+            "/place/" + newEvent.value.place_id + "/events"
+          );
         })
         .catch(() => {
           loading.value = false;

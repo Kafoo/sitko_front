@@ -6,6 +6,7 @@ export interface AppAlert {
 
 export interface AppState {
   app_alert?: AppAlert;
+  confirmed_guest: boolean
   errors?: Array;
   windowWidth: number;
   locale: String;

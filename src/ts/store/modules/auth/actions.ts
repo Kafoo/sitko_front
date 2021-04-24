@@ -41,10 +41,10 @@ export const actions: ActionTree<AuthState, RootState> = {
       });
   },
 
-  SEND_LOGOUT_REQUEST({ commit }) {
+  SEND_LOGOUT_REQUEST({ commit }, next_route = "/") {
     commit("setLoading");
-    router.push("/").catch(() => {});
     axios.post(process.env.VUE_APP_API_URL + "logout").then(() => {
+      router.push(next_route).catch(() => {});
       commit("setUserData", null);
       commit("removeLoading");
       localStorage.removeItem("authToken");
@@ -55,11 +55,12 @@ export const actions: ActionTree<AuthState, RootState> = {
     return axios.get(process.env.VUE_APP_API_URL + "email/resend");
   },
 
-  SEND_VERIFY_REQUEST({ dispatch }, hash) {
+  SEND_VERIFY_REQUEST({ commit }, hash) {
+    commit('setVerifying', hash)
     return axios
       .get(process.env.VUE_APP_API_URL + "email/verify/" + hash)
       .then(() => {
-        dispatch("GET_USER_DATA");
+        commit('setVerifying', null)
       });
   },
 
@@ -68,7 +69,7 @@ export const actions: ActionTree<AuthState, RootState> = {
     return axios
       .put(process.env.VUE_APP_API_URL + "user/" + user.id, user)
       .then(response => {
-        commit("setUserData", response.data.user);
+        commit("setUserData", new UserModel(response.data.user));
         commit(
           "app/setAlert",
           { type: "success", msg: capitalize(i18n.t("modifications saved")) },

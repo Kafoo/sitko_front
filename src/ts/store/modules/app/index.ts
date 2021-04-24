@@ -5,8 +5,15 @@ import { mutations } from "./mutations";
 import { AppState } from "./types";
 import { RootState } from "@/ts/store/types";
 
+var isConfirmed
+localStorage.getItem("AccessCode") == process.env.VUE_APP_ACCESS_CODE
+?isConfirmed=true
+:isConfirmed=false
+
 export const state: AppState = {
+
   app_alert: undefined,
+  confirmed_guest: isConfirmed,
   errors: [],
   windowWidth: window.innerWidth,
   locale: "fr",

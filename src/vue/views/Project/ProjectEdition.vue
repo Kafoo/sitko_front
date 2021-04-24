@@ -3,7 +3,7 @@
     <loading-circle v-if="loading" small />
     <div v-else-if="project" class="card-body">
       <ariane>
-        <back-button :text="project.title" :path="project.path" />
+        <back-button :text="$t('project page')" :path="project.path" />
         <place-chip :place="project.place" />
       </ariane>
 
@@ -16,12 +16,7 @@
           <template v-slot:image>
             <image-input
               nullable
-              :image="project.image"
-              @update="
-                image => {
-                  project.image = image;
-                }
-              "
+              v-model="project.image"
             />
           </template>
 
@@ -36,15 +31,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place_entity" v-model="project.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -122,6 +109,7 @@ import { useInputRules } from "@/ts/functions/composition/inputRules";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import ProjectModel from "@/ts/models/projectClass";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
 import DeleteButton from "@c/atoms/app/DeleteButton.vue";
 import PlaceChip from "@c/atoms/place/PlaceChip.vue";
@@ -134,6 +122,7 @@ export default defineComponent({
     TagsInput,
     ImageInput,
     CaldateInput,
+    VisibilityInput,
     DeleteButton,
     PlaceChip,
     CudLayout

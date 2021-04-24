@@ -34,7 +34,10 @@
   },
 
   "help": {
-    "visibility": "<i><b>[ Soon ! ]</i></b><br><b>Public</b> : Everybody<br> <b>Restreint</b> : Friends and place members<br><b>Privé</b> : Place members only"
+    "visibility":{
+      "place": "<b>Public</b> : Everybody<br> <b>Restreint</b> : Users linked to you<br><b>Privé</b> : You only",
+      "place_entity": "<b>Public</b> : Everybody<br> <b>Restreint</b> : Users linked to the place<br><b>Privé</b> : You only"
+    }
   },
 
   "confirm":{
@@ -111,6 +114,12 @@
 
   "media":{
     "max_size": "size limit : {max}"
+  },
+
+  "visibilities":{
+    "1": "public",
+    "2": "restreint",
+    "3": "private"
   }
 
 }

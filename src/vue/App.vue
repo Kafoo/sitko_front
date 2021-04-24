@@ -1,34 +1,39 @@
 <template>
-  <v-app class="app">
-    <!-- Error message -->
-    <alert />
-    <!-- Navigation -->
-    <navigation />
+    <v-app 
+    class="app">
+      <access-code v-if="!confirmed_guest" />
+        <!-- Error message -->
+        <alert :class="confirmed_guest?'':'blur'" />
+        <!-- Navigation -->
+        <navigation :class="confirmed_guest?'':'blur'" />
 
-    <!-- Content -->
-    <v-main>
-      <div v-if="loading" class="mt-5 d-flex justify-center">
-        <loading-circle app />
-      </div>
+        <!-- Content -->
+        <v-main :class="confirmed_guest?'':'blur'">
+          <div v-if="loading" class="mt-5 d-flex justify-center">
+            <loading-circle app />
+          </div>
 
-      <router-view v-else></router-view>
-    </v-main>
-  </v-app>
+          <router-view v-else></router-view>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Navigation from "@c/organisms/app/Navigation.vue";
 import Alert from "@c/molecules/app/Alert.vue";
+import AccessCode from './components/molecules/app/AccessCode.vue';
 
 export default {
   components: {
     Navigation,
-    Alert
+    Alert,
+    AccessCode
   },
 
   computed: {
-    ...mapGetters("auth", ["loading"])
+    ...mapGetters("auth", ["loading"]),
+    ...mapGetters("app", ["confirmed_guest"])
   },
 
   methods: {
@@ -55,5 +60,10 @@ export default {
 </script>
 
 <style scoped>
+
+
+.blur{
+  filter: blur(5px);
+}
 
 </style>

@@ -33,6 +33,10 @@ export default function useFetcher(
       }
 
       loading.value = false;
+    })
+    .catch(()=>{
+      loading.value = false
+      
     });
   });
 

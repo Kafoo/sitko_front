@@ -12,14 +12,7 @@
           </template>
 
           <template v-slot:image>
-            <image-input
-              :image="newProject.image"
-              @update="
-                image => {
-                  newProject.image = image;
-                }
-              "
-            />
+            <image-input v-model="newProject.image" />
           </template>
 
           <template v-slot:title>
@@ -34,15 +27,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place_entity" v-model="newProject.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -110,6 +95,8 @@ import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
+import ProjectModel from "@/ts/models/projectClass"
 
 export default defineComponent({
   name: "ProjectCreation",
@@ -120,7 +107,8 @@ export default defineComponent({
     TagsInput,
     CaldateInput,
     BackButton,
-    CudLayout
+    CudLayout,
+    VisibilityInput
   },
 
   setup(props, { root }) {
@@ -135,12 +123,7 @@ export default defineComponent({
     var place_id = ref(root.$route.params.place_id);
     var form = ref(false);
     var loading = ref(false);
-    var newProject = ref({
-      place_id: place_id.value,
-      caldates: [],
-      image: undefined,
-      tags: []
-    });
+    var newProject = ref(new ProjectModel({place_id: place_id.value}));
 
     const createProject = () => {
       loading.value = true;

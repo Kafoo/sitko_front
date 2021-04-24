@@ -10,6 +10,9 @@ export const getters: GetterTree<AppState, RootState> = {
   app_alert(state): AppAlert | undefined {
     return state.app_alert;
   },
+  confirmed_guest(state): boolean {
+    return state.confirmed_guest
+  },
   lastRoute(state): Route | undefined {
     if (state.routes.length > 1) {
       return state.routes[state.routes.length - 1];

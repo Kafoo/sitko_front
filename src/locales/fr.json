@@ -105,6 +105,7 @@
   "delete project": "supprimer le projet",
   "delete event": "supprimer l'événement",
   "delete place": "supprimer le lieu",
+  "delete note": "supprimer la note",
   "save" : "enregistrer",
   "modifications saved" : "modifications enregistrées",
   "resend e-mail": "renvoyer le mail",
@@ -114,7 +115,9 @@
   "note edition": "edition de la note",
   "place edition": "edition du lieu",
 
-  "back to project": "retour au projet",
+  "place page": "page du lieu",
+  "project page": "page du projet",
+  "event page": "page de l'événement",
 
   "Deletion is definitive": "La suppression est définitive",
   "Project deletion is definitive.": "La suppression du projet est définitive.",
@@ -158,7 +161,10 @@
   },
 
   "help": {
-    "visibility": "<i><b>[ Fonctionnalité bientôt disponible ! ]</i></b><br><b>Public</b> : Tout le monde<br> <b>Restreint</b> : Amis et membres du lieu<br><b>Privé</b> : Membres du lieu uniquement"
+    "visibility":{
+      "place": "<b>Publique</b> : Tout le monde<br> <b>Restreinte</b> : Utilisateurs connectés à vous<br><b>Privée</b> : Vous seulement",
+      "place_entity": "<b>Publique</b> : Tout le monde<br> <b>Restreinte</b> : Utilisateurs connectés au lieu<br><b>Privée</b> : Vous seulement"
+    }
   },
 
   "confirm":{
@@ -238,6 +244,12 @@
 
   "media":{
     "max_size": "poids maximal : {max}"
+  },
+
+  "visibilities":{
+    "1": "publique",
+    "2": "restreinte",
+    "3": "privée"
   }
 
 }

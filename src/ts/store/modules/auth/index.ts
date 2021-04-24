@@ -7,7 +7,8 @@ import { RootState } from "@/ts/store/types";
 
 export const state: AuthState = {
   userData: undefined,
-  loading: false
+  loading: false,
+  verifying: null
 };
 
 const namespaced: boolean = true;

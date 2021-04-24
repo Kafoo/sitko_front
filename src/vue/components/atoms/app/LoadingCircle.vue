@@ -3,6 +3,7 @@
     indeterminate
     :color="app ? 'green lighten-2' : 'grey'"
     class="loading"
+    :class="relative?'':'centered'"
     :size="small ? 50 : 100"
     :width="small ? 6 : 10"
   ></v-progress-circular>
@@ -19,6 +20,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    relative: {
+      type: Boolean,
+      default: false
+    },
     app: {
       type: Boolean,
       default: false
@@ -32,7 +37,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.loading {
+.loading.centered {
   position: absolute;
   top: 50%; /* position the top  edge of the element at the middle of the parent */
   left: 50%; /* position the left edge of the element at the middle of the parent */

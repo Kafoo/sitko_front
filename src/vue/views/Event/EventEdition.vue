@@ -3,7 +3,7 @@
     <loading-circle v-if="loading" small />
     <div v-else-if="event" class="card-body">
       <ariane>
-        <back-button :text="event.title" :path="event.path" />
+        <back-button :text="$t('event page')" :path="event.path" />
         <place-chip :place="event.place" />
       </ariane>
 
@@ -16,12 +16,7 @@
           <template v-slot:image>
             <image-input
               nullable
-              :image="event.image"
-              @update="
-                image => {
-                  event.image = image;
-                }
-              "
+              v-model="event.image"
             />
           </template>
 
@@ -36,15 +31,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place_entity" v-model="event.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -125,6 +112,7 @@ import DeleteButton from "@c/atoms/app/DeleteButton.vue";
 import PlaceChip from "@c/atoms/place/PlaceChip.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 
 export default defineComponent({
   name: "EventEdition",
@@ -136,7 +124,8 @@ export default defineComponent({
     DeleteButton,
     PlaceChip,
     BackButton,
-    CudLayout
+    CudLayout,
+    VisibilityInput
   },
 
   setup(props, { root }) {

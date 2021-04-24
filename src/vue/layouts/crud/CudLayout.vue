@@ -19,10 +19,11 @@
             <slot name="title"></slot>
           </v-col>
         </v-row>
-
-        <div class="d-flex">
-          <slot name="visibility"></slot>
-        </div>
+        <v-row justify="center" dense>
+          <v-col>
+            <slot  name="visibility"></slot>
+          </v-col>
+        </v-row>
       </div>
     </div>
 

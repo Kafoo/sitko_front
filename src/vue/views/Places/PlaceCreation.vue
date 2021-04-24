@@ -12,7 +12,7 @@
           </template>
 
           <template v-slot:image>
-            <image-input :image="newPlace.image" @update="changeImage" />
+            <image-input v-model="newPlace.image" />
           </template>
 
           <template v-slot:title>
@@ -27,15 +27,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place" v-model="newPlace.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -49,8 +41,8 @@
             ></v-textarea>
           </template>
 
-          <template v-slot:localization>
-            <localization-input v-model="newPlace.localization"/>
+          <template v-slot:location>
+            <location-input v-model="newPlace.location"/>
           </template>
 
           <template v-slot:tags>
@@ -94,7 +86,8 @@ import PlaceModel from "@/ts/models/placeClass";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import TagModel from "@/ts/models/tagClass";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
-import LocalizationInput from '@/vue/components/molecules/input/LocalizationInput.vue';
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
+import LocationInput from '@/vue/components/molecules/input/LocationInput.vue';
 
 export default defineComponent({
   name: "PlaceCreation",
@@ -104,7 +97,8 @@ export default defineComponent({
     ImageInput,
     TagsInput,
     CudLayout,
-    LocalizationInput
+    VisibilityInput,
+    LocationInput
   },
 
   setup(props, { root }) {
@@ -120,10 +114,6 @@ export default defineComponent({
     const { SEND_PLACE_CREATION } = useActions({
       SEND_PLACE_CREATION: "place/SEND_PLACE_CREATION"
     } as any);
-
-    const changeImage = (data: string | ImageModel) => {
-      newPlace.value.image = data;
-    };
 
     const createPlace = () => {
       loading.value = true;
@@ -150,7 +140,6 @@ export default defineComponent({
       form,
       newPlace,
       showCrop,
-      changeImage,
       updateTags,
       lastRoute
     };

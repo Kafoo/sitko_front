@@ -25,7 +25,7 @@
       min-width="0"
       min-height="500px"
     >
-      <router-view :place="place"></router-view>
+      <router-view :place="place" :loading_place="loading"></router-view>
     </v-card>
 
     <float-menu v-if="place" :place="place" />

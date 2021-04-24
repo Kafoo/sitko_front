@@ -5,11 +5,13 @@ import taggable from "@/ts/mixins/taggable";
 import linkable from "@/ts/mixins/linkable";
 import mix from "@/ts/mixins/_mix";
 import globalModel from "@/ts/models/globalClass";
+import visiable from "../mixins/visiable";
 
 export default class PlaceModel extends mix(globalModel).with(
   imageable,
   taggable,
-  linkable
+  linkable,
+  visiable
 ) {
   id?: number;
   essence: string;
@@ -19,7 +21,7 @@ export default class PlaceModel extends mix(globalModel).with(
   author: AuthorModel;
   notes: Array<NoteModel>;
   path: string;
-  localization:Object|null;
+  location:Object|null;
 
   constructor(rawData: any = {}) {
     super(rawData);
@@ -44,14 +46,14 @@ export default class PlaceModel extends mix(globalModel).with(
     }
 
     this.projects_count = rawData.projects_count;
-    if (rawData.localization) {
-      if (typeof rawData.localization == "string") {
-        this.localization = JSON.parse(rawData.localization)
+    if (rawData.location) {
+      if (typeof rawData.location == "string") {
+        this.location = JSON.parse(rawData.location)
       } else{
-        this.localization = rawData.localization
+        this.location = rawData.location
       }
     } else{
-      this.localization = null
+      this.location = null
     }
 
   }

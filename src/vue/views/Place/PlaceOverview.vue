@@ -1,5 +1,5 @@
 <template>
-  <loading-circle v-if="!place" small />
+  <loading-circle v-if="loading_place" small />
 
   <div v-else-if="place" style="max-width:1000px; margin:auto">
     <place-header :place="place" />
@@ -97,7 +97,8 @@ export default defineComponent({
   name: "PlaceOverview",
 
   props: {
-    place: Object as () => PlaceModel
+    place: Object as () => PlaceModel,
+    loading_place: Boolean
   },
 
   components: {

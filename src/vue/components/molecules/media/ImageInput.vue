@@ -5,7 +5,7 @@
         <big-avatar
           :circle="circle"
           :size="size"
-          :image="image"
+          :image="value"
           :default="default_image"
         />
         <v-hover v-slot="{ hover }">
@@ -20,7 +20,7 @@
             >edit</v-icon
           >
         </v-hover>
-        <v-hover v-if="nullable && image" v-slot="{ hover }">
+        <v-hover v-if="nullable && value" v-slot="{ hover }">
           <v-icon
             small
             class="delete-icon"
@@ -28,7 +28,7 @@
               circle ? 'delete-icon-circle' : '',
               ` elevation-${hover ? 5 : 2}`
             ]"
-            @click="$emit('update', null)"
+            @click="$emit('input', null)"
             >close</v-icon
           >
         </v-hover>
@@ -72,7 +72,7 @@ export default defineComponent({
   name: "ImageInput",
 
   props: {
-    image: {
+    value: {
       type: [Object as () => ImageModel, String]
     },
     size: {
@@ -122,15 +122,15 @@ export default defineComponent({
     };
 
     const update = (newImage:string) => {
-      emit("update", newImage);
+      emit("input", newImage);
     };
 
-    const imageSrc = computed(() => {
-      if (typeof props.image === "string") {
-        return props.image;
-      } else if (props.image) {
-        return props.image.medium;
-      } else if (!props.image) {
+    var imageSrc = computed(() => {
+      if (typeof props.value === "string") {
+        return props.value;
+      } else if (props.value) {
+        return props.value.medium;
+      } else if (!props.value) {
         const defaultModel = new ImageModel(props.default_image);
         return defaultModel.medium;
       }

@@ -16,7 +16,7 @@ export default defineComponent({
   name: "",
 
   props: {
-    image: (Object as ()=>ImageModel) || String,
+    image: [Object as () => ImageModel, String],
 
     size: {
       type: String,

@@ -3,7 +3,7 @@
     <loading-circle v-if="loading" small />
     <div v-else-if="place" class="card-body">
       <ariane>
-        <back-button :text="place.name" :path="place.path" />
+        <back-button :text="$t('place page')" :path="place.path" />
       </ariane>
 
       <v-form @submit.prevent="editPlace" v-model="form">
@@ -13,7 +13,7 @@
           </template>
 
           <template v-slot:image>
-            <image-input :image="place.image" @update="changeImage" />
+            <image-input v-model="place.image" />
           </template>
 
           <template v-slot:title>
@@ -28,15 +28,7 @@
           </template>
 
           <template v-slot:visibility>
-            <v-select
-              disabled
-              :items="['Public', 'Restreint', 'Privé']"
-              label="Visibilité"
-              outlined
-              class="rounded-lg"
-            ></v-select>
-
-            <help class="mt-2 mx-2" :text="$t('help.visibility')" />
+            <visibility-input type="place" v-model="place.visibility"/>
           </template>
 
           <template v-slot:description>
@@ -50,8 +42,8 @@
             ></v-textarea>
           </template>
 
-          <template v-slot:localization>
-            <localization-input v-model="place.localization"/>
+          <template v-slot:location>
+            <location-input v-model="place.location"/>
           </template>
 
           <template v-slot:tags>
@@ -109,7 +101,8 @@ import PlaceModel from "@/ts/models/placeClass";
 import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
-import LocalizationInput from '@/vue/components/molecules/input/LocalizationInput.vue';
+import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
+import LocationInput from '@/vue/components/molecules/input/LocationInput.vue';
 
 
 export default defineComponent({
@@ -120,7 +113,8 @@ export default defineComponent({
     TagsInput,
     DeleteButton,
     CudLayout,
-    LocalizationInput
+    VisibilityInput,
+    LocationInput
   },
 
   name: "PlaceEdition",
@@ -147,6 +141,8 @@ export default defineComponent({
       true
     );
 
+
+
     const editPlace = () => {
       loading_edit.value = true;
       SEND_PLACE_EDITION(place.value)
@@ -171,10 +167,6 @@ export default defineComponent({
         });
     };
 
-    const changeImage = (data: string | Image) => {
-      place.value!.image = data;
-    };
-
     return {
       loading_edit,
       loading_deletion,
@@ -182,7 +174,6 @@ export default defineComponent({
       form,
       rules,
       place,
-      changeImage,
       editPlace,
       deletePlace
     };

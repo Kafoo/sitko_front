@@ -10,17 +10,8 @@
             nullable
             circle
             default_image="avatar"
-            :image="editedUser.image"
-            @update="changeImage"
+            v-model="editedUser.image"
           />
-        </v-row>
-
-        <v-row dense>
-          <v-col cols="12">
-            <v-alert v-if="errors.name" dense outlined type="error">
-              {{ errors.name[0] }}
-            </v-alert>
-          </v-col>
         </v-row>
 
         <v-row dense>
@@ -33,10 +24,17 @@
               :label="firstNameLabel"
               maxlength="20"
               required
-              @input="modified = true"
               :disabled="loading"
             ></v-text-field>
           </v-col>
+
+        <v-row dense>
+          <v-col cols="12">
+            <v-alert v-if="errors.name" dense outlined type="error">
+              {{ errors.name[0] }}
+            </v-alert>
+          </v-col>
+        </v-row>
 
           <v-spacer></v-spacer>
 
@@ -47,7 +45,20 @@
               v-model="editedUser.last_name"
               :label="lastNameLabel"
               maxlength="20"
-              @input="modified = true"
+              :disabled="loading"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row dense>
+          <v-col cols="12">
+            <v-text-field
+              outlined
+              id="email"
+              v-model="editedUser.email"
+              :rules="[rules.required[0], rules.email[0]]"
+              :label="$t('e-mail') | capitalize"
+              required
               :disabled="loading"
             ></v-text-field>
           </v-col>
@@ -61,21 +72,6 @@
           </v-col>
         </v-row>
 
-        <v-row dense>
-          <v-col cols="12">
-            <v-text-field
-              outlined
-              id="email"
-              v-model="editedUser.email"
-              :rules="[rules.required[0], rules.email[0]]"
-              :label="$t('e-mail') | capitalize"
-              required
-              @input="modified = true"
-              :disabled="loading"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
         <v-row justify="center" dense>
           <v-col cols="12" class="mb-4">
             <tags-input
@@ -84,7 +80,6 @@
               @update="
                 tags => {
                   editedUser.tags = tags;
-                  modified = true;
                 }
               "
             />
@@ -104,7 +99,6 @@
               :label="$tc('password', 1) | capitalize"
               :hint="$t('form.min_carac', { n: '8' }) | capitalize"
               counter
-              @input="modified = true"
               @click:append="show_password = !show_password"
               :disabled="loading"
             ></v-text-field>
@@ -132,6 +126,14 @@
               @click:append="show_password = !show_password"
               :disabled="loading"
             ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row dense>
+          <v-col cols="12">
+            <v-alert v-if="errors.password" dense outlined type="error">
+              {{ errors.password[0] }}
+            </v-alert>
           </v-col>
         </v-row>
 
@@ -242,6 +244,10 @@ export default defineComponent({
 
     var editedUser = ref<UserModel>(JSON.parse(JSON.stringify(user.value)));
 
+    watch(() => editedUser.value, (newValue:any) => {
+      modified.value = true
+    }, {deep:true});
+
     const firstNameLabel = computed(
       () =>
         capitalize(root.$t("first name")) + " / " + capitalize(root.$t("alias"))
@@ -278,11 +284,6 @@ export default defineComponent({
         });
     };
 
-    const changeImage = (data: string | ImageModel) => {
-      editedUser.value.image = data;
-      modified.value = true;
-    };
-
     const logout = () => {
       SEND_LOGOUT_REQUEST();
     };
@@ -300,7 +301,6 @@ export default defineComponent({
       logout,
       editUser,
       deleteUser,
-      changeImage,
       show_password,
       rules,
       errors,

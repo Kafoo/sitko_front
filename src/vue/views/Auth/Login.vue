@@ -2,7 +2,7 @@
   <primary-content-body>
     <v-card-text>
       <v-form ref="loginForm" v-model="valid" @submit.prevent="login">
-        <div v-if="verification" class="form-group text-md-center">
+        <div v-if="verifying" class="form-group text-md-center">
           <span class="h2">{{ $t("e-mail confirmation") | camelize }}</span>
         </div>
         <v-row dense>
@@ -88,10 +88,6 @@ export default defineComponent({
     PrimaryContentBody
   },
 
-  props: {
-    verification: { type: String, default: undefined }
-  },
-
   setup(props, { root, refs }) {
     onMounted(() => {
       root.$store.commit("app/setErrors", {});
@@ -107,6 +103,7 @@ export default defineComponent({
       SEND_LOGIN_REQUEST: "auth/SEND_LOGIN_REQUEST"
     } as any);
     var { errors } = useGetters({ errors: "app/errors" } as any);
+    var { verifying } = useGetters({ verifying: "auth/verifying" } as any);
 
     var valid = ref(false);
     var show_password = ref(false);
@@ -125,12 +122,13 @@ export default defineComponent({
         loading.value = true;
         SEND_LOGIN_REQUEST(form.value)
           .then(() => {
-            if (props.verification) {
-              root.$emit("verify");
+            if (verifying.value) {
+              window.location.href = "/verify/"+verifying.value
             } else {
               root.$router.push({ name: "Home" }).catch(() => {});
             }
           })
+
           .catch(() => {
             loading.value = false;
           });
@@ -145,7 +143,8 @@ export default defineComponent({
       form,
       rules,
       refForm,
-      login
+      login,
+      verifying
     };
   }
 });
