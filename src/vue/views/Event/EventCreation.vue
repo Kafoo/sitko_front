@@ -61,6 +61,7 @@
                   newEvent.caldates = caldates;
                 }
               "
+              :label="$t('event dates') | capitalize"
             />
           </template>
 
@@ -97,6 +98,8 @@ import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 import EventModel from "@/ts/models/eventClass"
+import CaldateModel from "@/ts/models/caldateClass"
+import store from '@/ts/store';
 
 export default defineComponent({
   name: "EventCreation",
@@ -126,17 +129,26 @@ export default defineComponent({
     var newEvent = ref(new EventModel({place_id: place_id.value}));
 
     const createEvent = () => {
-      loading.value = true;
-      SEND_EVENT_CREATION(newEvent.value)
-        .then(() => {
-          loading.value = false;
-          root.$router.push(
-            "/place/" + newEvent.value.place_id + "/events"
-          );
+
+      if (!newEvent.value.caldates.length) {
+        store.commit('app/setAlert', {
+          type:'error', 
+          msg:root.$i18n.t('Please select at least 1 date for the event')
         })
-        .catch(() => {
-          loading.value = false;
-        });
+      } else {  
+        loading.value = true;
+        SEND_EVENT_CREATION(newEvent.value)
+          .then(() => {
+            loading.value = false;
+            root.$router.push(
+              "/place/" + newEvent.value.place_id + "/events"
+            );
+          })
+          .catch(() => {
+            loading.value = false;
+          });
+      }
+
     };
     const updateTags = (tags: any) => {
       newEvent.value.tags = tags;

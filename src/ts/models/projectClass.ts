@@ -1,5 +1,4 @@
 import ProjentModel from "@/ts/models/projentClass";
-import CaldateModel from "@/ts/models/caldateClass";
 
 export default class Project extends ProjentModel {
   essence: string;
@@ -13,12 +12,9 @@ export default class Project extends ProjentModel {
 
     this.path = "/project/" + this.id;
 
-    this.current = false;
+    this.is_done = rawData.is_done || false;
 
-    this.caldates.forEach((caldate: CaldateModel) => {
-      if (!caldate.isPast) {
-        this.current = true;
-      }
-    });
+    this.current = !this.is_done;
+
   }
 }

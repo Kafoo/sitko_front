@@ -113,6 +113,7 @@ import PlaceChip from "@c/atoms/place/PlaceChip.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
+import store from '@/ts/store';
 
 export default defineComponent({
   name: "EventEdition",
@@ -151,15 +152,23 @@ export default defineComponent({
     } as any);
 
     const editEvent = () => {
-      loading_edit.value = true;
-      SEND_EVENT_EDITION(event.value)
-        .then(() => {
-          loading_edit.value = false;
-          root.$router.push("/event/" + event.value.id);
+
+      if (!event.value.caldates.length) {
+        store.commit('app/setAlert', {
+          type:'error', 
+          msg:root.$i18n.t('Please select at least 1 date for the event')
         })
-        .catch(() => {
-          loading_edit.value = false;
-        });
+      } else { 
+        loading_edit.value = true;
+        SEND_EVENT_EDITION(event.value)
+          .then(() => {
+            loading_edit.value = false;
+            root.$router.push("/event/" + event.value.id);
+          })
+          .catch(() => {
+            loading_edit.value = false;
+          });
+      }
     };
 
     const deleteEvent = () => {

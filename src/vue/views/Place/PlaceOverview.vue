@@ -11,7 +11,7 @@
     />
 
     <div
-      class="description grey lighten-3 font-italic mx-0 my-3 ma-sm-5 pa-5 breakwrap"
+      class="description grey lighten-3 font-italic mx-0 my-5 mx-sm-5 pa-5 breakwrap"
       :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
     >
       {{ place.description }}

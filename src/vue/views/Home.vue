@@ -3,16 +3,6 @@
     <welcoming class="mb-8 mx-3" />
 
     <div v-if="user">
-      <div v-if="!user.place" class="text-center">
-        <create-button
-          class="mb-8"
-          :text="$t('actions.create.place')"
-          @action="$router.push('/place/create/')"
-        />
-      </div>
-
-      <v-divider></v-divider>
-
       <home-list />
     </div>
   </div>

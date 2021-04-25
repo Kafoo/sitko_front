@@ -132,27 +132,15 @@ export default {
     },
 
     accountItems() {
-      var first = {};
-      if (this.user.place) {
-        first = {
-          title: this.user.place.name,
-          path: "/place/" + this.user.place.id,
-          icon: "home"
-        };
-      } else {
-        first = {
-          title: this.$options.filters.capitalize(
-            this.$t("actions.create.place")
-          ),
-          path: "/place/create",
-          icon: "home"
-        };
-      }
 
       return [
-        first,
         {
-          title: this.$options.filters.capitalize(this.$t("account")),
+          title: this.$options.filters.capitalize(this.$t("my places")),
+          path: "/places/myplaces",
+          icon: "home"
+        },
+        {
+          title: this.$options.filters.capitalize(this.$t("my account")),
           path: "/account",
           icon: "account_circle"
         }

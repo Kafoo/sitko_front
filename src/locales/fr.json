@@ -41,8 +41,10 @@
   "notes": "notes",
   "events": "événements",
   "caldate": "date",
+  "caldates": "dates",
   "contact": "contact",
   "connection": "connexion",
+  "state": "état",
 
   "event": "événement",
   "project": "projet",
@@ -80,6 +82,8 @@
   "incoming events": "événements à venir",
   "past projects": "projets passés",
   "past events": "événements passés",
+  "completed project": "projet terminé",
+  "ongoing project": "projet en cours",
 
 	"day": "jour",
 	"week": "semaine",
@@ -128,6 +132,7 @@
   "A fresh verification link has been sent to your email address.": "Un nouveau mail de confirmation a été envoyé.",
   "Error sending verification link.":"Erreur lors de l'envoie de l'email de vérification.",
   "This project will be removed definitely": "Ce projet sera définitivement supprimé",
+  "Please select at least 1 date for the event": "Merci de préciser au moins une date pour l'événement",
 
   "Link request sent":"Demande de lien envoyé",
   "Request canceled":"Demande annulée",

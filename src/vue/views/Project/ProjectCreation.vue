@@ -30,6 +30,16 @@
             <visibility-input type="place_entity" v-model="newProject.visibility"/>
           </template>
 
+          <template v-slot:is_done>
+            <v-switch
+              color="green"
+              class="mt-0 ml-2"
+              v-model="newProject.is_done"
+              :label="`${$t('state')} : ${newProject.is_done?$t('completed project'):$t('ongoing project')}` | capitalize"
+              inset
+            ></v-switch>
+          </template>
+
           <template v-slot:description>
             <v-textarea
               :label="$t('description') | capitalize"
@@ -61,6 +71,7 @@
                   newProject.caldates = caldates;
                 }
               "
+              :label="$t('project dates') | capitalize"
             />
           </template>
 

@@ -24,16 +24,16 @@ export function camelize(value: string | TranslateResult) {
 
 export function incoming(value: Array<ProjentModel> | undefined) {
   if (value) {
-    return value.filter((project: ProjentModel) => {
-      return project.inc_caldates.length > 0;
+    return value.filter((projent: ProjentModel) => {
+      return projent.current;
     });
   }
 }
 
 export function past(value: Array<ProjentModel> | undefined) {
   if (value) {
-    return value.filter((project: ProjentModel) => {
-      return project.inc_caldates.length == 0;
+    return value.filter((projent: ProjentModel) => {
+      return !projent.current;
     });
   }
 }

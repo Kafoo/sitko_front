@@ -6,5 +6,11 @@ import PlaceModel from "@/ts/models/placeClass";
 export const getters: GetterTree<PlaceState, RootState> = {
   places(state): Array<PlaceModel> {
     return state.places;
-  }
+  },
+  userPlaces(state, getters, rootState): Array<PlaceModel> {
+      return state.places.filter((place:PlaceModel) => {
+        return place.author.id == rootState.auth.userData.id
+      });;
+
+  },
 };

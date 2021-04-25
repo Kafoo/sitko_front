@@ -19,12 +19,16 @@ export default class ProjentModel extends mix(globalModel).with(
   description: string;
   place?: PlaceModel;
   author: AuthorModel;
+  current: boolean;
 
   constructor(rawData: any = {}) {
     super(rawData);
 
     this.id = rawData.id;
     this.place_id = rawData.place_id;
+
+    //current attribute is determined in project/event classes
+    this.current = false;
 
     if (rawData.author) {
       this.author = new AuthorModel(rawData.author);

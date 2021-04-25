@@ -27,6 +27,12 @@
       </div>
     </div>
 
+    <v-row v-if="$slots.is_done" justify="end" dense>
+      <v-col>
+        <slot name="is_done"></slot>
+      </v-col>
+    </v-row>
+
     <v-row justify="center" dense>
       <v-col>
         <slot name="description"></slot>

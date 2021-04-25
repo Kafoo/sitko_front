@@ -34,6 +34,16 @@
             <visibility-input type="place_entity" v-model="project.visibility"/>
           </template>
 
+          <template v-slot:is_done>
+            <v-switch
+              color="green"
+              class="mt-0 ml-2"
+              v-model="project.is_done"
+              :label="`${$t('state')} : ${project.is_done?$t('completed project'):$t('ongoing project')}` | capitalize"
+              inset
+            ></v-switch>
+          </template>
+
           <template v-slot:description>
             <v-textarea
               outlined

@@ -28,6 +28,15 @@ export default [
         meta: {
           title: "Sitko - Mes Lieux"
         }
+      },
+      {
+        path: "all",
+        name: "AllPlaces",
+        beforeEnter: auth,
+        component: () => import("@/vue/views/Places/AllPlaces.vue"),
+        meta: {
+          title: "Sitko - Tous les Lieux"
+        }
       }
     ]
   },

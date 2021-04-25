@@ -2,7 +2,7 @@
   <div>
     <div class="text-center">
       <create-button
-        class="my-8"
+        class="mb-8"
         :text="$t('actions.create.place')"
         @action="$router.push('/place/create/')"
       />
@@ -18,11 +18,6 @@
         v-bind:key="item"
       ></v-skeleton-loader>
     </div>
-
-    <div 
-    v-else-if="!places || !places.length"
-    class="d-flex justify-center text-h6">
-    Vous n'avez pas encore créé de lieu</div>
 
     <div v-else class="d-flex flex-wrap justify-center">
       <place-card
@@ -47,7 +42,7 @@ import CreateButton from "@c/atoms/app/CreateButton.vue";
 const namespace: string = "place";
 
 @Component({
-  name: "Places",
+  name: "AllPlaces",
 
   components: {
     PlaceCard,
@@ -56,7 +51,7 @@ const namespace: string = "place";
   }
 })
 export default class Places extends Vue {
-  @Getter("userPlaces", { namespace }) places?: Array<PlaceModel>;
+  @Getter("places", { namespace }) places?: Array<PlaceModel>;
   @Action("GET_ALL_PLACES", { namespace }) GET_ALL_PLACES: any;
 
   loading = false;
