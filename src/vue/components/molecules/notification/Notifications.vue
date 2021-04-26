@@ -27,7 +27,7 @@
           <div
             class="d-flex justify-space-between pl-4 text-overline pt-1 green lighten-2"
           >
-            <div>
+            <div class="flex-grow-1 c-pointer" @click="$router.push('/notifications')">
               Notifications
             </div>
             <v-btn small icon class="mr-2" @click.native.stop="refresh">
@@ -70,8 +70,7 @@
             style="height:180px"
           >
             <div>
-              <!-- TOTRANSLATE -->
-              pas de notification
+              {{$t('no notification') | capitalize}}
             </div>
           </div>
         </div>

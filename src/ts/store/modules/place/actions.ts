@@ -42,6 +42,20 @@ export const actions: ActionTree<PlaceState, RootState> = {
     }
   },
 
+  GET_LINKED_PLACES({ state, getters, commit }) {
+    if (state.fetched.linked_places) {
+      return getters.linkedPlaces;
+    } else {
+      return axios.get(process.env.VUE_APP_API_URL + "place?linked").then(response => {
+        state.fetched.linked_places = Date.now();
+        for (const place of response.data) {
+          commit("pushPlace", new PlaceModel(place));
+        }
+        return getters.linkedPlaces;
+      });
+    }
+  },
+
   SEND_PLACE_CREATION({ commit }, place) {
     return axios
       .post(process.env.VUE_APP_API_URL + "place", place)

@@ -1,8 +1,8 @@
 <template>
   <loading-circle v-if="!place" small />
   <div v-else>
-    <page-title class="my-5" :title="$t('place notes') | capitalize" />
-    <div v-if="user.place && place.author.id === user.id" class="text-center">
+    <page-title>{{$t('place notes') | capitalize}}</page-title>
+    <div v-if="place.can.createEntity" class="text-center">
       <create-button
         :text="$t('actions.create.note')"
         @action="$router.push('/note/create/' + place.id)"

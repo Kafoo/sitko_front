@@ -75,7 +75,12 @@
             :to="item.path"
           >
             <v-list-item-title style="max-width:247px">
-              <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+              <v-icon 
+              v-if="item.icon"
+              left
+              >
+                {{ item.icon }}
+              </v-icon>
               <span class="text-truncate">
                 {{ item.title }}
               </span>
@@ -138,6 +143,11 @@ export default {
           title: this.$options.filters.capitalize(this.$t("my places")),
           path: "/places/myplaces",
           icon: "home"
+        },
+        {
+          title: this.$options.filters.capitalize(this.$t("my network")),
+          path: "/network",
+          icon: "share"
         },
         {
           title: this.$options.filters.capitalize(this.$t("my account")),

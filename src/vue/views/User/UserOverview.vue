@@ -11,7 +11,7 @@
 
       <v-row no-gutters>
         <v-col>
-          <page-title :title="user.name" />
+          <page-title>{{user.name | capitalize}}</page-title>
         </v-col>
       </v-row>
 

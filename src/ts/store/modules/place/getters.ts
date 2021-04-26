@@ -13,4 +13,9 @@ export const getters: GetterTree<PlaceState, RootState> = {
       });;
 
   },
+  linkedPlaces(state): Array<PlaceModel> {
+    return state.places.filter((project: PlaceModel) => {
+      return project.link === 'confirmed';
+    });
+  }
 };

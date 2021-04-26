@@ -1,7 +1,7 @@
 <template>
   
   <primary-content-body>
-    <page-title title="Carte des lieux" class="my-4"/>
+    <page-title>{{$t('places map') | capitalize}}</page-title>
     <v-card class="ma-0" rounded="lg" elevation="8">
       <div v-if="loading" class="loading d-flex align-center justify-center">
         <v-progress-circular

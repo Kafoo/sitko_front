@@ -4,6 +4,7 @@
     @click="$emit('action')"
     class="center mb-8 green lighten-1"
     justify="center"
+    rounded
     align="center"
   >
     {{ text }}

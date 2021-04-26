@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="text-center">
+      <page-title>{{$t('my places') | capitalize}}</page-title>
       <create-button
         class="my-8"
         :text="$t('actions.create.place')"

@@ -1,19 +1,30 @@
 <template>
   <primary-content-body>
 
-    <page-title class="my-4" title="Notifications"/>
+    <page-title>{{$t('notifications') | capitalize}}</page-title>
 
-    <link-notification
-      v-for="notification in activeNotifications"
-      :key="notification.id"
-      :notification="notification"
-    />
+    <div v-if="loading">
+      <loading-circle small></loading-circle>
+    </div>
 
-    <v-pagination
-      v-model="page"
-      :length="pagesCount"
-      class="mt-3"
-    ></v-pagination>
+    <div v-else-if="!notifications.length" class="text-center">
+      -- {{$t('no notification') | capitalize}} --
+    </div>
+
+    <div v-else>
+      <link-notification
+        v-for="notification in activeNotifications"
+        :key="notification.id"
+        :notification="notification"
+      />
+
+      <v-pagination
+        v-model="page"
+        :length="pagesCount"
+        class="mt-3"
+      ></v-pagination>
+    </div>
+
 
   </primary-content-body>
 </template>

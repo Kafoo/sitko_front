@@ -28,6 +28,20 @@ export const actions: ActionTree<UserState, RootState> = {
     }
   },
 
+  GET_LINKED_USERS({ state, getters, commit }) {
+    if (state.fetched.linked_users) {
+      return getters.linkedUsers;
+    } else {
+      return axios.get(process.env.VUE_APP_API_URL + "user?linked").then(response => {
+        state.fetched.linked_users = Date.now();
+        for (const user of response.data) {
+          commit("pushUser", new UserModel(user));
+        }
+        return getters.linkedUsers;
+      });
+    }
+  },
+
   SEND_LINK_REQUEST({ commit }, payload) {
     return _SEND_LINK_REQUEST({ commit }, payload);
   },

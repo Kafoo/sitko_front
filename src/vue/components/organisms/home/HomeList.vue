@@ -1,12 +1,13 @@
 <template>
   <div>
     <net-slide
-      :title="$t('every places') | capitalize"
+      :title="$t('new places') | capitalize"
       :empty="$t('no place') | capitalize"
       type="place"
       :items="places"
       :loading="loading_all_places"
       class="mt-8 mb-7"
+      all="/places/all"
     />
     <net-slide
       :title="$t('current projects') | capitalize"

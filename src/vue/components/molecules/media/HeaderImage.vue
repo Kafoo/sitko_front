@@ -14,6 +14,19 @@
         <image-popup :image="comp_image" @close="expand_image = false" />
       </v-dialog>
     </template>
+    <template v-slot:placeholder>
+      <v-row
+        class="image_placeholder fill-height ma-0"
+        align="center"
+        justify="center"
+      >
+        <v-progress-circular
+          indeterminate
+          size="50"
+          color="#858585"
+        ></v-progress-circular>
+      </v-row>
+    </template>
   </v-img>
 </template>
 
@@ -23,7 +36,7 @@ import ImagePopup from "@c/organisms/app/ImagePopup.vue";
 import ImageModel from "@/ts/models/imageClass";
 
 export default defineComponent({
-  name: "MediumImage",
+  name: "HeaderImage",
 
   components: {
     ImagePopup

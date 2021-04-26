@@ -12,6 +12,18 @@
         <image-popup :image="comp_image" @close="expand_image = false" />
       </v-dialog>
     </template>
+    <template v-slot:placeholder>
+      <v-row
+        class="image_placeholder fill-height ma-0"
+        align="center"
+        justify="center"
+      >
+        <v-progress-circular
+          indeterminate
+          color="grey lighten-5"
+        ></v-progress-circular>
+      </v-row>
+    </template>
   </v-img>
 </template>
 

@@ -50,5 +50,14 @@ export default [
     meta: {
       title: "Sitko"
     }
+  },
+  {
+    path: "/network",
+    name: "MyNetwork",
+    beforeEnter: auth,
+    component: () => import("@/vue/views/MyNetwork.vue"),
+    meta: {
+      title: "Sitko - My Network"
+    }
   }
 ];
