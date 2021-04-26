@@ -5,9 +5,9 @@
     :aspect-ratio="16 / 9"
     v-if="comp_image"
     class="image"
-    :class="image ? '' : 'c-pointer'"
+    :class="image ? 'c-pointer' : ''"
     :src="comp_image.full"
-    @click="!image ? (expand_image = true) : undefined"
+    @click="image ? (expand_image = true) : undefined"
   >
     <template>
       <v-dialog v-model="expand_image" width="90%">

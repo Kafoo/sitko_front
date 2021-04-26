@@ -1,5 +1,6 @@
 <template>
   <div>
+    <page-title>{{$t('all places') | capitalize}}</page-title>
     <div class="text-center">
       <create-button
         class="mb-8"
