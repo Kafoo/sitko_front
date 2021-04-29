@@ -11,7 +11,9 @@
       -- {{$t('no notification') | capitalize}} --
     </div>
 
-    <div v-else>
+    <div v-else
+     v-for="notification in activeNotifications"
+     :key="notification.id">
       <link-notification
         v-if="notification.type == 'link_request'"
         :notification="notification"
@@ -38,6 +40,7 @@ import { defineComponent, computed, ref } from "@vue/composition-api"
 import NotificationModel from '@/ts/models/notificationClass';
 import useFetcher from '@/ts/functions/composition/useFetcher';
 import LinkNotification from '../components/molecules/notification/LinkNotification.vue';
+import Notification from '../components/molecules/notification/Notification.vue';
 
 
 
@@ -46,7 +49,8 @@ export default defineComponent({
   name : "Notifications",
 
   components:{
-    LinkNotification
+    LinkNotification,
+    Notification
   },
 
   setup() {

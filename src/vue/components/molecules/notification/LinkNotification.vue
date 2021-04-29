@@ -2,7 +2,7 @@
 
   <notification :notification="notification">
 
-    <div v-if="notification.state == 'pending'" class="ma-1">
+    <div v-if="notification.state == 'pending'" class="ma-1 m-0">
       <v-btn
         small
         text
@@ -26,7 +26,7 @@
     </div>
     <div
       v-else
-      class="mx-1 mb-1 text-caption"
+      class="mx-1 text-caption"
       :class="
         notification.state == 'confirmed' ? 'green--text' : 'red--text'
       "

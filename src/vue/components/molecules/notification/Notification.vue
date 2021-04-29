@@ -29,7 +29,7 @@
         :image="notification.image"
       />
 
-      <div class="d-flex flex-column text-body-2 pr-5">
+      <div class="d-flex flex-column text-body-2 pr-5 pb-2">
         <div class="text-caption mx-1 mt-1 font-italic grey--text">
           <v-icon 
           v-if="!notification.read" 
