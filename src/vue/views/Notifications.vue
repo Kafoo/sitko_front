@@ -13,8 +13,11 @@
 
     <div v-else>
       <link-notification
-        v-for="notification in activeNotifications"
-        :key="notification.id"
+        v-if="notification.type == 'link_request'"
+        :notification="notification"
+      />
+      <notification
+        v-else
         :notification="notification"
       />
 

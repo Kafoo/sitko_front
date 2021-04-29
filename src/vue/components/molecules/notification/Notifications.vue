@@ -41,11 +41,19 @@
 
 
           <div v-else-if="notifications && notifications.length">
-            <link-notification
-              v-for="notification in displayed_notifications"
-              :key="notification.id"
-              :notification="notification"
-            />
+
+            <div 
+            v-for="notification in displayed_notifications"
+            :key="notification.id">
+              <link-notification
+                v-if="notification.type == 'link_request'"
+                :notification="notification"
+              />
+              <notification
+                v-else
+                :notification="notification"
+              />
+            </div>
 
             <v-btn 
             block 
@@ -84,13 +92,15 @@ import { defineComponent, ref, computed, Ref } from "@vue/composition-api";
 import { useGetters, useActions } from 'vuex-composition-helpers';
 import useFetcher from "@use/useFetcher";
 import LinkNotification from "@c/molecules/notification/LinkNotification.vue";
+import Notification from "@c/molecules/notification/Notification.vue";
 import NotificationModel from "@/ts/models/notificationClass";
 
 export default defineComponent({
   name: "Notifications",
 
   components: {
-    LinkNotification
+    LinkNotification,
+    Notification
   },
 
   setup() {

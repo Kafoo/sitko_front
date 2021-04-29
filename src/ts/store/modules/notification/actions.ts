@@ -3,6 +3,7 @@ import { NotificationState } from "./types";
 import { RootState } from "@/ts/store/types";
 import NotificationModel from "@/ts/models/notificationClass";
 import axios from "axios";
+import LinkNotificationModel from "@/ts/models/linkNotificationClass";
 
 export const actions: ActionTree<NotificationState, RootState> = {
 
@@ -16,7 +17,15 @@ export const actions: ActionTree<NotificationState, RootState> = {
           commit("resetNotifications");
           state.fetched.notifications = Date.now();
           for (const notification of response.data) {
-            commit("pushNotification", new NotificationModel(notification));
+
+            var model
+
+            if (notification.type == "link_request") {
+              model = new LinkNotificationModel(notification)
+            } else {
+              model = new NotificationModel(notification)
+            }
+            commit("pushNotification", model);
           }
           return state.notifications;
         })
@@ -43,10 +52,17 @@ export const actions: ActionTree<NotificationState, RootState> = {
     return axios
       .put(process.env.VUE_APP_API_URL + "notification/read/" + notification_id)
       .then(response => {
-        commit(
-          "updateNotification",
-          new NotificationModel(response.data.notification)
-        );
+
+        var model
+        var notification = response.data.notification
+
+        if (notification.type == "link_request") {
+          model = new LinkNotificationModel(notification)
+        } else {
+          model = new NotificationModel(notification)
+        }
+
+        commit("updateNotification", model);
       })
       .catch(() => {});
   }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import i18n from "@/ts/plugins/i18n.js";
 import { capitalize } from "@/ts/functions/vueFilters";
-import NotificationModel from "@/ts/models/notificationClass";
+import LinkNotificationModel from "@/ts/models/linkNotificationClass";
 
 
 export function _SEND_LINK_REQUEST(
@@ -80,14 +80,17 @@ export function _SEND_CONFIRM_LINK(
     )
     .then(response => {
       requesting.link = "confirmed";
-      commit("push" + capitalize(requesting.essence), requesting);
+      commit(requesting.essence + "/push" + capitalize(requesting.essence),
+        requesting,
+        {root : true});
       commit(
         "app/setAlert",
         { type: "success", msg: i18n.t("Link confirmed") },
         { root: true }
       );
       commit(
-        "notification/updateNotification", new NotificationModel(response.data.notification), { root: true });
+        "notification/updateNotification", 
+        new LinkNotificationModel(response.data.notification), { root: true });
     });
 }
 
@@ -103,13 +106,16 @@ export function _SEND_DECLINE_LINK(
     )
     .then(response => {
       requesting.link = false;
-      commit("push" + capitalize(requesting.essence), requesting);
+      commit(requesting.essence + "/push" + capitalize(requesting.essence), 
+        requesting,
+        {root : true});
       commit(
         "app/setAlert",
         { type: "success", msg: i18n.t("Link declined") },
         { root: true }
       );
       commit(
-        "notification/updateNotification", new NotificationModel(response.data.notification), { root: true });
+        "notification/updateNotification", 
+        new LinkNotificationModel(response.data.notification), { root: true });
     });
 }

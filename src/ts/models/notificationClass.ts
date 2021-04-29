@@ -1,43 +1,28 @@
-import i18n from "../plugins/i18n";
-import ImageModel from "./imageClass";
-import PlaceModel from "./placeClass";
-import UserModel from "./userClass";
 import GlobalModel from "./globalClass";
-import { capitalize } from "@/ts/functions/vueFilters";
+import ImageModel from "./imageClass";
 
 export default class NotificationModel extends GlobalModel {
   id: number;
+  essence:string;
   message: string;
   link: string;
   type: string;
-  requesting_type: string;
-  requested_type: string;
-  image: ImageModel;
-  requesting: UserModel | PlaceModel;
-  requested: UserModel | PlaceModel;
-  requested_at: string;
-  state: string;
+  image: ImageModel
+  created_at: string;
   read: boolean;
+  closable:boolean;
 
   constructor(rawData: any = {}) {
     super(rawData)
     this.id = rawData.id;
+    this.essence = "notification";
     this.type = rawData.type;
-    this.requesting_type = rawData.requesting_type;
-    this.requested_type = rawData.requested_type;
-    this.requested_at = this.getTime(rawData.requested_at);
-    this.requesting = this.getRequesting(rawData.requesting)!;
-    this.requested = this.getRequested(rawData.requested)!;
-    this.message = this.getMessage() as string;
-    this.image = this.getImage();
-    this.link = this.requesting.path;
-    this.state = rawData.state;
-
-    if (rawData.read_at) {
-      this.read = true;
-    } else {
-      this.read = false;
-    }
+    this.created_at = this.getTime(rawData.created_at);
+    this.message = rawData.message;
+    this.image = new ImageModel()
+    this.link = rawData.link || '/notifications';
+    this.read = !!rawData.read_at;
+    this.closable = true;
   }
 
   getTime(rawTime: string) {
@@ -46,7 +31,7 @@ export default class NotificationModel extends GlobalModel {
     var timeParts = rawTime.split(" ")[1].split(":");
     var time = timeParts[0] + ":" + timeParts[1];
 
-    return (
+    var response = (
       this.day(date.getDay()) +
       " " +
       date.getDate() +
@@ -54,55 +39,9 @@ export default class NotificationModel extends GlobalModel {
       this.month(date.getMonth()) +
       " à " +
       time
-    );
-  }
+    )
 
-  getRequesting(requesting: object) {
-    if (this.type == "link_request") {
-      if (this.requesting_type == "user") {
-        return new UserModel(requesting);
-      } else if (this.requesting_type == "place") {
-        return new PlaceModel(requesting);
-      }
-    }
-  }
-
-  getRequested(requested: object) {
-    if (this.type == "link_request") {
-      if (this.requested_type == "user") {
-        return new UserModel(requested);
-      } else if (this.requested_type == "place") {
-        return new PlaceModel(requested);
-      }
-    }
-  }
-
-  getMessage() {
-    if (this.type == "link_request") {
-      const requesting = "<b>" + this.requesting.name + "</b>";
-      const requested = "<b>" + this.requested.name + "</b>";
-      const translation_path =
-        "notification.link." +
-        this.requesting_type +
-        ".to" +
-        capitalize(this.requested_type);
-
-      return i18n.t(translation_path, { requesting, requested });
-    }
-  }
-
-  getImage() {
-    var image;
-
-    if (this.type == "link_request") {
-      image = new ImageModel(this.requesting.image);
-    }
-
-    if (!image) {
-      image = new ImageModel();
-    }
-
-    return image;
+    return response;
   }
 
   day(d: number) {
