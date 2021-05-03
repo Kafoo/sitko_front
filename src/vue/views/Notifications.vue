@@ -11,17 +11,19 @@
       -- {{$t('no notification') | capitalize}} --
     </div>
 
-    <div v-else
-     v-for="notification in activeNotifications"
+    <div v-else>
+      <div 
+      v-for="notification in activeNotifications"
      :key="notification.id">
-      <link-notification
-        v-if="notification.type == 'link_request'"
-        :notification="notification"
-      />
-      <notification
-        v-else
-        :notification="notification"
-      />
+        <link-notification
+          v-if="notification.type == 'link_request'"
+          :notification="notification"
+        />
+        <notification
+          v-else
+          :notification="notification"
+        />
+      </div>
 
       <v-pagination
         v-model="page"

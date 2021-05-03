@@ -1,23 +1,27 @@
+import timestampable from "../mixins/timestampable";
+import mix from "../mixins/_mix";
 import GlobalModel from "./globalClass";
 import ImageModel from "./imageClass";
 
-export default class NotificationModel extends GlobalModel {
+export default class NotificationModel extends mix(GlobalModel).with(
+  timestampable
+) {
   id: number;
   essence:string;
   message: string;
   link: string;
   type: string;
   image: ImageModel
-  created_at: string;
   read: boolean;
   closable:boolean;
+  time:string;
 
   constructor(rawData: any = {}) {
     super(rawData)
     this.id = rawData.id;
     this.essence = "notification";
     this.type = rawData.type;
-    this.created_at = this.getTime(rawData.created_at);
+    this.time = this.getTime(this.created_at);
     this.message = rawData.message;
     this.image = new ImageModel()
     this.link = rawData.link || '/notifications';

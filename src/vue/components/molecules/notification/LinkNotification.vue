@@ -31,7 +31,7 @@
         notification.state == 'confirmed' ? 'green--text' : 'red--text'
       "
     >
-      {{ $t("notification.link.state." + notification.state) }}
+      {{ $t("notification.link_request.state." + notification.state) }}
     </div>
 
   </notification>

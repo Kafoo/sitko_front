@@ -30,7 +30,9 @@
 
   "home": "accueil",
   "my account": "mon compte",
+  "my profile": "mon profil",
   "account": "compte",
+  "settings": "paramètres",
   "explore": "explorer",
   "users": "utilisateurs",
   "place": "lieu",
@@ -150,7 +152,7 @@
   "Link canceled":"Lien annulé",
 
   "notification":{
-    "link":{
+    "link_request":{
       "user":{
         "toUser" : "{requesting} aimerait se connecter à vous",
         "toPlace" : "{requesting} aimerait se connecter à {requested}"
@@ -162,6 +164,16 @@
       "state":{
         "confirmed" : "lien confirmé",
         "declined" : "lien refusé"
+      }
+    },
+    "link_confirmation":{
+      "user":{
+        "toUser" : "{requested} a accepté votre demande de lien.",
+        "toPlace" : "{requested} a accepté la demande de lien de {requesting}."
+      },
+      "place":{
+        "toUser" : "{requested} a accepté votre demande de lien.",
+        "toPlace" : "{requested} a accepté la demande de lien de {requesting}."
       }
     }
   },

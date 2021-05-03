@@ -140,6 +140,11 @@ export default {
 
       return [
         {
+          title: this.$options.filters.capitalize(this.$t("my profile")),
+          path: "/profil",
+          icon: "account_circle"
+        },
+        {
           title: this.$options.filters.capitalize(this.$t("my places")),
           path: "/places/myplaces",
           icon: "home"
@@ -150,9 +155,9 @@ export default {
           icon: "share"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("my account")),
-          path: "/account",
-          icon: "account_circle"
+          title: this.$options.filters.capitalize(this.$t("settings")),
+          path: "/settings",
+          icon: "settings"
         }
       ];
     }

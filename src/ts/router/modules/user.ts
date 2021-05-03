@@ -30,16 +30,26 @@ export default [
       import(/* webpackChunkName: "verify" */ "@/vue/views/Auth/Verify.vue")
   },
   {
-    path: "/account",
-    name: "Account",
+    path: "/settings",
+    name: "Settings",
     beforeEnter: auth,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "account" */ "@/vue/views/Account.vue"),
+      import(/* webpackChunkName: "account" */ "@/vue/views/Settings.vue"),
     meta: {
-      title: "Sitko - Account"
+      title: "Sitko - Settings"
+    }
+  },
+  {
+    path: "/profil",
+    name: "Profil",
+    beforeEnter: auth,
+    component: () =>
+      import("@/vue/views/Profil.vue"),
+    meta: {
+      title: "Sitko - Profil"
     }
   },
   {

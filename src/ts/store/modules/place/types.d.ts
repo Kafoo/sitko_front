@@ -7,5 +7,6 @@ export interface PlaceState {
   fetched: {
     all_places?: number;
     linked_places?: number;
+    user_places?: number;
   };
 }

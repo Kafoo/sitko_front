@@ -10,7 +10,7 @@
   "404": "page not found",
 
   "notification":{
-    "link":{
+    "link_request":{
       "user":{
         "toUser" : "{requesting} would like to connect",
         "toPlace" : "{requesting} would like to connect to {requested}"
@@ -22,6 +22,16 @@
       "state":{
         "confirmed" : "link confirmed",
         "declined" : "link declined"
+      }
+    },
+    "link_confirmation":{
+      "user":{
+        "toUser" : "{requested} confirmed your link request.",
+        "toPlace" : "{requested} confirmed the link request from {requesting}."
+      },
+      "place":{
+        "toUser" : "{requested} confirmed your link request.",
+        "toPlace" : "{requested} confirmed the link request from {requesting}."
       }
     }
   },

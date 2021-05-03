@@ -37,36 +37,33 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { State, Getter, Action } from "vuex-class";
-import { Component } from "vue-property-decorator";
-import PlaceModel from "@/ts/models/placeClass";
+
+import { defineComponent } from "@vue/composition-api"
 import PlaceCard from "@c/molecules/place/PlaceCard.vue";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
+import useFetcher from '@/ts/functions/composition/useFetcher';
 
-const namespace: string = "place";
+export default defineComponent({
 
-@Component({
-  name: "Places",
+  name : "MyPlaces",
 
   components: {
     PlaceCard,
     PrimaryContentBody,
     CreateButton
-  }
-})
-export default class Places extends Vue {
-  @Getter("userPlaces", { namespace }) places?: Array<PlaceModel>;
-  @Action("GET_ALL_PLACES", { namespace }) GET_ALL_PLACES: any;
+  },
 
-  loading = false;
+  setup() {
 
-  created() {
-    this.loading = true;
-    this.GET_ALL_PLACES().then(() => {
-      this.loading = false;
-    });
+    var { entity:places, loading:loading } = useFetcher("place/GET_USER_PLACES");
+
+    return{
+      places,
+      loading
+    }
+
   }
-}
+});
 </script>
+

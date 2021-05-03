@@ -20,7 +20,8 @@ export const actions: ActionTree<NotificationState, RootState> = {
 
             var model
 
-            if (notification.type == "link_request") {
+            if (notification.type == "link_request" ||
+                notification.type == "link_confirmation") {
               model = new LinkNotificationModel(notification)
             } else {
               model = new NotificationModel(notification)
@@ -56,7 +57,8 @@ export const actions: ActionTree<NotificationState, RootState> = {
         var model
         var notification = response.data.notification
 
-        if (notification.type == "link_request") {
+        if (notification.type == "link_request" ||
+            notification.type == "link_confirmation") {
           model = new LinkNotificationModel(notification)
         } else {
           model = new NotificationModel(notification)

@@ -3,6 +3,9 @@
   <primary-content-body>
     <div class="d-flex flex-column align-center">
       <page-title>{{$t('my network') | capitalize}}</page-title>
+
+      <v-select solo :items="['Pinpon', 'Les Vallées', 'Autre Lieu']" value="Pinpon"/>
+
       <v-tabs 
       class="mb-5"
       no-animation
@@ -78,6 +81,7 @@ import { defineComponent, ref } from "@vue/composition-api"
 import useFetcher from '@/ts/functions/composition/useFetcher';
 import PlaceCard from '../components/molecules/place/PlaceCard.vue';
 import UserChip from '../components/atoms/user/UserChip.vue';
+import { useGetters } from 'vuex-composition-helpers';
 
 export default defineComponent({
 
@@ -92,6 +96,9 @@ export default defineComponent({
 
     var tab = ref(null)
 
+    const { user } = useGetters({user: 'auth/user'} as any)
+
+    var { entity:userPlaces, loading:loading_userPlaces } = useFetcher("place/GET_USER_PLACES");
     var { entity:places, loading:loading_places } = useFetcher("place/GET_LINKED_PLACES");
     var { entity:users, loading:loading_users } = useFetcher("user/GET_LINKED_USERS");
 

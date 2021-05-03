@@ -37,7 +37,7 @@
           color="red darken-2">
             circle
           </v-icon>
-          {{ notification.created_at }}
+          {{ notification.time }}
         </div>
         <span class="mx-1" v-html="notification.message" />
 

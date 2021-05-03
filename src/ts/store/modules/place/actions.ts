@@ -42,6 +42,20 @@ export const actions: ActionTree<PlaceState, RootState> = {
     }
   },
 
+  GET_USER_PLACES({ state, getters, commit }) {
+    if (state.fetched.user_places) {
+      return getters.userPlaces;
+    } else {
+      return axios.get(process.env.VUE_APP_API_URL + "place?user").then(response => {
+        state.fetched.user_places = Date.now();
+        for (const place of response.data) {
+          commit("pushPlace", new PlaceModel(place));
+        }
+        return getters.userPlaces;
+      });
+    }
+  },
+
   GET_LINKED_PLACES({ state, getters, commit }) {
     if (state.fetched.linked_places) {
       return getters.linkedPlaces;

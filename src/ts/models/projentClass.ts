@@ -4,10 +4,10 @@ import imageable from "../mixins/imageable";
 import taggable from "../mixins/taggable";
 import mix from "@/ts/mixins/_mix";
 import caldatable from "../mixins/caldatable";
-import globalModel from "./globalClass";
+import GlobalModel from "./globalClass";
 import visiable from "../mixins/visiable";
 
-export default class ProjentModel extends mix(globalModel).with(
+export default class ProjentModel extends mix(GlobalModel).with(
   imageable,
   taggable,
   caldatable,
