@@ -4,7 +4,7 @@
     <div class="d-flex flex-column align-center">
       <page-title>{{$t('my network') | capitalize}}</page-title>
 
-      <v-select solo :items="['Pinpon', 'Les Vallées', 'Autre Lieu']" value="Pinpon"/>
+      <!-- <v-select solo :items="['Pinpon', 'Les Vallées', 'Autre Lieu']" value="Pinpon"/> -->
 
       <v-tabs 
       class="mb-5"
