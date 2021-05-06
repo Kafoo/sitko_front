@@ -10,6 +10,9 @@ export const getters: GetterTree<AppState, RootState> = {
   app_alert(state): AppAlert | undefined {
     return state.app_alert;
   },
+  app_data(state): Object {
+    return state.app_data;
+  },
   confirmed_guest(state): boolean {
     return state.confirmed_guest
   },

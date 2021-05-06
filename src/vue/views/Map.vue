@@ -1,7 +1,7 @@
 <template>
   
   <primary-content-body>
-    <page-title>{{$t('places map') | capitalize}}</page-title>
+    <page-title v-if="$vuetify.breakpoint.name !== 'xs'">{{$t('places map') | capitalize}}</page-title>
     <v-card class="ma-0" rounded="lg" elevation="8">
       <div v-if="loading" class="loading d-flex align-center justify-center">
         <v-progress-circular
@@ -11,7 +11,7 @@
         ></v-progress-circular>
       </div>
       <l-map
-        style="height: 60vh; width: 100%"
+        style="height: calc(100vh - 60px); width: 100%"
         :zoom="5"
         :center="[46.70672236934442, 2.254394665360451]"
         :minZoom="2"

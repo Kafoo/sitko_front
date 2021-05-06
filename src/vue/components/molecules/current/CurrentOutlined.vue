@@ -103,6 +103,21 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+.labelized {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  white-space: nowrap;
+  top: -10px;
+  padding: 0 7px;
+  background-color: white;
+}
+
+.items-container {
+  border-color: #959595 !important;
+}
+
 ::v-deep .edit-icon {
   position: absolute;
   bottom: -22px;
@@ -112,10 +127,6 @@ export default defineComponent({
 
 ::v-deep .v-slide-group__content {
   justify-content: center;
-}
-
-.items-container {
-  border-color: #959595;
 }
 
 .drag {

@@ -4,6 +4,7 @@
       v-if="notification"
       class="p-relative d-flex align-center c-pointer"
       :class="`grey lighten-${hover ? '3' : '4'}`"
+      @mouseover="read"
       @click="
         if (notification.link) {
           read();

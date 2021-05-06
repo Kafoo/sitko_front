@@ -7,13 +7,13 @@
             user-select: none; /* Non-prefixed version, currently*/
 }
 
-.c-selectable{
-  -webkit-touch-callout: initial; /* iOS Safari */
-    -webkit-user-select: initial; /* Safari */
-     -khtml-user-select: initial; /* Konqueror HTML */
-       -moz-user-select: initial; /* Old versions of Firefox */
-        -ms-user-select: initial; /* Internet Explorer/Edge */
-            user-select: initial; /* Non-prefixed version, currently*/
+.selectable-text{
+  -webkit-touch-callout: text; /* iOS Safari */
+    -webkit-user-select: text; /* Safari */
+     -khtml-user-select: text; /* Konqueror HTML */
+       -moz-user-select: text; /* Old versions of Firefox */
+        -ms-user-select: text; /* Internet Explorer/Edge */
+            user-select: text; /* Non-prefixed version, currently*/
 }
 
 .v-card__text, .v-card__title {
@@ -160,16 +160,6 @@ user-select: none; /* Standard */
   .desktop{
     display: none;
   }
-}
-
-.labelized {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  white-space: nowrap;
-  top: -10px;
-  padding: 0 7px;
-  background-color: white;
 }
 
 .chip-text{

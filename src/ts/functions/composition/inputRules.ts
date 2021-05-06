@@ -4,9 +4,22 @@ import { capitalize } from "@/ts/functions/vueFilters";
 export const useInputRules = () => {
   const email = [
     (v: string) =>
-      /.+@.+\..+/.test(v) ||
+      (/.+@.+\..+/.test(v) || !v) ||
       capitalize(i18n.t("form.unvalid", { item: i18n.t("e-mail") }))
   ];
+
+  var url_pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+
+  const url = [
+    (v: string) =>
+    (url_pattern.test(v) || !v) ||
+    capitalize(i18n.t("form.unvalid", { item: i18n.t("url") }))
+  ]
 
   const image = [
     (v: File) =>
@@ -35,6 +48,7 @@ export const useInputRules = () => {
 
   return {
     email,
+    url,
     required,
     image,
     match,

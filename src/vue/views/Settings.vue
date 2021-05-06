@@ -38,7 +38,7 @@
               :rules="[rules.min(8)[0]]"
               :type="show_password ? 'text' : 'password'"
               name="input-10-1"
-              :label="$tc('password', 1) | capitalize"
+              :label="$tc('new password', 1) | capitalize"
               :hint="$t('form.min_carac', { n: '8' }) | capitalize"
               counter
               @click:append="show_password = !show_password"

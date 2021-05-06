@@ -140,8 +140,8 @@ export default {
 
       return [
         {
-          title: this.$options.filters.capitalize(this.$t("my profile")),
-          path: "/profil",
+          title: this.$options.filters.capitalize(this.$t("my profil")),
+          path: "/user/"+this.user.id,
           icon: "account_circle"
         },
         {

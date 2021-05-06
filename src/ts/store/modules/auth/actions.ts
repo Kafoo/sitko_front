@@ -13,7 +13,8 @@ export const actions: ActionTree<AuthState, RootState> = {
     axios
       .get(process.env.VUE_APP_API_URL + "auth")
       .then(response => {
-        commit("setUserData", new UserModel(response.data));
+        commit("app/setAppData", response.data.app_data, { root: true })
+        commit("setUserData", new UserModel(response.data.user));
         commit("removeLoading");
       })
       .catch(() => {

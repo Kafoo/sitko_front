@@ -13,6 +13,7 @@ localStorage.getItem("AccessCode") == process.env.VUE_APP_ACCESS_CODE
 export const state: AppState = {
 
   app_alert: undefined,
+  app_data: {},
   confirmed_guest: isConfirmed,
   errors: [],
   windowWidth: window.innerWidth,
