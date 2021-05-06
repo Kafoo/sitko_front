@@ -84,9 +84,7 @@
           <v-icon>person</v-icon>
           Bio
         </div>
-        <div v-if="user.bio">
-          {{ user.bio }}
-        </div>
+        <div v-if="user.bio" v-html="user.bio"/>
         <div v-else class="grey--text text-center">
           -- {{user.name}} n'a pas encore rempli cette section --
         </div>
@@ -99,9 +97,7 @@
           <v-icon>radio_button_checked</v-icon>
           Attentes
         </div>
-        <div v-if="user.expectations">
-          {{ user.expectations }}
-        </div>
+        <div v-if="user.expectations" v-html="user.expectations"/>
         <div v-else class="grey--text text-center">
           -- {{user.name}} n'a pas encore rempli cette section --
         </div>

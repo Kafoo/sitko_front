@@ -11,7 +11,7 @@
         ></v-progress-circular>
       </div>
       <l-map
-        style="height: calc(100vh - 60px); width: 100%"
+        class="map"
         :zoom="5"
         :center="[46.70672236934442, 2.254394665360451]"
         :minZoom="2"
@@ -109,6 +109,18 @@ export default defineComponent({
   left: 0;
   background-color: #0000001f;
   z-index: 2;
+}
+
+
+.map{
+  height: 60vh; 
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+ .map{
+  height: calc(100vh - 60px); 
+}
 }
 
 @import "~leaflet.markercluster/dist/MarkerCluster.css";
