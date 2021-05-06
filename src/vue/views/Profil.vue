@@ -306,7 +306,7 @@ export default defineComponent({
         .then(() => {
           loading.value = false;
           modified.value = false;
-        })
+          root.$router.push("/user/" + user.value.id);        })
         .catch(() => {
           loading.value = false;
         });

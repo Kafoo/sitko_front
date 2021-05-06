@@ -70,7 +70,8 @@ export const actions: ActionTree<AuthState, RootState> = {
     return axios
       .put(process.env.VUE_APP_API_URL + "user/" + user.id, user)
       .then(response => {
-        commit("setUserData", new UserModel(response.data.user));
+        commit("setUserData", new UserModel(response.data.auth));
+        commit("user/pushUser", new UserModel(response.data.user), {root:true});
         commit(
           "app/setAlert",
           { type: "success", msg: capitalize(i18n.t("modifications saved")) },

@@ -108,7 +108,7 @@
       </div>
 
       <outlined-area 
-      v-if="user.contact_infos && user.contact_infos.length > 0"
+      v-if="user.contact_infos && Object.keys(user.contact_infos).length > 0"
       label="Contact">
         <div class="d-flex flex-wrap justify-center">
           <v-btn 
