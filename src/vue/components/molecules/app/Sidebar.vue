@@ -24,12 +24,12 @@
           </v-card-title>
 
           <v-btn
-            v-if="user.id == place.author.id"
+            v-if="place.can.update"
             icon
             fab
             small
             class="ml-1 mb-2"
-            :to="`/place/edit/${place.id}`"
+            :to="`/place/${place.id}/edit`"
           >
             <v-icon>edit</v-icon>
           </v-btn>
