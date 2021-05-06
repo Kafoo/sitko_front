@@ -107,7 +107,9 @@
         </div>
       </div>
 
-      <outlined-area label="Contact">
+      <outlined-area 
+      v-if="user.contact_infos && user.contact_infos.length > 0"
+      label="Contact">
         <div class="d-flex flex-wrap justify-center">
           <v-btn 
           v-if="user.contact_infos.facebook"
