@@ -109,7 +109,7 @@
   "e-mail": "email",
   "e-mail confirmation": "confirmation de l'email",
   "login": "se connecter",
-  "register": "s'inscrire",
+  "register": "inscription",
   "Who am I ?": "Qui suis-je ?",
   "Why am I on Sitko ?": "Pourquoi je suis sur Sitko ?",
 
@@ -183,8 +183,8 @@
   },
 
   "home_page":{
-  	"unauthenticated": "Salut, connecte-toi ou créé un compte pour profiter de ce site merveilleux où il commence à se passer des choses.",
-  	"authenticated": "Merci d'être là pour tester le site, enjoy =)",
+  	"unauthenticated": "Merci d'être là pour tester Sitko !",
+  	"authenticated": "Merci d'être là pour tester Sitko, enjoy =)",
     "unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
   	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer.",
     "discord": "Rejoins-nous sur Discord"

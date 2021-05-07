@@ -37,7 +37,7 @@
   },
 
   "home_page":{
-  	"unauthenticated": "Hello, login or register to enjoy this wonderful website where you can't do much.",
+  	"unauthenticated": "Thank you for testing Sitko !",
   	"authenticated": "Thank you for testing Sitko, enjoy =)",
   	"unverified": "Your account has been registered. Now, you can confirm your e-mail adress via the link we sent you.",
   	"verified": "Welcome in this wonderful website where some things are happening.",
