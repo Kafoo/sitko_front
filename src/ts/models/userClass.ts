@@ -6,13 +6,6 @@ import linkable from "../mixins/linkable";
 import mix from "@/ts/mixins/_mix";
 import globalModel from "./globalClass";
 
-interface ContactInfos {
-  facebook?: string;
-  instagram?: string;
-  youtube?: string;
-  email?: string;
-}
-
 export default class UserModel extends mix(globalModel).with(
   imageable,
   taggable,
@@ -27,7 +20,17 @@ export default class UserModel extends mix(globalModel).with(
   expectations: string;
   user_type: number;
   home_type: number;
-  contact_infos: ContactInfos;
+  contact_infos: {
+    facebook?: string;
+    instagram?: string;
+    youtube?: string;
+    email?: string;
+  };
+  preferences: {
+    email?: {
+      links?: boolean
+    }
+  };
   email_verified_at?: string;
   password?: string;
   password_confirmation?: string;
@@ -49,6 +52,7 @@ export default class UserModel extends mix(globalModel).with(
     this.home_type = rawData.home_type
 
     this.contact_infos = {...rawData.contact_infos}
+    this.preferences = {...rawData.preferences}
     this.email_verified_at = rawData.email_verified_at;
 
     if (rawData.place) {

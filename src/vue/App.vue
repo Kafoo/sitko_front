@@ -13,7 +13,7 @@
             <loading-circle app />
           </div>
 
-          <router-view v-else></router-view>
+          <router-view v-else :key="$route.path"></router-view>
         </v-main>
     </v-app>
 </template>

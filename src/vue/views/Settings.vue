@@ -28,6 +28,15 @@
           </v-col>
         </v-row>
 
+        <!-- <v-row dense>
+          <v-col cols="12">
+            <v-checkbox
+              v-model="editedUser.preferences.email"
+              label="Demandes/confirmations de lien"
+            ></v-checkbox>
+          </v-col>
+        </v-row> -->
+
         <v-row justify="center" dense>
           <v-col cols="12">
             <v-text-field

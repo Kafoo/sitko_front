@@ -17,7 +17,27 @@
       {{ place.description }}
     </div>
 
-    <div class="mb-5">
+
+      <div 
+      v-if="place.can.createEntity"
+      class="centering d-flex">
+        <create-button
+          class="mx-2"
+          :text="$t('actions.create.note')"
+          @action="$router.push('/note/create/' + place.id)"
+        />
+        <create-button
+          class="mx-2"
+          :text="$t('actions.create.project')"
+          @action="$router.push('/project/create/' + place.id)"
+        />
+        <create-button
+          class="mx-2"
+          :text="$t('actions.create.event')"
+          @action="$router.push('/event/create/' + place.id)"
+        />
+      </div>
+
       <current-notes
         class="mx-5 mb-5"
         :notes="notes"
@@ -25,14 +45,6 @@
         :label="$t('notes') | capitalize"
       />
 
-      <div class="centering">
-        <create-button
-          v-if="place.can.createEntity"
-          :text="$t('actions.create.note')"
-          @action="$router.push('/note/create/' + place.id)"
-        />
-      </div>
-    </div>
 
     <net-slide
       :title="$t('current projects') | capitalize"
