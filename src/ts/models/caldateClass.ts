@@ -1,15 +1,17 @@
 import PlaceModel from "@/ts/models/placeClass";
 import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
+import moment from "moment-timezone";
+moment.locale(localStorage.getItem("locale") as string)
 
 export default class Caldate {
   id: number;
   timed: boolean;
   place_id: number;
-  rawStart: string;
-  rawEnd: string;
   start: string;
-  end: string;
+  tzStart: moment.Moment;
+  end:string
+  tzEnd: moment.Moment;
   child_id?: number;
   child_type: string;
   icon: string;
@@ -23,13 +25,15 @@ export default class Caldate {
     this.timed = rawData.timed;
     this.id = rawData.id;
     this.place_id = rawData.place_id;
-    this.rawStart = this.timeFormat(rawData.start);
-    this.rawEnd = this.timeFormat(rawData.end);
-    this.start = this.timeFormat(rawData.start, false);
-    this.end = this.timeFormat(rawData.end, false);
+    this.tzStart = moment.utc(rawData.start);
+    this.tzStart.tz(moment.tz.guess())
+    this.start = moment(rawData.start).format('YYYY-MM-DD HH:mm:ss')
+    this.tzEnd = moment.utc(rawData.end);
+    this.tzEnd.tz(moment.tz.guess())
+    this.end = moment(rawData.end).format('YYYY-MM-DD HH:mm:ss')
     this.child_type = rawData.child_type;
 
-    if (this.start === this.end) {
+    if (this.tzStart.format() === this.tzEnd.format()) {
       this.singleDate = true;
     } else {
       this.singleDate = false;
@@ -41,9 +45,7 @@ export default class Caldate {
       this.icon = "date_range";
     }
 
-    const beginning = new Date(this.start);
-
-    if (beginning.getTime() < Date.now()) {
+    if (this.tzStart < moment()) {
       this.isPast = true;
     } else {
       this.isPast = false;
@@ -72,148 +74,60 @@ export default class Caldate {
     }
   }
 
-  timeFormat(dateTime: string, sec = true) {
-    var date = dateTime.split(" ")[0];
-
-    if (!this.timed) {
-      return date;
-    }
-
-    var time = dateTime.split(" ")[1];
-    var timeParts = time.split(":");
-    let newTime = "";
-
-    timeParts.forEach(function(part, i) {
-      if (part.length < 2) {
-        part = "0" + part;
+  removeTimeIfNeeded(data:string) {
+    const timeRegex = /\d{1,2}:\d{2}( AM| PM)?/
+      if (!this.timed) {
+        return data.replace(timeRegex, "")
+      }else{
+        const time = data.match(timeRegex)
+        if (time) {
+          return data.replace(time[0], "("+time[0]+")" )
+        }
       }
-      if (i === part.length && !sec) {
-        //nothing for seconds
-      } else if (i === 0) {
-        newTime += part;
-      } else {
-        newTime += ":" + part;
-      }
-    });
-
-    return date + " " + newTime;
-  }
-
-  day(d: number) {
-    switch (d) {
-      case 1:
-        return "lundi";
-      case 2:
-        return "mardi";
-      case 3:
-        return "mercredi";
-      case 4:
-        return "jeudi";
-      case 5:
-        return "vendredi";
-      case 6:
-        return "samedi";
-      case 0:
-        return "dimanche";
-    }
-  }
-
-  month(m: number) {
-    switch (m) {
-      case 0:
-        return "jan.";
-      case 1:
-        return "fév.";
-      case 2:
-        return "mars";
-      case 3:
-        return "avr.";
-      case 4:
-        return "mai";
-      case 5:
-        return "juin";
-      case 6:
-        return "juill.";
-      case 7:
-        return "août";
-      case 8:
-        return "sept.";
-      case 9:
-        return "oct.";
-      case 10:
-        return "nov.";
-      case 11:
-        return "déc.";
-    }
-  }
-
-  fullMonth(m: number) {
-    switch (m) {
-      case 0:
-        return "janvier";
-      case 1:
-        return "février";
-      case 2:
-        return "mars";
-      case 3:
-        return "avril";
-      case 4:
-        return "mai";
-      case 5:
-        return "juin";
-      case 6:
-        return "juillet";
-      case 7:
-        return "août";
-      case 8:
-        return "septembre";
-      case 9:
-        return "octobre";
-      case 10:
-        return "novembre";
-      case 11:
-        return "décembre";
-    }
+      return data
   }
 
   chipFormat() {
     let chip = "";
-    var date = new Date(this.start);
+
+    const currentYear = moment().format('YYYY')
+
+
 
     //SINGLE DATE
-    if (this.start === this.end) {
-      chip =
-        this.day(date.getDay()) +
-        " " +
-        date.getDate() +
-        " " +
-        this.month(date.getMonth());
-      if (this.timed == true) {
-        chip += " à " + this.start.split(" ")[1];
-      }
+    if (this.tzStart.format() === this.tzEnd.format()) {
+      chip = this.tzStart.format('LLLL')
+
+      chip = this.removeTimeIfNeeded(chip)
+
 
       //RANGE DATE
     } else {
-      var start = new Date(this.start);
-      var end = new Date(this.end);
-      //From
-      chip =
-        this.day(start.getDay()) +
-        " " +
-        start.getDate() +
-        " " +
-        this.month(start.getMonth());
 
-      if (this.timed == true) {
-        chip += " (" + this.start.split(" ")[1] + ")";
-      }
-      //To
-      chip += " - " + end.getDate() + " " + this.month(end.getMonth());
+        //superlong chip
+        if ((currentYear !== this.tzStart.format('YYYY') ||
+        currentYear !== this.tzEnd.format('YYYY')) &&
+        (this.timed)) {
+          var start = this.tzStart.format('l')+' '+this.tzStart.format('LT')
+          var end = this.tzEnd.format('l')+' '+this.tzEnd.format('LT')
+        //soft chip
+        }else{        
+          var start = this.tzStart.format('llll')
+          var end = this.tzEnd.format('llll')
+        }
+        start = this.removeTimeIfNeeded(start)
+        end = this.removeTimeIfNeeded(end)
 
-      if (this.timed == true) {
-        chip += " (" + this.end.split(" ")[1] + ") ";
-      }
+        chip = start+" - "+end
+
+
     }
+
+    const currentYearRegex = '(, )?(?<!/)'+currentYear
+    chip = chip.replaceAll(new RegExp(currentYearRegex, "g"), "")
+    
+    chip = chip.replaceAll("  ", " ")
+
     return chip;
   }
 }

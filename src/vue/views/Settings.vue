@@ -1,6 +1,6 @@
 <template>
   <primary-content-body>
-    <div>
+    <div class="pa-3">
       <v-row justify="center">
         <page-title>{{$t('settings') | capitalize}}</page-title>
       </v-row>

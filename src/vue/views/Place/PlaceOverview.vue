@@ -20,7 +20,7 @@
 
       <div 
       v-if="place.can.createEntity"
-      class="centering d-flex">
+      class="centering d-flex flex-wrap">
         <create-button
           class="mx-2"
           :text="$t('actions.create.note')"

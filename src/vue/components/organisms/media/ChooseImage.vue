@@ -23,7 +23,7 @@
         <input
           type="file"
           ref="file"
-          accept=".jpg, .png"
+          accept="image/x-png, image/jpeg"
           style="display:none"
           @change="changeImage"
         />

@@ -5,12 +5,18 @@
     :value="value"
     @change="update"
     :items="visibilities"
-    item-text="translated_name"
     item-value="id"
     label="Visibilité"
     outlined
     class="rounded-lg"
-    ></v-select>
+    >
+      <template slot="selection" slot-scope="data">
+        {{ data.item.translated_name | capitalize }}
+      </template>
+      <template slot="item" slot-scope="data">
+        {{ data.item.translated_name | capitalize }}
+      </template>
+    </v-select>
 
     <help class="mt-2 mx-2" :text="$t('help.visibility.'+type)" />
   </div>

@@ -7,7 +7,7 @@
             user-select: none; /* Non-prefixed version, currently*/
 }
 
-.selectable-text{
+.selectable-text, input, textarea{
   -webkit-touch-callout: text; /* iOS Safari */
     -webkit-user-select: text; /* Safari */
      -khtml-user-select: text; /* Konqueror HTML */
@@ -15,6 +15,7 @@
         -ms-user-select: text; /* Internet Explorer/Edge */
             user-select: text; /* Non-prefixed version, currently*/
 }
+
 
 .v-card__text, .v-card__title {
   word-break: normal;

@@ -90,7 +90,6 @@ import {
 } from "@vue/composition-api";
 import { useActions, useGetters } from "vuex-composition-helpers";
 import { useInputRules } from "@/ts/functions/composition/inputRules";
-import ChooseDate from "@c/organisms/app/ChooseDate.vue";
 import ImageInput from "@c/molecules/media/ImageInput.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CaldateInput from "@c/molecules/input/CaldateInput.vue";
@@ -105,7 +104,6 @@ export default defineComponent({
   name: "EventCreation",
 
   components: {
-    ChooseDate,
     ImageInput,
     TagsInput,
     CaldateInput,

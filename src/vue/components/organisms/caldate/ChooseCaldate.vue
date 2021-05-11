@@ -46,9 +46,10 @@
 import $ from "jquery";
 import VDatePicker from "v-calendar/lib/components/date-picker.umd";
 import Caldate from "@/ts/models/caldateClass";
+import moment from "moment";
 
 export default {
-  name: "ChooseDate",
+  name: "ChooseCaldate",
 
   data() {
     var now = new Date();
@@ -87,21 +88,9 @@ export default {
   methods: {
     formatDT(dateTime) {
       if (typeof dateTime !== Object) {
-        dateTime = new Date(dateTime);
+        dateTime = new Date(dateTime)
       }
-      var date =
-        dateTime.getFullYear() +
-        "-" +
-        (dateTime.getMonth() + 1) +
-        "-" +
-        dateTime.getDate();
-      var time =
-        dateTime.getHours() +
-        ":" +
-        dateTime.getMinutes() +
-        ":" +
-        dateTime.getSeconds();
-      return date + " " + time;
+      return moment(dateTime).utc().format('YYYY-MM-DD HH:mm:ss')
     },
 
     confirm() {
