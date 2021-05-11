@@ -5,15 +5,15 @@
         v-if="note"
         :id="note.id"
         :elevation="hover ? 4 : 2"
-        class="note-card c-pointer my-2 d-flex justify-center align-center"
-        width="200"
-        height="50px"
+        class="note-card c-pointer px-3 my-2 d-flex justify-center align-center"
+        width="180"
+        height="60px"
         color="#fff5b8"
         @click="$router.push(note.path)"
       >
-        <span class="text-truncate font-weight-bold" style="max-width: 150px;">
+        <v-clamp autoresize :max-lines="2" class="text-center font-weight-bold">
           {{ note.title }}
-        </span>
+        </v-clamp>
       </v-card>
     </v-hover>
   </div>

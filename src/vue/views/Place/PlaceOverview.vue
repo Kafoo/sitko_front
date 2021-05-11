@@ -4,6 +4,26 @@
   <div v-else-if="place" style="max-width:1000px; margin:auto">
     <place-header :place="place" />
 
+    <div 
+    v-if="place.can.createEntity"
+    class="centering d-flex flex-wrap">
+      <create-button
+        class="mx-2"
+        :text="$t('actions.create.note')"
+        @action="$router.push('/note/create/' + place.id)"
+      />
+      <create-button
+        class="mx-2"
+        :text="$t('actions.create.project')"
+        @action="$router.push('/project/create/' + place.id)"
+      />
+      <create-button
+        class="mx-2"
+        :text="$t('actions.create.event')"
+        @action="$router.push('/event/create/' + place.id)"
+      />
+    </div>
+
     <current-tags
       class="mx-5 mb-5"
       :tags="place.tags"
@@ -11,32 +31,11 @@
     />
 
     <div
-      class="description grey lighten-3 font-italic mx-0 my-5 mx-sm-5 pa-5 breakwrap"
+      class="description grey lighten-3 text-subtitle-2 mx-0 my-5 mx-sm-5 pa-5 breakwrap"
       :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
     >
       {{ place.description }}
     </div>
-
-
-      <div 
-      v-if="place.can.createEntity"
-      class="centering d-flex flex-wrap">
-        <create-button
-          class="mx-2"
-          :text="$t('actions.create.note')"
-          @action="$router.push('/note/create/' + place.id)"
-        />
-        <create-button
-          class="mx-2"
-          :text="$t('actions.create.project')"
-          @action="$router.push('/project/create/' + place.id)"
-        />
-        <create-button
-          class="mx-2"
-          :text="$t('actions.create.event')"
-          @action="$router.push('/event/create/' + place.id)"
-        />
-      </div>
 
       <current-notes
         class="mx-5 mb-5"

@@ -20,7 +20,8 @@
       >
         <v-progress-circular
           indeterminate
-          color="grey lighten-5"
+          size="50"
+          color="#858585"
         ></v-progress-circular>
       </v-row>
     </template>

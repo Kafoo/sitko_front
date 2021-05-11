@@ -9,9 +9,9 @@
     class=" chip c-pointer my-1 mx-2 py-1 flex-grow-0 font-weight-bold"
   >
     <v-icon small class="mr-1">{{ caldate.icon }}</v-icon>
-    <span class="breakwrap">
+    <v-clamp autoresize :max-lines="2" class="breakwrap text-center font-weight-bold">
       {{ caldate.chip }}
-    </span>
+    </v-clamp>
   </v-chip>
 
 </template>

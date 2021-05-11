@@ -51,7 +51,7 @@
     </div>
 
     <div
-      class="description grey lighten-3 font-italic mx-0 mb-3 mt-5 ma-sm-5 pa-5 breakwrap"
+      class="description grey lighten-3 text-subtitle mx-0 mb-3 mt-5 ma-sm-5 pa-5 breakwrap"
       :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
     >
       {{ project.description }}

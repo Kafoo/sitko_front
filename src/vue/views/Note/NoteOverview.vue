@@ -29,14 +29,10 @@
       </div>
 
       <div
-        class="description yellow lighten-3 font-italic mx-0 mb-3 mt-5 ma-sm-5 pa-5 breakwrap"
+        class="description yellow lighten-3 text-subtitle-2 mx-0 mb-3 mt-5 ma-sm-5 pa-5 breakwrap"
         :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
       >
-        {{ note.description }} Lorem exercitation nulla amet enim laboris duis
-        nulla Lorem velit officia. Anim ut duis enim pariatur ea. Enim sunt
-        deserunt enim magna Lorem enim proident id et qui deserunt fugiat velit.
-        Lorem nostrud aliquip ea veniam officia reprehenderit ipsum tempor
-        cillum laborum.
+        {{ note.description }}
       </div>
     </v-card>
   </div>

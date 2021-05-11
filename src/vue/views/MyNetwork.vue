@@ -29,7 +29,7 @@
             v-if="loading_users"
             small/>
 
-            <user-chip
+            <user-card
             v-else-if="!!users.length"
             v-for="user in users" 
             :key="user.id" 
@@ -80,7 +80,7 @@
 import { defineComponent, ref } from "@vue/composition-api"
 import useFetcher from '@/ts/functions/composition/useFetcher';
 import PlaceCard from '../components/molecules/place/PlaceCard.vue';
-import UserChip from '../components/atoms/user/UserChip.vue';
+import UserCard from '../components/molecules/card/UserCard.vue';
 import { useGetters } from 'vuex-composition-helpers';
 
 export default defineComponent({
@@ -89,7 +89,7 @@ export default defineComponent({
 
   components: {
     PlaceCard,
-    UserChip
+    UserCard
   },
 
   setup() {

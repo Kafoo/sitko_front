@@ -9,6 +9,7 @@
     label="Visibilité"
     outlined
     class="rounded-lg"
+    :rules="[rules.required[0]]"
     >
       <template slot="selection" slot-scope="data">
         {{ data.item.translated_name | capitalize }}
@@ -28,6 +29,7 @@
 import { defineComponent } from "@vue/composition-api"
 import { capitalize } from '@/ts/functions/vueFilters';
 import { useGetters } from 'vuex-composition-helpers';
+import { useInputRules } from '@/ts/functions/composition/inputRules';
 
 export default defineComponent({
 
@@ -44,6 +46,8 @@ export default defineComponent({
 
   setup(props, { emit, root }) {
 
+    const rules = useInputRules()
+
     const { app_data } = useGetters({app_data: 'app/app_data'} as any)
     const visibilities = app_data.value.visibilities
 
@@ -53,7 +57,8 @@ export default defineComponent({
 
     return{
       visibilities,
-      update
+      update,
+      rules
     }
 
   }
