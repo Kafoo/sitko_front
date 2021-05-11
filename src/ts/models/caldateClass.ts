@@ -25,11 +25,9 @@ export default class Caldate {
     this.timed = rawData.timed;
     this.id = rawData.id;
     this.place_id = rawData.place_id;
-    this.tzStart = moment.utc(rawData.start);
-    this.tzStart.tz(moment.tz.guess())
+    this.tzStart = moment.utc(rawData.start).tz(moment.tz.guess());
     this.start = moment(rawData.start).format('YYYY-MM-DD HH:mm:ss')
-    this.tzEnd = moment.utc(rawData.end);
-    this.tzEnd.tz(moment.tz.guess())
+    this.tzEnd = moment.utc(rawData.end).tz(moment.tz.guess());
     this.end = moment(rawData.end).format('YYYY-MM-DD HH:mm:ss')
     this.child_type = rawData.child_type;
 

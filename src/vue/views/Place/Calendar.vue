@@ -114,13 +114,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref, onMounted } from "@vue/composition-api";
+import { defineComponent, ref, Ref, onMounted, computed } from "@vue/composition-api";
 import { useGetters, useActions } from "vuex-composition-helpers";
 import useFetcher from "@use/useFetcher";
 import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
 import CaldateModel from "@/ts/models/caldateClass";
 import ProjentCard from "@c/molecules/card/ProjentCard.vue";
+import moment from 'moment';
 
 export default defineComponent({
   name: "Calendar",
@@ -146,10 +147,22 @@ export default defineComponent({
 
     const place_id = parseInt(root.$route.params.id);
 
-    var { entity: caldates, loading } = useFetcher(
+    var { entity: rawCaldates, loading } = useFetcher(
       "caldate/GET_CALDATES_BY_PLACE",
       place_id
     );
+
+    var caldates:any = computed(() => {
+      var arr = [] as Array<CaldateModel>
+      if (rawCaldates.value) {        
+        rawCaldates.value.forEach((caldate:CaldateModel) => {
+          caldate.start = moment.utc(caldate.start).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss')
+          caldate.end = moment.utc(caldate.end).tz(moment.tz.guess()).format('YYYY-MM-DD HH:mm:ss')
+          arr.push(caldate)
+        });
+      }
+      return arr
+    })
 
     onMounted(() => {
       calendar.value.move(0);
