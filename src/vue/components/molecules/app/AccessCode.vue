@@ -12,6 +12,7 @@
     </div>
     <div class="d-flex align-end">
       <v-text-field
+      id="codeInput"
       @keypress="checkKey($event)"
       @input="checkConfirm"
       v-model="code"
@@ -26,7 +27,7 @@
 
 <script lang="ts">
 
-import { defineComponent, ref, watch } from "@vue/composition-api"
+import { defineComponent, ref, watch, onMounted } from "@vue/composition-api"
 import { filter } from 'vue/types/umd';
 import { useMutations } from 'vuex-composition-helpers';
 import store from '@/ts/store';
@@ -36,7 +37,15 @@ export default defineComponent({
 
   name : "AccessCode",
 
-  setup(props, { root }) {
+  setup(props, { root,refs }) {
+
+    onMounted(()=>{
+      setTimeout(()=>{
+      if (document && document.getElementById("codeInput")) {
+        document.getElementById("codeInput")!.focus()
+      }
+      })
+    })
 
     var model = ref(true)
     var code = ref("")
