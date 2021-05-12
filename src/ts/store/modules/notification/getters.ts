@@ -9,6 +9,7 @@ export const getters: GetterTree<NotificationState, RootState> = {
   },
 
   newNotificationsCount(state): number {
-    return state.notifications.filter(notification=> !notification.read).length
+    return state.notifications.filter(notification => !notification.read)
+      .length;
   }
 };

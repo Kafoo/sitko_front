@@ -15,6 +15,5 @@ export default class Project extends ProjentModel {
     this.is_done = rawData.is_done || false;
 
     this.current = !this.is_done;
-
   }
 }

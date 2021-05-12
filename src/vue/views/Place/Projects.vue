@@ -1,7 +1,7 @@
 <template>
   <loading-circle v-if="!place" small />
   <div v-else>
-    <page-title>{{$t('place projects') | capitalize}}</page-title>
+    <page-title>{{ $t("place projects") | capitalize }}</page-title>
     <div v-if="place.can.createEntity" class="text-center">
       <create-button
         :text="$t('actions.create.project')"

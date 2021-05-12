@@ -27,7 +27,10 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place_entity" v-model="newEvent.visibility"/>
+            <visibility-input
+              type="place_entity"
+              v-model="newEvent.visibility"
+            />
           </template>
 
           <template v-slot:description>
@@ -96,9 +99,9 @@ import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
-import EventModel from "@/ts/models/eventClass"
-import CaldateModel from "@/ts/models/caldateClass"
-import store from '@/ts/store';
+import EventModel from "@/ts/models/eventClass";
+import CaldateModel from "@/ts/models/caldateClass";
+import store from "@/ts/store";
 
 export default defineComponent({
   name: "EventCreation",
@@ -124,29 +127,25 @@ export default defineComponent({
     var place_id = ref(root.$route.params.place_id);
     var form = ref(false);
     var loading = ref(false);
-    var newEvent = ref(new EventModel({place_id: place_id.value}));
+    var newEvent = ref(new EventModel({ place_id: place_id.value }));
 
     const createEvent = () => {
-
       if (!newEvent.value.caldates.length) {
-        store.commit('app/setAlert', {
-          type:'error', 
-          msg:root.$i18n.t('Please select at least 1 date for the event')
-        })
-      } else {  
+        store.commit("app/setAlert", {
+          type: "error",
+          msg: root.$i18n.t("Please select at least 1 date for the event")
+        });
+      } else {
         loading.value = true;
         SEND_EVENT_CREATION(newEvent.value)
           .then(() => {
             loading.value = false;
-            root.$router.push(
-              "/place/" + newEvent.value.place_id + "/events"
-            );
+            root.$router.push("/place/" + newEvent.value.place_id + "/events");
           })
           .catch(() => {
             loading.value = false;
           });
       }
-
     };
     const updateTags = (tags: any) => {
       newEvent.value.tags = tags;

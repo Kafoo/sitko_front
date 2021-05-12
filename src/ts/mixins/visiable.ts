@@ -7,7 +7,7 @@ export default function(superclass: any) {
     constructor(rawData: any = {}) {
       super(rawData);
       this.visibility = rawData.visibility || 1;
-      this.visibility_name = i18n.t('visibilities.'+this.visibility)
-    };
-  }
+      this.visibility_name = i18n.t("visibilities." + this.visibility);
+    }
+  };
 }

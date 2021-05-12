@@ -1,7 +1,5 @@
 <template>
-
   <notification :notification="notification">
-
     <div v-if="notification.state == 'pending'" class="ma-1 m-0">
       <v-btn
         small
@@ -11,7 +9,7 @@
         :disabled="loading_choice"
       >
         <!-- TOTRANSLATE -->
-        {{$t('accept')}}
+        {{ $t("accept") }}
       </v-btn>
       <v-btn
         small
@@ -21,28 +19,24 @@
         :disabled="loading_choice"
       >
         <!-- TOTRANSLATE -->
-        {{$t('decline')}}
+        {{ $t("decline") }}
       </v-btn>
     </div>
     <div
       v-else
       class="mx-1 text-caption"
-      :class="
-        notification.state == 'confirmed' ? 'green--text' : 'red--text'
-      "
+      :class="notification.state == 'confirmed' ? 'green--text' : 'red--text'"
     >
       {{ $t("notification.link_request.state." + notification.state) }}
     </div>
-
   </notification>
-
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import { useActions, useMutations } from "vuex-composition-helpers";
 import LinkNotificationModel from "@/ts/models/linkNotificationClass";
-import Notification from './Notification.vue';
+import Notification from "./Notification.vue";
 
 export default defineComponent({
   name: "LinkNotification",
@@ -76,7 +70,10 @@ export default defineComponent({
     const confirm = () => {
       read();
       loading_choice.value = true;
-      SEND_CONFIRM_LINK({requesting:props.notification!.requesting, requested:props.notification!.requested})
+      SEND_CONFIRM_LINK({
+        requesting: props.notification!.requesting,
+        requested: props.notification!.requested
+      })
         .then(() => {
           loading_choice.value = false;
         })
@@ -88,7 +85,10 @@ export default defineComponent({
     const decline = () => {
       read();
       loading_choice.value = true;
-      SEND_DECLINE_LINK({requesting:props.notification!.requesting, requested:props.notification!.requested})
+      SEND_DECLINE_LINK({
+        requesting: props.notification!.requesting,
+        requested: props.notification!.requested
+      })
         .then(() => {
           loading_choice.value = false;
         })
@@ -113,6 +113,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

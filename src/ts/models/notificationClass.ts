@@ -7,24 +7,24 @@ export default class NotificationModel extends mix(GlobalModel).with(
   timestampable
 ) {
   id: number;
-  essence:string;
+  essence: string;
   message: string;
   link: string;
   type: string;
-  image: ImageModel
+  image: ImageModel;
   read: boolean;
-  closable:boolean;
-  time:string;
+  closable: boolean;
+  time: string;
 
   constructor(rawData: any = {}) {
-    super(rawData)
+    super(rawData);
     this.id = rawData.id;
     this.essence = "notification";
     this.type = rawData.type;
     this.time = this.getTime(this.created_at);
     this.message = rawData.message;
-    this.image = new ImageModel()
-    this.link = rawData.link || '/notifications';
+    this.image = new ImageModel();
+    this.link = rawData.link || "/notifications";
     this.read = !!rawData.read_at;
     this.closable = true;
   }
@@ -35,15 +35,14 @@ export default class NotificationModel extends mix(GlobalModel).with(
     var timeParts = rawTime.split(" ")[1].split(":");
     var time = timeParts[0] + ":" + timeParts[1];
 
-    var response = (
+    var response =
       this.day(date.getDay()) +
       " " +
       date.getDate() +
       " " +
       this.month(date.getMonth()) +
       " à " +
-      time
-    )
+      time;
 
     return response;
   }

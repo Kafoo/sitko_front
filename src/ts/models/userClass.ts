@@ -12,7 +12,7 @@ export default class UserModel extends mix(globalModel).with(
   linkable
 ) {
   id: number;
-  essence:string;
+  essence: string;
   name: string;
   last_name?: string;
   email: string;
@@ -28,8 +28,8 @@ export default class UserModel extends mix(globalModel).with(
   };
   preferences: {
     email?: {
-      links?: boolean
-    }
+      links?: boolean;
+    };
   };
   email_verified_at?: string;
   password?: string;
@@ -38,21 +38,20 @@ export default class UserModel extends mix(globalModel).with(
   path: string;
 
   constructor(rawData: any = {}) {
-
     super(rawData);
     this.id = rawData.id;
-    this.essence = "user"
+    this.essence = "user";
     this.name = rawData.name || i18n.t("an old user");
     this.last_name = rawData.last_name || "";
     this.email = rawData.email || "";
     this.bio = rawData.bio || "";
     this.expectations = rawData.expectations || "";
 
-    this.user_type = rawData.user_type
-    this.home_type = rawData.home_type
+    this.user_type = rawData.user_type;
+    this.home_type = rawData.home_type;
 
-    this.contact_infos = {...rawData.contact_infos}
-    this.preferences = {...rawData.preferences}
+    this.contact_infos = { ...rawData.contact_infos };
+    this.preferences = { ...rawData.preferences };
     this.email_verified_at = rawData.email_verified_at;
 
     if (rawData.place) {

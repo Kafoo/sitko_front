@@ -13,7 +13,7 @@ export const actions: ActionTree<AuthState, RootState> = {
     axios
       .get(process.env.VUE_APP_API_URL + "auth")
       .then(response => {
-        commit("app/setAppData", response.data.app_data, { root: true })
+        commit("app/setAppData", response.data.app_data, { root: true });
         commit("setUserData", new UserModel(response.data.user));
         commit("removeLoading");
       })
@@ -57,11 +57,11 @@ export const actions: ActionTree<AuthState, RootState> = {
   },
 
   SEND_VERIFY_REQUEST({ commit }, hash) {
-    commit('setVerifying', hash)
+    commit("setVerifying", hash);
     return axios
       .get(process.env.VUE_APP_API_URL + "email/verify/" + hash)
       .then(() => {
-        commit('setVerifying', null)
+        commit("setVerifying", null);
       });
   },
 
@@ -71,7 +71,9 @@ export const actions: ActionTree<AuthState, RootState> = {
       .put(process.env.VUE_APP_API_URL + "user/" + user.id, user)
       .then(response => {
         commit("setUserData", new UserModel(response.data.auth));
-        commit("user/pushUser", new UserModel(response.data.user), {root:true});
+        commit("user/pushUser", new UserModel(response.data.user), {
+          root: true
+        });
         commit(
           "app/setAlert",
           { type: "success", msg: capitalize(i18n.t("modifications saved")) },

@@ -103,7 +103,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 .labelized {
   position: absolute;
   left: 50%;

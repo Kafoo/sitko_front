@@ -8,14 +8,13 @@ export const getters: GetterTree<PlaceState, RootState> = {
     return state.places;
   },
   userPlaces(state, getters, rootState): Array<PlaceModel> {
-      return state.places.filter((place:PlaceModel) => {
-        return place.author.id == rootState.auth.userData.id
-      });;
-
+    return state.places.filter((place: PlaceModel) => {
+      return place.author.id == rootState.auth.userData.id;
+    });
   },
   linkedPlaces(state): Array<PlaceModel> {
     return state.places.filter((project: PlaceModel) => {
-      return project.link === 'confirmed';
+      return project.link === "confirmed";
     });
   }
 };

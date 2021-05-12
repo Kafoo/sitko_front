@@ -4,9 +4,7 @@ import visiable from "../mixins/visiable";
 import mix from "../mixins/_mix";
 import GlobalModel from "./globalClass";
 
-export default class NoteModel extends mix(GlobalModel).with(
-  visiable
-) {
+export default class NoteModel extends mix(GlobalModel).with(visiable) {
   id: number;
   essence: string;
   place_id: number;
@@ -17,7 +15,7 @@ export default class NoteModel extends mix(GlobalModel).with(
   author: UserModel;
 
   constructor(rawData: any = {}) {
-    super(rawData)
+    super(rawData);
 
     this.id = rawData.id;
     this.essence = "note";

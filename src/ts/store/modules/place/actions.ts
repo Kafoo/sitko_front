@@ -46,13 +46,15 @@ export const actions: ActionTree<PlaceState, RootState> = {
     if (state.fetched.user_places) {
       return getters.userPlaces;
     } else {
-      return axios.get(process.env.VUE_APP_API_URL + "place?user").then(response => {
-        state.fetched.user_places = Date.now();
-        for (const place of response.data) {
-          commit("pushPlace", new PlaceModel(place));
-        }
-        return getters.userPlaces;
-      });
+      return axios
+        .get(process.env.VUE_APP_API_URL + "place?user")
+        .then(response => {
+          state.fetched.user_places = Date.now();
+          for (const place of response.data) {
+            commit("pushPlace", new PlaceModel(place));
+          }
+          return getters.userPlaces;
+        });
     }
   },
 
@@ -60,13 +62,15 @@ export const actions: ActionTree<PlaceState, RootState> = {
     if (state.fetched.linked_places) {
       return getters.linkedPlaces;
     } else {
-      return axios.get(process.env.VUE_APP_API_URL + "place?linked").then(response => {
-        state.fetched.linked_places = Date.now();
-        for (const place of response.data) {
-          commit("pushPlace", new PlaceModel(place));
-        }
-        return getters.linkedPlaces;
-      });
+      return axios
+        .get(process.env.VUE_APP_API_URL + "place?linked")
+        .then(response => {
+          state.fetched.linked_places = Date.now();
+          for (const place of response.data) {
+            commit("pushPlace", new PlaceModel(place));
+          }
+          return getters.linkedPlaces;
+        });
     }
   },
 

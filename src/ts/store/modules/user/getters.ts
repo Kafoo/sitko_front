@@ -9,7 +9,7 @@ export const getters: GetterTree<UserState, RootState> = {
   },
   linkedUsers(state): Array<UserModel> {
     return state.users.filter((project: UserModel) => {
-      return project.link === 'confirmed';
+      return project.link === "confirmed";
     });
   }
 };

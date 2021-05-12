@@ -62,7 +62,7 @@ export default defineComponent({
 
     const decline = () => {
       loading.value = true;
-      SEND_DECLINE_LINK({requesting:props.entity, requested:user.value})
+      SEND_DECLINE_LINK({ requesting: props.entity, requested: user.value })
         .then(() => {
           loading.value = false;
         })
@@ -73,7 +73,7 @@ export default defineComponent({
 
     const confirm = () => {
       loading.value = true;
-      SEND_CONFIRM_LINK({requesting:props.entity, requested:user.value})
+      SEND_CONFIRM_LINK({ requesting: props.entity, requested: user.value })
         .then(() => {
           loading.value = false;
         })
@@ -84,7 +84,10 @@ export default defineComponent({
 
     const cancel = () => {
       loading.value = true;
-      SEND_CANCEL_LINK_REQUEST({requesting:user.value, requested:props.entity})
+      SEND_CANCEL_LINK_REQUEST({
+        requesting: user.value,
+        requested: props.entity
+      })
         .then(() => {
           loading.value = false;
         })

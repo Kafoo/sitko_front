@@ -1,7 +1,7 @@
 <template>
   <loading-circle v-if="!place" small />
   <div v-else>
-    <page-title>{{$t('place notes') | capitalize}}</page-title>
+    <page-title>{{ $t("place notes") | capitalize }}</page-title>
     <div v-if="place.can.createEntity" class="text-center">
       <create-button
         :text="$t('actions.create.note')"
@@ -20,10 +20,7 @@
     </h4>
 
     <!-- Loadings -->
-    <div
-      v-if="loading_notes"
-      class="notes d-flex justify-center flex-wrap"
-    >
+    <div v-if="loading_notes" class="notes d-flex justify-center flex-wrap">
       <skeleton-index v-for="item in 6" v-bind:key="item" />
     </div>
 

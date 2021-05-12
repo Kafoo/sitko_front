@@ -27,7 +27,10 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place_entity" v-model="newProject.visibility"/>
+            <visibility-input
+              type="place_entity"
+              v-model="newProject.visibility"
+            />
           </template>
 
           <template v-slot:is_done>
@@ -35,7 +38,13 @@
               color="green"
               class="mt-0 ml-2"
               v-model="newProject.is_done"
-              :label="`${$t('state')} : ${newProject.is_done?$t('completed project'):$t('ongoing project')}` | capitalize"
+              :label="
+                `${$t('state')} : ${
+                  newProject.is_done
+                    ? $t('completed project')
+                    : $t('ongoing project')
+                }` | capitalize
+              "
               inset
             ></v-switch>
           </template>
@@ -106,7 +115,7 @@ import CaldateInput from "@c/molecules/input/CaldateInput.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
-import ProjectModel from "@/ts/models/projectClass"
+import ProjectModel from "@/ts/models/projectClass";
 
 export default defineComponent({
   name: "ProjectCreation",
@@ -132,7 +141,7 @@ export default defineComponent({
     var place_id = ref(root.$route.params.place_id);
     var form = ref(false);
     var loading = ref(false);
-    var newProject = ref(new ProjectModel({place_id: place_id.value}));
+    var newProject = ref(new ProjectModel({ place_id: place_id.value }));
 
     const createProject = () => {
       loading.value = true;

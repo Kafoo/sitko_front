@@ -2,7 +2,6 @@
   <div>
     <v-menu rounded="lg" bottom left>
       <template v-slot:activator="{ on, attrs }">
-
         <v-btn
           v-bind="attrs"
           v-on="on"
@@ -11,13 +10,14 @@
           icon
         >
           <v-icon>notifications_none</v-icon>
-          <v-chip 
-          v-if="!loading && newNotificationsCount !== 0"
-          class="new-icon px-1 c-pointer"
-          x-small
-          color="red"
-          text-color="white">
-              {{newNotificationsCount}}
+          <v-chip
+            v-if="!loading && newNotificationsCount !== 0"
+            class="new-icon px-1 c-pointer"
+            x-small
+            color="red"
+            text-color="white"
+          >
+            {{ newNotificationsCount }}
           </v-chip>
         </v-btn>
       </template>
@@ -27,7 +27,10 @@
           <div
             class="d-flex justify-space-between pl-4 text-overline pt-1 green lighten-2"
           >
-            <div class="flex-grow-1 c-pointer" @click="$router.push('/notifications')">
+            <div
+              class="flex-grow-1 c-pointer"
+              @click="$router.push('/notifications')"
+            >
               Notifications
             </div>
             <v-btn small icon class="mr-2" @click.native.stop="refresh">
@@ -39,36 +42,33 @@
             <loading-circle small app />
           </div>
 
-
           <div v-else-if="notifications && notifications.length">
-
-            <div 
-            v-for="notification in displayed_notifications"
-            :key="notification.id">
+            <div
+              v-for="notification in displayed_notifications"
+              :key="notification.id"
+            >
               <link-notification
                 v-if="notification.type == 'link_request'"
                 :notification="notification"
               />
-              <notification
-                v-else
-                :notification="notification"
-              />
+              <notification v-else :notification="notification" />
             </div>
 
-            <v-btn 
-            block 
-            tile 
-            class="grey lighten-2 text-overline"
-            to="/notifications"
+            <v-btn
+              block
+              tile
+              class="grey lighten-2 text-overline"
+              to="/notifications"
             >
-              <v-icon 
-              v-if="MoreNewNotifications" 
-              class="mr-1"
-              size="10px" 
-              color="red darken-2">
+              <v-icon
+                v-if="MoreNewNotifications"
+                class="mr-1"
+                size="10px"
+                color="red darken-2"
+              >
                 circle
               </v-icon>
-              {{$t('more')}}
+              {{ $t("more") }}
             </v-btn>
           </div>
 
@@ -78,7 +78,7 @@
             style="height:180px"
           >
             <div>
-              {{$t('no notification') | capitalize}}
+              {{ $t("no notification") | capitalize }}
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, Ref } from "@vue/composition-api";
-import { useGetters, useActions } from 'vuex-composition-helpers';
+import { useGetters, useActions } from "vuex-composition-helpers";
 import useFetcher from "@use/useFetcher";
 import LinkNotification from "@c/molecules/notification/LinkNotification.vue";
 import Notification from "@c/molecules/notification/Notification.vue";
@@ -104,8 +104,9 @@ export default defineComponent({
   },
 
   setup() {
-
-    const { newNotificationsCount } =  useGetters({newNotificationsCount: 'notification/newNotificationsCount'} as any)
+    const { newNotificationsCount } = useGetters({
+      newNotificationsCount: "notification/newNotificationsCount"
+    } as any);
 
     var showNotifications = ref(false);
 
@@ -128,24 +129,23 @@ export default defineComponent({
     var displayed_notifications: Ref<Array<NotificationModel>> = computed(
       () => {
         if (notifications.value) {
-          return notifications.value.slice(0, 5)
+          return notifications.value.slice(0, 5);
         } else {
-          return []
+          return [];
         }
       }
     );
 
     var MoreNewNotifications: Ref<boolean> = computed(() => {
       if (notifications.value) {
-        var MoreNews = notifications.value.slice(5).filter(
-          (notification: NotificationModel) => !notification.read
-        );
-        return MoreNews.length?true:false;
+        var MoreNews = notifications.value
+          .slice(5)
+          .filter((notification: NotificationModel) => !notification.read);
+        return MoreNews.length ? true : false;
       } else {
-        return false
+        return false;
       }
     });
-
 
     return {
       showNotifications,

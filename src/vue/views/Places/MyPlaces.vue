@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-center">
-      <page-title>{{$t('my places') | capitalize}}</page-title>
+      <page-title>{{ $t("my places") | capitalize }}</page-title>
       <create-button
         class="my-8"
         :text="$t('actions.create.place')"
@@ -20,10 +20,12 @@
       ></v-skeleton-loader>
     </div>
 
-    <div 
-    v-else-if="!places || !places.length"
-    class="d-flex justify-center text-h6">
-    Vous n'avez pas encore créé de lieu</div>
+    <div
+      v-else-if="!places || !places.length"
+      class="d-flex justify-center text-h6"
+    >
+      Vous n'avez pas encore créé de lieu
+    </div>
 
     <div v-else class="d-flex flex-wrap justify-center">
       <place-card
@@ -37,16 +39,14 @@
 </template>
 
 <script lang="ts">
-
-import { defineComponent } from "@vue/composition-api"
+import { defineComponent } from "@vue/composition-api";
 import PlaceCard from "@c/molecules/place/PlaceCard.vue";
 import PrimaryContentBody from "@/vue/layouts/PrimaryContentBody.vue";
 import CreateButton from "@c/atoms/app/CreateButton.vue";
-import useFetcher from '@/ts/functions/composition/useFetcher';
+import useFetcher from "@/ts/functions/composition/useFetcher";
 
 export default defineComponent({
-
-  name : "MyPlaces",
+  name: "MyPlaces",
 
   components: {
     PlaceCard,
@@ -55,15 +55,14 @@ export default defineComponent({
   },
 
   setup() {
+    var { entity: places, loading: loading } = useFetcher(
+      "place/GET_USER_PLACES"
+    );
 
-    var { entity:places, loading:loading } = useFetcher("place/GET_USER_PLACES");
-
-    return{
+    return {
       places,
       loading
-    }
-
+    };
   }
 });
 </script>
-

@@ -46,8 +46,7 @@ export default [
     path: "/profil",
     name: "Profil",
     beforeEnter: auth,
-    component: () =>
-      import("@/vue/views/Profil.vue"),
+    component: () => import("@/vue/views/Profil.vue"),
     meta: {
       title: "Sitko - Profil"
     }

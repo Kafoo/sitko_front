@@ -8,14 +8,12 @@ export default class LocationModel {
   resultType: string;
 
   constructor(rawData: any = {}) {
-    this.id = rawData.id
-    this.title = rawData.title
-    this.address = rawData.address
-    this.position = rawData.position
-    this.localityType = rawData.localityType
-    this.mapView = rawData.mapView
-    this.resultType = rawData.resultType
-
+    this.id = rawData.id;
+    this.title = rawData.title;
+    this.address = rawData.address;
+    this.position = rawData.position;
+    this.localityType = rawData.localityType;
+    this.mapView = rawData.mapView;
+    this.resultType = rawData.resultType;
   }
-
 }

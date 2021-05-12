@@ -3,18 +3,10 @@ import i18n from "@/ts/plugins/i18n.js";
 import { capitalize } from "@/ts/functions/vueFilters";
 import LinkNotificationModel from "@/ts/models/linkNotificationClass";
 
-
-export function _SEND_LINK_REQUEST(
-  { commit }: any,
-  payload: any,
-) {
+export function _SEND_LINK_REQUEST({ commit }: any, payload: any) {
   return axios
-    .put(
-      process.env.VUE_APP_API_URL +
-        "link/request",
-        payload
-    )
-    
+    .put(process.env.VUE_APP_API_URL + "link/request", payload)
+
     .then(response => {
       payload.link = "requesting";
       commit("push" + capitalize(payload.essence), payload);
@@ -28,14 +20,10 @@ export function _SEND_LINK_REQUEST(
 
 export function _SEND_CANCEL_LINK_REQUEST(
   { commit }: any,
-  {requesting, requested}:any
+  { requesting, requested }: any
 ) {
   return axios
-    .put(
-      process.env.VUE_APP_API_URL +
-        "link/cancel",
-        {requesting, requested}
-    )
+    .put(process.env.VUE_APP_API_URL + "link/cancel", { requesting, requested })
     .then(response => {
       requested.link = false;
       commit("push" + capitalize(requested.essence), requested);
@@ -47,16 +35,9 @@ export function _SEND_CANCEL_LINK_REQUEST(
     });
 }
 
-export function _SEND_UNLINK_REQUEST(
-  { commit }: any,
-  payload: any,
-) {
+export function _SEND_UNLINK_REQUEST({ commit }: any, payload: any) {
   return axios
-    .put(
-      process.env.VUE_APP_API_URL +
-        "link/unlink",
-        payload
-    )
+    .put(process.env.VUE_APP_API_URL + "link/unlink", payload)
     .then(response => {
       payload.link = false;
       commit("push" + capitalize(payload.essence), payload);
@@ -70,52 +51,58 @@ export function _SEND_UNLINK_REQUEST(
 
 export function _SEND_CONFIRM_LINK(
   { commit }: any,
-  {requesting, requested}:any
+  { requesting, requested }: any
 ) {
   return axios
-    .put(
-      process.env.VUE_APP_API_URL +
-        "link/confirm",
-        {requesting, requested}
-    )
+    .put(process.env.VUE_APP_API_URL + "link/confirm", {
+      requesting,
+      requested
+    })
     .then(response => {
       requesting.link = "confirmed";
-      commit(requesting.essence + "/push" + capitalize(requesting.essence),
+      commit(
+        requesting.essence + "/push" + capitalize(requesting.essence),
         requesting,
-        {root : true});
+        { root: true }
+      );
       commit(
         "app/setAlert",
         { type: "success", msg: i18n.t("Link confirmed") },
         { root: true }
       );
       commit(
-        "notification/updateNotification", 
-        new LinkNotificationModel(response.data.notification), { root: true });
+        "notification/updateNotification",
+        new LinkNotificationModel(response.data.notification),
+        { root: true }
+      );
     });
 }
 
 export function _SEND_DECLINE_LINK(
   { commit }: any,
-  {requesting, requested}:any
+  { requesting, requested }: any
 ) {
   return axios
-    .put(
-      process.env.VUE_APP_API_URL +
-      "link/decline",
-      {requesting, requested}
-    )
+    .put(process.env.VUE_APP_API_URL + "link/decline", {
+      requesting,
+      requested
+    })
     .then(response => {
       requesting.link = false;
-      commit(requesting.essence + "/push" + capitalize(requesting.essence), 
+      commit(
+        requesting.essence + "/push" + capitalize(requesting.essence),
         requesting,
-        {root : true});
+        { root: true }
+      );
       commit(
         "app/setAlert",
         { type: "success", msg: i18n.t("Link declined") },
         { root: true }
       );
       commit(
-        "notification/updateNotification", 
-        new LinkNotificationModel(response.data.notification), { root: true });
+        "notification/updateNotification",
+        new LinkNotificationModel(response.data.notification),
+        { root: true }
+      );
     });
 }

@@ -39,8 +39,8 @@ export default defineComponent({
       if (props.image) {
         if (typeof props.image !== "string") {
           return props.image.medium;
-        } else  {
-          return props.image
+        } else {
+          return props.image;
         }
       } else {
         var image;

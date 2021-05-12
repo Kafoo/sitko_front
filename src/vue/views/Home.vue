@@ -1,45 +1,42 @@
 <template>
   <div class="mt-8" style="max-width:800px; margin:auto">
-  
     <welcoming class="mb-8 mx-3" />
 
     <div v-if="user">
-
       <div class="d-flex flex-column align-center">
-        <v-btn 
-        
-        color="#fff490" 
-        x-large
-        class="mb-5 rounded-lg"
-        elevation="4"
-        to="/map">
+        <v-btn
+          color="#fff490"
+          x-large
+          class="mb-5 rounded-lg"
+          elevation="4"
+          to="/map"
+        >
           <v-icon left>map</v-icon>
-          {{$t('places map')}}
+          {{ $t("places map") }}
         </v-btn>
-        <v-btn 
-        
-        color="#97f29a" 
-        x-large
-        class="mb-5 rounded-lg"
-        elevation="4"
-        to="/network">
+        <v-btn
+          color="#97f29a"
+          x-large
+          class="mb-5 rounded-lg"
+          elevation="4"
+          to="/network"
+        >
           <v-icon left>share</v-icon>
-          {{$t('my network')}}
+          {{ $t("my network") }}
         </v-btn>
-        <v-btn 
-        
-        color="#90ceff" 
-        x-large
-        class="mb-5 rounded-lg"
-        elevation="4"
-        to="/places/myplaces">
+        <v-btn
+          color="#90ceff"
+          x-large
+          class="mb-5 rounded-lg"
+          elevation="4"
+          to="/places/myplaces"
+        >
           <v-icon left>home</v-icon>
-          {{$t('my places')}}
+          {{ $t("my places") }}
         </v-btn>
       </div>
 
       <home-list />
-
     </div>
   </div>
 </template>
@@ -72,6 +69,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,28 +1,27 @@
 <template>
-    <v-app 
-    class="app">
-      <access-code v-if="!confirmed_guest" />
-        <!-- Error message -->
-        <alert :class="confirmed_guest?'':'blur'" />
-        <!-- Navigation -->
-        <navigation :class="confirmed_guest?'':'blur'" />
+  <v-app class="app">
+    <access-code v-if="!confirmed_guest" />
+    <!-- Error message -->
+    <alert :class="confirmed_guest ? '' : 'blur'" />
+    <!-- Navigation -->
+    <navigation :class="confirmed_guest ? '' : 'blur'" />
 
-        <!-- Content -->
-        <v-main :class="confirmed_guest?'':'blur'">
-          <div v-if="loading" class="mt-5 d-flex justify-center">
-            <loading-circle app />
-          </div>
+    <!-- Content -->
+    <v-main :class="confirmed_guest ? '' : 'blur'">
+      <div v-if="loading" class="mt-5 d-flex justify-center">
+        <loading-circle app />
+      </div>
 
-          <router-view v-else :key="$route.path"></router-view>
-        </v-main>
-    </v-app>
+      <router-view v-else :key="$route.path"></router-view>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Navigation from "@c/organisms/app/Navigation.vue";
 import Alert from "@c/molecules/app/Alert.vue";
-import AccessCode from './components/molecules/app/AccessCode.vue';
+import AccessCode from "./components/molecules/app/AccessCode.vue";
 
 export default {
   components: {
@@ -33,18 +32,31 @@ export default {
 
   computed: {
     ...mapGetters("auth", ["loading"]),
-    ...mapGetters("app", ["confirmed_guest"])
+    ...mapGetters("app", ["confirmed_guest"]),
+    ...mapGetters("app", ["idle_user"])
   },
 
   methods: {
-    ...mapActions("auth", ["GET_USER_DATA"])
+    ...mapActions("auth", ["GET_USER_DATA"]),
+    ...mapActions("app", ["SET_IDLE_USER"])
   },
 
   beforeDestroy() {
     document.removeEventListener("backbutton", this.yourCallBackFunction);
   },
 
+  onIdle() {
+    this.SET_IDLE_USER(true)
+  },
+
+  onActive(){
+    if (this.idle_user) {
+      location.reload();
+    }
+  },
+
   mounted() {
+
     if (localStorage.getItem("authToken")) {
       this.GET_USER_DATA();
     }
@@ -60,10 +72,7 @@ export default {
 </script>
 
 <style scoped>
-
-
-.blur{
+.blur {
   filter: blur(5px);
 }
-
 </style>

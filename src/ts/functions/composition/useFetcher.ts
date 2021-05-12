@@ -25,19 +25,19 @@ export default function useFetcher(
   onMounted(() => {
     loading.value = true;
 
-    ACTION(params).then((response: any) => {
-      if (copy) {
-        entity.value = JSON.parse(JSON.stringify(response));
-      } else {
-        entity.value = response;
-      }
+    ACTION(params)
+      .then((response: any) => {
+        if (copy) {
+          entity.value = JSON.parse(JSON.stringify(response));
+        } else {
+          entity.value = response;
+        }
 
-      loading.value = false;
-    })
-    .catch(()=>{
-      loading.value = false
-      
-    });
+        loading.value = false;
+      })
+      .catch(() => {
+        loading.value = false;
+      });
   });
 
   return {

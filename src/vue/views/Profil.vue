@@ -2,7 +2,7 @@
   <primary-content-body>
     <div class="pa-3">
       <v-row justify="center">
-        <page-title>{{$t('profil edition') | capitalize}}</page-title>
+        <page-title>{{ $t("profil edition") | capitalize }}</page-title>
       </v-row>
       <v-form v-model="form">
         <v-row justify="center" class="my-4">
@@ -28,13 +28,13 @@
             ></v-text-field>
           </v-col>
 
-        <v-row dense>
-          <v-col cols="12">
-            <v-alert v-if="errors.name" dense outlined type="error">
-              {{ errors.name[0] }}
-            </v-alert>
-          </v-col>
-        </v-row>
+          <v-row dense>
+            <v-col cols="12">
+              <v-alert v-if="errors.name" dense outlined type="error">
+                {{ errors.name[0] }}
+              </v-alert>
+            </v-col>
+          </v-row>
 
           <v-spacer></v-spacer>
 
@@ -67,20 +67,20 @@
         <v-row dense>
           <v-col cols="12" sm="6" md="6">
             <v-select
-            return-object
-            v-model="editedUser.home_type"
-            :items="home_types"
-            item-value="id"
-            label="Habitat"
-            outlined
-            class="rounded-lg"
+              return-object
+              v-model="editedUser.home_type"
+              :items="home_types"
+              item-value="id"
+              label="Habitat"
+              outlined
+              class="rounded-lg"
             >
               <template slot="selection" slot-scope="data">
-                <v-icon left>{{data.item.icon}}</v-icon>
+                <v-icon left>{{ data.item.icon }}</v-icon>
                 {{ data.item.translated_name | capitalize }}
               </template>
               <template slot="item" slot-scope="data">
-                <v-icon left>{{data.item.icon}}</v-icon>
+                <v-icon left>{{ data.item.icon }}</v-icon>
                 {{ data.item.translated_name | capitalize }}
               </template>
             </v-select>
@@ -90,20 +90,20 @@
 
           <v-col cols="12" sm="6" md="6">
             <v-select
-            return-object
-            v-model="editedUser.user_type"
-            :items="user_types"
-            item-value="id"
-            label="Statut"
-            outlined
-            class="rounded-lg"
+              return-object
+              v-model="editedUser.user_type"
+              :items="user_types"
+              item-value="id"
+              label="Statut"
+              outlined
+              class="rounded-lg"
             >
               <template slot="selection" slot-scope="data">
-                <v-icon left>{{data.item.icon}}</v-icon>
+                <v-icon left>{{ data.item.icon }}</v-icon>
                 {{ data.item.translated_name | capitalize }}
               </template>
               <template slot="item" slot-scope="data">
-                <v-icon left>{{data.item.icon}}</v-icon>
+                <v-icon left>{{ data.item.icon }}</v-icon>
                 {{ data.item.translated_name | capitalize }}
               </template>
             </v-select>
@@ -163,10 +163,9 @@
         </v-row>
 
         <v-row dense>
-
           <v-col cols="12" sm="6" md="6">
             <v-text-field
-            append-icon="play_arrow"
+              append-icon="play_arrow"
               outlined
               autocomplete="disabled"
               v-model="editedUser.contact_infos.youtube"
@@ -190,7 +189,6 @@
               :disabled="loading"
             ></v-text-field>
           </v-col>
-
         </v-row>
 
         <v-row justify="end">
@@ -206,7 +204,6 @@
           </v-col>
         </v-row>
       </v-form>
-
     </div>
 
     <loading-bar :loading="loading" />
@@ -253,9 +250,9 @@ export default defineComponent({
     var dialog = ref(false);
     var loading = ref(false);
 
-    const { app_data } = useGetters({app_data: 'app/app_data'} as any)
-    const home_types = app_data.value.home_types
-    const user_types = app_data.value.user_types
+    const { app_data } = useGetters({ app_data: "app/app_data" } as any);
+    const home_types = app_data.value.home_types;
+    const user_types = app_data.value.user_types;
 
     const { SEND_USER_EDITION } = useActions({
       SEND_USER_EDITION: "auth/SEND_USER_EDITION"
@@ -265,9 +262,13 @@ export default defineComponent({
 
     var editedUser = ref<UserModel>(JSON.parse(JSON.stringify(user.value)));
 
-    watch(() => editedUser.value, (newValue:any) => {
-      modified.value = true
-    }, {deep:true});
+    watch(
+      () => editedUser.value,
+      (newValue: any) => {
+        modified.value = true;
+      },
+      { deep: true }
+    );
 
     const firstNameLabel = computed(
       () =>
@@ -279,34 +280,35 @@ export default defineComponent({
         capitalize(root.$t("last name")) + " (" + root.$t("form.optional") + ")"
     );
 
-    const validateUrl = (url?:string) => {
-        if (url) {          
-          let regex = /^(http|https)/;
-          if(url.length > 3 && !url.match(regex)) {
-              return 'http://' + url;
-          }else{
-              return url
-          }
+    const validateUrl = (url?: string) => {
+      if (url) {
+        let regex = /^(http|https)/;
+        if (url.length > 3 && !url.match(regex)) {
+          return "http://" + url;
         } else {
-          return undefined
+          return url;
         }
+      } else {
+        return undefined;
+      }
     };
 
     const validateContactInfos = () => {
-      var infos = editedUser.value.contact_infos
-      infos.facebook = validateUrl(infos.facebook)
-      infos.instagram = validateUrl(infos.instagram)
-      infos.youtube = validateUrl(infos.youtube)
-    }
+      var infos = editedUser.value.contact_infos;
+      infos.facebook = validateUrl(infos.facebook);
+      infos.instagram = validateUrl(infos.instagram);
+      infos.youtube = validateUrl(infos.youtube);
+    };
 
     const editUser = () => {
       loading.value = true;
-      validateContactInfos()
+      validateContactInfos();
       SEND_USER_EDITION(editedUser.value)
         .then(() => {
           loading.value = false;
           modified.value = false;
-          root.$router.push("/user/" + user.value.id);        })
+          root.$router.push("/user/" + user.value.id);
+        })
         .catch(() => {
           loading.value = false;
         });
@@ -332,9 +334,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
->>>.v-input .v-icon, .v-menu__content .v-icon { 
-    color: #4d4d4d;
+>>> .v-input .v-icon,
+.v-menu__content .v-icon {
+  color: #4d4d4d;
 }
-
 </style>

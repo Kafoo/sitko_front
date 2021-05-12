@@ -123,7 +123,7 @@ export default defineComponent({
         SEND_LOGIN_REQUEST(form.value)
           .then(() => {
             if (verifying.value) {
-              window.location.href = "/verify/"+verifying.value
+              window.location.href = "/verify/" + verifying.value;
             } else {
               root.$router.push({ name: "Home" }).catch(() => {});
             }

@@ -14,10 +14,7 @@
           </template>
 
           <template v-slot:image>
-            <image-input
-              nullable
-              v-model="event.image"
-            />
+            <image-input nullable v-model="event.image" />
           </template>
 
           <template v-slot:title>
@@ -31,7 +28,7 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place_entity" v-model="event.visibility"/>
+            <visibility-input type="place_entity" v-model="event.visibility" />
           </template>
 
           <template v-slot:description>
@@ -113,7 +110,7 @@ import PlaceChip from "@c/atoms/place/PlaceChip.vue";
 import BackButton from "@c/atoms/app/BackButton.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
-import store from '@/ts/store';
+import store from "@/ts/store";
 
 export default defineComponent({
   name: "EventEdition",
@@ -152,13 +149,12 @@ export default defineComponent({
     } as any);
 
     const editEvent = () => {
-
       if (!event.value.caldates.length) {
-        store.commit('app/setAlert', {
-          type:'error', 
-          msg:root.$i18n.t('Please select at least 1 date for the event')
-        })
-      } else { 
+        store.commit("app/setAlert", {
+          type: "error",
+          msg: root.$i18n.t("Please select at least 1 date for the event")
+        });
+      } else {
         loading_edit.value = true;
         SEND_EVENT_EDITION(event.value)
           .then(() => {

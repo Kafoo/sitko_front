@@ -21,7 +21,7 @@
         </v-row>
         <v-row justify="center" dense>
           <v-col>
-            <slot  name="visibility"></slot>
+            <slot name="visibility"></slot>
           </v-col>
         </v-row>
       </div>

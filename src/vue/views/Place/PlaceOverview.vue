@@ -4,9 +4,7 @@
   <div v-else-if="place" style="max-width:1000px; margin:auto">
     <place-header :place="place" />
 
-    <div 
-    v-if="place.can.createEntity"
-    class="centering d-flex flex-wrap">
+    <div v-if="place.can.createEntity" class="centering d-flex flex-wrap">
       <create-button
         class="mx-2"
         :text="$t('actions.create.note')"
@@ -37,13 +35,12 @@
       {{ place.description }}
     </div>
 
-      <current-notes
-        class="mx-5 mb-5"
-        :notes="notes"
-        :loading="loading_notes"
-        :label="$t('notes') | capitalize"
-      />
-
+    <current-notes
+      class="mx-5 mb-5"
+      :notes="notes"
+      :loading="loading_notes"
+      :label="$t('notes') | capitalize"
+    />
 
     <net-slide
       :title="$t('current projects') | capitalize"

@@ -2,7 +2,7 @@ import PlaceModel from "@/ts/models/placeClass";
 import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
 import moment from "moment-timezone";
-moment.locale(localStorage.getItem("locale") as string)
+moment.locale(localStorage.getItem("locale") as string);
 
 export default class Caldate {
   id: number;
@@ -10,7 +10,7 @@ export default class Caldate {
   place_id: number;
   start: string;
   tzStart: moment.Moment;
-  end:string
+  end: string;
   tzEnd: moment.Moment;
   child_id?: number;
   child_type: string;
@@ -26,9 +26,9 @@ export default class Caldate {
     this.id = rawData.id;
     this.place_id = rawData.place_id;
     this.tzStart = moment.utc(rawData.start).tz(moment.tz.guess());
-    this.start = moment(rawData.start).format('YYYY-MM-DD HH:mm:ss')
+    this.start = moment(rawData.start).format("YYYY-MM-DD HH:mm:ss");
     this.tzEnd = moment.utc(rawData.end).tz(moment.tz.guess());
-    this.end = moment(rawData.end).format('YYYY-MM-DD HH:mm:ss')
+    this.end = moment(rawData.end).format("YYYY-MM-DD HH:mm:ss");
     this.child_type = rawData.child_type;
 
     if (this.tzStart.format() === this.tzEnd.format()) {
@@ -72,59 +72,55 @@ export default class Caldate {
     }
   }
 
-  removeTimeIfNeeded(data:string) {
-    const timeRegex = /\d{1,2}:\d{2}( AM| PM)?/
-      if (!this.timed) {
-        return data.replace(timeRegex, "")
-      }else{
-        const time = data.match(timeRegex)
-        if (time) {
-          return data.replace(time[0], "("+time[0]+")" )
-        }
+  removeTimeIfNeeded(data: string) {
+    const timeRegex = /\d{1,2}:\d{2}( AM| PM)?/;
+    if (!this.timed) {
+      return data.replace(timeRegex, "");
+    } else {
+      const time = data.match(timeRegex);
+      if (time) {
+        return data.replace(time[0], "(" + time[0] + ")");
       }
-      return data
+    }
+    return data;
   }
 
   chipFormat() {
     let chip = "";
 
-    const currentYear = moment().format('YYYY')
-
-
+    const currentYear = moment().format("YYYY");
 
     //SINGLE DATE
     if (this.tzStart.format() === this.tzEnd.format()) {
-      chip = this.tzStart.format('LLLL')
+      chip = this.tzStart.format("LLLL");
 
-      chip = this.removeTimeIfNeeded(chip)
-
+      chip = this.removeTimeIfNeeded(chip);
 
       //RANGE DATE
     } else {
-
-        //superlong chip
-        if ((currentYear !== this.tzStart.format('YYYY') ||
-        currentYear !== this.tzEnd.format('YYYY')) &&
-        (this.timed)) {
-          var start = this.tzStart.format('l')+' '+this.tzStart.format('LT')
-          var end = this.tzEnd.format('l')+' '+this.tzEnd.format('LT')
+      //superlong chip
+      if (
+        (currentYear !== this.tzStart.format("YYYY") ||
+          currentYear !== this.tzEnd.format("YYYY")) &&
+        this.timed
+      ) {
+        var start = this.tzStart.format("l") + " " + this.tzStart.format("LT");
+        var end = this.tzEnd.format("l") + " " + this.tzEnd.format("LT");
         //soft chip
-        }else{        
-          var start = this.tzStart.format('llll')
-          var end = this.tzEnd.format('llll')
-        }
-        start = this.removeTimeIfNeeded(start)
-        end = this.removeTimeIfNeeded(end)
+      } else {
+        var start = this.tzStart.format("llll");
+        var end = this.tzEnd.format("llll");
+      }
+      start = this.removeTimeIfNeeded(start);
+      end = this.removeTimeIfNeeded(end);
 
-        chip = start+" - "+end
-
-
+      chip = start + " - " + end;
     }
 
-    const currentYearRegex = '(, )?(?<!/)'+currentYear
-    chip = chip.replaceAll(new RegExp(currentYearRegex, "g"), "")
-    
-    chip = chip.replaceAll("  ", " ")
+    const currentYearRegex = "(, )?(?<!/)" + currentYear;
+    chip = chip.replaceAll(new RegExp(currentYearRegex, "g"), "");
+
+    chip = chip.replaceAll("  ", " ");
 
     return chip;
   }

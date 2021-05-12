@@ -51,13 +51,13 @@ export default defineComponent({
   setup(props) {
     var expand_image = ref(false);
 
-    var comp_image = computed(()=>{
+    var comp_image = computed(() => {
       if (props.image) {
-        return props.image
+        return props.image;
       } else {
-        return new ImageModel()
+        return new ImageModel();
       }
-    })
+    });
 
     return {
       expand_image,

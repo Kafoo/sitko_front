@@ -30,12 +30,10 @@
           class="mb-4"
           :to="'/place/' + $route.params.id + '/edit'"
         >
-          <v-icon
-            left
-          >
+          <v-icon left>
             edit
           </v-icon>
-          {{$t('edit')}}
+          {{ $t("edit") }}
         </v-btn>
 
         <v-btn

@@ -10,14 +10,24 @@ import "@trevoreyre/autocomplete-vue/dist/style.css";
 
 import VueGtag from "vue-gtag";
 
-Vue.use(VueGtag, {
-  config: { id: process.env.ANALYTICS_ID }
+Vue.use(
+  VueGtag,
+  {
+    config: { id: process.env.ANALYTICS_ID }
   },
   router
-
 );
 
-import 'leaflet/dist/leaflet.css';
+import IdleVue from 'idle-vue'
+ 
+const eventsHub = new Vue()
+ 
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 1200000
+})
+
+import "leaflet/dist/leaflet.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 import "./assets/css/main.css";
 import "@/ts/functions/interceptors";
@@ -45,18 +55,18 @@ Vue.component("back-button", BackButton);
 Vue.component("page-title", PageTitle);
 Vue.component("tiny-avatar", TinyAvatar);
 
-import L from 'leaflet';
+import L from "leaflet";
 type D = L.Icon.Default & {
   _getIconUrl?: string;
 };
-// eslint-disable-next-line  
+// eslint-disable-next-line
 delete (L.Icon.Default.prototype as D)._getIconUrl
-// eslint-disable-next-line  
+// eslint-disable-next-line
 L.Icon.Default.mergeOptions({  
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),  
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),  
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')  
-})
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+});
 
 new Vue({
   router,

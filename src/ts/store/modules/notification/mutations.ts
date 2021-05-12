@@ -18,10 +18,12 @@ export const mutations: MutationTree<NotificationState> = {
     );
     if (exists) {
       //refresh
-      if (!notification.updated_at || notification.updated_at > exists.updated_at) {
+      if (
+        !notification.updated_at ||
+        notification.updated_at > exists.updated_at
+      ) {
         Object.assign(exists, notification);
       }
-
     } else {
       //or push
       state.notifications.push(notification);
@@ -34,9 +36,12 @@ export const mutations: MutationTree<NotificationState> = {
     );
     if (exists) {
       //refresh
-      var one = notification.updated_at
-      var two = exists.updated_at
-      if (!notification.updated_at || notification.updated_at > exists.updated_at) {
+      var one = notification.updated_at;
+      var two = exists.updated_at;
+      if (
+        !notification.updated_at ||
+        notification.updated_at > exists.updated_at
+      ) {
         Object.assign(exists, notification);
       }
     }

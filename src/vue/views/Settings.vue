@@ -2,10 +2,9 @@
   <primary-content-body>
     <div class="pa-3">
       <v-row justify="center">
-        <page-title>{{$t('settings') | capitalize}}</page-title>
+        <page-title>{{ $t("settings") | capitalize }}</page-title>
       </v-row>
       <v-form v-model="form">
-
         <v-row dense>
           <v-col cols="12">
             <v-text-field
@@ -193,9 +192,13 @@ export default defineComponent({
 
     var editedUser = ref<UserModel>(JSON.parse(JSON.stringify(user.value)));
 
-    watch(() => editedUser.value, (newValue:any) => {
-      modified.value = true
-    }, {deep:true});
+    watch(
+      () => editedUser.value,
+      (newValue: any) => {
+        modified.value = true;
+      },
+      { deep: true }
+    );
 
     const deleteUser = () => {
       loading_deletion.value = true;

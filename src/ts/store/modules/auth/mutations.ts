@@ -12,7 +12,7 @@ export const mutations: MutationTree<AuthState> = {
   removeLoading(state) {
     state.loading = false;
   },
-  setVerifying(state, payload:string) {
-    state.verifying = payload
+  setVerifying(state, payload: string) {
+    state.verifying = payload;
   }
 };

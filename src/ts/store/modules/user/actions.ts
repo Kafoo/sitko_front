@@ -32,13 +32,15 @@ export const actions: ActionTree<UserState, RootState> = {
     if (state.fetched.linked_users) {
       return getters.linkedUsers;
     } else {
-      return axios.get(process.env.VUE_APP_API_URL + "user?linked").then(response => {
-        state.fetched.linked_users = Date.now();
-        for (const user of response.data) {
-          commit("pushUser", new UserModel(user));
-        }
-        return getters.linkedUsers;
-      });
+      return axios
+        .get(process.env.VUE_APP_API_URL + "user?linked")
+        .then(response => {
+          state.fetched.linked_users = Date.now();
+          for (const user of response.data) {
+            commit("pushUser", new UserModel(user));
+          }
+          return getters.linkedUsers;
+        });
     }
   },
 

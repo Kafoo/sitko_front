@@ -66,7 +66,7 @@ import { useInputRules } from "@/ts/functions/composition/inputRules";
 import ImageModel from "@/ts/models/imageClass";
 import CropPopup from "@c/organisms/app/CropPopup.vue";
 import BigAvatar from "../../atoms/media/BigAvatar.vue";
-import i18n from '@/ts/plugins/i18n';
+import i18n from "@/ts/plugins/i18n";
 
 export default defineComponent({
   name: "ImageInput",
@@ -116,12 +116,12 @@ export default defineComponent({
       } else {
         store.commit("app/setAlert", {
           type: "error",
-          msg: i18n.t('media.max_size', {max:'4Mo'})
+          msg: i18n.t("media.max_size", { max: "4Mo" })
         });
       }
     };
 
-    const update = (newImage:string) => {
+    const update = (newImage: string) => {
       emit("input", newImage);
     };
 

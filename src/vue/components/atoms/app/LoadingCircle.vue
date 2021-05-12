@@ -3,7 +3,7 @@
     indeterminate
     :color="app ? 'green lighten-2' : 'grey'"
     class="loading"
-    :class="relative?'':'centered'"
+    :class="relative ? '' : 'centered'"
     :size="small ? 50 : 100"
     :width="small ? 6 : 10"
   ></v-progress-circular>

@@ -41,5 +41,4 @@ export default class ProjentModel extends mix(GlobalModel).with(
 
     this.place = new PlaceModel(rawData.place);
   }
-  
 }

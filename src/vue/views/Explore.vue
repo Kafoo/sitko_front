@@ -1,6 +1,6 @@
 <template>
   <primary-content-body>
-    <page-title>{{$t('explore') | capitalize}}</page-title>
+    <page-title>{{ $t("explore") | capitalize }}</page-title>
     <img :src="image_src" class="mt-8" width="60%" />
   </primary-content-body>
 </template>

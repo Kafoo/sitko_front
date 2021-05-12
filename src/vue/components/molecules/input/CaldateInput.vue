@@ -25,8 +25,8 @@ import CaldateModel from "@/ts/models/caldateClass";
 import ChooseCaldate from "@c/organisms/caldate/ChooseCaldate.vue";
 import CaldateChip from "@c/atoms/caldate/CaldateChip.vue";
 import CurrentCaldates from "@c/molecules/current/CurrentCaldates.vue";
-import i18n from '@/ts/plugins/i18n';
-import { capitalize } from '@/ts/functions/vueFilters';
+import i18n from "@/ts/plugins/i18n";
+import { capitalize } from "@/ts/functions/vueFilters";
 
 export default defineComponent({
   name: "CaldateInput",

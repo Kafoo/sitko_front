@@ -14,10 +14,7 @@
           </template>
 
           <template v-slot:image>
-            <image-input
-              nullable
-              v-model="project.image"
-            />
+            <image-input nullable v-model="project.image" />
           </template>
 
           <template v-slot:title>
@@ -31,7 +28,10 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place_entity" v-model="project.visibility"/>
+            <visibility-input
+              type="place_entity"
+              v-model="project.visibility"
+            />
           </template>
 
           <template v-slot:is_done>
@@ -39,7 +39,13 @@
               color="green"
               class="mt-0 ml-2"
               v-model="project.is_done"
-              :label="`${$t('state')} : ${project.is_done?$t('completed project'):$t('ongoing project')}` | capitalize"
+              :label="
+                `${$t('state')} : ${
+                  project.is_done
+                    ? $t('completed project')
+                    : $t('ongoing project')
+                }` | capitalize
+              "
               inset
             ></v-switch>
           </template>

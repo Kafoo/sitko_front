@@ -14,7 +14,10 @@ export const getters: GetterTree<AppState, RootState> = {
     return state.app_data;
   },
   confirmed_guest(state): boolean {
-    return state.confirmed_guest
+    return state.confirmed_guest;
+  },
+  idle_user(state): boolean {
+    return state.idle_user;
   },
   lastRoute(state): Route | undefined {
     if (state.routes.length > 1) {

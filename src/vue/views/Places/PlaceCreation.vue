@@ -27,7 +27,7 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place" v-model="newPlace.visibility"/>
+            <visibility-input type="place" v-model="newPlace.visibility" />
           </template>
 
           <template v-slot:description>
@@ -42,7 +42,7 @@
           </template>
 
           <template v-slot:location>
-            <location-input v-model="newPlace.location"/>
+            <location-input v-model="newPlace.location" />
           </template>
 
           <template v-slot:tags>
@@ -87,7 +87,7 @@ import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import TagModel from "@/ts/models/tagClass";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
-import LocationInput from '@/vue/components/molecules/input/LocationInput.vue';
+import LocationInput from "@/vue/components/molecules/input/LocationInput.vue";
 
 export default defineComponent({
   name: "PlaceCreation",

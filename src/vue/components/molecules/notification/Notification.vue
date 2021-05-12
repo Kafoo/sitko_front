@@ -32,10 +32,7 @@
 
       <div class="d-flex flex-column text-body-2 pr-5 pb-2">
         <div class="text-caption mx-1 mt-1 font-italic grey--text">
-          <v-icon 
-          v-if="!notification.read" 
-          size="10px" 
-          color="red darken-2">
+          <v-icon v-if="!notification.read" size="10px" color="red darken-2">
             circle
           </v-icon>
           {{ notification.time }}
@@ -43,7 +40,6 @@
         <span class="mx-1" v-html="notification.message" />
 
         <slot></slot>
-
       </div>
     </div>
   </v-hover>
@@ -52,8 +48,8 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import { useActions } from "vuex-composition-helpers";
-import LinkNotificationModel from '@/ts/models/linkNotificationClass';
-import NotificationModel from '@/ts/models/notificationClass';
+import LinkNotificationModel from "@/ts/models/linkNotificationClass";
+import NotificationModel from "@/ts/models/notificationClass";
 
 export default defineComponent({
   name: "Notification",
@@ -61,11 +57,10 @@ export default defineComponent({
   components: {},
 
   props: {
-    notification: Object as () => NotificationModel || LinkNotificationModel
+    notification: (Object as () => NotificationModel) || LinkNotificationModel
   },
 
   setup(props) {
-
     const { SEND_NOTIFICATION_DELETION } = useActions({
       SEND_NOTIFICATION_DELETION: "notification/SEND_NOTIFICATION_DELETION"
     } as any);

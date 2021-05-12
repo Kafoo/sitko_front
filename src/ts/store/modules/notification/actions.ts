@@ -6,7 +6,6 @@ import axios from "axios";
 import LinkNotificationModel from "@/ts/models/linkNotificationClass";
 
 export const actions: ActionTree<NotificationState, RootState> = {
-
   GET_NOTIFICATIONS({ state, commit }, { reload = null } = {}) {
     if (!reload && state.fetched.notifications) {
       return state.notifications;
@@ -17,14 +16,15 @@ export const actions: ActionTree<NotificationState, RootState> = {
           commit("resetNotifications");
           state.fetched.notifications = Date.now();
           for (const notification of response.data) {
+            var model;
 
-            var model
-
-            if (notification.type == "link_request" ||
-                notification.type == "link_confirmation") {
-              model = new LinkNotificationModel(notification)
+            if (
+              notification.type == "link_request" ||
+              notification.type == "link_confirmation"
+            ) {
+              model = new LinkNotificationModel(notification);
             } else {
-              model = new NotificationModel(notification)
+              model = new NotificationModel(notification);
             }
             commit("pushNotification", model);
           }
@@ -53,15 +53,16 @@ export const actions: ActionTree<NotificationState, RootState> = {
     return axios
       .put(process.env.VUE_APP_API_URL + "notification/read/" + notification_id)
       .then(response => {
+        var model;
+        var notification = response.data.notification;
 
-        var model
-        var notification = response.data.notification
-
-        if (notification.type == "link_request" ||
-            notification.type == "link_confirmation") {
-          model = new LinkNotificationModel(notification)
+        if (
+          notification.type == "link_request" ||
+          notification.type == "link_confirmation"
+        ) {
+          model = new LinkNotificationModel(notification);
         } else {
-          model = new NotificationModel(notification)
+          model = new NotificationModel(notification);
         }
 
         commit("updateNotification", model);

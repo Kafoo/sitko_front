@@ -23,7 +23,10 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place_entity" v-model="newNote.visibility"/>
+            <visibility-input
+              type="place_entity"
+              v-model="newNote.visibility"
+            />
           </template>
 
           <template v-slot:description>

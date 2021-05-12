@@ -9,5 +9,5 @@ export default [
     meta: {
       title: "Sitko - Notifications"
     }
-  },
+  }
 ];

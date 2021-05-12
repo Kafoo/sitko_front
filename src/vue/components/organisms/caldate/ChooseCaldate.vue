@@ -88,9 +88,11 @@ export default {
   methods: {
     formatDT(dateTime) {
       if (typeof dateTime !== Object) {
-        dateTime = new Date(dateTime)
+        dateTime = new Date(dateTime);
       }
-      return moment(dateTime).utc().format('YYYY-MM-DD HH:mm:ss')
+      return moment(dateTime)
+        .utc()
+        .format("YYYY-MM-DD HH:mm:ss");
     },
 
     confirm() {

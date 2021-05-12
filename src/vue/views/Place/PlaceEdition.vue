@@ -28,7 +28,7 @@
           </template>
 
           <template v-slot:visibility>
-            <visibility-input type="place" v-model="place.visibility"/>
+            <visibility-input type="place" v-model="place.visibility" />
           </template>
 
           <template v-slot:description>
@@ -43,7 +43,7 @@
           </template>
 
           <template v-slot:location>
-            <location-input v-model="place.location"/>
+            <location-input v-model="place.location" />
           </template>
 
           <template v-slot:tags>
@@ -102,8 +102,7 @@ import ConfirmDialog from "@c/molecules/app/ConfirmDialog.vue";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
-import LocationInput from '@/vue/components/molecules/input/LocationInput.vue';
-
+import LocationInput from "@/vue/components/molecules/input/LocationInput.vue";
 
 export default defineComponent({
   components: {
@@ -140,8 +139,6 @@ export default defineComponent({
       place_id,
       true
     );
-
-
 
     const editPlace = () => {
       loading_edit.value = true;

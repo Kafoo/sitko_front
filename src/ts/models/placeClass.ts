@@ -21,7 +21,7 @@ export default class PlaceModel extends mix(globalModel).with(
   author: AuthorModel;
   notes: Array<NoteModel>;
   path: string;
-  location:Object|null;
+  location: Object | null;
 
   constructor(rawData: any = {}) {
     super(rawData);
@@ -48,13 +48,12 @@ export default class PlaceModel extends mix(globalModel).with(
     this.projects_count = rawData.projects_count;
     if (rawData.location) {
       if (typeof rawData.location == "string") {
-        this.location = JSON.parse(rawData.location)
-      } else{
-        this.location = rawData.location
+        this.location = JSON.parse(rawData.location);
+      } else {
+        this.location = rawData.location;
       }
-    } else{
-      this.location = null
+    } else {
+      this.location = null;
     }
-
   }
 }

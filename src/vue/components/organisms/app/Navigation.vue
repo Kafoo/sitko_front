@@ -55,7 +55,7 @@
         <v-icon>map</v-icon>
       </v-btn>
 
-      <notifications v-if="!loading && user" class="mr-2"/>
+      <notifications v-if="!loading && user" class="mr-2" />
 
       <v-menu class="acccount-drawer" v-if="!loading" rounded="xl" bottom left>
         <template v-slot:activator="{ on, attrs }">
@@ -75,10 +75,7 @@
             :to="item.path"
           >
             <v-list-item-title style="max-width:247px">
-              <v-icon 
-              v-if="item.icon"
-              left
-              >
+              <v-icon v-if="item.icon" left>
                 {{ item.icon }}
               </v-icon>
               <span class="text-truncate">
@@ -137,11 +134,10 @@ export default {
     },
 
     accountItems() {
-
       return [
         {
           title: this.$options.filters.capitalize(this.$t("my profil")),
-          path: "/user/"+this.user.id,
+          path: "/user/" + this.user.id,
           icon: "account_circle"
         },
         {

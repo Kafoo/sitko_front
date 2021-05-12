@@ -1,7 +1,6 @@
 <template>
   <div class="text-center">
-
-    <page-title>{{$t('contact') | capitalize}}</page-title>
+    <page-title>{{ $t("contact") | capitalize }}</page-title>
 
     <h5>Facebook</h5>
     <h5>Instagram</h5>

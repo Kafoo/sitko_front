@@ -23,9 +23,8 @@ export default class LinkNotificationModel extends NotificationModel {
     this.image = this.getImage();
     if (rawData.specifics.state) {
       this.state = rawData.specifics.state;
-      this.closable = this.state !== 'pending';
+      this.closable = this.state !== "pending";
     }
-
   }
 
   getRequesting(requesting: object) {
@@ -55,15 +54,14 @@ export default class LinkNotificationModel extends NotificationModel {
         capitalize(this.requested_type);
 
       return i18n.t(translation_path, { requesting, requested });
-
-    }else if(this.type == "link_confirmation"){
+    } else if (this.type == "link_confirmation") {
       const requested = "<b>" + this.requested.name + "</b>";
       const translation_path =
         "notification.link_confirmation." +
         this.requested_type +
         ".to" +
         capitalize(this.requesting_type);
-      
+
       return i18n.t(translation_path, { requested });
     }
   }
@@ -71,20 +69,19 @@ export default class LinkNotificationModel extends NotificationModel {
   getImage() {
     if (this.type == "link_request") {
       if (this.requesting.image) {
-        return new ImageModel(this.requesting.image)
-      }else{
-        return new ImageModel()
+        return new ImageModel(this.requesting.image);
+      } else {
+        return new ImageModel();
       }
     }
     if (this.type == "link_confirmation") {
       if (this.requested.image) {
-        return new ImageModel(this.requested.image)
-      }else{
-        return new ImageModel()
+        return new ImageModel(this.requested.image);
+      } else {
+        return new ImageModel();
       }
-    }else{
-      return new ImageModel()
+    } else {
+      return new ImageModel();
     }
-    }
-
+  }
 }

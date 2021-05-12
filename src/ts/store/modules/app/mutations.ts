@@ -35,6 +35,10 @@ export const mutations: MutationTree<AppState> = {
     localStorage.setItem("AccessCode", code);
   },
 
+  setIdleUser(state, payload: boolean) {
+    state.idle_user = payload;
+  },
+
   pushRoute(state, route) {
     state.routes.push(route);
   }

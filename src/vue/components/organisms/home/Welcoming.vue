@@ -1,37 +1,31 @@
 <template>
   <div class="d-flex flex-column justify-center align-center">
-
     <div v-if="!user" class="d-flex flex-column align-center text-center">
       <h1>{{ $t("hello") | capitalize }} !</h1>
       <h2>{{ $t("home_page.unauthenticated") }}</h2>
-      <v-img class="my-3" src="https://res.cloudinary.com/dyigive9u/image/upload/v1620394226/home_mwhjqq.png" width="100px"></v-img>
+      <v-img
+        class="my-3"
+        src="https://res.cloudinary.com/dyigive9u/image/upload/v1620394226/home_mwhjqq.png"
+        width="100px"
+      ></v-img>
 
-      <v-btn 
-      rounded
-      class="ma-2"
-      color="success" 
-      to="/register">
-        {{$t('register')}}
+      <v-btn rounded class="ma-2" color="success" to="/register">
+        {{ $t("register") }}
       </v-btn>
-      <v-btn 
-      rounded
-      class="ma-2"
-      color="success" 
-      to="/login">
-        {{$t('connection')}}
+      <v-btn rounded class="ma-2" color="success" to="/login">
+        {{ $t("connection") }}
       </v-btn>
-      <v-btn 
-      rounded
-      class="ma-2" 
-      color="blue" 
-      dark
-      href="https://discord.gg/dV5yWgZz9G"
-      target="_blank">
-        {{$t('home_page.discord')}}
+      <v-btn
+        rounded
+        class="ma-2"
+        color="blue"
+        dark
+        href="https://discord.gg/dV5yWgZz9G"
+        target="_blank"
+      >
+        {{ $t("home_page.discord") }}
       </v-btn>
-
     </div>
-
 
     <span v-else class="text-center">
       <h1>{{ $t("hello") | capitalize }} {{ user.name }} !</h1>
@@ -42,7 +36,6 @@
         {{ $t("home_page.discord") }}
       </a>
     </span>
-
   </div>
 </template>
 

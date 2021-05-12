@@ -6,4 +6,5 @@ declare module "*.vue" {
 declare module "vue-clamp";
 declare module "@trevoreyre/autocomplete-vue";
 declare module "vue-advanced-cropper";
-declare module 'vue2-leaflet-markercluster'
+declare module "vue2-leaflet-markercluster";
+declare module "idle-vue";

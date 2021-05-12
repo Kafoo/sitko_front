@@ -9,7 +9,7 @@ axios.interceptors.response.use(
     /*    if (response.data.message) {
       store.commit('app/setAlert', {type:'success', msg: response.data.message})  
     }*/
-    store.commit("app/setErrors", [])
+    store.commit("app/setErrors", []);
     return response;
   },
   error => {
@@ -18,7 +18,7 @@ axios.interceptors.response.use(
     } else if (error.response.status === 401) {
       store.commit("auth/setUserData", null);
       localStorage.removeItem("authToken");
-      router.push({ name: "Login" }).catch(()=>{});
+      router.push({ name: "Login" }).catch(() => {});
       return Promise.reject(error);
     } else {
       if (error.response.data.customMessage) {
