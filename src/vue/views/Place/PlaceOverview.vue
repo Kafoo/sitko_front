@@ -4,6 +4,13 @@
   <div v-else-if="place" style="max-width:1000px; margin:auto">
     <place-header :place="place" />
 
+    <div
+      class="description grey lighten-3 text-subtitle-2 mx-0 my-5 mx-sm-5 pa-5 breakwrap"
+      :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
+    >
+      {{ place.description }}
+    </div>
+
     <div v-if="place.can.createEntity" class="centering d-flex flex-wrap">
       <create-button
         class="mx-2"
@@ -27,13 +34,6 @@
       :tags="place.tags"
       :label="$t('place tags') | capitalize"
     />
-
-    <div
-      class="description grey lighten-3 text-subtitle-2 mx-0 my-5 mx-sm-5 pa-5 breakwrap"
-      :class="$vuetify.breakpoint.name !== 'xs' ? 'rounded-xl' : ''"
-    >
-      {{ place.description }}
-    </div>
 
     <current-notes
       class="mx-5 mb-5"

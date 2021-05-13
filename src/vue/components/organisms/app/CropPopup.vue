@@ -13,7 +13,7 @@
     <cropper
       class="cropper"
       :src="image"
-      :stencil-props="{ aspectRatio: 1 }"
+      :stencil-props="{ aspectRatio: 16/9 }"
       @change="crop"
     ></cropper>
     <template v-slot:placeholder>
