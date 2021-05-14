@@ -87,25 +87,25 @@ export default defineComponent({
 
     const rules = useInputRules();
 
-    const facebookChange = (value) => {
+    const facebookChange = (value:Object) => {
       var infos = {... props.value}
       infos.facebook = value
       emit("input", infos);
     }
 
-    const instagramChange = (value) => {
+    const instagramChange = (value:Object) => {
       var infos = {... props.value}
       infos.instagram = value
       emit("input", infos);
     }
 
-    const youtubeChange = (value) => {
+    const youtubeChange = (value:Object) => {
       var infos = {... props.value}
       infos.youtube = value
       emit("input", infos);
     }
 
-    const emailChange = (value) => {
+    const emailChange = (value:Object) => {
       var infos = {... props.value}
       infos.email = value
       emit("input", infos);
