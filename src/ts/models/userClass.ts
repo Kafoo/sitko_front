@@ -54,9 +54,11 @@ export default class UserModel extends mix(globalModel).with(
     this.preferences = { ...rawData.preferences };
     this.email_verified_at = rawData.email_verified_at;
 
-    if (rawData.place) {
-      this.place = new PlaceModel(rawData.place);
-    }
+    this.places = []
+
+    rawData.places.forEach((place:PlaceModel) => {
+      this.places.push(new PlaceModel(place))
+    });
 
     this.password = "";
     this.password_confirmation = "";

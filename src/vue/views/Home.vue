@@ -25,6 +25,18 @@
           {{ $t("my network") }}
         </v-btn>
         <v-btn
+          v-if="!user.places || (user.places && !user.places.length)"
+          color="#90ceff"
+          x-large
+          class="mb-5 rounded-lg"
+          elevation="4"
+          to="/place/create"
+        >
+          <v-icon left>home</v-icon>
+          {{ $t("actions.create.place") }}
+        </v-btn>
+        <v-btn
+          v-else
           color="#90ceff"
           x-large
           class="mb-5 rounded-lg"

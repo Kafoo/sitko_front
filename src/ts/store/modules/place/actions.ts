@@ -10,6 +10,7 @@ import {
   _SEND_CONFIRM_LINK,
   _SEND_DECLINE_LINK
 } from "@/ts/functions/actions/linkActions";
+import UserModel from "@/ts/models/userClass";
 
 export const actions: ActionTree<PlaceState, RootState> = {
   GET_PLACE({ commit, state }, place_id) {
@@ -79,6 +80,7 @@ export const actions: ActionTree<PlaceState, RootState> = {
       .post(process.env.VUE_APP_API_URL + "place", place)
       .then(response => {
         commit("pushPlace", new PlaceModel(response.data.place));
+        commit("auth/setUserData", new UserModel(response.data.user), { root: true })
       });
   },
 
