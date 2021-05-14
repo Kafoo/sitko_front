@@ -111,7 +111,7 @@ export default defineComponent({
     var showNotifications = ref(false);
 
     var { entity: notifications, loading: loading } = useFetcher(
-      "notification/GET_NOTIFICATIONS"
+      "notification/GET_NOTIFICATIONS", {action_param:{reload:true}, reload:300000}
     );
 
     const { REFRESH } = useActions({

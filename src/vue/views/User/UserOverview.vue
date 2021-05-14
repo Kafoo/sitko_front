@@ -184,7 +184,7 @@ export default defineComponent({
 
   setup(props, { root }) {
     const user_id = parseInt(root.$route.params.id);
-    var { entity: user, loading } = useFetcher("user/GET_USER", user_id);
+    var { entity: user, loading } = useFetcher("user/GET_USER", {action_param:user_id});
 
     var show_email = ref(false);
 
@@ -197,4 +197,6 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

@@ -73,7 +73,7 @@ export default defineComponent({
 
     var { entity: notes, loading: loading_notes } = useFetcher(
       "note/GET_NOTES_BY_PLACE",
-      place_id
+      {action_param:place_id}
     );
 
     return {

@@ -137,8 +137,8 @@ export default defineComponent({
 
     var { entity: event, loading } = useFetcher(
       "event/GET_EVENT",
-      event_id,
-      true
+      {action_param:event_id,
+      copy:true}
     );
 
     const { SEND_EVENT_EDITION } = useActions({

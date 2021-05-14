@@ -74,7 +74,7 @@ export default defineComponent({
 
     var { entity: events, loading: loading_events } = useFetcher(
       "event/GET_EVENTS_BY_PLACE",
-      place_id
+      {action_param:place_id}
     );
 
     return {

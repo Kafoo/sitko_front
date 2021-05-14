@@ -11,25 +11,24 @@
         @click="$router.push(projent.path)"
       >
         <v-img :lazy-src="image.low_medium" :src="image.medium" height="130px">
-          <v-tooltip v-if="withPlace" right>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                class="ml-1 mt-1"
-                v-on="on"
-                v-bind="attrs"
-                fab
-                icon
-                small
-                @click.stop="$router.push('/place/' + projent.place_id)"
-              >
-                <tiny-avatar
-                  class="place-image elevation-5"
-                  :image="place_image"
-                />
-              </v-btn>
-            </template>
-            <span>{{ projent.place.name }}</span>
-          </v-tooltip>
+          <v-btn
+            v-if="withPlace"
+            class="ml-1 mt-3 pl-0 pr-2"
+            x-small
+            rounded
+            color="#ffffff99"
+            @click.stop="$router.push('/place/' + projent.place_id)"
+          >
+            <tiny-avatar
+              class="place-image elevation-5"
+              size="30"
+              :image="place_image"
+            />
+            <span 
+            class="ml-1 text-truncate" 
+            style="max-width: 150px">{{projent.place.name}}</span>
+          </v-btn>
+
 
           <template v-slot:placeholder>
             <v-row

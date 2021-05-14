@@ -12,8 +12,9 @@ import { useActions } from "vuex-composition-helpers";
  */
 export default function useFetcher(
   action_name: String,
-  params?: any,
-  copy?: Boolean
+  {action_param, copy=false, reload}
+  :{action_param?:any, copy?:boolean, reload?:number} 
+  = {}
 ) {
   const { ACTION } = useActions({
     ACTION: action_name
@@ -25,19 +26,30 @@ export default function useFetcher(
   onMounted(() => {
     loading.value = true;
 
-    ACTION(params)
-      .then((response: any) => {
-        if (copy) {
-          entity.value = JSON.parse(JSON.stringify(response));
-        } else {
-          entity.value = response;
-        }
+    const action = () => {
+      ACTION(action_param)
+        .then((response: any) => {
+          if (copy) {
+            entity.value = JSON.parse(JSON.stringify(response));
+          } else {
+            entity.value = response;
+          }
 
-        loading.value = false;
-      })
-      .catch(() => {
-        loading.value = false;
-      });
+          loading.value = false;
+        })
+        .catch(() => {
+          loading.value = false;
+        });
+    }
+
+    if (reload) {
+      action()
+      setInterval(()=>{action()}, reload)
+    } else {
+      action()
+    }
+
+
   });
 
   return {

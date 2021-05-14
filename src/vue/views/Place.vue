@@ -50,7 +50,7 @@ export default defineComponent({
   setup(props, { root }) {
     const place_id = parseInt(root.$route.params.id);
 
-    var { entity: place, loading } = useFetcher("place/GET_PLACE", place_id);
+    var { entity: place, loading } = useFetcher("place/GET_PLACE", {action_param:place_id});
 
     return {
       place,

@@ -86,11 +86,6 @@ export default {
           title: this.$options.filters.capitalize(this.$t("events")),
           path: "/place/" + this.$route.params.id + "/events",
           icon: "star"
-        },
-        {
-          title: this.$options.filters.capitalize(this.$t("contact")),
-          path: "/place/" + this.$route.params.id + "/contact",
-          icon: "contact_support"
         }
       ];
     }

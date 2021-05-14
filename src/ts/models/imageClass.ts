@@ -16,6 +16,16 @@ export default class ImageModel {
       this.thumb =
         "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1610015867/default-user-icon_xuqjw7.jpg";
       this.public_id = "";
+    } else if (data === "logo") {
+      this.full =
+        "https://res.cloudinary.com/dyigive9u/image/upload/v1620997268/logo.8ec273e1_mubpri.jpg";
+      this.medium =
+        "https://res.cloudinary.com/dyigive9u/image/upload/t_medium/v1620997268/logo.8ec273e1_mubpri.jpg";
+      this.low_medium =
+        "https://res.cloudinary.com/dyigive9u/image/upload/t_low_medium/v1620997268/logo.8ec273e1_mubpri.jpg";
+      this.thumb =
+        "https://res.cloudinary.com/dyigive9u/image/upload/t_thumb/v1620997268/logo.8ec273e1_mubpri.jpg";
+      this.public_id = "";
     } else if (data === 0) {
       this.full =
         "https://res.cloudinary.com/dyigive9u/image/upload/v1609233274/ojty0jq09f6z8ttshbrx_eepnts.jpg";

@@ -87,7 +87,7 @@
   "no place": "aucun lieu",
   "no notification": "aucune notification",
 
-  "current projects": "projets en cours",
+  "current projects": "projet en cours",
   "incoming events": "événements à venir",
   "past projects": "projets passés",
   "past events": "événements passés",
@@ -125,6 +125,8 @@
   "save" : "enregistrer",
   "modifications saved" : "modifications enregistrées",
   "resend e-mail": "renvoyer le mail",
+  "see more": "voir plus",
+  "see less": "voir moins",
 
   "project edition": "edition du projet",
   "event edition": "edition de l'événement",
@@ -265,9 +267,10 @@
   },
 
   "count":{
-    "sitkers":"{n} sitkers",
-    "currentProjects":"{n} projets en cours",
-    "tags": "{n} tag | {n} tags"
+    "sitkers":"{n} sitker | {n} sitker | {n} sitkers",
+    "currentProjects":"pas de projet en cours | {n} projet en cours | {n} projets en cours",
+    "incomingEvents":"pas d'événement à venir | {n} événement à venir | {n} événements à venir",
+    "tags": "{n} tag | {n} tag | {n} tags"
 
   },
 

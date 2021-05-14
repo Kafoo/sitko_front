@@ -155,8 +155,8 @@ export default defineComponent({
 
     var { entity: project, loading } = useFetcher(
       "project/GET_PROJECT",
-      project_id,
-      true
+      {action_param:project_id,
+      copy:true}
     );
 
     const { SEND_PROJECT_EDITION } = useActions({

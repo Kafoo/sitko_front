@@ -31,7 +31,7 @@
         <v-hover v-slot="{ hover }">
           <v-card-title
             style="line-height:22px"
-            class="px-3 pt-2 pb-1"
+            class="px-3 pt-2 pb-0"
             :class="hover ? 'text-decoration-underline' : ''"
           >
             <v-clamp autoresize :max-lines="2" class="description">
@@ -41,11 +41,11 @@
         </v-hover>
 
         <v-card-text class="mx-1 px-2 py-0">
-          <div class="text-caption font-weight-bold" style="line-height:14px">
-            {{ $t("count.sitkers", { n: "0" }) }}
+          <div class="text-caption" style="line-height:15px">
+            {{ $tc("count.currentProjects", place.projects_count, { n: place.projects_count }) | capitalize}}
           </div>
-          <div class="text-caption">
-            {{ $t("count.currentProjects", { n: place.projects_count }) }}
+          <div class="text-caption" style="line-height:15px">
+            {{ $tc("count.incomingEvents", place.events_count, { n: place.events_count }) | capitalize}}
           </div>
         </v-card-text>
 

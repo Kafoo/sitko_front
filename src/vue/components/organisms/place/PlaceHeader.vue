@@ -36,13 +36,78 @@
           {{ $t("edit") }}
         </v-btn>
 
-        <v-btn
-          :to="'/place/' + $route.params.id + '/contact'"
-          class="placeAction rounded-lg mb-4 ml-sm-4"
-        >
-          <v-icon class="mr-2">mail</v-icon>
-          {{ $t("contact") | capitalize }}
-        </v-btn>
+      <v-menu rounded="xl" bottom left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            class="placeAction rounded-lg mb-4 ml-sm-4"
+          >
+            <v-icon class="mr-2">mail</v-icon>
+            {{ $t("contact") | capitalize }}
+          </v-btn>
+        </template>
+        <v-list>
+          <div class="d-flex flex-wrap justify-center">
+            <v-btn
+              v-if="place.contact_infos.facebook"
+              rounded
+              :href="place.contact_infos.facebook"
+              target="_blank"
+              color="#4267B2"
+              dark
+              class="ma-2"
+            >
+              <v-icon left>facebook</v-icon>
+              Facebook
+            </v-btn>
+            <v-btn
+              v-if="place.contact_infos.instagram"
+              rounded
+              :href="place.contact_infos.instagram"
+              target="_blank"
+              color="purple"
+              dark
+              class="ma-2"
+            >
+              <v-icon left>camera</v-icon>
+              Instagram
+            </v-btn>
+            <v-btn
+              v-if="place.contact_infos.youtube"
+              rounded
+              :href="place.contact_infos.youtube"
+              target="_blank"
+              color="#ea0000"
+              dark
+              class="ma-2"
+            >
+              <v-icon left>play_arrow</v-icon>
+              Youtube
+            </v-btn>
+            <v-btn
+              v-if="place.contact_infos.email"
+              rounded
+              @click="show_email = true"
+              color="grey darken-2"
+              dark
+              class="ma-2 pr-3"
+            >
+              <v-icon left>email</v-icon>
+              Email
+            </v-btn>
+          </div>
+          </v-list>
+        </v-menu>
+
+        <v-dialog v-model="show_email" width="unset">
+          <v-card class="pa-8 selectable-text">
+            <v-icon>email</v-icon>
+            <span class="ml-2 selectable-text">
+              {{ place.contact_infos.email }}
+            </span>
+          </v-card>
+        </v-dialog>
 
         <v-menu rounded="xl" bottom left>
           <template v-slot:activator="{ on, attrs }">
@@ -132,8 +197,11 @@ export default defineComponent({
       }
     ]);
 
+    var show_email = ref(false)
+
     return {
-      morePlaceActions
+      morePlaceActions,
+      show_email
     };
   }
 });
@@ -152,4 +220,9 @@ export default defineComponent({
     z-index: 1;
   }
 }
+
+.v-menu__content {
+  margin-top: 40px;
+}
+
 </style>

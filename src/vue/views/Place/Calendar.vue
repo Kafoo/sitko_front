@@ -155,7 +155,7 @@ export default defineComponent({
 
     var { entity: rawCaldates, loading } = useFetcher(
       "caldate/GET_CALDATES_BY_PLACE",
-      place_id
+      {action_param:place_id}
     );
 
     var caldates: any = computed(() => {

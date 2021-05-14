@@ -105,7 +105,7 @@ export default defineComponent({
 
     const note_id = parseInt(root.$route.params.id);
 
-    var { entity: note, loading } = useFetcher("note/GET_NOTE", note_id, true);
+    var { entity: note, loading } = useFetcher("note/GET_NOTE", {action_param:note_id, copy:true});
 
     const { SEND_NOTE_EDITION } = useActions({
       SEND_NOTE_EDITION: "note/SEND_NOTE_EDITION"

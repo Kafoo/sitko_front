@@ -76,7 +76,7 @@ export default defineComponent({
 
     var { entity: projects, loading: loading_projects } = useFetcher(
       "project/GET_PROJECTS_BY_PLACE",
-      place_id
+      {action_param:place_id}
     );
 
     return {

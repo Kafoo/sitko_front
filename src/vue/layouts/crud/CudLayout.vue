@@ -55,6 +55,8 @@
       </v-col>
     </v-row>
 
+    <slot name="contact_infos"></slot>
+
     <v-card-actions class="mt-4 d-flex flex-wrap justify-end">
       <slot name="actions"></slot>
     </v-card-actions>

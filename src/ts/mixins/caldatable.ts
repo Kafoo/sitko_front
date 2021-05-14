@@ -19,6 +19,15 @@ export default function(superclass: any) {
             this.inc_caldates.push(caldate);
           }
         });
+
+        this.caldates.sort(function(a, b) {
+          if (a.start > b.start) {
+            return 1
+          } else {
+            return -1
+          }
+        })
+
       }
     }
   };

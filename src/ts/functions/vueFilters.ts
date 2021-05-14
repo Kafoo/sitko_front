@@ -38,7 +38,46 @@ export function past(value: Array<ProjentModel> | undefined) {
   }
 }
 
+export function sort_newest(value: Array<{created_at:string}> | undefined) {
+  if (value) {
+    var entities = [...value];
+    return entities.sort(function(a, b) {
+      if (a.created_at < b.created_at) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+  }else{
+    return []
+  }
+}
+
+export function sort_soonest(value: Array<ProjentModel> | undefined) {
+  if (value) {
+    var entities = [...value];
+    return entities.sort(function(a, b) {
+
+      if (!a.caldates[0]) {
+        return 1
+      }
+      if (!b.caldates[0]) {
+        return -1
+      }
+      if (a.caldates[0].start > b.caldates[0].start) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+  }else{
+    return []
+  }
+}
+
 Vue.filter("capitalize", capitalize);
 Vue.filter("camelize", camelize);
 Vue.filter("incoming", incoming);
 Vue.filter("past", past);
+Vue.filter("sort_newest", sort_newest);
+Vue.filter("sort_soonest", sort_soonest);

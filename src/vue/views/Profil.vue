@@ -134,62 +134,10 @@
           </v-col>
         </v-row>
 
-        <v-row dense>
-          <v-col cols="12" sm="6" md="6">
-            <v-text-field
-              append-icon="facebook"
-              outlined
-              autocomplete="disabled"
-              v-model="editedUser.contact_infos.facebook"
-              :rules="[rules.url[0]]"
-              label="Facebook"
-              :disabled="loading"
-            ></v-text-field>
-          </v-col>
-
-          <v-spacer></v-spacer>
-
-          <v-col cols="12" sm="6" md="6">
-            <v-text-field
-              append-icon="camera"
-              outlined
-              autocomplete="disabled"
-              v-model="editedUser.contact_infos.instagram"
-              :rules="[rules.url[0]]"
-              label="Instagram"
-              :disabled="loading"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
-        <v-row dense>
-          <v-col cols="12" sm="6" md="6">
-            <v-text-field
-              append-icon="play_arrow"
-              outlined
-              autocomplete="disabled"
-              v-model="editedUser.contact_infos.youtube"
-              :rules="[rules.url[0]]"
-              label="Youtube"
-              :disabled="loading"
-            ></v-text-field>
-          </v-col>
-
-          <v-spacer></v-spacer>
-
-          <v-col cols="12" sm="6" md="6">
-            <v-text-field
-              append-icon="email"
-              outlined
-              autocomplete="disabled"
-              v-model="editedUser.contact_infos.email"
-              :rules="[rules.email[0]]"
-              label="Email"
-              required
-              :disabled="loading"
-            ></v-text-field>
-          </v-col>
-        </v-row>
+        <contact-infos-input 
+        v-model="editedUser.contact_infos"
+        :loading="loading"
+        />
 
         <v-row justify="end">
           <v-col class="d-flex flex-column" cols="12" sm="auto">
@@ -229,6 +177,8 @@ import ImageInput from "@c/molecules/media/ImageInput.vue";
 import UserModel from "@/ts/models/userClass";
 import ImageModel from "@/ts/models/imageClass";
 import TagsInput from "@c/molecules/tag/TagsInput.vue";
+import ContactInfosInput from '../components/molecules/input/ContactInfosInput.vue';
+
 
 export default defineComponent({
   name: "Profil",
@@ -239,7 +189,8 @@ export default defineComponent({
     ConfirmDialog,
     ImageInput,
     LoadingBar,
-    TagsInput
+    TagsInput,
+    ContactInfosInput
   },
 
   setup(props, { root }) {

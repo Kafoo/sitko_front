@@ -76,6 +76,11 @@
               {{ $t("confirm.edit") }}
             </v-btn>
           </template>
+
+          <template v-slot:contact_infos>
+            <contact-infos-input v-model="place.contact_infos" class="mt-5"/>
+          </template>
+
         </cud-layout>
       </v-form>
     </div>
@@ -103,6 +108,8 @@ import TagsInput from "@c/molecules/tag/TagsInput.vue";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 import LocationInput from "@/vue/components/molecules/input/LocationInput.vue";
+import ContactInfosInput from '@/vue/components/molecules/input/ContactInfosInput.vue';
+
 
 export default defineComponent({
   components: {
@@ -113,7 +120,8 @@ export default defineComponent({
     DeleteButton,
     CudLayout,
     VisibilityInput,
-    LocationInput
+    LocationInput,
+    ContactInfosInput
   },
 
   name: "PlaceEdition",
@@ -136,12 +144,33 @@ export default defineComponent({
 
     var { entity: place, loading } = useFetcher(
       "place/GET_PLACE",
-      place_id,
-      true
+      {action_param:place_id,
+      copy:true}
     );
+
+    const validateUrl = (url?: string) => {
+      if (url) {
+        let regex = /^(http|https)/;
+        if (url.length > 3 && !url.match(regex)) {
+          return "http://" + url;
+        } else {
+          return url;
+        }
+      } else {
+        return undefined;
+      }
+    };
+
+    const validateContactInfos = () => {
+      var infos = place.value.contact_infos;
+      infos.facebook = validateUrl(infos.facebook);
+      infos.instagram = validateUrl(infos.instagram);
+      infos.youtube = validateUrl(infos.youtube);
+    };
 
     const editPlace = () => {
       loading_edit.value = true;
+      validateContactInfos()
       SEND_PLACE_EDITION(place.value)
         .then(() => {
           loading_edit.value = false;

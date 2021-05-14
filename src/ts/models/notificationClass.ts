@@ -23,7 +23,10 @@ export default class NotificationModel extends mix(GlobalModel).with(
     this.type = rawData.type;
     this.time = this.getTime(this.created_at);
     this.message = rawData.message;
-    this.image = new ImageModel();
+
+
+    this.image = new ImageModel(rawData.image);
+
     this.link = rawData.link || "/notifications";
     this.read = !!rawData.read_at;
     this.closable = true;

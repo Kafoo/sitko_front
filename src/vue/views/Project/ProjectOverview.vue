@@ -92,7 +92,7 @@ export default defineComponent({
     const project_id = parseInt(root.$route.params.id);
     var { entity: project, loading } = useFetcher(
       "project/GET_PROJECT",
-      project_id
+      {action_param:project_id}
     );
 
     return {

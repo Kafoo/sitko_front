@@ -18,6 +18,12 @@ export default class PlaceModel extends mix(globalModel).with(
   name: string;
   description: string;
   projects_count: number;
+  contact_infos: {
+    facebook?: string;
+    instagram?: string;
+    youtube?: string;
+    email?: string;
+  };
   author: AuthorModel;
   notes: Array<NoteModel>;
   path: string;
@@ -38,6 +44,8 @@ export default class PlaceModel extends mix(globalModel).with(
       this.author = new AuthorModel();
     }
 
+    this.contact_infos = { ...rawData.contact_infos };
+
     this.notes = [];
     if (rawData.notes) {
       rawData.notes.forEach((note: NoteModel) => {
@@ -46,6 +54,9 @@ export default class PlaceModel extends mix(globalModel).with(
     }
 
     this.projects_count = rawData.projects_count;
+    this.events_count = rawData.events_count;
+
+
     if (rawData.location) {
       if (typeof rawData.location == "string") {
         this.location = JSON.parse(rawData.location);

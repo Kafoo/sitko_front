@@ -5,7 +5,7 @@
   "caldate": "date",
   "caldates": "dates",
 
-  "other caldate": "other caldate | other caldates",
+  "other caldate": "other date | other dates",
 
   "404": "page not found",
 
@@ -117,9 +117,10 @@
   },
 
   "count":{
-    "sitkers":"{n} sitkers",
-    "currentProjects":"{n} current projects",
-    "tags": "{n} tags"
+    "sitkers":"{n} sitker | {n} sitker | {n} sitkers",
+    "currentProjects":"no current project | {n} current project | {n} current projects",
+    "incomingEvents":"no incoming event | {n} incoming event | {n} incoming events",
+    "tags": "{n} tag | {n} tag | {n} tags"
   },
 
   "time":{
