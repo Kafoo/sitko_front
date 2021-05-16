@@ -2,7 +2,7 @@ import { auth } from "@/ts/router/middlewares";
 
 export default [
   {
-    path: "/map",
+    path: "/map/:focusType?/:focusId?",
     name: "Map",
     beforeEnter: auth,
     component: () => import("@/vue/views/Map.vue"),

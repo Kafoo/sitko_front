@@ -119,6 +119,7 @@ export default defineComponent({
 
     const swiperOption = {
       slidesPerView: 'auto',
+      slidesPerGroup: 2,
       pagination: {
         el: '.swiper-pagination',
         clickable: true

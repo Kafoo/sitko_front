@@ -12,6 +12,8 @@
         ></v-progress-circular>
       </div>
       <l-map
+        id="map"
+        ref="refMap"
         class="map"
         :zoom="5"
         :center="[46.70672236934442, 2.254394665360451]"
@@ -24,6 +26,7 @@
           <l-marker
             v-for="place in displayed_places"
             :key="place.id"
+            :ref="'marker_'+place.id"
             :lat-lng="[
               place.location.position.lat,
               place.location.position.lng
@@ -40,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from "@vue/composition-api";
+import { defineComponent, computed, onMounted, watch } from "@vue/composition-api";
 import { LMap, LTileLayer, LMarker, LIcon, LPopup } from "vue2-leaflet";
 import VMarkerCluster from "vue2-leaflet-markercluster";
 import useFetcher from "@/ts/functions/composition/useFetcher";
@@ -48,6 +51,20 @@ import PlaceModel from "@/ts/models/placeClass";
 import L from "leaflet";
 import "leaflet.markercluster";
 import PlaceCard from "@c/molecules/place/PlaceCard.vue";
+
+interface Marker{
+  mapObject:{
+    getLatLng:()=>Array<number>, 
+    openPopup:()=>void,
+
+  }
+}
+
+interface Map{
+  mapObject:{
+    setView:(lgtLat:Array<number>, zoom?:number)=>void
+  }
+}
 
 export default defineComponent({
   name: "Map",
@@ -62,7 +79,7 @@ export default defineComponent({
     VMarkerCluster
   },
 
-  setup() {
+  setup(props, {refs, root}) {
     var { entity: places, loading } = useFetcher("place/GET_ALL_PLACES");
 
     var displayed_places = computed(() => {
@@ -75,6 +92,27 @@ export default defineComponent({
         });
       }
       return adresses;
+    });
+
+    watch(() => places.value, (newPlaces:any) => {
+
+      if(root.$route.params.focusId &&
+      root.$route.params.focusType){
+        root.$nextTick(() => {
+          const markerName = 'marker_'+root.$route.params.focusId
+          if(newPlaces.length &&
+          refs[markerName]){
+            console.log(refs)
+            console.log(refs['marker_11'])
+            var marker = (refs[markerName] as Array<Vue & Marker>)[0].mapObject
+            var map = (refs.refMap as Vue & Map).mapObject
+            map.setView(marker.getLatLng(), 13)
+            setTimeout(()=>{
+              marker.openPopup()
+            },300)
+          }
+        });
+      }
     });
 
     return {

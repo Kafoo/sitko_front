@@ -4,13 +4,13 @@
       class="flex-grow-0"
       tiny
       :text="false"
-      v-for="tag in tags.slice(0, 5)"
+      v-for="tag in tags.slice(0, 3)"
       :key="tag.id"
       :tag="tag"
       noselect
     />
-    <span v-if="tags.length > 5" class="text-caption">
-      +{{ tags.length - 5 }} tag{{ tags.length - 5 > 1 ? "s" : "" }}
+    <span v-if="tags.length > 3" class="text-caption">
+      +{{ tags.length - 3 }} tag{{ tags.length - 3 > 1 ? "s" : "" }}
     </span>
   </div>
 </template>

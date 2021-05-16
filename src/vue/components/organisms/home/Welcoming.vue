@@ -18,6 +18,15 @@
       <v-btn
         rounded
         class="ma-2"
+        color="#eff24f"
+        
+        to="/wtfis"
+      >
+        {{ $t("What is Sitko ?") }}
+      </v-btn>
+      <v-btn
+        rounded
+        class="ma-2"
         color="blue"
         dark
         href="https://discord.gg/dV5yWgZz9G"
@@ -32,10 +41,28 @@
       <h3>
         {{ $t("home_page.authenticated") }}
       </h3>
-      <a class="discord-link" href="https://discord.gg/dV5yWgZz9G">
+      <v-btn 
+      text 
+      style="text-transform: none" 
+      plain 
+      class="text-decoration-underline"
+      href="https://discord.gg/dV5yWgZz9G"
+      target="_blank"
+      height="30px">
         {{ $t("home_page.discord") }}
-      </a>
+      </v-btn>
     </span>
+
+    <v-btn 
+    text 
+    style="text-transform: none" 
+    plain 
+    class="text-decoration-underline"
+    to="/wtfis"
+    height="30px">
+      {{$t('What is Sitko ?')}}
+    </v-btn>
+
   </div>
 </template>
 

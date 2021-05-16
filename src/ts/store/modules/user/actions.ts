@@ -14,10 +14,10 @@ import {
 export const actions: ActionTree<UserState, RootState> = {
   GET_USER({ commit, state }, user_id) {
     var user = state.users.find((x: UserModel) => x.id === user_id);
-
     if (user) {
       return user;
     } else {
+    console.log(user)
       return axios
         .get(process.env.VUE_APP_API_URL + "user/" + user_id)
         .then(response => {

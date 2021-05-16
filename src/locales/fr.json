@@ -127,6 +127,8 @@
   "resend e-mail": "renvoyer le mail",
   "see more": "voir plus",
   "see less": "voir moins",
+  "discover the map": "découvrir la carte",
+  "back to homepage": "retour à l'accueil",
 
   "project edition": "edition du projet",
   "event edition": "edition de l'événement",
@@ -137,6 +139,7 @@
   "project page": "page du projet",
   "event page": "page de l'événement",
 
+  "What is Sitko ?" : "C'est quoi Sitko ?",
   "Deletion is definitive": "La suppression est définitive",
   "Project deletion is definitive.": "La suppression du projet est définitive.",
   "Account deletion is definitive.": "La suppression du compte est définitive.",
@@ -186,7 +189,7 @@
 
   "home_page":{
   	"unauthenticated": "Merci d'être là pour tester Sitko !",
-  	"authenticated": "Merci d'être là pour tester Sitko, enjoy =)",
+  	"authenticated": "Merci d'être là pour tester Sitko =)",
     "unverified": "Ton compte a bien été enregistré, maintenant, tu peux confirmer ton mail via le lien que tu as reçu dans ta boîte de réception.",
   	"verified": "Bienvenue dans ce merveilleux site où des choses commencent à se passer.",
     "discord": "Rejoins-nous sur Discord"

@@ -1,7 +1,6 @@
 <template>
   <div class="mt-8" style="max-width:800px; margin:auto">
     <welcoming class="mb-8 mx-3" />
-
     <div v-if="user">
       <div class="d-flex flex-column align-center">
         <v-btn

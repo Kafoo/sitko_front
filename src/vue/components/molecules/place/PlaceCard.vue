@@ -5,11 +5,11 @@
         :id="place.id"
         :elevation="hover ? 4 : 2"
         class="c-pointer pb-0"
-        width="220"
-        height="252px"
+        width="180"
+        height="212px"
         @click="$router.push('/place/' + place.id)"
       >
-        <v-img :lazy-src="image.low_medium" :src="image.medium" height="130px">
+        <v-img :lazy-src="image.low_medium" :src="image.medium" height="100px">
           <template v-slot:placeholder>
             <v-row
               class="image_placeholder fill-height ma-0"
@@ -30,11 +30,11 @@
 
         <v-hover v-slot="{ hover }">
           <v-card-title
-            style="line-height:22px"
-            class="px-3 pt-2 pb-0"
+            style="line-height:17px"
+            class="px-3 pt-2 pb-0 mb-1 text-subtitle-1 font-weight-bold"
             :class="hover ? 'text-decoration-underline' : ''"
           >
-            <v-clamp autoresize :max-lines="2" class="description">
+            <v-clamp autoresize :max-lines="2">
               {{ place.name }}
             </v-clamp>
           </v-card-title>

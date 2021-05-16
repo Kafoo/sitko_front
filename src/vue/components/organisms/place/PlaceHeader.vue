@@ -1,7 +1,15 @@
 <template>
   <div>
-    <div class="d-flex justify-center">
+    <div class="d-flex justify-center" style="position:relative">
       <header-image class="mb-2 flex-grow-0" :image="place.image" />
+      <div 
+      v-if="place.location"
+      style="position:absolute;right:10px;bottom:15px">
+        <v-btn small color='#00000075' dark class="rounded-lg" :to="'/map/place/'+place.id">
+          <v-icon left>map</v-icon>
+          Sur la carte
+        </v-btn>
+      </div>
     </div>
 
     <div
@@ -36,7 +44,11 @@
           {{ $t("edit") }}
         </v-btn>
 
-      <v-menu rounded="xl" bottom left>
+      <v-menu 
+      v-if="Object.keys(place.contact_infos).length"
+      rounded="xl" 
+      bottom 
+      left>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-bind="attrs"

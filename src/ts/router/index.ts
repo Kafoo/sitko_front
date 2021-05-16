@@ -10,6 +10,8 @@ import note from "./modules/note";
 import user from "./modules/user";
 import notification from "./modules/notification";
 import map from "./modules/map";
+import others from "./modules/others";
+
 
 Vue.use(VueRouter);
 
@@ -27,6 +29,7 @@ const routes = [
   ...user,
   ...notification,
   ...map,
+  ...others,
 
   {
     path: "*",
