@@ -1,6 +1,6 @@
 <template>
   <v-btn
-    outlined=""
+    outlined
     :to="'/place/' + place.id"
     height="32px"
     rounded
@@ -10,7 +10,9 @@
     class="pl-0 pr-3"
   >
     <tiny-avatar class="d-inline mr-2" size="28" :image="image" />
-    <span>{{ place.name }}</span>
+    <div style="max-width:170px" class="text-truncate">
+      <span>{{ place.name }}</span>
+    </div>
   </v-btn>
 </template>
 

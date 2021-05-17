@@ -7,7 +7,7 @@
       style="position:absolute;right:10px;bottom:15px">
         <v-btn small color='#00000075' dark class="rounded-lg" :to="'/map/place/'+place.id">
           <v-icon left>map</v-icon>
-          Sur la carte
+          {{$t('on the map')}}
         </v-btn>
       </div>
     </div>
@@ -19,6 +19,14 @@
         <h1>
           {{ place.name }}
         </h1>
+
+        <v-card
+        v-if="place.location"
+        class="location text-caption grey--text text-lighten-2"
+        elevation="0">
+          <v-icon small>place</v-icon>
+          {{place.location.address.city}}, {{place.location.address.countryName}}
+        </v-card>
 
         <created-by :item="place" />
       </div>

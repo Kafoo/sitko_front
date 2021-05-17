@@ -29,7 +29,17 @@
           <v-icon small class="mr-1">edit</v-icon>
           {{ $t("options.edit") }}
         </v-btn>
+
         <place-chip :place="project.place" />
+
+        <v-card
+        v-if="project.place.location"
+        class="location text-caption grey--text text-lighten-2 px-1 mt-1"
+        elevation="0">
+          <v-icon small>place</v-icon>
+          {{project.place.location.address.city}}, {{project.place.location.address.countryName}}
+        </v-card>
+
       </div>
 
       <div class="mt-4">

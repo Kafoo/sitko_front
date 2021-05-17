@@ -26,9 +26,17 @@
             />
             <span 
             class="ml-1 text-truncate" 
-            style="max-width: 150px">{{projent.place.name}}</span>
+            style="max-width: 120px">{{projent.place.name}}</span>
           </v-btn>
 
+          <v-card
+          v-if="projent.place.location"
+          class="location text-truncate grey--text text--lighten-2 text-caption px-1"
+          color="#00000063"
+          max-width="165px">
+            <v-icon color="white" small>place</v-icon>
+            {{projent.place.location.address.city}}, {{projent.place.location.address.countryName}}
+          </v-card>
 
           <template v-slot:placeholder>
             <v-row
@@ -139,4 +147,11 @@ export default defineComponent({
 .image_placeholder {
   background-color: #e3e3e3;
 }
+
+.location{
+  position: absolute;
+  bottom: 4px;
+  left: 3px;
+}
+
 </style>

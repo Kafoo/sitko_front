@@ -10,6 +10,17 @@
         @click="$router.push('/place/' + place.id)"
       >
         <v-img :lazy-src="image.low_medium" :src="image.medium" height="100px">
+
+
+          <v-card
+          v-if="place.location"
+          class="location text-truncate grey--text text--lighten-2 text-caption px-1"
+          color="#00000063"
+          max-width="165px">
+            <v-icon color="white" small>place</v-icon>
+            {{place.location.address.city}}, {{place.location.address.countryName}}
+          </v-card>
+
           <template v-slot:placeholder>
             <v-row
               class="image_placeholder fill-height ma-0"
@@ -105,5 +116,11 @@ export default defineComponent({
 .image {
   border-radius: 5px 5px 0 0;
   object-fit: cover;
+}
+
+.location{
+  position: absolute;
+  bottom: 4px;
+  left: 3px;
 }
 </style>
