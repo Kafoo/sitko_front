@@ -30,7 +30,7 @@
           </v-btn>
 
           <v-card
-          v-if="projent.place.location"
+          v-if="withLocation && projent.place.location"
           class="location text-truncate grey--text text--lighten-2 text-caption px-1"
           color="#00000063"
           max-width="165px">
@@ -97,6 +97,10 @@ export default defineComponent({
     type: String,
     projent: Object as () => ProjectModel,
     withPlace: {
+      type: Boolean,
+      default: false
+    },
+    withLocation: {
       type: Boolean,
       default: false
     }

@@ -4,14 +4,16 @@
     :small="small"
     @click="click"
     :close="closable"
+    style="height:auto"
     @click:close="$emit('close')"
-    class="chip c-pointer my-1 mx-2 py-5 flex-grow-0 font-weight-bold"
+    class="chip c-pointer my-1 mx-2 flex-grow-0 font-weight-bold"
   >
     <v-icon small class="mr-1">{{ caldate.icon }}</v-icon>
     <v-clamp
       autoresize
       :max-lines="2"
-      class="breakwrap text-center font-weight-bold"
+      class="breakwrap text-center font-weight-bold py-1"
+      style="line-height:20px"
     >
       {{ caldate.chip }}
     </v-clamp>

@@ -16,6 +16,7 @@
       :items="projects | sort_soonest"
       :loading="loading_all_projects"
       withPlace
+      withLocation
       class="mb-7"
     />
     <net-slide
@@ -25,6 +26,7 @@
       :items="events | sort_soonest"
       :loading="loading_all_events"
       withPlace
+      withLocation
       class="mb-7"
     />
   </div>
