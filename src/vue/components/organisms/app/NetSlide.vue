@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref } from "@vue/composition-api";
+import { defineComponent, watch, ref, computed } from "@vue/composition-api";
 import ProjectCard from "@c/molecules/project/ProjectCard.vue";
 import EventCard from "@c/molecules/event/EventCard.vue";
 import NoteCard from "@c/molecules/note/NoteCard.vue";
@@ -115,20 +115,28 @@ export default defineComponent({
     all: String
   },
 
-  setup(props, {refs}) {
+  setup(props, {root, refs}) {
 
-    const swiperOption = {
-      slidesPerView: 'auto',
-      slidesPerGroup: 2,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev'
+    var swiperOption:any = computed(() => {
+      return {
+        slidesPerView: 'auto',
+        slidesPerGroup: 1,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        },
+        breakpoints: {
+            600: {
+              slidesPerGroup: 2,
+              freeMode:false
+            }
+          }
       }
-    }
+    })
 
     interface Swiper{
       $swiper: {

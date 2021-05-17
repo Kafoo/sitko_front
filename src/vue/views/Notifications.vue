@@ -6,7 +6,7 @@
       <loading-circle small></loading-circle>
     </div>
 
-    <div v-else-if="!notifications.length" class="text-center">
+    <div v-else-if="notifications && !notifications.length" class="text-center">
       -- {{ $t("no notification") | capitalize }} --
     </div>
 

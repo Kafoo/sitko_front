@@ -26,7 +26,6 @@ export default class NotificationModel extends mix(GlobalModel).with(
 
     this.message = i18n.t('notification.welcome') as string;
 
-
     this.image = new ImageModel(rawData.image);
 
     this.link = rawData.link || "/notifications";

@@ -8,8 +8,8 @@ import UserModel from "./userClass";
 export default class LinkNotificationModel extends NotificationModel {
   requesting_type: string;
   requested_type: string;
-  requesting: UserModel | PlaceModel;
-  requested: UserModel | PlaceModel;
+  requesting?: UserModel | PlaceModel;
+  requested?: UserModel | PlaceModel;
   image: ImageModel;
   state?: string;
 
@@ -17,9 +17,11 @@ export default class LinkNotificationModel extends NotificationModel {
     super(rawData);
     this.requesting_type = rawData.specifics.requesting_type;
     this.requested_type = rawData.specifics.requested_type;
-    this.requesting = this.getRequesting(rawData.specifics.requesting)!;
-    this.requested = this.getRequested(rawData.specifics.requested)!;
-    this.message = this.getMessage() as string;
+    if (rawData.specifics.requesting && rawData.specifics.requested) {
+      this.requesting = this.getRequesting(rawData.specifics.requesting)!;
+      this.requested = this.getRequested(rawData.specifics.requested)!;
+      this.message = this.getMessage() as string;
+    }
     this.image = this.getImage();
     if (rawData.specifics.state) {
       this.state = rawData.specifics.state;
@@ -44,44 +46,47 @@ export default class LinkNotificationModel extends NotificationModel {
   }
 
   getMessage() {
-    if (this.type == "link_request") {
-      const requesting = "<b>" + this.requesting.name + "</b>";
-      const requested = "<b>" + this.requested.name + "</b>";
-      const translation_path =
-        "notification.link_request." +
-        this.requesting_type +
-        ".to" +
-        capitalize(this.requested_type);
+    if (this.requesting && this.requested){
+      if (this.type == "link_request") {
+        const requesting = "<b>" + this.requesting.name + "</b>";
+        const requested = "<b>" + this.requested.name + "</b>";
+        const translation_path =
+          "notification.link_request." +
+          this.requesting_type +
+          ".to" +
+          capitalize(this.requested_type);
 
-      return i18n.t(translation_path, { requesting, requested });
-    } else if (this.type == "link_confirmation") {
-      const requested = "<b>" + this.requested.name + "</b>";
-      const translation_path =
-        "notification.link_confirmation." +
-        this.requested_type +
-        ".to" +
-        capitalize(this.requesting_type);
+        return i18n.t(translation_path, { requesting, requested });
+      } else if (this.type == "link_confirmation") {
+        const requested = "<b>" + this.requested.name + "</b>";
+        const translation_path =
+          "notification.link_confirmation." +
+          this.requested_type +
+          ".to" +
+          capitalize(this.requesting_type);
 
-      return i18n.t(translation_path, { requested });
+        return i18n.t(translation_path, { requested });
+      }
     }
   }
 
   getImage() {
-    if (this.type == "link_request") {
-      if (this.requesting.image) {
-        return new ImageModel(this.requesting.image);
-      } else {
-        return new ImageModel();
+    if (this.requested && this.requesting) { 
+      if (this.type == "link_request") {
+        if (this.requesting.image) {
+          return new ImageModel(this.requesting.image);
+        } else {
+          return new ImageModel();
+        }
+      }
+      if (this.type == "link_confirmation") {
+        if (this.requested.image) {
+          return new ImageModel(this.requested.image);
+        } else {
+          return new ImageModel();
+        }
       }
     }
-    if (this.type == "link_confirmation") {
-      if (this.requested.image) {
-        return new ImageModel(this.requested.image);
-      } else {
-        return new ImageModel();
-      }
-    } else {
-      return new ImageModel();
-    }
+  return new ImageModel();
   }
 }

@@ -53,10 +53,14 @@
         </v-btn>
 
       <v-menu 
+      class="contact-infos"
       v-if="Object.keys(place.contact_infos).length"
       rounded="xl" 
-      bottom 
-      left>
+      bottom
+      left
+      close-on-click=""
+      offset-y
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-bind="attrs"
@@ -143,7 +147,7 @@
             </v-btn>
           </template>
 
-          <v-list>
+          <v-list v-click-outside="flap">
             <v-list-item
               v-for="item in morePlaceActions"
               :key="item.title"
@@ -219,9 +223,14 @@ export default defineComponent({
 
     var show_email = ref(false)
 
+  const flap = () =>{
+    console.log('yop')
+  }
+
     return {
       morePlaceActions,
-      show_email
+      show_email,
+      flap
     };
   }
 });
@@ -237,12 +246,8 @@ export default defineComponent({
     position: fixed;
     bottom: 15px;
     right: 20px;
-    z-index: 1;
+    z-index: 2;
   }
-}
-
-.v-menu__content {
-  margin-top: 40px;
 }
 
 </style>

@@ -31,13 +31,19 @@
         <v-img
           v-if="place.image"
           width="40px"
+          height="40px"
           class="rounded-lg"
           :src="place.image.thumb"
         >
         </v-img>
-        <v-card-title class="px-2 py-1">
+        <v-clamp
+          autoresize
+          :max-lines="2"
+          class="text-h6 ma-1 ml-3 font-weight-bold"
+          style="line-height:20px"
+        >
           {{ place.name }}
-        </v-card-title>
+        </v-clamp>
       </div>
       <v-list-item
         v-for="item in placeNavItems"
@@ -87,11 +93,6 @@ export default defineComponent({
         title: root.$options.filters!.capitalize(root.$t("events")),
         path: "/place/" + root.$route.params.id + "/events",
         icon: "star"
-      },
-      {
-        title: root.$options.filters!.capitalize(root.$t("contact")),
-        path: "/place/" + root.$route.params.id + "/contact",
-        icon: "contact_support"
       }
     ]);
 

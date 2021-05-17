@@ -12,18 +12,20 @@
     @click="$emit('click')"
     :color="tag.color"
   >
-    <v-icon v-if="selected" small>
-      done
-    </v-icon>
-    <v-icon v-else-if="tag.category" small>
-      {{ tag.category.icon }}
-    </v-icon>
-    <v-icon v-else-if="!text" small>
-      fiber_manual_record
-    </v-icon>
-    <span v-if="text" class="ml-1 chip-text">
-      {{ tag.title }}
-    </span>
+    <div class="handle">
+      <v-icon v-if="selected" small>
+        done
+      </v-icon>
+      <v-icon v-else-if="tag.category" small>
+        {{ tag.category.icon }}
+      </v-icon>
+      <v-icon v-else-if="!text" small>
+        fiber_manual_record
+      </v-icon>
+      <span v-if="text" class="ml-1 chip-text">
+        {{ tag.title }}
+      </span>
+    </div>
   </v-chip>
 </template>
 

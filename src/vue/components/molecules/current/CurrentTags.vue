@@ -11,6 +11,7 @@
     >
       <div class="d-flex flex-wrap flex-row justify-center align-center">
         <draggable
+          :options="{handle: '.handle'}"
           :disabled="!draggable"
           class="list-group"
           tag="ul"
