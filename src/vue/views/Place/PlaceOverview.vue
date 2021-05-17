@@ -58,7 +58,7 @@
     />
 
     <net-slide
-      v-if="pastProjects.length"
+      v-if="pastProjects && pastProjects.length"
       :title="$t('past projects') | capitalize"
       :all="`/place/` + place.id + `/projects`"
       :empty="$t('no project') | capitalize"
@@ -69,7 +69,7 @@
     />
 
     <net-slide
-      v-if="pastEvents.length"
+      v-if="pastEvents && pastEvents.length"
       :title="$t('past events') | capitalize"
       :all="`/place/` + place.id + `/events`"
       :empty="$t('no event') | capitalize"

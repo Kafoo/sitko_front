@@ -46,7 +46,7 @@ export default defineComponent({
     Login
   },
 
-  setup(props, context) {
+  setup(props, {root}) {
     const { SEND_VERIFY_REQUEST } = useActions({
       SEND_VERIFY_REQUEST: "auth/SEND_VERIFY_REQUEST"
     } as any);
@@ -73,7 +73,7 @@ export default defineComponent({
             store.commit("app/setAlert", {
               type: "error",
               //TOTRANSLATE
-              msg: "Error verifying email, please try to login"
+              msg: root.$i18n.t("Error verifying email, please try to login")
             });
             SEND_LOGOUT_REQUEST("/login");
           }

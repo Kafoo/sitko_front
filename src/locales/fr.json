@@ -157,6 +157,7 @@
   "This project will be removed definitely": "Ce projet sera définitivement supprimé",
   "Please select at least 1 date for the event": "Merci de préciser au moins une date pour l'événement",
   "You haven't created any place yet": "Vous n'avez pas encore créé de lieu",
+  "Error verifying email, please try to login": "Erreur lors de la confirmation, veuillez vous connecter",
 
   "You are linked to no user": "Aucun utilisateur n'est dans ton réseau",
   "You are linked to no place": "Aucun lieu n'est dans ton réseau",
