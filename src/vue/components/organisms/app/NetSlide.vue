@@ -25,6 +25,7 @@
           class="ma-2"
           :project="item"
           :withPlace="withPlace"
+          :withLocation="withLocation"
         />
 
         <place-card v-else-if="type == 'place'" class="ma-2" :place="item" />
@@ -34,6 +35,7 @@
           class="ma-2"
           :event="item"
           :withPlace="withPlace"
+          :withLocation="withLocation"
         />
 
         <note-card
@@ -41,6 +43,7 @@
           class="ma-2"
           :note="item"
           :withPlace="withPlace"
+          :withLocation="withLocation"
         />
       </swiper-slide>
     <div 
@@ -109,6 +112,10 @@ export default defineComponent({
       default: false
     },
     withPlace: {
+      type: Boolean,
+      default: false
+    },
+    withLocation: {
       type: Boolean,
       default: false
     },

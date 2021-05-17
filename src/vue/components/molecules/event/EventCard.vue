@@ -1,5 +1,9 @@
 <template>
-  <projent-card :projent="event" type="event" :withPlace="withPlace" />
+  <projent-card 
+  :projent="event" 
+  type="event" 
+  :withPlace="withPlace"
+  :withLocation="withLocation"/>
 </template>
 
 <script lang="ts">
@@ -17,6 +21,10 @@ export default defineComponent({
   props: {
     event: Object as () => EventModel,
     withPlace: {
+      type: Boolean,
+      default: false
+    },
+    withLocation: {
       type: Boolean,
       default: false
     }
