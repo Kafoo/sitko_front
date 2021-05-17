@@ -36,7 +36,7 @@
       </v-btn>
     </div>
 
-    <span v-else class="text-center">
+    <div v-else class="text-center d-flex flex-column">
       <h1>{{ $t("hello") | capitalize }} {{ user.name }} !</h1>
       <h3>
         {{ $t("home_page.authenticated") }}
@@ -51,17 +51,17 @@
       height="30px">
         {{ $t("home_page.discord") }}
       </v-btn>
-    </span>
 
-    <v-btn 
-    text 
-    style="text-transform: none" 
-    plain 
-    class="text-decoration-underline"
-    to="/wtfis"
-    height="30px">
-      {{$t('What is Sitko ?')}}
-    </v-btn>
+      <v-btn 
+      text 
+      style="text-transform: none" 
+      plain 
+      class="text-decoration-underline"
+      to="/wtfis"
+      height="30px">
+        {{$t('What is Sitko ?')}}
+      </v-btn>
+    </div>
 
   </div>
 </template>

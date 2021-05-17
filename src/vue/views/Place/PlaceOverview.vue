@@ -58,6 +58,7 @@
     />
 
     <net-slide
+      v-if="pastProjects.length"
       :title="$t('past projects') | capitalize"
       :all="`/place/` + place.id + `/projects`"
       :empty="$t('no project') | capitalize"
@@ -68,6 +69,7 @@
     />
 
     <net-slide
+      v-if="pastEvents.length"
       :title="$t('past events') | capitalize"
       :all="`/place/` + place.id + `/events`"
       :empty="$t('no event') | capitalize"
@@ -141,6 +143,14 @@ export default defineComponent({
       {action_param:place_id}
     );
 
+    var pastProjects:any = computed(() => {     
+      return root.$options.filters!.past(projects.value)
+    })
+
+    var pastEvents:any = computed(() => {     
+      return root.$options.filters!.past(events.value)
+    })
+
     return {
       user,
       loading_projects,
@@ -148,7 +158,9 @@ export default defineComponent({
       loading_notes,
       projects,
       events,
-      notes
+      notes,
+      pastProjects,
+      pastEvents
     };
   }
 });

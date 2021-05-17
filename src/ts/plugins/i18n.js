@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueI18n from "vue-i18n";
+import store from "../store";
 
 Vue.use(VueI18n);
 
@@ -20,13 +21,7 @@ function loadLocaleMessages() {
   return messages;
 }
 
-const stored_locale = localStorage.getItem("locale");
-var locale;
-if (stored_locale) {
-  locale = stored_locale;
-} else {
-  locale = navigator.language.split("-")[0];
-}
+var locale = store.state.app.locale
 
 export default new VueI18n({
   locale: locale,

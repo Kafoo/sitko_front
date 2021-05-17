@@ -5,7 +5,7 @@
     @click="click"
     :close="closable"
     @click:close="$emit('close')"
-    class=" chip c-pointer my-1 mx-2 py-1 flex-grow-0 font-weight-bold"
+    class="chip c-pointer my-1 mx-2 py-5 flex-grow-0 font-weight-bold"
   >
     <v-icon small class="mr-1">{{ caldate.icon }}</v-icon>
     <v-clamp

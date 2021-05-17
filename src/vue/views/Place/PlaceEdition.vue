@@ -58,6 +58,10 @@
             />
           </template>
 
+          <template v-slot:contact_infos>
+            <contact-infos-input v-model="place.contact_infos" class="mt-5"/>
+          </template>
+
           <template v-slot:actions>
             <delete-button
               :disabled="loading_edit"
@@ -75,10 +79,6 @@
             >
               {{ $t("confirm.edit") }}
             </v-btn>
-          </template>
-
-          <template v-slot:contact_infos>
-            <contact-infos-input v-model="place.contact_infos" class="mt-5"/>
           </template>
 
         </cud-layout>

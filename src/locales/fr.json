@@ -62,6 +62,12 @@
   "image": "image",
   "category": "catégorie",
   "adress":"adress",
+  "home type": "type d'habitat",
+  "status": "statut",
+  "bio": "bio",
+  "my bio": "ma bio",
+  "expectations": "attentes",
+  "my expectations on Sitko": "mes attentes sur Sitko",
 
   "other caldate": "autre date | autres dates",
 
@@ -150,6 +156,7 @@
   "Error sending verification link.":"Erreur lors de l'envoie de l'email de vérification.",
   "This project will be removed definitely": "Ce projet sera définitivement supprimé",
   "Please select at least 1 date for the event": "Merci de préciser au moins une date pour l'événement",
+  "You haven't created any place yet": "Vous n'avez pas encore créé de lieu",
 
   "You are linked to no user": "Aucun utilisateur n'est dans ton réseau",
   "You are linked to no place": "Aucun lieu n'est dans ton réseau",
@@ -161,6 +168,7 @@
   "Link canceled":"Lien annulé",
 
   "notification":{
+    "welcome": "<strong>Bienvenue sur Sitko !</strong> Tu peux maintenant <strong>éditer ton profil</strong>, créer un lieu ou consulter la carte !",
     "link_request":{
       "user":{
         "toUser" : "{requesting} aimerait se connecter à vous",
@@ -266,7 +274,8 @@
 
   "data":{
   	"empty": "Aucun {item} pour le moment",
-  	"empty_typed": "Aucun {item} de ce type pour le moment"
+  	"empty_typed": "Aucun {item} de ce type pour le moment",
+  	"na": "{user} n'a pas encore rempli cette section"
   },
 
   "count":{

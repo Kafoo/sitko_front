@@ -5,12 +5,12 @@
         v-if="projent"
         :id="projent.id"
         :elevation="hover ? 4 : 2"
-        class="projent-card c-pointer"
-        width="220"
-        height="252px"
+        class="projent-card c-pointer rounded-lg"
+        width="180"
+        height="212px"
         @click="$router.push(projent.path)"
       >
-        <v-img :lazy-src="image.low_medium" :src="image.medium" height="130px">
+        <v-img :lazy-src="image.low_medium" :src="image.medium" height="100px">
           <v-btn
             v-if="withPlace"
             class="ml-1 mt-3 pl-0 pr-2"
@@ -50,8 +50,8 @@
 
         <v-hover v-slot="{ hover }">
           <v-card-title
-            style="line-height:22px"
-            class="px-3 pt-2 pb-1"
+            style="line-height:17px"
+            class="px-3 pt-2 pb-0 mb-1 text-subtitle-1 font-weight-bold"
             :class="hover ? 'text-decoration-underline' : ''"
           >
             {{ projent.title }}

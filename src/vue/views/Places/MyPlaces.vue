@@ -24,7 +24,7 @@
       v-else-if="!places || !places.length"
       class="d-flex justify-center text-h6"
     >
-      Vous n'avez pas encore créé de lieu
+      {{$t('You haven\'t created any place yet')}}
     </div>
 
     <div v-else class="d-flex flex-wrap justify-center">

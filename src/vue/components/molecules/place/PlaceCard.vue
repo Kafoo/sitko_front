@@ -4,7 +4,7 @@
       <v-card
         :id="place.id"
         :elevation="hover ? 4 : 2"
-        class="c-pointer pb-0"
+        class="c-pointer pb-0 rounded-lg"
         width="180"
         height="212px"
         @click="$router.push('/place/' + place.id)"

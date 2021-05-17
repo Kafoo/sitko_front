@@ -10,4 +10,11 @@ declare global {
       [elem: string]: any;
     }
   }
+
+  interface Navigator {
+    userLanguage:string,
+    browserLanguage:string,
+    systemLanguage:string
+  }
+
 }

@@ -2,9 +2,9 @@ import PlaceModel from "@/ts/models/placeClass";
 import ProjectModel from "@/ts/models/projectClass";
 import EventModel from "@/ts/models/eventClass";
 import moment from "moment-timezone";
-moment.locale(localStorage.getItem("locale") as string);
+import store from "../store";
 
-export default class Caldate {
+export default class CaldateModel {
   id: number;
   timed: boolean;
   place_id: number;
@@ -22,6 +22,9 @@ export default class Caldate {
   child?: any;
 
   constructor(rawData: any = {}) {
+
+    moment.locale(store.state.app.locale as string);
+
     this.timed = rawData.timed;
     this.id = rawData.id;
     this.place_id = rawData.place_id;

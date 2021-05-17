@@ -71,7 +71,7 @@
               v-model="editedUser.home_type"
               :items="home_types"
               item-value="id"
-              label="Habitat"
+              :label="$t('home type') | capitalize"
               outlined
               class="rounded-lg"
             >
@@ -94,7 +94,7 @@
               v-model="editedUser.user_type"
               :items="user_types"
               item-value="id"
-              label="Statut"
+              :label="$t('status') | capitalize"
               outlined
               class="rounded-lg"
             >
@@ -113,7 +113,7 @@
         <v-row dense>
           <v-col cols="12">
             <v-textarea
-              label="Ma bio"
+              :label="$t('my bio') | capitalize"
               outlined
               rows="6"
               v-model="editedUser.bio"
@@ -125,7 +125,7 @@
         <v-row dense>
           <v-col cols="12">
             <v-textarea
-              label="Mes attentes sur Sitko"
+              :label="$t('my expectations on Sitko') | capitalize"
               outlined
               rows="4"
               v-model="editedUser.expectations"

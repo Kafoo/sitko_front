@@ -188,7 +188,7 @@ export default defineComponent({
 }
 
 .swiper {
-  min-height: 268px;
+  min-height: 230px;
 }
 
 .no-item {

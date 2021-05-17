@@ -37,7 +37,7 @@
 
       <v-row justify="center" dense>
         <v-col cols="12" sm="6" md="6" class=" text-center mb-4">
-          <outlined-area label="Statut">
+          <outlined-area :label="$t('status') | capitalize">
             <div v-if="user.user_type">
               <v-icon>{{ user.user_type.icon }}</v-icon>
               {{ user.user_type.translated_name | capitalize }}
@@ -48,7 +48,7 @@
           </outlined-area>
         </v-col>
         <v-col cols="12" sm="6" md="6" class="text-center mb-4">
-          <outlined-area label="Habitat">
+          <outlined-area :label="$t('home type') | capitalize">
             <div v-if="user.home_type">
               <v-icon>{{ user.home_type.icon }}</v-icon>
               {{ user.home_type.translated_name | capitalize }}
@@ -69,22 +69,22 @@
       <div class="description grey lighten-3 my-5 pa-5 breakwrap rounded-xl">
         <div class="font-weight-bold mb-2">
           <v-icon>person</v-icon>
-          Bio
+          {{$t('bio') | capitalize}}
         </div>
         <div v-if="user.bio" v-html="user.bio" />
         <div v-else class="grey--text text-center">
-          -- {{ user.name }} n'a pas encore rempli cette section --
+          -- {{ $t('data.user_na', {user:user.name}) | capitalize }} --
         </div>
       </div>
 
       <div class="description grey lighten-3 my-5 pa-5 breakwrap rounded-xl">
         <div class="font-weight-bold mb-2">
           <v-icon>radio_button_checked</v-icon>
-          Attentes
+          {{$t('expectations') | capitalize}}
         </div>
         <div v-if="user.expectations" v-html="user.expectations" />
         <div v-else class="grey--text text-center">
-          -- {{ user.name }} n'a pas encore rempli cette section --
+          -- {{ $t('data.user_na', {user:user.name}) | capitalize }} --
         </div>
       </div>
 

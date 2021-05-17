@@ -1,5 +1,6 @@
 import timestampable from "../mixins/timestampable";
 import mix from "../mixins/_mix";
+import i18n from "../plugins/i18n";
 import GlobalModel from "./globalClass";
 import ImageModel from "./imageClass";
 
@@ -22,7 +23,8 @@ export default class NotificationModel extends mix(GlobalModel).with(
     this.essence = "notification";
     this.type = rawData.type;
     this.time = this.getTime(this.created_at);
-    this.message = rawData.message;
+
+    this.message = i18n.t('notification.welcome') as string;
 
 
     this.image = new ImageModel(rawData.image);

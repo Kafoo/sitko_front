@@ -43,7 +43,7 @@ axios.interceptors.request.use(function(config) {
     Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     "Content-Type": "application/json",
     Accept: "application/json",
-    "Accept-Language": localStorage.getItem("locale") || store.state.app.locale
+    "Accept-Language": store.state.app.locale
   };
   return config;
 });

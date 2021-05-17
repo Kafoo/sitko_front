@@ -1,33 +1,16 @@
 <template>
   <div style="line-height:15px" class="text-caption grey--text text--darken-1">
-    <span class="breakwrap" v-if="caldates.length" :key="caldates[0].id"
-      ><!--
-    -->{{ caldates[0].chip }}
-    </span>
-
-    <span
-      v-if="caldates.length > 1"
-      :class="more ? 'text-decoration-underline c-pointer' : ''"
-      @click="more ? (morePopup = true) : undefined"
-      ><!--
-    -->{{ $t("and") }}
-      {{ caldates.length - 1 }}
-      {{ $tc("other caldate", caldates.length - 1 > 1 ? 2 : 1) }}
-    </span>
-
-    <v-dialog v-model="morePopup" max-width="400px">
-      <caldates-popup
-        @close="morePopup = false"
-        :caldates="caldates"
-        :title="title"
-      />
-    </v-dialog>
+    <v-clamp autoresize :max-lines="2">
+      {{text}}
+    </v-clamp>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
+import { defineComponent, ref, computed, Ref } from "@vue/composition-api";
 import CaldatesPopup from "@c/organisms/caldate/CaldatesPopup.vue";
+import CaldateModel from '@/ts/models/caldateClass';
+import i18n from '@/ts/plugins/i18n';
 
 export default defineComponent({
   name: "CaldatesInCard",
@@ -38,7 +21,7 @@ export default defineComponent({
 
   props: {
     caldates: {
-      type: Array,
+      type: Array as ()=> Array<CaldateModel>,
       default: []
     },
 
@@ -50,11 +33,27 @@ export default defineComponent({
     title: String
   },
 
-  setup() {
+  setup(props) {
     var morePopup = ref(false);
 
+    var text:Ref<string> = computed(() => {
+      var text = ""
+      if (props.caldates.length) {
+        text += props.caldates[0].chip
+        if (props.caldates.length > 1) {
+          text += " " + i18n.t('and')
+          text += " " + (props.caldates.length - 1).toString()
+          text += " " + i18n.tc("other caldate", props.caldates.length - 1 > 1 ? 2 : 1)
+        }
+      }
+      return text
+    })
+
+
+
     return {
-      morePopup
+      morePopup,
+      text
     };
   }
 });

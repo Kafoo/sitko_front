@@ -53,6 +53,10 @@
             />
           </template>
 
+          <template v-slot:contact_infos>
+            <contact-infos-input v-model="newPlace.contact_infos" class="mt-5"/>
+          </template>
+
           <template v-slot:actions>
             <v-btn
               type="submit"
@@ -88,6 +92,7 @@ import TagModel from "@/ts/models/tagClass";
 import CudLayout from "@/vue/layouts/crud/CudLayout.vue";
 import VisibilityInput from "@c/molecules/input/VisibilityInput.vue";
 import LocationInput from "@/vue/components/molecules/input/LocationInput.vue";
+import ContactInfosInput from '@/vue/components/molecules/input/ContactInfosInput.vue';
 
 export default defineComponent({
   name: "PlaceCreation",
@@ -98,7 +103,8 @@ export default defineComponent({
     TagsInput,
     CudLayout,
     VisibilityInput,
-    LocationInput
+    LocationInput,
+    ContactInfosInput
   },
 
   setup(props, { root }) {
@@ -115,8 +121,29 @@ export default defineComponent({
       SEND_PLACE_CREATION: "place/SEND_PLACE_CREATION"
     } as any);
 
+    const validateUrl = (url?: string) => {
+      if (url) {
+        let regex = /^(http|https)/;
+        if (url.length > 3 && !url.match(regex)) {
+          return "http://" + url;
+        } else {
+          return url;
+        }
+      } else {
+        return undefined;
+      }
+    };
+
+    const validateContactInfos = () => {
+      var infos = newPlace.value.contact_infos;
+      infos.facebook = validateUrl(infos.facebook);
+      infos.instagram = validateUrl(infos.instagram);
+      infos.youtube = validateUrl(infos.youtube);
+    };
+
     const createPlace = () => {
       loading.value = true;
+      validateContactInfos()
       SEND_PLACE_CREATION(newPlace.value)
         .then(() => {
           loading.value = false;

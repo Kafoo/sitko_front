@@ -62,7 +62,7 @@
       <div class="mb-5" style="line-height:1.8em;">
         ✊ Profiter de ces temps de grands changements pour fédérer nos efforts.<br>
         📱 Utiliser les outils d'aujourd'hui à notre manière pour optimiser ces changements.<br>
-        🌿 Rencontrer, apprendre, vivre.
+        🌿 Rencontrer, apprendre et vivre !
       </div>
     </v-card>
 

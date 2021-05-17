@@ -10,6 +10,7 @@
   "404": "page not found",
 
   "notification":{
+    "welcome": "<strong>Welcome on Sitko!</strong> Now you can <strong>edit your profil</strong>, create a new place or discover the map!",
     "link_request":{
       "user":{
         "toUser" : "{requesting} would like to connect",
@@ -113,7 +114,8 @@
 
   "data":{
   	"empty": "There is no {item} yet",
-  	"empty_typed": "There is no such {item} yet"
+  	"empty_typed": "There is no such {item} yet",
+  	"user_na": "{user} has not yet filled this section"
   },
 
   "count":{

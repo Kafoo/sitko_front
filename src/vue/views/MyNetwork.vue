@@ -32,7 +32,8 @@
           </div>
         </v-tab-item>
         <v-tab-item :transition="false" :reverse-transition="false">
-          <div class="d-flex flex-wrap justify-center">
+          <div class="d-flex flex-wrap justify-center"
+            style="min-height:100px; min-width:100px">
             <loading-circle v-if="loading_places" small />
 
             <place-card
