@@ -132,6 +132,7 @@ import { capitalize } from "@/ts/functions/vueFilters";
 import useRouter from "vue-router";
 
 import { useInputRules } from "@/ts/functions/composition/inputRules";
+import store from '@/ts/store';
 
 export default defineComponent({
   name: "Home",
@@ -156,7 +157,8 @@ export default defineComponent({
       last_name: "",
       email: "",
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
+      locale: store.state.app.locale
     });
     var show_password = ref(false);
     var loading = ref(false);

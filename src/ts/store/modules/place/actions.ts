@@ -16,7 +16,7 @@ export const actions: ActionTree<PlaceState, RootState> = {
   GET_PLACE({ commit, state }, place_id) {
     var place = state.places.find((x: PlaceModel) => x.id === place_id);
 
-    if (place) {
+    if (place && (!place.image || place.image && place.image.public_id !== "downloading")) {
       return place;
     } else {
       return axios
@@ -59,19 +59,33 @@ export const actions: ActionTree<PlaceState, RootState> = {
     }
   },
 
-  GET_LINKED_PLACES({ state, getters, commit }) {
-    if (state.fetched.linked_places) {
-      return getters.linkedPlaces;
-    } else {
+  GET_LINKED_PLACES({ state, getters, commit }, {place_id=null}={}) {
+    if (place_id) {
       return axios
-        .get(process.env.VUE_APP_API_URL + "place?linked")
+        .get(process.env.VUE_APP_API_URL + "place?linked", place_id)
         .then(response => {
-          state.fetched.linked_places = Date.now();
+          var places = []
           for (const place of response.data) {
-            commit("pushPlace", new PlaceModel(place));
+            const placeObject = new PlaceModel(place)
+            commit("pushPlace", placeObject);
+            places.push(placeObject)
           }
-          return getters.linkedPlaces;
+          return places;
         });
+    }else{
+      if (state.fetched.linked_places) {
+        return getters.linkedPlaces;
+      } else {
+        return axios
+          .get(process.env.VUE_APP_API_URL + "place?linked")
+          .then(response => {
+            state.fetched.linked_places = Date.now();
+            for (const place of response.data) {
+              commit("pushPlace", new PlaceModel(place));
+            }
+            return getters.linkedPlaces;
+          });
+      }
     }
   },
 

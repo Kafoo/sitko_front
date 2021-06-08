@@ -122,7 +122,6 @@ export default defineComponent({
 
   setup(props, { root }) {
 
-    const { user } = useGetters({ user: "auth/user" } as any);
     const place_id = parseInt(root.$route.params.id);
 
 
@@ -152,7 +151,6 @@ export default defineComponent({
     })
 
     return {
-      user,
       loading_projects,
       loading_events,
       loading_notes,

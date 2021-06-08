@@ -5,11 +5,11 @@
       <v-toolbar-title>
         <v-app-bar-nav-icon @click="$router.push('/').catch(() => {})">
           <v-img
-            class="shrink mr-2"
+            class="shrink"
             contain
             src="@/assets/logo.png"
             transition="scale-transition"
-            width="55"
+            width="45"
           />
         </v-app-bar-nav-icon>
         <span
@@ -89,93 +89,112 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import i18n from "@/ts/plugins/i18n.js";
-import Notifications from "@c/molecules/notification/Notifications.vue";
+<script lang="ts">
 
-export default {
-  data: () => {
-    return {
-      appTitle: "Sitko",
-      locales: ["fr", "en"],
-      selected_locale: i18n.locale
-    };
-  },
+import { defineComponent, computed, watch, ref, Ref } from "@vue/composition-api"
+import i18n from "@/ts/plugins/i18n.js";
+import store from '@/ts/store';
+import Notifications from "@c/molecules/notification/Notifications.vue";
+import useFetcher from '@/ts/functions/composition/useFetcher';
+import { useMutations, useActions } from 'vuex-composition-helpers';
+
+export default defineComponent({
+
+  name : "Navigation",
 
   components: {
     Notifications
   },
 
-  computed: {
-    ...mapGetters("auth", ["user", "loading"]),
+  setup(props, {root}) {
 
-    activeItems() {
-      if (this.user == undefined) {
-        return this.topNavItems;
-      } else {
-        return this.accountItems;
-      }
-    },
+    var { entity: user, loading } = useFetcher("auth/GET_USER_DATA");
 
-    topNavItems() {
-      return [
+    const { setLocale } = useMutations({setLocale: "app/setLocale"} as any);
+    const { SEND_USER_EDITION } = useActions({SEND_USER_EDITION: "auth/SEND_USER_EDITION"} as any);
+
+    const appTitle = "Ositko"
+    const locales = ["fr", "en"]
+    var selected_locale = ref(i18n.locale)
+
+    const topNavItems = [
         {
-          title: this.$options.filters.capitalize(this.$t("connection")),
+          title: root.$options.filters!.capitalize(root.$i18n.t("connection")),
           path: "/login",
           icon: ""
         },
         {
-          title: this.$options.filters.capitalize(this.$t("register")),
+          title: root.$options.filters!.capitalize(root.$i18n.t("register")),
           path: "/register",
           icon: ""
         }
-      ];
-    },
+    ]
 
-    accountItems() {
+    var activeItems:Ref<Array<Object>> = computed(() => {
+      if (user.value == undefined) {
+        return topNavItems;
+      } else {
+        return accountItems.value;
+      }
+    })
+
+    var accountItems:Ref<Array<Object>> = computed(() => {
       return [
         {
-          title: this.$options.filters.capitalize(this.$t("my profil")),
-          path: "/user/" + this.user.id,
+          title: root.$options.filters!.capitalize(root.$i18n.t("my profil")),
+          path: "/user/" + user.value.id,
           icon: "account_circle"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("my places")),
+          title: root.$options.filters!.capitalize(root.$i18n.t("my places")),
           path: "/places/myplaces",
           icon: "home"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("my network")),
+          title: root.$options.filters!.capitalize(root.$i18n.t("my network")),
           path: "/network",
           icon: "share"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("settings")),
+          title: root.$options.filters!.capitalize(root.$i18n.t("settings")),
           path: "/settings",
           icon: "settings"
         }
       ];
-    }
-  },
+    })
 
-  watch: {
-    $route(to) {
-      document.title = to.meta.title || "Sitko";
-    }
-  },
-  methods: {
-    ...mapMutations("app", ["setLocale"]),
-    changeLocale() {
-      this.setLocale(this.selected_locale);
-      this.$router.go();
-    },
+    const changeLocale = () => {
 
-    search() {
+      var newUser = {...user.value}
+      newUser.locale = selected_locale.value
+      SEND_USER_EDITION(newUser).then(()=>{
+        store.commit("app/setAlert", null);
+        setLocale(selected_locale.value);
+        root.$router.go(0);
+      });
+    }
+
+    const search = () => {
       return [];
     }
+
+    watch(() => computed, (newValue:any) => {
+      //
+    }, {deep:false});
+
+    return{
+      appTitle,
+      locales,
+      selected_locale,
+      user,
+      changeLocale,
+      loading,
+      activeItems
+      
+    }
+
   }
-};
+});
 </script>
 
 <style scoped>
@@ -184,7 +203,6 @@ export default {
 }
 * .locale-select {
   border-radius: 5px;
-  padding: 0 4px 0 2px;
   margin-left: 9px;
   cursor: pointer;
   font-size: 0.8em;
@@ -193,11 +211,13 @@ export default {
   text-align-last: center;
   color: #717171;
   font-style: italic;
+  padding: 0 2px 0 0;
 }
 
 .locale-select option {
   cursor: pointer;
 }
+
 
 @keyframes slide-up {
   0% {

@@ -102,8 +102,6 @@ export default defineComponent({
           const markerName = 'marker_'+root.$route.params.focusId
           if(newPlaces.length &&
           refs[markerName]){
-            console.log(refs)
-            console.log(refs['marker_11'])
             var marker = (refs[markerName] as Array<Vue & Marker>)[0].mapObject
             var map = (refs.refMap as Vue & Map).mapObject
             map.setView(marker.getLatLng(), 13)

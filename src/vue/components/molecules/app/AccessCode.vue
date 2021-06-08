@@ -70,7 +70,6 @@ export default defineComponent({
     };
 
     const confirm = () => {
-      console.log(process.env.VUE_APP_ACCESS_CODE);
       if (code.value == process.env.VUE_APP_ACCESS_CODE) {
         store.commit("app/setAccessCode", code.value);
         window.location.href = "/";

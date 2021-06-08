@@ -16,4 +16,5 @@ export interface RootState {
   note: NoteState;
   notification: NotificationState;
   user: UserState;
+  idleVue:{isIdle}
 }

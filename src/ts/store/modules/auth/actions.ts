@@ -7,19 +7,26 @@ import UserModel from "@/ts/models/userClass";
 import i18n from "@/ts/plugins/i18n.js";
 import { capitalize } from "@/ts/functions/vueFilters";
 
+
 export const actions: ActionTree<AuthState, RootState> = {
-  GET_USER_DATA({ commit }) {
-    commit("setLoading");
-    axios
-      .get(process.env.VUE_APP_API_URL + "auth")
-      .then(response => {
-        commit("app/setAppData", response.data.app_data, { root: true });
-        commit("setUserData", new UserModel(response.data.user));
-        commit("removeLoading");
-      })
-      .catch(() => {
-        commit("removeLoading");
-      });
+  GET_USER_DATA({ commit, state }) {
+
+    var user = state.userData
+    if (user &&
+        (!user.image || user.image && user.image.public_id !== "downloading") ||
+        (state.fetched.userData_try &&  Date.now() - state.fetched.userData_try < 1000)) {
+      return user;
+    } else {
+      state.fetched.userData_try = Date.now();
+      return axios
+        .get(process.env.VUE_APP_API_URL + "auth")
+        .then(response => {
+          commit("app/setAppData", response.data.app_data, { root: true });
+          var user = new UserModel(response.data.user)
+          commit("setUserData", user);
+          return user
+        })
+    }
   },
 
   SEND_LOGIN_REQUEST({ commit }, data) {

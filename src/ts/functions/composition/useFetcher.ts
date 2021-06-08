@@ -34,6 +34,12 @@ export default function useFetcher(
           } else {
             entity.value = response;
           }
+          if (entity.value.image && entity.value.image.public_id == "downloading") {
+          
+            setTimeout(() => {
+              action()
+            }, 3000);
+          }
 
           loading.value = false;
         })

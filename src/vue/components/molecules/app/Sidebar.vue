@@ -50,45 +50,52 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
+<script lang="ts">
 
-export default {
-  data() {
-    return {};
-  },
+import { defineComponent } from "@vue/composition-api"
+import useFetcher from '@/ts/functions/composition/useFetcher';
+
+export default defineComponent({
+
+  name : "Sidebar",
 
   props: {
     place: Object,
     default: () => {}
   },
 
-  computed: {
-    ...mapGetters("auth", ["user"]),
-    placeNavItems() {
-      return [
+  setup(props, {root}) {
+
+    var { entity: user, loading } = useFetcher("auth/GET_USER_DATA");
+
+    const placeNavItems = [
         {
-          title: this.$options.filters.capitalize(this.$t("calendar")),
-          path: "/place/" + this.$route.params.id + "/calendar",
+          title: root.$options.filters!.capitalize(root.$i18n.t("calendar")),
+          path: "/place/" + root.$route.params.id + "/calendar",
           icon: "event"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("notes")),
-          path: "/place/" + this.$route.params.id + "/notes",
+          title: root.$options.filters!.capitalize(root.$i18n.t("notes")),
+          path: "/place/" + root.$route.params.id + "/notes",
           icon: "description"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("projects")),
-          path: "/place/" + this.$route.params.id + "/projects",
+          title: root.$options.filters!.capitalize(root.$i18n.t("projects")),
+          path: "/place/" + root.$route.params.id + "/projects",
           icon: "handyman"
         },
         {
-          title: this.$options.filters.capitalize(this.$t("events")),
-          path: "/place/" + this.$route.params.id + "/events",
+          title: root.$options.filters!.capitalize(root.$i18n.t("events")),
+          path: "/place/" + root.$route.params.id + "/events",
           icon: "star"
         }
       ];
+
+    return{
+      user,
+      placeNavItems
     }
+
   }
-};
+});
 </script>

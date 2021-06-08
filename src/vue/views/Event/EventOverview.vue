@@ -92,15 +92,12 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-    const { user } = useGetters({ user: "auth/user" } as any);
-
     const event_id = parseInt(root.$route.params.id);
     var { entity: event, loading } = useFetcher("event/GET_EVENT", {action_param:event_id});
 
     return {
       event,
       loading,
-      user
     };
   }
 });

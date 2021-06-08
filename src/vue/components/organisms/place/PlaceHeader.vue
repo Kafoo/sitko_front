@@ -147,7 +147,7 @@
             </v-btn>
           </template>
 
-          <v-list v-click-outside="flap">
+          <v-list>
             <v-list-item
               v-for="item in morePlaceActions"
               :key="item.title"
@@ -223,14 +223,9 @@ export default defineComponent({
 
     var show_email = ref(false)
 
-  const flap = () =>{
-    console.log('yop')
-  }
-
     return {
       morePlaceActions,
-      show_email,
-      flap
+      show_email
     };
   }
 });

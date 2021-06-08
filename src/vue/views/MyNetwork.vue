@@ -3,7 +3,12 @@
     <div class="d-flex flex-column align-center">
       <page-title>{{ $t("my network") | capitalize }}</page-title>
 
-      <!-- <v-select solo :items="['Pinpon', 'Les Vallées', 'Autre Lieu']" value="Pinpon"/> -->
+      <v-select
+      v-model="selectedSubject"
+      solo
+      return-object
+      item-text="name"
+      :items="networkSubjects" />
 
       <v-tabs class="mb-5" no-animation v-model="tab" centered>
         <v-tab>{{ $t("users") }}</v-tab>
@@ -55,11 +60,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
+import { defineComponent, ref, computed, watch } from "@vue/composition-api";
 import useFetcher from "@/ts/functions/composition/useFetcher";
 import PlaceCard from "../components/molecules/place/PlaceCard.vue";
 import UserCard from "../components/molecules/card/UserCard.vue";
 import { useGetters } from "vuex-composition-helpers";
+import PlaceCreationVue from './Places/PlaceCreation.vue';
+import PlaceModel from '@/ts/models/placeClass';
 
 export default defineComponent({
   name: "MyNetwork",
@@ -74,9 +81,16 @@ export default defineComponent({
 
     const { user } = useGetters({ user: "auth/user" } as any);
 
+    var selectedSubject = ref(user.value)
+
+    watch(() => selectedSubject.value, (newValue:any) => {
+      console.log('yop')
+    }, {deep:false});
+
     var { entity: userPlaces, loading: loading_userPlaces } = useFetcher(
       "place/GET_USER_PLACES"
     );
+
     var { entity: places, loading: loading_places } = useFetcher(
       "place/GET_LINKED_PLACES"
     );
@@ -84,12 +98,23 @@ export default defineComponent({
       "user/GET_LINKED_USERS"
     );
 
+    var networkSubjects:any = computed(() => {
+      var array = [user.value]
+      userPlaces.value?.forEach((place:PlaceModel) => {
+        array.push(place)
+      });
+      return array
+    })
+
     return {
       tab,
       places,
       loading_places,
       users,
-      loading_users
+      user,
+      loading_users,
+      networkSubjects,
+      selectedSubject
     };
   }
 });

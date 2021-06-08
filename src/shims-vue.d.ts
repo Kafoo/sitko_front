@@ -9,4 +9,5 @@ declare module "vue-advanced-cropper";
 declare module "vue2-leaflet-markercluster";
 declare module "idle-vue";
 declare module "vue-awesome-swiper";
+declare module "lodash";
 

@@ -24,7 +24,8 @@ const eventsHub = new Vue()
  
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 1200000
+  idleTime: 1200000,
+  store
 })
 
 import "leaflet/dist/leaflet.css";

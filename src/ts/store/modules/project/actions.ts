@@ -8,7 +8,7 @@ export const actions: ActionTree<ProjectState, RootState> = {
   GET_PROJECT({ commit, state }, project_id) {
     var project = state.projects.find((x: ProjectModel) => x.id === project_id);
 
-    if (project) {
+    if (project && (!project.image || project.image && project.image.public_id !== "downloading")) {
       return project;
     } else {
       return axios

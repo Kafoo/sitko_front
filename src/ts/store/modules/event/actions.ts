@@ -8,7 +8,7 @@ export const actions: ActionTree<EventState, RootState> = {
   GET_EVENT({ commit, state }, event_id) {
     var event = state.events.find((x: EventModel) => x.id === event_id);
 
-    if (event) {
+    if (event && (!event.image || event.image && event.image.public_id !== "downloading")) {
       return event;
     } else {
       return axios

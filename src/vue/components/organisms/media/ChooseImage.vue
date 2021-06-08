@@ -101,7 +101,7 @@ export default defineComponent({
           cropping.value = true;
         };
       } else {
-        error.value = capitalize(t("media.max_size", { max: "4 MB" }));
+        error.value = capitalize(t("media.max_size", { max: "4 Mo" }));
       }
     };
 

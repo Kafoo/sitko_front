@@ -97,7 +97,6 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-    const { user } = useGetters({ user: "auth/user" } as any);
 
     const project_id = parseInt(root.$route.params.id);
     var { entity: project, loading } = useFetcher(
@@ -107,8 +106,7 @@ export default defineComponent({
 
     return {
       project,
-      loading,
-      user
+      loading
     };
   }
 });

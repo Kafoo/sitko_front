@@ -66,15 +66,13 @@ export default defineComponent({
   },
 
   setup(props, { root }) {
-    const { user } = useGetters({ user: "auth/user" } as any);
 
     const note_id = parseInt(root.$route.params.id);
     var { entity: note, loading } = useFetcher("note/GET_NOTE", {action_param:note_id});
 
     return {
       note,
-      loading,
-      user
+      loading
     };
   }
 });
