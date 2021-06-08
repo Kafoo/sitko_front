@@ -56,26 +56,12 @@ export default defineComponent({
 
 
     const { SET_IDLE_USER } = useActions({SET_IDLE_USER: 'app/SET_IDLE_USER'} as any)
-    const { GET_USER_DATA } = useActions({GET_USER_DATA: 'auth/GET_USER_DATA'} as any)
 
     if (localStorage.getItem("authToken")) {
       var { entity: user, loading } = useFetcher("auth/GET_USER_DATA");
     }
 
     var lastUserRefresh = Date.now()
-
-    // watch(() => user.value, (user:any) => {
-    //   if (user.image && user.image.public_id == "downloading") {
-
-
-    //     setTimeout(()=>{
-    //         if (Date.now() - lastUserRefresh > 2990) {
-    //           GET_USER_DATA()
-    //           lastUserRefresh = Date.now()
-    //         }
-    //     }, 3000)
-    //   }
-    // }, {deep:true});
 
     const { confirmed_guest } = useGetters({confirmed_guest: 'app/confirmed_guest'} as any)
     const { idle_user } = useGetters({idle_user: 'app/idle_user'} as any)
