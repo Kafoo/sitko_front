@@ -38,12 +38,12 @@
     <input
       type="file"
       ref="file"
-      accept=".jpg, .png"
+      accept="image/x-png, image/jpeg"
       style="display:none"
       @change="confirmInput"
     />
 
-    <v-dialog v-model="cropping" width="unset">
+    <v-dialog persistent v-model="cropping" width="unset">
       <crop-popup
         @close="cropping = false"
         :image="customImage"
@@ -106,22 +106,52 @@ export default defineComponent({
     const confirmInput = (e: any) => {
       var file = e.target.files[0];
 
-      if (file.size < 4000000) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = e => {
-          customImage.value = e.target!.result as string;
-          cropping.value = true;
-        };
-      } else {
-        store.commit("app/setAlert", {
-          type: "error",
-          msg: i18n.t("media.max_size", { max: "4Mo" })
-        });
+      if (file) {        
+        if (file.size < 4000000) {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = e => {
+            customImage.value = e.target!.result as string;
+            cropping.value = true;
+          };
+        } else {
+          store.commit("app/setAlert", {
+            type: "error",
+            msg: i18n.t("media.max_size", { max: "4Mo" })
+          });
+        }
       }
+
     };
 
+    const checkDimensions = (image:string) => {
+
+      var imageModel = new Image();
+      imageModel.src = image;
+
+      imageModel.onload = function() {
+          // access image size here
+
+          if (imageModel.width > 2000) {
+            const ratio = imageModel.width/imageModel.height
+            imageModel.width = 2000
+            imageModel.height = imageModel.width/ratio
+          }
+
+
+          image = imageModel.src;
+
+
+      };
+
+      return image
+
+    }
+
     const update = (newImage: string) => {
+
+      newImage = checkDimensions(newImage)
+
       emit("input", newImage);
     };
 

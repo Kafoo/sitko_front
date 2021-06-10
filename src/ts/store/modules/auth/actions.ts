@@ -15,7 +15,6 @@ export const actions: ActionTree<AuthState, RootState> = {
     if (user &&
         ((!user.image || user.image && user.image.public_id !== "downloading") ||
         (state.fetched.userData_try &&  Date.now() - state.fetched.userData_try < 1000))) {
-        console.log('yop')
       return user;
     } else {
       state.fetched.userData_try = Date.now();

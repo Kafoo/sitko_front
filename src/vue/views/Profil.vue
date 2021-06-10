@@ -221,6 +221,14 @@ export default defineComponent({
       { deep: true }
     );
 
+    watch(
+      () => editedUser.value,
+      (newValue: any) => {
+        modified.value = true;
+      },
+      { deep: true }
+    );
+
     const firstNameLabel = computed(
       () =>
         capitalize(root.$t("first name")) + " / " + capitalize(root.$t("alias"))
@@ -259,6 +267,7 @@ export default defineComponent({
           loading.value = false;
           modified.value = false;
           root.$router.push("/user/" + user.value.id);
+          root.$router.go(0)
         })
         .catch(() => {
           loading.value = false;
