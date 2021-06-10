@@ -130,18 +130,13 @@ export default defineComponent({
       imageModel.src = image;
 
       imageModel.onload = function() {
-          // access image size here
-
-          if (imageModel.width > 2000) {
+          if (imageModel.width > 1500) {
             const ratio = imageModel.width/imageModel.height
-            imageModel.width = 2000
+            imageModel.width = 1500
             imageModel.height = imageModel.width/ratio
           }
 
-
           image = imageModel.src;
-
-
       };
 
       return image
