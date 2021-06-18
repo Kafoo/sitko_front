@@ -134,10 +134,14 @@ export default defineComponent({
             const ratio = imageModel.width/imageModel.height
             imageModel.width = 1500
             imageModel.height = imageModel.width/ratio
+            console.log(imageModel.width)
           }
 
+            console.log(imageModel.src)
           image = imageModel.src;
       };
+
+
 
       return image
 
