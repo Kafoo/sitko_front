@@ -2,6 +2,8 @@ const path = require("path");
 
 module.exports = {
 
+  publicPath: '/frontend/dist/',
+
   devServer: {
     host: "localhost"
   },
