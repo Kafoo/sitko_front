@@ -44,7 +44,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.VUE_APP_BASE_URL,
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
