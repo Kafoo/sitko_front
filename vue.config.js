@@ -2,8 +2,6 @@ const path = require("path");
 
 module.exports = {
 
-  publicPath: '/home/u790612287/domains/lesiteco.com/public_html/frontend/dist/',
-
   devServer: {
     host: "localhost"
   },
