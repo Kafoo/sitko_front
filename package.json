@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "build wamp": "vue-cli-service build --mode wamp",
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service serve --mode development",
     "dev_wamp": "vue-cli-service serve --mode wamp",
