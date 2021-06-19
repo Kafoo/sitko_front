@@ -44,7 +44,6 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  base: "/frontend/dist/",
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
